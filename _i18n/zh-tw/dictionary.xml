@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <blocks>
-  <block id="f1574d51fcf9f775687f0113052df518" category="summary">這些技術報告提供 ONTAP 的概觀及建議實務做法</block>
   <block id="4434424bd2c1011098a508e85df56b94" category="doc">ONTAP 技術報告</block>
   <block id="f282b1ca0090a5b43997888b90926fdd" category="summary">這些技術報告概述了 NetApp ONTAP 的產業解決方案、以及建議的實務做法</block>
   <block id="0fa7990fb9bf5e1fa283be0a561304a6" category="doc">產業解決方案技術報告</block>
@@ -411,4 +410,5 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
   <block id="0dca6505dd29defef873a6ae40e5ba67" category="sidebar">VMware vSphere 虛擬磁碟區（ VVols ）搭配 ONTAP</block>
   <block id="2d90ac09cbf108bddad31dd341f8614e" category="sidebar">VMware Site Recovery Manager 搭配 ONTAP</block>
   <block id="16d877785afd5e8f401c4bd07d5afe32" category="sidebar">其他虛擬化技術報告</block>
+  <block id="606ae2d52250c5830b4f47feec9aadee" category="summary">ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署、以及 ONTAP 功能的建議實務做法。</block>
 </blocks>

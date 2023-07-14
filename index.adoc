@@ -3,7 +3,7 @@ layout: landing-page
 sidebar: sidebar 
 keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
 permalink: index.html 
-summary: 這些技術報告提供 ONTAP 的概觀及建議實務做法 
+summary: ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署、以及 ONTAP 功能的建議實務做法。 
 ---
 = ONTAP 技術報告
 :hardbreaks:
