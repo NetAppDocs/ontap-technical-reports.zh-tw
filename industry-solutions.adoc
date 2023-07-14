@@ -1,0 +1,35 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
+permalink: industry-solutions.html 
+summary: 這些技術報告概述了 NetApp ONTAP 的產業解決方案、以及建議的實務做法 
+---
+= 產業解決方案技術報告
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+我們的產業專屬資料儲存解決方案經過策略合作關係強化、可因應關鍵業務挑戰。
+
+
+
+== EDA
+
+link:https://www.netapp.com/pdf.html?item=/media/19368-tr-4617.pdf["ONTAP 的電子設計自動化最佳實務做法"^]
+瞭解 NetApp ONTAP 針對電子設計自動化（ EDA ）工作負載的建議實務做法和實作秘訣、 FlexGroup Volume 是處理 EDA 環境中高中繼資料負荷的理想選擇。
+
+
+
+== 醫療
+
+link:https://www.netapp.com/pdf.html?item=/media/17137-tr3928pdf.pdf["適用於 Epic 的 NetApp 最佳實務做法"^]
+Epic 為醫療產業打造軟體。瞭解將 NetApp 儲存設備與 Epic 軟體環境整合的建議實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/86527-tr-4975.pdf["FlexPod - 大型醫院的 Epic"^]
+瞭解 FlexPod 提供的端點對端點效能功能、這些功能展示了使用跨系統資料庫的電子健康記錄（ EHR ）應用程式需求、並著重於儲存配置、以及在大型醫院的 FlexPod 解決方案上設定 EHR 的最佳實務做法。

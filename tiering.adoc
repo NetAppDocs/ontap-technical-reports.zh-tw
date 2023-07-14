@@ -1,0 +1,31 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
+permalink: tiering.html 
+summary: 這些技術報告提供 NetApp ONTAP 分層的概觀、以及建議的實務做法。 
+---
+= 分層技術報告
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+
+
+[role="lead"]
+有了 FabricPool 資料分層解決方案、企業的 Flash 系統整體使用者體驗就能改善、同時避免重新架構應用程式以提高儲存效率的難題。FabricPool 可減少系統環境的儲存佔用空間及相關成本。作用中資料仍保留在高效能 SSD 上。非使用中資料會分層化為低成本物件儲存、同時保留儲存效率。
+
+[NOTE]
+====
+這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/fabricpool/index.html["ONTAP FabricPool"] 產品文件。
+
+====
+link:https://www.netapp.com/pdf.html?item=/media/17239-tr4598.pdf["TR-4598：FabricPool 最佳實務做法"^]
+瞭解 FabricPool 的功能、需求、實作及建議實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/19403-tr-4826.pdf["TR-4826 ： NetApp FabricPool with StorageGRID 推薦指南"^]
+瞭解部署 StorageGRID 並將其調整為 ONTAP 元件 FabricPool 容量層的建議實務做法。本文件也涵蓋使用 StorageGRID 時的核心功能、需求、實作及建議實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/9138-tr4695.pdf["TR-4695 ：使用 NetApp FabricPool 進行資料庫儲存分層"^]
+瞭解 FabricPool 的優點和組態選項、包括 Oracle 關聯式資料庫管理系統（ RDBMS ）。

@@ -1,0 +1,71 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, MAV, MFA, Ransomware, Security, best practices, best-practices, tamperproof, tamper proof, tamperproof snapshots tamper-proof snapshots 
+permalink: security.html 
+summary: 這些技術報告概述 NetApp ONTAP 的安全性、以及建議的實務做法。 
+---
+= 安全技術報告
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+ONTAP 持續進化、安全性是解決方案不可或缺的一部分。最新版的 ONTAP 包含許多新的安全功能、這些功能對貴組織來說非常重要、可以保護其資料在混合雲中的安全性、防止勒索軟體攻擊、並遵循業界建議的實務做法。這些新功能也能協助貴組織邁向 Zero Trust 模式。
+
+[NOTE]
+====
+這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/security-encryption/index.html["ONTAP 安全性與資料加密"] 產品文件。
+
+====
+
+
+== 勒索軟體
+
+link:https://www.netapp.com/pdf.html?item=/media/7334-tr4572.pdf["TR-4572 ：勒索軟體的 NetApp 解決方案"^]
+瞭解勒索軟體如何進化、以及如何利用 NetApp 解決方案來識別攻擊、防止擴散、並儘快恢復。本文件所提供的指引與解決方案旨在協助組織擁有網路彈性解決方案、同時符合其規定的資訊系統機密性、完整性及可用度安全目標。
+
+link:https://www.netapp.com/pdf.html?item=/media/6158-tr4526.pdf["TR-4526 ：使用 NetApp SnapLock 的符合 WORM 儲存設備"^]
+許多企業都仰賴一次寫入、多次讀取（ WORM ）資料儲存設備來滿足法規遵循要求、或只是在資料保護策略中新增另一層。瞭解如何將 ONTAP 的 WORM 解決方案 SnapLock 整合至需要 WORM 資料儲存的環境。
+
+
+
+== 零信任
+
+link:https://www.netapp.com/pdf.html?item=/media/19756-tr-4829.pdf["TR-4829 ： NetApp 與 Zero Trust"^]
+零信任傳統上是一種以網路為中心的方法、用於建構微核心和周邊（ MCAP ）、以控制區段閘道的方式來保護資料、服務、應用程式或資產。ONTAP 採用以資料為中心的 Zero Trust 方法、讓儲存管理系統成為區段閘道、以保護及監控客戶資料的存取。特別是、 FPolicy Zero Trust 引擎和 FPolicy 合作夥伴生態系統成為控制中心、可深入瞭解正常和異常的資料存取模式、並識別內部威脅。
+
+
+
+== 多因素驗證
+
+link:https://www.netapp.com/pdf.html?item=/media/17055-tr4647.pdf["TR-4647 ： ONTAP 最佳實務做法與實作指南中的多因素驗證"^]
+瞭解 ONTAP 的多因素驗證功能、以便使用 System Manager 、 Active IQ Unified Manager 和 ONTAP 安全 Shell （ SSH ） CLI 驗證進行管理存取。
+
+link:https://www.netapp.com/pdf.html?item=/media/17036-tr4717.pdf["TR-4717 ：使用通用存取卡進行 ONTAP SSH 驗證"^]
+瞭解如何搭配 ActivClient 軟體、設定及測試協力廠商 SSH 用戶端、以便在 ONTAP 中設定 ONTAP 儲存管理員時、透過儲存在通用存取卡（ CAC ）上的公開金鑰來驗證其身分。
+
+
+
+== 多租戶
+
+link:https://www.netapp.com/pdf.html?item=/media/16886-tr-4160.pdf["TR-4160 ： ONTAP 中的安全多租戶共享"^]
+瞭解如何在 ONTAP 中使用儲存 VM 實作安全的多租戶共享、包括設計考量和建議實務做法。
+
+
+
+== 記錄
+
+link:https://www.netapp.com/pdf.html?item=/media/16880-tr-4303.pdf["TR-4303 ：登入 ONTAP"^]
+瞭解如何定義 ONTAP 產生的不同記錄、提供的功能、以及如何檢視和存取記錄。
+
+
+
+== 標準
+
+link:https://www.netapp.com/pdf.html?item=/media/17180-tr4401.pdf["TR-4401 ： PCI-DSS 4.0 和 ONTAP"^]
+瞭解如何根據 PCI DSS 4.0 標準驗證系統、並符合您套用至 NetApp ONTAP 系統的控制項要求。

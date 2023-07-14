@@ -1,0 +1,49 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
+permalink: data-protection-disaster-recovery.html 
+summary: 這些技術報告提供 ONTAP 資料保護與災難恢復的概觀、以及建議的實務做法 
+---
+= 資料保護與災難恢復技術報告
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+SnapMirror 是一款經濟實惠、易於使用的統一複製解決方案、適用於整個資料架構。它可透過LAN或WAN高速複寫資料。您可以在虛擬和傳統環境中、為業務關鍵應用程式（例如 Microsoft Exchange 、 Microsoft SQL Server 和 Oracle ）提供高資料可用度和快速資料複寫功能。當您將資料複寫到一或多個 ONTAP 儲存系統、並持續更新次要資料時、您的資料會保持在最新狀態、並隨時可供您使用。不需要外部複寫伺服器。
+
+[NOTE]
+====
+這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/data-protection-disaster-recovery/index.html["ONTAP 資料保護與災難恢復"] 產品文件。
+
+====
+
+
+== SnapMirror
+
+* SnapMirror AsynAsynAsynAsyn*
+link:https://www.netapp.com/pdf.html?item=/media/17229-tr4015.pdf["TR-4015 ： SnapMirror 非同步組態和最佳實務做法"^]
+瞭解設定 SnapMirror 非同步（ SM-A ）複寫磁碟區、一致性群組和儲存虛擬機器（ SVM 災難恢復）的建議實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/17064-tr4678.pdf["TR-4678 ：資料保護與備份 ONTAP FlexGroup 磁碟區"^]
+瞭解 FlexGroup 磁碟區的建議資料保護與備份。主題包括 Snapshot 複本、 SnapMirror 及其他資料保護與備份解決方案。
+
+* SnapMirror Synchronous *
+link:https://www.netapp.com/pdf.html?item=/media/17174-tr4733.pdf["TR-4733 ： SnapMirror 同步組態和最佳實務做法"^]
+瞭解設定 SnapMirror 同步（ SM-S ）複寫的建議實務做法。
+
+* SnapMirror 三資料中心災難恢復 *
+link:https://www.netapp.com/pdf.html?item=/media/19369-tr-4832.pdf["TR-4832 ：使用 NetApp SnapMirror for ONTAP 9.7 進行三個資料中心災難恢復"^]
+瞭解使用 ONTAP SnapMirror 技術進行複寫的三個資料中心災難恢復組態。
+
+
+
+== 應用程式與基礎架構搭配 SnapMirror
+
+link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/vsrm-ontap9_1._introduction_to_srm_with_ontap.html["TR-4900 ： VMware Site Recovery Manager 與 ONTAP"]
+ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能、以簡化管理、同時降低成本。瞭解 VMware 領先業界的災難恢復（ DR ）軟體 VMware Site Recovery Manager （ SRM ）推薦的 ONTAP 解決方案、包括最新的產品資訊和建議實務做法、以簡化部署、降低風險並簡化後續管理。

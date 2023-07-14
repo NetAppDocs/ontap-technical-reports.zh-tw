@@ -1,0 +1,74 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, NAS, best practices, best-practices 
+permalink: nas.html 
+summary: 這些技術報告概述了 NetApp ONTAP 中的 NFS 、 SMB/CIFS 、 S3 、名稱服務、以及建議的實務做法。 
+---
+= NAS 技術報告
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp NAS 解決方案可簡化資料管理、協助您跟上成長腳步、同時最佳化成本。ONTAP NAS 解決方案可在統一化架構中提供不中斷營運、效率和無縫擴充性。採用 NetApp ONTAP 技術的橫向擴充 NAS 運用龐大的 ONTAP 生態系統、擁有重大的創新商機和願景、可推動未來的創新。
+
+[NOTE]
+====
+這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/nas-management/index.html["ONTAP NAS 儲存管理"] 和 link:https://docs.netapp.com/us-en/ontap/object-storage-management/index.html["ONTAP S3 儲存管理"] 產品文件。
+
+====
+
+
+== NFS
+
+link:https://www.netapp.com/pdf.html?item=/media/10720-tr-4067.pdf["TR-4067 ： ONTAP 最佳實務做法與實作指南中的 NFS"^]
+瞭解 ONTAP 中 NFS 的基本概念、支援資訊、組態秘訣及建議實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/84595-tr-4962.pdf["TR-4962 ： NFSv4.2 延伸屬性"^]
+瞭解如何在 ONTAP 9.12.1 及更新版本中啟用及使用 NFSv4.2 延伸屬性。
+
+
+
+== 中小企業
+
+link:https://www.netapp.com/pdf.html?item=/media/17136-tr4740.pdf["TR-4740 ： SMB 3.0 多通道"^]
+Microsoft 在 SMB 3.0 傳輸協定中引進多通道、其目標是藉由解決 SMB1 和 SMB2 的效能和可靠性限制、來改善 SMB3 傳輸協定。瞭解 ONTAP 的多重通路功能、包括其功能、建議實務做法和效能測試結果。
+
+
+
+== 多重傳輸協定
+
+link:https://www.netapp.com/pdf.html?item=/media/27436-tr-4887.pdf["TR-4887 ： ONTAP 中的多重傳輸協定 NAS 總覽與最佳實務做法"^]
+瞭解多重傳輸協定 NAS 存取如何在 ONTAP 中運作、以及多重傳輸協定環境的建議實務做法。
+
+
+
+== SS3 ONTAP
+
+link:https://www.netapp.com/pdf.html?item=/media/17219-tr4814.pdf["TR-4814 ： ONTAP 最佳實務做法中的 S3"^]
+瞭解將 Amazon Simple Storage Service （ S3 ）與 ONTAP 軟體搭配使用的建議實務做法、以及將 ONTAP 作為物件存放區與原生 S3 應用程式搭配使用的功能和組態、或作為 FabricPool 的分層目的地。
+
+
+
+== 名稱服務
+
+link:https://www.netapp.com/pdf.html?item=/media/19370-tr-4523.pdf["TR-4523 ： ONTAP 中的 DNS 負載平衡"^]
+瞭解如何設定 ONTAP 以搭配 DNS 負載平衡方法使用、包括 ONTAP 中的 DNS 、各種組態方法、以及建議的實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/16328-tr-4668.pdf["TR-4668 ：名稱服務最佳實務做法指南"^]
+瞭解在 ONTAP 中實作網路附加儲存（ NAS ）解決方案（例如 CIFS/SMB 和 NFS ）時的建議實務做法、限制和考量。
+
+link:https://www.netapp.com/pdf.html?item=/media/19423-tr-4835.pdf["TR-4835 ：如何在 ONTAP 多重傳輸協定 NAS 身分識別管理中設定 LDAP"^]
+瞭解如何在 ONTAP 中設定適用於多重傳輸協定 NAS 的輕量型目錄存取傳輸協定（ LDAP ）身分識別管理。
+
+
+
+== NAS 安全性
+
+link:https://www.netapp.com/pdf.html?item=/media/19384-tr-4616.pdf["TR-4616：ONTAP NFS Kerberos in Sf2"^]
+瞭解 ONTAP 中的 NFS Kerberos 、包括 Active Directory 和 Red Hat Enterprise Linux （ RHEL ）用戶端的組態步驟。

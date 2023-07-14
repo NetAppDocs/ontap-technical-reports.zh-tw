@@ -1,0 +1,73 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
+permalink: apps-dbs.html 
+summary: 這些技術報告概述 ONTAP 上的應用程式和資料庫、以及建議的實務做法 
+---
+= 應用程式與資料庫技術報告
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保護基礎。下列技術報告提供 NetApp 建議的 Microsoft SQL Server 、 MySQL 、 Oracle 及 PostgreSQL 實作實作實務做法與實作程序指引。
+
+
+
+== Microsoft SQL Server
+
+link:https://www.netapp.com/pdf.html?item=/media/8585-tr4590.pdf["TR-4590 ： Microsoft SQL Server with ONTAP 的最佳實務做法指南"^]
+瞭解儲存管理員和資料庫管理員如何在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 。
+
+link:https://www.netapp.com/pdf.html?item=/media/12400-tr4714.pdf["TR-4714 ：使用 SnapCenter 的 Microsoft SQL Server 最佳實務做法"^]
+立即瞭解如何使用 SnapCenter 技術在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 、以保護資料。
+
+
+
+== MySQL
+
+link:https://www.netapp.com/pdf.html?item=/media/16423-tr-4722pdf.pdf["ONTAP 上的 MySQL 資料庫"^]
+MySQL 及其變種（包括 MariaDB 和 Percona ）廣泛用於許多企業應用程式。這些應用程式涵蓋全球社群網站和大量的經濟應用系統、以及包含數千個資料庫執行個體的中小企業代管系統。瞭解在 ONTAP 上部署 MySQL 的組態需求、以及調整與儲存組態的相關指引。
+
+
+
+== Oracle
+
+link:https://www.netapp.com/pdf.html?item=/media/8744-tr3633pdf.pdf["TR-3633：ONTAP Oracle資料庫on"^]
+瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功部署 Oracle 的建議實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/85630-tr-4969.pdf["TR-4969 ： AFF A 系列和 C 系列上的 Oracle 資料庫效能"^]
+ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬體升級、以及從外部儲存陣列匯入 LUN 的原生功能。最多可將 24 個節點叢集在一起、同時透過網路檔案系統（ NFS ）、伺服器訊息區（ SMB ）、 iSCSI 、光纖通道（ FC ）和非揮發性記憶體高速（ NVMe ）傳輸協定來提供資料。此外、 Snapshot 技術是建立數萬個線上備份和完整運作資料庫複本的基礎。除了豐富的 ONTAP 功能集之外、還有各式各樣的使用者需求、包括資料庫大小、效能需求和資料保護需求。瞭解使用 AFF 儲存系統（包括 A 系列和 C 系列）的裸機資料庫效能、其中涵蓋兩種 AFF 選項之間的最大值和實際差異。
+
+link:https://www.netapp.com/pdf.html?item=/media/85629-tr-4971.pdf["TR-4971 ： AFF A 系列和 C 系列上的虛擬化 Oracle 資料庫效能"^]
+ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬體升級、以及從外部儲存陣列匯入 LUN 的原生功能。最多可將 24 個節點叢集在一起、同時透過網路檔案系統（ NFS ）、伺服器訊息區（ SMB ）、 iSCSI 、光纖通道 FC （ Fibre Channel FC ）和非揮發性記憶體高速（ NVMe ）傳輸協定來提供資料。此外、 Snapshot 技術是建立數萬個線上備份和完整運作資料庫複本的基礎。除了豐富的 ONTAP 功能集之外、還有各式各樣的使用者需求、包括資料庫大小、效能需求和資料保護需求。瞭解使用 AFF 儲存系統（包括 A 系列和 C 系列）的虛擬化資料庫效能、其中涵蓋兩種 AFF 選項之間的最大值和實際差異。
+
+link:https://www.netapp.com/pdf.html?item=/media/19666-tr-4591.pdf["TR-4591 ： Oracle 資料保護：備份、還原、複寫和災難恢復"^]
+瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功備份、恢復、複寫及提供災難恢復給 Oracle 的建議實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/8583-tr4592.pdf["TR-4592 ： MetroCluster 上的 Oracle"^]
+瞭解在 MetroCluster 同步複寫功能上操作 Oracle 資料庫的建議實務做法、測試程序及其他考量事項。
+
+link:https://www.netapp.com/pdf.html?item=/media/19750-tr-4534.pdf["TR-4534 ：將 Oracle 資料庫移轉至 ONTAP 儲存系統"^]
+瞭解規劃移轉策略的整體考量、進行資料移動的三個不同層級、並詳細說明一些可用的各種程序。
+
+link:https://www.netapp.com/pdf.html?item=/media/9138-tr4695.pdf["TR-4695 ：使用 FabricPool 進行資料庫儲存分層"^]
+瞭解 FabricPool 的優點和組態選項、包括 Oracle 關聯式資料庫管理系統（ RDBMS ）。
+
+link:https://www.netapp.com/pdf.html?item=/media/40384-tr-4899.pdf["TR-4899 ： Oracle 資料庫透明化應用程式容錯移轉、採用 SnapMirror Business Continuity"^]
+SnapMirror Business Continuity （ SM-BC ）和 Oracle Real Application Cluster （ RAC ）可在發生站台中斷和真正災難時、提供透明的應用程式容錯移轉（ TAF ）和持續性。瞭解 AFF 儲存陣列的組態指南和建議實務做法、並將 SMBC 作為 Oracle RAC 的儲存元件。
+
+link:https://www.netapp.com/pdf.html?item=/media/21901-tr-4876.pdf["TR-4876 ：採用 ONTAP 解決方案和部署最佳實務做法的 Oracle 多租戶"^]
+瞭解解決方案建議的實務做法、瞭解如何使用 ONTAP 儲存設備來配置、管理及保護 Oracle 多租戶資料庫、以充分發揮 Oracle 多租戶資料庫的效益、以及 ONTAP 軟體的功能。
+
+
+
+== PostgreSQL
+
+link:https://www.netapp.com/pdf.html?item=/media/17140-tr4770.pdf["TR-4770 ： ONTAP 上的 PostgreSQL 資料庫"^]
+PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。它受一般中介軟體套件的支援（例如 PHP 、 Java 、 Python 、 Tcl/Tk 、 ODBC 、 和 JDBC) ，過去一直是開放原始碼資料庫管理系統的熱門選擇。瞭解在 ONTAP 上部署 PostgreSQL 的組態需求、以及調整與儲存組態的相關指引。

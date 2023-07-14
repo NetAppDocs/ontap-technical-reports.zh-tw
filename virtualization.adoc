@@ -1,0 +1,38 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, VMware, vVols, SRM, SRA, Site Recovery Manager, OTV, ONTAP Tools for VMware, SnapCenter for VMware, SnapCenter, RCU, VSC, Virtual Storage Console, best practices, best-practices 
+permalink: virtualization.html 
+summary: 這些技術報告概述了使用 NetApp ONTAP 的 VMware 虛擬化解決方案、以及建議的實務做法。 
+---
+= 虛擬化技術報告
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp 虛擬化解決方案可協助您從伺服器獲得最大價值。有了以突破性的高效能 ONTAP Flash 系統為基礎的回應性虛擬伺服器基礎架構、您就能更快存取資料。精細的虛擬基礎架構可在不中斷多 PB 資料的情況下進行擴充、提供您共享存取多個工作負載所需的效能。ONTAP 透過關鍵合作夥伴關係、部署指南、應用程式整合及優異設計、協助簡化及降低虛擬伺服器基礎架構部署的複雜度。ONTAP 針對內部部署和雲端環境的健全虛擬化環境、提供許多建議的實務做法和解決方案。
+
+這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap-tools-vmware-vsphere/index.html["VMware vSphere適用的工具ONTAP"] 產品文件。
+
+link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/vsphere_ontap_ontap_for_vsphere.html["TR-4597：VMware vSphere ONTAP for VMware"]
+ ONTAP 在將近 20 年來一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能來簡化管理、同時降低成本。本文件介紹適用於 vSphere 的 ONTAP 解決方案、包括最新的產品資訊和建議實務做法、以簡化部署、降低風險並簡化管理。
+
+link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/vvols-overview.html["TR-4400 ：採用 NetApp ONTAP 的 VMware vSphere 虛擬磁碟區（ vVols ）"]
+ONTAP 在過去二十多年來一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能來簡化管理、同時降低成本。本文件涵蓋適用於 VMware vSphere 虛擬磁碟區（ VVols ）的 ONTAP 功能、包括最新的產品資訊和使用案例、以及建議的實務做法和其他資訊、可簡化部署並減少錯誤。
+
+link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/vsrm-ontap9_1._introduction_to_srm_with_ontap.html["TR-4900 ： VMware Site Recovery Manager 與 NetApp ONTAP"]
+ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能、以簡化管理、同時降低成本。本文件將介紹 VMware 領先業界的災難恢復（ DR ）軟體 VMware Site Recovery Manager （ SRM ） ONTAP 解決方案、包括最新產品資訊和建議實務做法、以簡化部署、降低風險並簡化後續管理。
+
+link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/vsphere_auto_introduction.html["介紹自動化功能以利ONTAP 實現VMware及vSphere"]
+自VMware ESX的第一天起、自動化一直是管理VMware環境的重要一環。能夠以程式碼形式部署基礎架構、並將實務做法延伸至私有雲端作業、有助於減輕對擴充性、靈活度、自我配置及效率的顧慮。本文件介紹自動化 ONTAP 和 VMware vSphere 環境的 ONTAP 解決方案。
+
+link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/tools-vmware-secure-development-activities.html["WP-7353 ：適用於 VMware vSphere 的 ONTAP 工具 - 產品安全性"]
+本文件說明保護 ONTAP 工具的技術與技術、以保護 VMware vSphere 9.X 免受產品環境中現有和新興威脅的影響。
+
+link:https://docs.netapp.com/us-en/netapp-solutions/virtualization/tools-vmware-secure-development-activities.html["WP-7355 ： SnapCenter 外掛程式 VMware vSphere - 產品安全性"]
+本文件說明用於保護 NetApp SnapCenter Plug-in for VMware vSphere 4.X 免受產品環境中現有和新興威脅的技術與技術。

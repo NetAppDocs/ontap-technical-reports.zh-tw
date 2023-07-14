@@ -1,0 +1,46 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
+permalink: nas-containers.html 
+summary: 這些技術報告提供 NetApp ONTAP 中 FlexCache 和 FlexGroup 磁碟區的概觀、以及最佳實務建議 
+---
+= FlexCache 與 FlexGroup Volume 技術報告
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp NAS 解決方案可簡化資料管理、協助您跟上成長腳步、同時最佳化成本。ONTAP NAS 解決方案可在統一化架構中提供不中斷營運、獲證實的效率和無縫擴充能力。採用 ONTAP 技術的橫向擴充 NAS 運用龐大的 ONTAP 生態系統、擁有重大的創新商機和願景、可推動未來的創新。
+
+[NOTE]
+====
+這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/task_nas_flexcache.html["ONTAP FlexCache Volume"] 和 link:https://docs.netapp.com/us-en/ontap/task_nas_provision_flexgroup.html["ONTAP FlexGroup Volume"] 產品文件。
+
+====
+
+
+== FlexCache
+
+link:https://www.netapp.com/pdf.html?item=/media/7336-tr4743.pdf["TR-4743：FlexCache 《不ONTAP 實的"^]
+FlexCache 是一種快取技術、可在相同或不同的 ONTAP 叢集上建立磁碟區的稀疏可寫入複本。它可以讓資料和檔案更接近使用者、以更小的佔用空間來加快處理量。瞭解如何使用 FlexCache 、建議的實務做法、限制及設計與實作考量。
+
+
+
+== 資料量FlexGroup
+
+link:https://www.netapp.com/pdf.html?item=/media/17251-tr4571a.pdf["TR-4571a ： FlexGroup 十大最佳實務做法"^]
+本技術報告是 TR-4571 的精簡版： NetApp ONTAP FlexGroup Volume 快速使用的最佳實務做法與實作指南。
+
+link:https://www.netapp.com/pdf.html?item=/media/7337-tr4557.pdf["TR-4557 ： NetApp ONTAP FlexGroup Volume - 技術概觀"^]
+瞭解 FlexGroup Volume （ ONTAP 橫向擴充 NAS 容器）、它將近乎無限的容量與中繼資料繁重工作負載中可預測的低延遲效能融合在一起。
+
+link:https://www.netapp.com/pdf.html?item=/media/12385-tr4571.pdf["TR-4571 ： NetApp ONTAP FlexGroup Volume 最佳實務做法與實作指南"^]
+瞭解 FlexGroup Volume 、建議實務做法和實作秘訣。FlexGroup Volume 是 ONTAP 橫向擴充 NAS 容器的演進、可在中繼資料繁重的工作負載中、將幾乎無限的容量與可預測的低延遲效能混合在一起。
+
+link:https://www.netapp.com/pdf.html?item=/media/17064-tr4678.pdf["TR-4678 ： FlexGroup 磁碟區的資料保護與備份"^]
+瞭解 FlexGroup 磁碟區的資料保護與備份、包括 Snapshot 複本、 SnapMirror 及其他資料保護與備份解決方案。

@@ -1,0 +1,38 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, SAN, NVMe, NVMeoF, NVMeoTCP, NVMeoFC, iSCSI, fibre channel, fiber channel, igroups, namespaces, namespace, LUN, subsystem, best practices, best-practices 
+permalink: san.html 
+summary: 這些技術報告概述 ONTAP 的區塊協定、以及建議的實務做法。 
+---
+= SAN 技術報告
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+ONTAP SAN 儲存設備提供簡化的 SAN 體驗、可為貴組織的關鍵任務資料庫和其他 SAN 工作負載提供高可用度。ONTAP SAN 與 Oracle 、 SAP 和 Microsoft SQL Server 資料庫整合了同級最佳的資料服務、加上 VMware 和其他領先業界的 Hypervisor 、可為企業資料庫應用程式提供更快的價值實現時間。
+
+[NOTE]
+====
+這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/san-management/index.html["ONTAP SAN 儲存管理"] 產品文件。
+
+====
+link:https://www.netapp.com/pdf.html?item=/media/10680-tr4080.pdf["TR-4080 ： ONTAP 中現代 SAN 的最佳實務做法"^]
+瞭解 ONTAP 中的區塊傳輸協定、以及建議實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/10681-tr4684.pdf["TR-4684 ：使用 NVMe over Fabrics （ NVMe of ）實作及設定現代化 SAN"^]
+瞭解如何實作和設定 NVMe over Fabrics 傳輸（ NVMe over Fibre Channel 和 NVMe over TCP ）。主題包括設計、實作、組態、管理準則和建議實務做法、以使用 NVMe 通訊協定和傳輸來建置高可用度、高效能的現代化 SAN 解決方案。
+
+link:https://www.netapp.com/pdf.html?item=/media/10379-tr4515.pdf["TR-4515 ： ONTAP AFF 所有 SAN 陣列（ ASA ）系統"^]
+瞭解 NetApp AFF 所有 SAN 陣列（ ASA ）系統、以及如何根據建議實作的實務做法來實作永遠可用的業務關鍵 SAN 組態。
+
+link:https://www.netapp.com/pdf.html?item=/media/85671-tr-4968.pdf["TR-4968 ： NetApp All SAN 陣列資料可用度與完整性"^]
+瞭解 All SAN 陣列系統的各種資料保護與資料完整性功能如何運作、以達到最長的應用程式正常運作時間、以及設計、實作及管理 SAN 網路的建議實務做法。
+
+link:https://www.netapp.com/pdf.html?item=/media/9222-nva-1145-design.pdf["現代化的 SAN 雲端連線 Flash 解決方案"^]
+此 NetApp 驗證架構已由 NetApp 、 VMware 和 Broadcom 共同設計與驗證。它使用最新的 Brocade 、 Emulex 和 VMware vSphere 技術解決方案、搭配 NetApp All Flash 儲存設備、為企業級 SAN 儲存設備和資料保護樹立新標準、創造卓越的商業價值。

@@ -1,0 +1,42 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, MFA, best practices, best-practices 
+permalink: security-hardening-guides.html 
+summary: 這些技術報告提供如何強化 NetApp ONTAP 及其他 ONTAP 相關產品的指引。 
+---
+= 安全強化指南
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+這些技術報告提供如何強化 NetApp ONTAP 及其他 NetApp 產品的指引。
+
+[NOTE]
+====
+這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/security-encryption/index.html["ONTAP 安全性與資料加密"] 產品文件。
+
+====
+
+
+== 強化指南
+
+link:https://www.netapp.com/pdf.html?item=/media/10674-tr4569.pdf["TR-4569 ： NetApp ONTAP 安全強化指南"^]
+瞭解如何設定 NetApp ONTAP 、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。
+
+link:https://www.netapp.com/pdf.html?item=/media/82393-tr-4957.pdf["TR-4957 ： NetApp SnapCenter 安全強化指南"^]
+瞭解如何設定 NetApp SnapCenter 軟體、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。
+
+link:https://www.netapp.com/pdf.html?item=/media/83591-tr-4963.pdf["TR-4963 ：安全強化指南： BlueXP Cloud Backup for Applications"^]
+瞭解如何設定 NetApp 雲端備份應用程式、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。
+
+link:https://netapp.com/pdf.html?item=/media/78654-tr-4943.pdf["TR-4943 ： NetApp Active IQ Unified Manager 安全強化指南"^]
+瞭解如何設定 NetApp Active IQ Unified Manager 、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。
+
+link:https://www.netapp.com/pdf.html?item=/media/78941-tr-4945.pdf["TR-4945 ： NetApp Manageability SDK 的安全強化指南"^]
+瞭解如何設定 NetApp Manageability SDK （ NMSDK ）、以協助組織達成資訊系統機密性、完整性和可用度的規定安全目標。
