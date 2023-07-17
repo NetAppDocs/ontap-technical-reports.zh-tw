@@ -3,7 +3,7 @@ indexpage:
   lead: ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署。某些 ONTAP 技術報告提供 ONTAP
     功能的架構背景和建議實務做法。
   tiles:
-  - title: 應用程式與資料庫技術報告
+  - title: 應用程式與資料庫
     links:
     - title: Microsoft SQL Server 搭配 ONTAP
       url: apps-dbs.html
@@ -15,7 +15,7 @@ indexpage:
       url: apps-dbs.html
     - title: 其他應用程式與資料庫技術報告
       url: apps-dbs.html
-  - title: 營運不中斷技術報告
+  - title: 營運不中斷
     links:
     - title: SnapMirror營運不中斷（SMBC）
       url: business-continuity.html
@@ -27,7 +27,7 @@ indexpage:
       url: business-continuity.html
     - title: 其他營運不中斷技術報告
       url: business-continuity.html
-  - title: 資料保護與災難恢復技術報告
+  - title: 資料保護與災難恢復
     links:
     - title: SnapMirror 非同步組態和最佳實務做法
       url: data-protection-disaster-recovery.html
@@ -37,7 +37,7 @@ indexpage:
       url: data-protection-disaster-recovery.html
     - title: 額外的資料保護與災難恢復技術報告
       url: data-protection-disaster-recovery.html
-  - title: FlexCache 和 FlexGroup Volume 技術報告
+  - title: FlexCache 和 FlexGroup 磁碟區
     links:
     - title: 資料量FlexCache
       url: nas-containers.html
@@ -47,7 +47,7 @@ indexpage:
       url: nas-containers.html
     - title: 其他 FlexCache 和 FlexGroup Volume 技術報告
       url: nas-containers.html
-  - title: NAS 技術報告
+  - title: NAS
     links:
     - title: NetApp ONTAP 最佳實務做法與實作中的 NFS
       url: nas.html
@@ -61,11 +61,11 @@ indexpage:
       url: nas.html
     - title: 其他 NAS 技術報告
       url: nas.html
-  - title: 網路技術報告
+  - title: 網路
     links:
     - title: BGP/VIP 搭配 ONTAP
       url: networking.html
-  - title: SAN 技術報告
+  - title: SAN
     links:
     - title: ONTAP 中現代 SAN 的最佳實務做法
       url: san.html
@@ -73,7 +73,7 @@ indexpage:
       url: san.html
     - title: ONTAP AFF All SAN Array （ ASA ）系統
       url: san.html
-  - title: 安全技術報告
+  - title: 安全性
     links:
     - title: 安全強化指南
       url: security-hardening-guides.html
@@ -89,7 +89,7 @@ indexpage:
       url: security.html
     - title: 其他安全技術報告
       url: security.html
-  - title: SnapCenter 技術報告
+  - title: SnapCenter
     links:
     - title: SnapCenter for Oracle
       url: snapcenter.html
@@ -101,7 +101,7 @@ indexpage:
       url: snapcenter.html
     - title: 其他 SnapCenter 技術報告
       url: snapcenter.html
-  - title: 分層技術報告
+  - title: 分層
     links:
     - title: FabricPool 最佳實務做法
       url: tiering.html
@@ -109,7 +109,7 @@ indexpage:
       url: tiering.html
     - title: 使用 FabricPool 進行資料庫儲存分層
       url: tiering.html
-  - title: 虛擬化技術報告
+  - title: 虛擬化
     links:
     - title: VMware vSphere ONTAP for VMware
       url: virtualization.html

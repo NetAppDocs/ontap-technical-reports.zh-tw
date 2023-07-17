@@ -369,7 +369,6 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
   <block id="a6a168fa8021b0302c7d52eda6a33f25" category="sidebar">AFF A 系列和 C 系列上的虛擬化 Oracle 資料庫效能</block>
   <block id="9eaca569c6f5ca3388f5613da3aa008c" category="sidebar">ONTAP 上的 Oracle 資料庫</block>
   <block id="f764824b813fdd72c94db78f7fb3b24b" category="sidebar">其他應用程式與資料庫技術報告</block>
-  <block id="f15b6d4df033d13872ca3938921e3677" category="sidebar">營運不中斷技術報告</block>
   <block id="556eda250d1f196adc09c3afcd396b84" category="sidebar">MetroCluster 解決方案架構與設計</block>
   <block id="4767099b22895a8101a1cba45d8cf6e9" category="sidebar">知識產權MetroCluster</block>
   <block id="eab1124b93650078ec1e8e3092712538" category="sidebar">FC MetroCluster</block>
@@ -378,7 +377,6 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
   <block id="b151fa9d3a99ac1198c348082841dadb" category="sidebar">SnapMirror 同步組態和最佳實務做法</block>
   <block id="db43ac1a3df915eac1e2b05048e0ff14" category="sidebar">使用 SnapLock 的符合 WORM 儲存設備</block>
   <block id="35b0462c5bb2a4fdc39750037610b26b" category="sidebar">額外的資料保護與災難恢復技術報告</block>
-  <block id="31947de3fc855dce40846d2cb60d48c4" category="sidebar">FlexCache 和 FlexGroup Volume 技術報告</block>
   <block id="098a9352bab68d0361bda3b31e3eaf76" category="sidebar">資料量FlexCache</block>
   <block id="98128573f1e72d145cae478573fe7e78" category="sidebar">FlexGroup 大量實作與最佳實務做法</block>
   <block id="0a66e21020f14b45688f8e77b7e20b00" category="sidebar">資料保護與備份 ONTAP FlexGroup 磁碟區</block>
@@ -411,4 +409,15 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
   <block id="2d90ac09cbf108bddad31dd341f8614e" category="sidebar">VMware Site Recovery Manager 搭配 ONTAP</block>
   <block id="16d877785afd5e8f401c4bd07d5afe32" category="sidebar">其他虛擬化技術報告</block>
   <block id="606ae2d52250c5830b4f47feec9aadee" category="summary">ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署、以及 ONTAP 功能的建議實務做法。</block>
+  <block id="16eb034c60d3efff32199367e1dacd1f" category="sidebar">應用程式與資料庫</block>
+  <block id="3c2615f951be2a520d1b872deaa1da54" category="sidebar">營運不中斷</block>
+  <block id="03c39d763ca15978d9ef16c2ba5fe98a" category="sidebar">資料保護與災難恢復</block>
+  <block id="4a86e7f91bacee45f7da12b91e420cf6" category="sidebar">FlexCache 和 FlexGroup 磁碟區</block>
+  <block id="c07ee5debf5f3a3fef16c1ee5e8e4942" category="sidebar">NAS</block>
+  <block id="a5fa5746370b608090b994a97b49e98b" category="sidebar">網路</block>
+  <block id="62a0282d39568be094470486eaf70c4f" category="sidebar">SAN</block>
+  <block id="2fae32629d4ef4fc6341f1751b405e45" category="sidebar">安全性</block>
+  <block id="337c62c6b6eb7319bae58701105e889c" category="sidebar">分層</block>
+  <block id="ea4c55be196897a16d86999f5c16d582" category="sidebar">虛擬化</block>
+  <block id="1a5c3601eda1cd38072323e418968743" category="sidebar">營運不中斷</block>
 </blocks>
