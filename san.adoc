@@ -28,9 +28,6 @@ link:https://www.netapp.com/pdf.html?item=/media/10680-tr4080.pdf["TR-4080 ： O
 link:https://www.netapp.com/pdf.html?item=/media/10681-tr4684.pdf["TR-4684 ：使用 NVMe over Fabrics （ NVMe of ）實作及設定現代化 SAN"^]
 瞭解如何實作和設定 NVMe over Fabrics 傳輸（ NVMe over Fibre Channel 和 NVMe over TCP ）。主題包括設計、實作、組態、管理準則和建議實務做法、以使用 NVMe 通訊協定和傳輸來建置高可用度、高效能的現代化 SAN 解決方案。
 
-link:https://www.netapp.com/pdf.html?item=/media/10379-tr4515.pdf["TR-4515 ： ONTAP AFF 所有 SAN 陣列（ ASA ）系統"^]
-瞭解 NetApp AFF 所有 SAN 陣列（ ASA ）系統、以及如何根據建議實作的實務做法來實作永遠可用的業務關鍵 SAN 組態。
-
 link:https://www.netapp.com/pdf.html?item=/media/85671-tr-4968.pdf["TR-4968 ： NetApp All SAN 陣列資料可用度與完整性"^]
 瞭解 All SAN 陣列系統的各種資料保護與資料完整性功能如何運作、以達到最長的應用程式正常運作時間、以及設計、實作及管理 SAN 網路的建議實務做法。
 

@@ -50,6 +50,9 @@ link:https://www.netapp.com/es/pdf.html?item=/es/media/12398-tr-4681.pdf["TR-468
 
 == SnapCenter for SAP HANA
 
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/backup/saphana-br-scs-overview.html["TR-4614：SAP HANA備份與還原SnapCenter 功能搭配使用"]
+SnapCenter 是一個統一且可擴充的平台、可為 SAP HANA 及其他資料庫提供應用程式一致的資料保護。支援集中控制和監督、同時委派使用者管理應用程式專屬的備份、還原和複製工作的能力。SnapCenter藉助SnapCenter 於功能強大的功能、資料庫和儲存管理員只需學習單一工具、即可管理各種應用程式和資料庫的備份、還原和複製作業。
+
 link:https://docs.netapp.com/us-en/netapp-solutions-sap/backup/amazon-fsx-overview.html["TR-4926：適用於NetApp ONTAP 的Amazon FSX上的SAP HANA - SnapCenter 利用NetApp進行備份與還原"]
 瞭解 Amazon FSX for NetApp ONTAP 和 SnapCenter 上的 SAP HANA 資料保護建議實務做法。主題包括 SnapCenter 概念、組態建議和作業工作流程、包括組態、備份作業、 以及還原與還原作業。
 

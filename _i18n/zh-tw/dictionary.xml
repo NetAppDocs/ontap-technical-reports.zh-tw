@@ -149,9 +149,6 @@ MetroCluster 為任務關鍵型應用程式提供跨地理區分離資料中心�
   <block id="3b87036714b3136acc2aae7890fd7edb" category="inline-link-macro">TR-4684 ：使用 NVMe over Fabrics （ NVMe of ）實作及設定現代化 SAN</block>
   <block id="34b05cb5d6ec578656c90adeba7715e5" category="paragraph"><block ref="63fc1db08e0f9d5d706220043515ab72" category="inline-link-macro-rx"></block>
 瞭解如何實作和設定 NVMe over Fabrics 傳輸（ NVMe over Fibre Channel 和 NVMe over TCP ）。主題包括設計、實作、組態、管理準則和建議實務做法、以使用 NVMe 通訊協定和傳輸來建置高可用度、高效能的現代化 SAN 解決方案。</block>
-  <block id="44f86414cc6f7a3896ef5aa684186663" category="inline-link-macro">TR-4515 ： ONTAP AFF 所有 SAN 陣列（ ASA ）系統</block>
-  <block id="8d04a09f4edabba7e258cb663e9829ed" category="paragraph"><block ref="cc723865ccc14ae6d193059ca8789d74" category="inline-link-macro-rx"></block>
-瞭解 NetApp AFF 所有 SAN 陣列（ ASA ）系統、以及如何根據建議實作的實務做法來實作永遠可用的業務關鍵 SAN 組態。</block>
   <block id="84d69011a1a493b2795f8b571a8773b1" category="inline-link-macro">TR-4968 ： NetApp All SAN 陣列資料可用度與完整性</block>
   <block id="656b37e505cd401fd574ca1e26892980" category="paragraph"><block ref="7792d8e3bf5a58bae4d6e0bf568b517e" category="inline-link-macro-rx"></block>
 瞭解 All SAN 陣列系統的各種資料保護與資料完整性功能如何運作、以達到最長的應用程式正常運作時間、以及設計、實作及管理 SAN 網路的建議實務做法。</block>
@@ -420,4 +417,35 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
   <block id="337c62c6b6eb7319bae58701105e889c" category="sidebar">分層</block>
   <block id="ea4c55be196897a16d86999f5c16d582" category="sidebar">虛擬化</block>
   <block id="1a5c3601eda1cd38072323e418968743" category="sidebar">營運不中斷</block>
+  <block id="47f5c5f7b80224cb7832ed3973296f38" category="inline-link-macro">TR-4614：SAP HANA備份與還原SnapCenter 功能搭配使用</block>
+  <block id="e48dd22947ca3e3c59533cfe21966b66" category="paragraph"><block ref="ee3dd6e7b456c60745112ed79c67a7f3" category="inline-link-macro-rx"></block>
+SnapCenter 是一個統一且可擴充的平台、可為 SAP HANA 及其他資料庫提供應用程式一致的資料保護。支援集中控制和監督、同時委派使用者管理應用程式專屬的備份、還原和複製工作的能力。SnapCenter藉助SnapCenter 於功能強大的功能、資料庫和儲存管理員只需學習單一工具、即可管理各種應用程式和資料庫的備份、還原和複製作業。</block>
+  <block id="86083f3ea21c2385b4f013aae3c57858" category="section-title">SAP HANA</block>
+  <block id="c1f86b21768b0c2bda31208d2625279e" category="inline-link-macro">TR-4435 ：採用 NFS 的 NetApp AFF 系統上的 SAP HANA</block>
+  <block id="dc602b9de9712db4a40b66aea2e8f2c3" category="paragraph"><block ref="a21ac9d982ea66b5d284054ce4548ed0" category="inline-link-macro-rx"></block>
+瞭解建議的實務做法、以及在 AFF 系統上使用 NFS 操作 SAP HANA 的其他考量。</block>
+  <block id="0db6b81db5bd35e1eef1e83e154c3cb5" category="inline-link-macro">TR-4436：AFF 採用Fibre Channel Protocol的NetApp穩定系統上的SAP HANA</block>
+  <block id="d0de7a409d27ea92210e47fbd05c24c1" category="paragraph"><block ref="2d054d2c04367ef468912c670a8d2ce8" category="inline-link-macro-rx"></block>
+瞭解在採用 Fibre Channel 的 AFF 系統上操作 SAP HANA 的建議實務做法及其他考量。</block>
+  <block id="84455e90e60d0b0d1deaff9373ea535c" category="inline-link-macro">TR-4290 ：採用 NFS 的 NetApp FAS 系統上的 SAP HANA</block>
+  <block id="0c69946545ea6ca466e526b7bf31c477" category="paragraph"><block ref="727fecd76120e1a50d497a6c3bd25ddb" category="inline-link-macro-rx"></block>
+瞭解建議的實務做法、以及在 FAS 系統上使用 NFS 操作 SAP HANA 的其他考量。</block>
+  <block id="9ad1252efd02f64c4626ec8190a60492" category="inline-link-macro">TR-4384 ：採用光纖通道傳輸協定的 NetApp FAS 系統上的 SAP HANA</block>
+  <block id="c80b89e2fe66b479a0ed46733a23a96d" category="paragraph"><block ref="c7cfc3ca5d87060bfe1001abc9ef2aa3" category="inline-link-macro-rx"></block>
+瞭解在採用 Fibre Channel 的 FAS 系統上操作 SAP HANA 的建議實務做法及其他考量。</block>
+  <block id="f20a40b88879c634d62a1183049bd409" category="inline-link-macro">TR-4821：IBM Power Systems上的SAP HANA、以及AFF 採用NFS的NetApp系統</block>
+  <block id="3e1ed0fd71baabfdbc39df6d61e03e20" category="paragraph"><block ref="ded8796b2cc871b8278207edbd04b7c1" category="inline-link-macro-rx"></block>
+IBM Power Systems專為資料密集和任務關鍵型工作負載所設計、例如SAP HANA。IBM Power Systems提供四項關鍵功能、簡化並加速SAP HANA部署：優異的虛擬化與靈活度、更快的資源配置、經濟實惠的擴充性、以及最大化的正常運作時間。AFF 產品系列通過認證、可搭配 SAP HANA 在量身打造的資料中心整合（ TDI ）專案中使用、完美搭配 IBM Power Systems 。本文件說明使用 ONTAP 搭配 AFF 產品系列和 IBM Power Systems 進行 NAS （ NFS ）儲存設定的建議實務做法。</block>
+  <block id="6ae22037e85e7a2f333a4d44077ec9d8" category="inline-link-macro">TR-4646 ： SAP HANA 災難恢復與儲存複寫功能</block>
+  <block id="d3c06956954f03cca1c7f84d179c6cc4" category="paragraph"><block ref="bd79df69ac16e4d0f7b6d65eb71a6e51" category="inline-link-macro-rx"></block>
+本文件概述 SAP HANA 的災難恢復保護選項。其中包括詳細的設定資訊、以及以同步和非同步 SnapMirror 儲存複寫為基礎的三站台災難恢復解決方案使用案例說明。上述解決方案使用 SnapCenter 搭配 SAP HANA 外掛程式來管理資料庫一致性。</block>
+  <block id="1fbffe17a8eff2e35f983208f5b90aef" category="inline-link-macro">TR-4711 ：使用 NetApp 儲存系統和 CommVault 軟體進行 SAP HANA 備份與還原</block>
+  <block id="dc26c4f72d256e6178f1b44ac24e7aa0" category="paragraph"><block ref="87f7ce4a5fa09aab58403dad28513cb5" category="inline-link-macro-rx"></block>
+本文件說明適用於 SAP HANA 的 NetApp 和 CommVault 解決方案設計、其中包括 CommVault IntelliSnap 快照管理技術和 Snapshot 技術。此解決方案以NetApp儲存設備和CommVault資料保護套件為基礎。</block>
+  <block id="f0e2318cd32c61c7c602d5745e21791b" category="inline-link-macro">TR-4953：使用Ansible的NetApp SAP Landscape Management整合</block>
+  <block id="6a611bd6ca7e4de2fd21142da6811f26" category="paragraph"><block ref="1cdb47bacf8817310f3298c929095e09" category="inline-link-macro-rx"></block>
+SAP Landscape Management（Lama）可讓SAP系統管理員將SAP系統作業自動化、包括端點對端點SAP系統複製、複製及重新整理作業。NetApp提供一系列豐富的Ansible模組、讓SAP Lama透過SAP Lama Automation Studio存取NetApp Snapshot和FlexClone等技術。這些技術有助於簡化及加速SAP系統複製、複製及更新作業。整合功能可讓在內部部署環境中執行NetApp儲存解決方案的客戶使用、或是在Amazon Web Services、Microsoft Azure或Google Cloud Platform等公有雲端供應商使用NetApp儲存服務的客戶使用。本文件說明SAP Lama搭配NetApp儲存功能的組態、適用於使用Ansible Automation進行SAP系統複製、複製及重新整理作業。</block>
+  <block id="8133b664c0921de8f7cfeb9e67c3402e" category="inline-link-macro">TR-4929：利用Libelle SystemCopy自動化SAP系統複製作業</block>
+  <block id="9143872d236b7cca7533460e44b8a327" category="paragraph"><block ref="ffb1313e66756ffd9b41011c2867b2a0" category="inline-link-macro-rx"></block>
+Libelle SystemCopy是一套架構型軟體解決方案、可建立全自動化的系統和橫向複本。只要按下按鈕、QA和測試系統就能以最新的正式作業資料進行更新。Libelle SystemCopy支援所有傳統資料庫和作業系統、為所有平台提供自己的複製機制、但同時整合了備份/還原程序或儲存工具、例如NetApp Snapshot複本和NetApp FlexClone Volume。</block>
 </blocks>

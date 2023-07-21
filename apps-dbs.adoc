@@ -71,3 +71,49 @@ link:https://www.netapp.com/pdf.html?item=/media/21901-tr-4876.pdf["TR-4876 ：�
 
 link:https://www.netapp.com/pdf.html?item=/media/17140-tr4770.pdf["TR-4770 ： ONTAP 上的 PostgreSQL 資料庫"^]
 PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。它受一般中介軟體套件的支援（例如 PHP 、 Java 、 Python 、 Tcl/Tk 、 ODBC 、 和 JDBC) ，過去一直是開放原始碼資料庫管理系統的熱門選擇。瞭解在 ONTAP 上部署 PostgreSQL 的組態需求、以及調整與儲存組態的相關指引。
+
+
+
+== SAP HANA
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/bp/saphana_aff_nfs_introduction.html["TR-4435 ：採用 NFS 的 NetApp AFF 系統上的 SAP HANA"]
+瞭解建議的實務做法、以及在 AFF 系統上使用 NFS 操作 SAP HANA 的其他考量。
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/bp/saphana_aff_fc_introduction.html["TR-4436：AFF 採用Fibre Channel Protocol的NetApp穩定系統上的SAP HANA"]
+瞭解在採用 Fibre Channel 的 AFF 系統上操作 SAP HANA 的建議實務做法及其他考量。
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/bp/saphana-fas-nfs_introduction.html["TR-4290 ：採用 NFS 的 NetApp FAS 系統上的 SAP HANA"]
+瞭解建議的實務做法、以及在 FAS 系統上使用 NFS 操作 SAP HANA 的其他考量。
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/bp/saphana_fas_fc_introduction.html["TR-4384 ：採用光纖通道傳輸協定的 NetApp FAS 系統上的 SAP HANA"]
+瞭解在採用 Fibre Channel 的 FAS 系統上操作 SAP HANA 的建議實務做法及其他考量。
+
+link:https://www.netapp.com/pdf.html?item=/media/19887-TR-4821.pdf["TR-4821：IBM Power Systems上的SAP HANA、以及AFF 採用NFS的NetApp系統"^]
+IBM Power Systems專為資料密集和任務關鍵型工作負載所設計、例如SAP HANA。IBM Power Systems提供四項關鍵功能、簡化並加速SAP HANA部署：優異的虛擬化與靈活度、更快的資源配置、經濟實惠的擴充性、以及最大化的正常運作時間。AFF 產品系列通過認證、可搭配 SAP HANA 在量身打造的資料中心整合（ TDI ）專案中使用、完美搭配 IBM Power Systems 。本文件說明使用 ONTAP 搭配 AFF 產品系列和 IBM Power Systems 進行 NAS （ NFS ）儲存設定的建議實務做法。
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/backup/saphana-br-scs-overview.html["TR-4614：SAP HANA備份與還原SnapCenter 功能搭配使用"]
+SnapCenter 是一個統一且可擴充的平台、可為 SAP HANA 及其他資料庫提供應用程式一致的資料保護。支援集中控制和監督、同時委派使用者管理應用程式專屬的備份、還原和複製工作的能力。SnapCenter藉助SnapCenter 於功能強大的功能、資料庫和儲存管理員只需學習單一工具、即可管理各種應用程式和資料庫的備份、還原和複製作業。
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/backup/amazon-fsx-overview.html["TR-4926：適用於NetApp ONTAP 的Amazon FSX上的SAP HANA - SnapCenter 利用NetApp進行備份與還原"]
+瞭解 Amazon FSX for NetApp ONTAP 和 SnapCenter 上的 SAP HANA 資料保護建議實務做法。主題包括 SnapCenter 概念、組態建議和作業工作流程、包括組態、備份作業、 以及還原與還原作業。
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/lifecycle/sc-copy-clone-introduction.html["TR-4667 ：利用 SnapCenter 將 SAP HANA 系統複製與複製作業自動化"]
+SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可讓 SAP 基礎管理員加速和自動化 SAP 系統複製、複製或重新整理作業。立即瞭解在任何主要或次要儲存設備上選擇任何 SnapCenter Snapshot 備份的選項、可讓您解決最重要的使用案例、包括邏輯毀損、災難恢復測試或 SAP QA 系統的重新整理。
+
+link:https://www.netapp.com/pdf.html?item=/media/17030-tr4719.pdf["TR-4719 ： SAP HANA 系統複寫備份與還原、採用 SnapCenter 技術"^]
+瞭解 SnapCenter 技術和 SAP HANA 外掛程式如何在 SAP HANA 系統複製環境中用於備份與還原。
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/lifecycle/sc-copy-clone-introduction.html["TR-4667 ：利用 SnapCenter 將 SAP HANA 系統複製與複製作業自動化"]
+在儲存層上建立應用程式一致的 NetApp Snapshot 備份、是系統複本和系統複製作業的基礎。儲存型Snapshot備份是使用SnapCenter 適用於SAP HANA的NetApp還原外掛程式和SAP HANA資料庫提供的介面來建立。此功能可在SAP HANA備份目錄中登錄Snapshot備份、以便將備份用於還原與還原、以及複製作業。SnapCenter
+
+link:https://www.netapp.com/pdf.html?item=/media/8584-tr4646pdf.pdf["TR-4646 ： SAP HANA 災難恢復與儲存複寫功能"^]
+本文件概述 SAP HANA 的災難恢復保護選項。其中包括詳細的設定資訊、以及以同步和非同步 SnapMirror 儲存複寫為基礎的三站台災難恢復解決方案使用案例說明。上述解決方案使用 SnapCenter 搭配 SAP HANA 外掛程式來管理資料庫一致性。
+
+link:https://www.netapp.com/pdf.html?item=/media/17050-tr4711pdf.pdf["TR-4711 ：使用 NetApp 儲存系統和 CommVault 軟體進行 SAP HANA 備份與還原"^]
+本文件說明適用於 SAP HANA 的 NetApp 和 CommVault 解決方案設計、其中包括 CommVault IntelliSnap 快照管理技術和 Snapshot 技術。此解決方案以NetApp儲存設備和CommVault資料保護套件為基礎。
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/lifecycle/lama-ansible-introduction.html["TR-4953：使用Ansible的NetApp SAP Landscape Management整合"]
+SAP Landscape Management（Lama）可讓SAP系統管理員將SAP系統作業自動化、包括端點對端點SAP系統複製、複製及重新整理作業。NetApp提供一系列豐富的Ansible模組、讓SAP Lama透過SAP Lama Automation Studio存取NetApp Snapshot和FlexClone等技術。這些技術有助於簡化及加速SAP系統複製、複製及更新作業。整合功能可讓在內部部署環境中執行NetApp儲存解決方案的客戶使用、或是在Amazon Web Services、Microsoft Azure或Google Cloud Platform等公有雲端供應商使用NetApp儲存服務的客戶使用。本文件說明SAP Lama搭配NetApp儲存功能的組態、適用於使用Ansible Automation進行SAP系統複製、複製及重新整理作業。
+
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/lifecycle/libelle-sc-overview.html["TR-4929：利用Libelle SystemCopy自動化SAP系統複製作業"]
+Libelle SystemCopy是一套架構型軟體解決方案、可建立全自動化的系統和橫向複本。只要按下按鈕、QA和測試系統就能以最新的正式作業資料進行更新。Libelle SystemCopy支援所有傳統資料庫和作業系統、為所有平台提供自己的複製機制、但同時整合了備份/還原程序或儲存工具、例如NetApp Snapshot複本和NetApp FlexClone Volume。
