@@ -1,5 +1,4 @@
 ---
-layout: landing-page 
 sidebar: sidebar 
 keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
 permalink: industry-solutions.html 
