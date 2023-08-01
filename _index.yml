@@ -5,13 +5,15 @@ indexpage:
   tiles:
   - title: 應用程式與資料庫
     links:
-    - title: Microsoft SQL Server 搭配 ONTAP
+    - title: ONTAP 上的 Microsoft SQL Server 資料庫
       url: apps-dbs.html
-    - title: AFF A 系列和 C 系列上的 Oracle 資料庫效能
-      url: apps-dbs.html
-    - title: AFF A 系列和 C 系列上的虛擬化 Oracle 資料庫效能
+    - title: ONTAP 上的 MySQL 資料庫
       url: apps-dbs.html
     - title: ONTAP 上的 Oracle 資料庫
+      url: apps-dbs.html
+    - title: ONTAP 上的 PostgreSQL 資料庫
+      url: apps-dbs.html
+    - title: ONTAP 上的 SAP HANA
       url: apps-dbs.html
     - title: 其他應用程式與資料庫技術報告
       url: apps-dbs.html

@@ -14,7 +14,7 @@ summary: 這些技術報告概述 ONTAP 上的應用程式和資料庫、以及�
 
 
 [role="lead"]
-ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保護基礎。下列技術報告提供 NetApp 建議的 Microsoft SQL Server 、 MySQL 、 Oracle 及 PostgreSQL 實作實作實務做法與實作程序指引。
+ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保護基礎。下列技術報告提供 NetApp 針對 Microsoft SQL Server 、 MySQL 、 Oracle 、 PostgreSQL 和 SAP HANA 所建議的實務做法和實作程序指引。
 
 
 

@@ -60,7 +60,6 @@ FlexCache 是一種快取技術、可在相同或不同的 ONTAP 叢集上建立
 有關壓縮的程序文件、請參閱 <block ref="3acd0d263d43c56e4642c32f39a44e7d" category="inline-link-macro-rx"></block></block>
   <block id="7ad7be62d0bdc93deb35e6cb0da16cf6" category="summary">這些技術報告概述 ONTAP 上的應用程式和資料庫、以及建議的實務做法</block>
   <block id="35c42caf14b9f812a74246f401f4a9a9" category="doc">應用程式與資料庫技術報告</block>
-  <block id="e2063b7bef20a99d1924626bcc9e3aa7" category="paragraph">ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保護基礎。下列技術報告提供 NetApp 建議的 Microsoft SQL Server 、 MySQL 、 Oracle 及 PostgreSQL 實作實作實務做法與實作程序指引。</block>
   <block id="78898e52fcbdc5337204a384f2456d4f" category="section-title">Microsoft SQL Server</block>
   <block id="0502e6755528910223db364699e71622" category="inline-link-macro">TR-4590 ： Microsoft SQL Server with ONTAP 的最佳實務做法指南</block>
   <block id="463e4a799ee233502c3bbb0b6374c6b0" category="paragraph"><block ref="99de55c4c3e3e73145e414bc6b81b05c" category="inline-link-macro-rx"></block>
@@ -348,9 +347,6 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
   <block id="01d5c6f5ce1a6fed30deb2d15c6cd55d" category="paragraph"><block ref="92224c43e8ec1baf3b9f7b0cf2e9a167" category="inline-link-macro-rx"></block>
 本文件說明用於保護 NetApp SnapCenter Plug-in for VMware vSphere 4.X 免受產品環境中現有和新興威脅的技術與技術。</block>
   <block id="6d4e2f1f073dd653734779d5d0cf0f77" category="sidebar">ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署。某些 ONTAP 技術報告提供 ONTAP 功能的架構背景和建議實務做法。</block>
-  <block id="0abe2bf261d0e67218108321d4d12f80" category="sidebar">Microsoft SQL Server 搭配 ONTAP</block>
-  <block id="781ca1fc048eb6987f2bc84c0cfe89d2" category="sidebar">AFF A 系列和 C 系列上的 Oracle 資料庫效能</block>
-  <block id="a6a168fa8021b0302c7d52eda6a33f25" category="sidebar">AFF A 系列和 C 系列上的虛擬化 Oracle 資料庫效能</block>
   <block id="9eaca569c6f5ca3388f5613da3aa008c" category="sidebar">ONTAP 上的 Oracle 資料庫</block>
   <block id="f764824b813fdd72c94db78f7fb3b24b" category="sidebar">其他應用程式與資料庫技術報告</block>
   <block id="556eda250d1f196adc09c3afcd396b84" category="sidebar">MetroCluster 解決方案架構與設計</block>
@@ -435,43 +431,10 @@ SAP Landscape Management（Lama）可讓SAP系統管理員將SAP系統作業自�
   <block id="8133b664c0921de8f7cfeb9e67c3402e" category="inline-link-macro">TR-4929：利用Libelle SystemCopy自動化SAP系統複製作業</block>
   <block id="9143872d236b7cca7533460e44b8a327" category="paragraph"><block ref="ffb1313e66756ffd9b41011c2867b2a0" category="inline-link-macro-rx"></block>
 Libelle SystemCopy是一套架構型軟體解決方案、可建立全自動化的系統和橫向複本。只要按下按鈕、QA和測試系統就能以最新的正式作業資料進行更新。Libelle SystemCopy支援所有傳統資料庫和作業系統、為所有平台提供自己的複製機制、但同時整合了備份/還原程序或儲存工具、例如NetApp Snapshot複本和NetApp FlexClone Volume。</block>
-  <block id="6de6f1db3c6d9273da9d8e254b666753" category="paragraph">提供本產品所使用之協力廠商版權與授權的相關資訊。</block>
-  <block id="253b40ae359ba25b56231803430c4873" category="section-title">ONTAP</block>
-  <block id="856c8958afd787f748a4a025f649154a" category="inline-link-macro">ONTAP 9.13.1 注意事項</block>
-  <block id="b22b3b2970d843f99e7e6904bea05207" category="inline-link-macro">關於此功能的注意事項ONTAP 9.12.1.1</block>
-  <block id="0358f41254df2d512849db5a04b7e3d4" category="inline-link-macro">關於此功能的注意事項ONTAP 9.12.0</block>
-  <block id="28f1290102a277ef2fd452d558c74219" category="inline-link-macro">ONTAP 9.11.1 注意事項</block>
-  <block id="57b07f14c8eb4660f94a86d29d53362d" category="inline-link-macro">關於本產品的注意事項ONTAP 9.10.1</block>
-  <block id="396712eb9c1644241047ac30619b2b3e" category="inline-link-macro">ONTAP 9.10.0 注意事項</block>
-  <block id="1e6000d4849ef9f3e08d1d9908e9f163" category="inline-link-macro">關於此功能的注意事項ONTAP</block>
-  <block id="6f408b9c999245c7aa32bc9cb1a020f6" category="inline-link-macro">關於本產品的注意事項ONTAP 9.8</block>
-  <block id="04b0bd5b1b4d414fdde93f809162d36d" category="inline-link-macro">關於產品的注意ONTAP 事項9.7</block>
-  <block id="0c1d7dffcba488555d5eb39b8991e822" category="inline-link-macro">關於此功能的注意事項ONTAP</block>
-  <block id="a11ac6880e72412c0f54ae19bea3d191" category="inline-link-macro">關於本產品的注意事項ONTAP</block>
-  <block id="e49c3c01b15761b5f011d0bd2a0661a3" category="inline-link-macro">關於產品的注意事項ONTAP 9.4</block>
-  <block id="bf7dcf6467a8a03b05b2d37d31d6eccd" category="inline-link-macro">關於本產品的注意事項ONTAP</block>
-  <block id="0328352fdfda84af6968462d1a67d3a6" category="inline-link-macro">關於此功能的注意事項ONTAP 9.2</block>
-  <block id="83904100c7d6fe0102e8b2b5bd8ec4bb" category="inline-link-macro">關於此產品的注意事項ONTAP</block>
-  <block id="5672f5979be77bb31dd559817c9e1e76" category="paragraph"><block ref="f7a2b1db149ed9886af0ce846dbc3e14" category="inline-link-macro-rx"></block>
-<block ref="b349c509ad858348b30db7e73307e3aa" category="inline-link-macro-rx"></block>
-<block ref="0dce234dfded58bd461541473b86e42a" category="inline-link-macro-rx"></block>
-<block ref="9760ec4df13f0afbdfec88ae16c871ae" category="inline-link-macro-rx"></block>
-<block ref="b6dab2933dfb92cf0c1355707a4aec7c" category="inline-link-macro-rx"></block>
-<block ref="1b7c80b26162b03bd0addd587f70df55" category="inline-link-macro-rx"></block>
-<block ref="14faf912aa42102a6628af4551e02583" category="inline-link-macro-rx"></block>
-<block ref="a90f36d649d3be5d386cc3563ab044fb" category="inline-link-macro-rx"></block>
-<block ref="2cd65b4a044075cfd9ad4a91f42fdff4" category="inline-link-macro-rx"></block>
-<block ref="5e764cc3fdcc19ff667796e414159bdc" category="inline-link-macro-rx"></block>
-<block ref="561451f09c7bca700ea0d7833cd9e92e" category="inline-link-macro-rx"></block>
-<block ref="d23d341a344216fbf99a91152429d49c" category="inline-link-macro-rx"></block>
-<block ref="b35e8fbd7b0369b23734510994911ec4" category="inline-link-macro-rx"></block>
-<block ref="41d4305cf7a6acb595086f123121a781" category="inline-link-macro-rx"></block>
-<block ref="ea685649fabe77da53e843fec56f72b8" category="inline-link-macro-rx"></block></block>
-  <block id="9f875be69c7685bab2118b783273f9cb" category="section-title">MCC IP的中介ONTAP</block>
-  <block id="9c737a80c28b60fa0a89b239e49754be" category="inline-link-macro">9.9.1 ONTAP MCC IP的靜態中介器注意事項</block>
-  <block id="fa29a7a0592293de2c9dcc278d56bc7e" category="inline-link-macro">9.8 ONTAP MCC IP的靜態中介器注意事項</block>
-  <block id="186313e86066c6c03d059adfc998c283" category="inline-link-macro">9.7 ONTAP 中介程序 MCC IP 通知</block>
-  <block id="da86bbce92dc808c91ba1376c176a12f" category="paragraph"><block ref="03dc7d738ea465fbcf752653ce5a8a9f" category="inline-link-macro-rx"></block>
-<block ref="ddd7bb6791d512b6bbd035245f183b42" category="inline-link-macro-rx"></block>
-<block ref="2f9e1ae374fcd81bbb2bbbd4546951d9" category="inline-link-macro-rx"></block></block>
+  <block id="9b73989307c1975dfa4d5e1581e4afe8" category="paragraph">通知檔案提供有關 NetApp 軟體所使用之協力廠商版權與授權的資訊。</block>
+  <block id="b40ff77cb48a86ef1345e1d3bf483086" category="paragraph">ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保護基礎。下列技術報告提供 NetApp 針對 Microsoft SQL Server 、 MySQL 、 Oracle 、 PostgreSQL 和 SAP HANA 所建議的實務做法和實作程序指引。</block>
+  <block id="fbba95a66fd7e4b84d1367060a08fd25" category="sidebar">ONTAP 上的 Microsoft SQL Server 資料庫</block>
+  <block id="d4ae77cd65c244ceb4277b27553d6931" category="sidebar">ONTAP 上的 MySQL 資料庫</block>
+  <block id="10907e7ac5ab6e5235a23898a2331b31" category="sidebar">ONTAP 上的 PostgreSQL 資料庫</block>
+  <block id="58be4918f9d0ced977d0da75ca36c36f" category="sidebar">ONTAP 上的 SAP HANA</block>
 </blocks>
