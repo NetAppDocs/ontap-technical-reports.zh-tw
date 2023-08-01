@@ -437,4 +437,42 @@ Libelle SystemCopy是一套架構型軟體解決方案、可建立全自動化�
   <block id="d4ae77cd65c244ceb4277b27553d6931" category="sidebar">ONTAP 上的 MySQL 資料庫</block>
   <block id="10907e7ac5ab6e5235a23898a2331b31" category="sidebar">ONTAP 上的 PostgreSQL 資料庫</block>
   <block id="58be4918f9d0ced977d0da75ca36c36f" category="sidebar">ONTAP 上的 SAP HANA</block>
+  <block id="253b40ae359ba25b56231803430c4873" category="section-title">ONTAP</block>
+  <block id="856c8958afd787f748a4a025f649154a" category="inline-link-macro">ONTAP 9.13.1 注意事項</block>
+  <block id="b22b3b2970d843f99e7e6904bea05207" category="inline-link-macro">關於此功能的注意事項ONTAP 9.12.1.1</block>
+  <block id="0358f41254df2d512849db5a04b7e3d4" category="inline-link-macro">關於此功能的注意事項ONTAP 9.12.0</block>
+  <block id="28f1290102a277ef2fd452d558c74219" category="inline-link-macro">ONTAP 9.11.1 注意事項</block>
+  <block id="57b07f14c8eb4660f94a86d29d53362d" category="inline-link-macro">關於本產品的注意事項ONTAP 9.10.1</block>
+  <block id="396712eb9c1644241047ac30619b2b3e" category="inline-link-macro">ONTAP 9.10.0 注意事項</block>
+  <block id="1e6000d4849ef9f3e08d1d9908e9f163" category="inline-link-macro">關於此功能的注意事項ONTAP</block>
+  <block id="6f408b9c999245c7aa32bc9cb1a020f6" category="inline-link-macro">關於本產品的注意事項ONTAP 9.8</block>
+  <block id="04b0bd5b1b4d414fdde93f809162d36d" category="inline-link-macro">關於產品的注意ONTAP 事項9.7</block>
+  <block id="0c1d7dffcba488555d5eb39b8991e822" category="inline-link-macro">關於此功能的注意事項ONTAP</block>
+  <block id="a11ac6880e72412c0f54ae19bea3d191" category="inline-link-macro">關於本產品的注意事項ONTAP</block>
+  <block id="e49c3c01b15761b5f011d0bd2a0661a3" category="inline-link-macro">關於產品的注意事項ONTAP 9.4</block>
+  <block id="bf7dcf6467a8a03b05b2d37d31d6eccd" category="inline-link-macro">關於本產品的注意事項ONTAP</block>
+  <block id="0328352fdfda84af6968462d1a67d3a6" category="inline-link-macro">關於此功能的注意事項ONTAP 9.2</block>
+  <block id="83904100c7d6fe0102e8b2b5bd8ec4bb" category="inline-link-macro">關於此產品的注意事項ONTAP</block>
+  <block id="5672f5979be77bb31dd559817c9e1e76" category="paragraph"><block ref="f7a2b1db149ed9886af0ce846dbc3e14" category="inline-link-macro-rx"></block>
+<block ref="b349c509ad858348b30db7e73307e3aa" category="inline-link-macro-rx"></block>
+<block ref="0dce234dfded58bd461541473b86e42a" category="inline-link-macro-rx"></block>
+<block ref="9760ec4df13f0afbdfec88ae16c871ae" category="inline-link-macro-rx"></block>
+<block ref="b6dab2933dfb92cf0c1355707a4aec7c" category="inline-link-macro-rx"></block>
+<block ref="1b7c80b26162b03bd0addd587f70df55" category="inline-link-macro-rx"></block>
+<block ref="14faf912aa42102a6628af4551e02583" category="inline-link-macro-rx"></block>
+<block ref="a90f36d649d3be5d386cc3563ab044fb" category="inline-link-macro-rx"></block>
+<block ref="2cd65b4a044075cfd9ad4a91f42fdff4" category="inline-link-macro-rx"></block>
+<block ref="5e764cc3fdcc19ff667796e414159bdc" category="inline-link-macro-rx"></block>
+<block ref="561451f09c7bca700ea0d7833cd9e92e" category="inline-link-macro-rx"></block>
+<block ref="d23d341a344216fbf99a91152429d49c" category="inline-link-macro-rx"></block>
+<block ref="b35e8fbd7b0369b23734510994911ec4" category="inline-link-macro-rx"></block>
+<block ref="41d4305cf7a6acb595086f123121a781" category="inline-link-macro-rx"></block>
+<block ref="ea685649fabe77da53e843fec56f72b8" category="inline-link-macro-rx"></block></block>
+  <block id="07ee2fe6f236deffba69a7cf80a680fd" category="section-title">適用於 MCC IP 的 ONTAP Mediator</block>
+  <block id="f089ab2b9f25f609795bdd46ae636f18" category="inline-link-macro">9.9.1 ONTAP Mediator for MCC IP 通知</block>
+  <block id="239794a299abe62705440f2dab3114cb" category="inline-link-macro">9.8 ONTAP Mediator for MCC IP 通知</block>
+  <block id="51fcca20d278d2d03192c01120f17442" category="inline-link-macro">9.7 適用於 MCC IP 的 ONTAP Mediator 通知</block>
+  <block id="3ba2aeb22339424d5f5b15dafd2c3eca" category="paragraph"><block ref="c8696a7854fcd089ea112145e4968b10" category="inline-link-macro-rx"></block>
+<block ref="4d19e06382f392d0f1a50df789d77c13" category="inline-link-macro-rx"></block>
+<block ref="fe4ac88b6b3f1cb9f1dc6d5d4b5086ee" category="inline-link-macro-rx"></block></block>
 </blocks>
