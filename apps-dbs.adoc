@@ -20,6 +20,9 @@ ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保�
 
 == Microsoft SQL Server
 
+link:https://www.netapp.com/pdf.html?item=/media/88704-tr-4976-virtualized-microsoft-sql-server-performance-on-netapp-aff-a-series-and-c-series.pdf["TR-4976 ： NetApp AFF A 系列和 C 系列系統上的虛擬化 Microsoft SQL Server 效能"^]
+瞭解在 NetApp AFF ASeries 和 AFF C 系列系統上執行 Microsoft SQL Server 時的效能、並取得如何根據工作負載使用量選擇適合您儲存需求的系統的指引。
+
 link:https://www.netapp.com/pdf.html?item=/media/8585-tr4590.pdf["TR-4590 ： Microsoft SQL Server with ONTAP 的最佳實務做法指南"^]
 瞭解儲存管理員和資料庫管理員如何在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 。
 

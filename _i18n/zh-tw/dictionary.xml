@@ -475,4 +475,7 @@ Libelle SystemCopy是一套架構型軟體解決方案、可建立全自動化�
   <block id="3ba2aeb22339424d5f5b15dafd2c3eca" category="paragraph"><block ref="c8696a7854fcd089ea112145e4968b10" category="inline-link-macro-rx"></block>
 <block ref="4d19e06382f392d0f1a50df789d77c13" category="inline-link-macro-rx"></block>
 <block ref="fe4ac88b6b3f1cb9f1dc6d5d4b5086ee" category="inline-link-macro-rx"></block></block>
+  <block id="5bde4271a0d37b365d828370d9f295ea" category="inline-link-macro">TR-4976 ： NetApp AFF A 系列和 C 系列系統上的虛擬化 Microsoft SQL Server 效能</block>
+  <block id="44453345ffedbe1014fb3f8c356ab916" category="paragraph"><block ref="156ab091613d6163254f8cebcd80c3dc" category="inline-link-macro-rx"></block>
+瞭解在 NetApp AFF ASeries 和 AFF C 系列系統上執行 Microsoft SQL Server 時的效能、並取得如何根據工作負載使用量選擇適合您儲存需求的系統的指引。</block>
 </blocks>
