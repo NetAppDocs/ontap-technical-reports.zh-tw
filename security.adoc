@@ -57,13 +57,6 @@ link:https://www.netapp.com/pdf.html?item=/media/16886-tr-4160.pdf["TR-4160 ： 
 
 
 
-== 記錄
-
-link:https://www.netapp.com/pdf.html?item=/media/16880-tr-4303.pdf["TR-4303 ：登入 ONTAP"^]
-瞭解如何定義 ONTAP 產生的不同記錄、提供的功能、以及如何檢視和存取記錄。
-
-
-
 == 標準
 
 link:https://www.netapp.com/pdf.html?item=/media/17180-tr4401.pdf["TR-4401 ： PCI-DSS 4.0 和 ONTAP"^]
