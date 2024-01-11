@@ -1,6 +1,6 @@
 ---
 settings:
-  name: ONTAP technical reports
+  name: ONTAP Technical Reports
   internal:
     pdf_enabled: false
   prod:
