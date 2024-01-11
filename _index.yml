@@ -5,18 +5,16 @@ indexpage:
   tiles:
   - title: 應用程式與資料庫
     links:
-    - title: ONTAP 上的 Microsoft SQL Server 資料庫
-      url: apps-dbs.html
+    - title: ONTAP 上的 Microsoft SQL Server
+      url: apps-dbs.html#microsoft-sql-server
     - title: ONTAP 上的 MySQL 資料庫
-      url: apps-dbs.html
+      url: apps-dbs.html#mysql
     - title: ONTAP 上的 Oracle 資料庫
-      url: apps-dbs.html
+      url: apps-dbs.html#oracle
     - title: ONTAP 上的 PostgreSQL 資料庫
-      url: apps-dbs.html
+      url: apps-dbs.html#postgresql
     - title: ONTAP 上的 SAP HANA
-      url: apps-dbs.html
-    - title: 其他應用程式與資料庫技術報告
-      url: apps-dbs.html
+      url: apps-dbs.html#sap-hana
   - title: 營運不中斷
     links:
     - title: SnapMirror營運不中斷（SMBC）
