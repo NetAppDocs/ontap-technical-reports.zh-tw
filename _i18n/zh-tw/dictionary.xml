@@ -412,30 +412,16 @@ SnapCenter 是一個統一且可擴充的平台、可為 SAP HANA 及其他資�
   <block id="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-macro"><block ref="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-rx"></block></block>
   <block id="2352c4e1f4d0024ade0869e00e6243f4" category="paragraph"><block ref="2352c4e1f4d0024ade0869e00e6243f4" category="inline-link-macro-rx"></block></block>
   <block id="9678a7dcb872318bf33163b8a1ba5331" category="sidebar">ONTAP 技術報告</block>
-  <block id="51d43324da11cb76e350d1d7832f1f5d" category="paragraph"><block ref="73c02c6f40f40d1bef9f5051354cdf50" category="inline-link-macro-rx"></block>
-ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能、以簡化管理、同時降低成本。瞭解 VMware 領先業界的災難恢復（ DR ）軟體 VMware Site Recovery Manager （ SRM ）推薦的 ONTAP 解決方案、包括最新的產品資訊和建議實務做法、以簡化部署、降低風險並簡化後續管理。</block>
   <block id="9aa5016539f88d8f1972a16ce9babd34" category="paragraph">SQL Server 是 Microsoft 資料平台的基礎、無論是在內部部署或雲端、都能以記憶體內建技術提供關鍵任務效能、並更快洞悉任何資料。</block>
   <block id="9b69ac51cee72ab028bfee99876e67a5" category="inline-link-macro">Microsoft SQL Server with ONTAP 的最佳實務做法</block>
-  <block id="bb3e80567e53a62889b16f8a28330951" category="paragraph"><block ref="527e556c0f65d9b68f95a689b5242b3a" category="inline-link-macro-rx"></block>
-瞭解儲存管理員和資料庫管理員如何在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 。</block>
   <block id="01752505b04bc5ba6ef1dfc307d41db3" category="admonition">本文件取代先前發佈的技術報告 _TR-4590 ： Microsoft SQL Server 與 ONTAP 的最佳實務做法指南。 _</block>
   <block id="b8301a5618a0750aa5ab5ebd84843cb4" category="paragraph">本文檔介紹了配置要求，並提供了有關在 ONTAP 上部署 MySQL 的調整和存儲配置的指導。</block>
   <block id="8fe2282d597ef2dd4851aef737ac5967" category="inline-link-macro">NetApp ONTAP 最佳實務做法的 MySQL 資料庫</block>
-  <block id="7bd19fbc30d8f49261360781c911284a" category="paragraph"><block ref="47c03dd388e0f4b64be263f54ad24b5f" category="inline-link-macro-rx"></block>
-MySQL 及其變種（包括 MariaDB 和 Percona ）廣泛用於許多企業應用程式。這些應用程式涵蓋全球社群網站和大量的經濟應用系統、以及包含數千個資料庫執行個體的中小企業代管系統。瞭解在 ONTAP 上部署 MySQL 的組態需求、以及調整與儲存組態的相關指引。</block>
   <block id="7bbcda330178e017d30732686ba60cb8" category="admonition">本文件取代先前發佈的技術報告 _TR-4722 ： NetApp ONTAP 最佳實務做法的 MySQL 資料庫。 _</block>
   <block id="528b35962f1679204260ddef6800eece" category="paragraph">ONTAP 專為 Oracle 資料庫所設計。數十年來、 ONTAP 已針對關聯式資料庫 I/O 的獨特需求進行最佳化、並特別建立多項 ONTAP 功能、以滿足 Oracle 資料庫的需求、甚至是 Oracle Inc. 本身的要求。</block>
-  <block id="a3b05f83bbfee49b66505969e477cbe1" category="paragraph"><block ref="30e7d832d52a563e9b30c621ab684820" category="inline-link-macro-rx"></block>
-瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功部署 Oracle 的建議實務做法。</block>
   <block id="9e19caeb431a5e29a1a63e3cee4b36c9" category="inline-link-macro">使用 ONTAP 保護 Oracle 資料</block>
-  <block id="7a5adbc575db65bc9ae1a4ce77988bcf" category="paragraph"><block ref="adf9ac111f5363156456a3b0381301b7" category="inline-link-macro-rx"></block>
-瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功備份、恢復、複寫及提供災難恢復給 Oracle 的建議實務做法。</block>
   <block id="00783c075f877e6e69c64079296967ed" category="inline-link-macro">使用 ONTAP 進行 Oracle 災難恢復</block>
-  <block id="b093f406bd8f2e9d2522b1b7e0018877" category="paragraph"><block ref="9ef14a83b083a4fd127511b5f3f8fa91" category="inline-link-macro-rx"></block>
-瞭解在 MetroCluster 和 SnapMirror 業務連續性上操作 Oracle 資料庫的建議實務做法、測試程序及其他考量事項。</block>
   <block id="c37c1629ee55e6d553c16bbab86adbde" category="inline-link-macro">將 Oracle 資料庫移轉至 ONTAP 儲存系統</block>
-  <block id="8553ace3da488a0677a7e85102fb4f4f" category="paragraph"><block ref="54a095218d238127515ece6155a02c41" category="inline-link-macro-rx"></block>
-瞭解規劃移轉策略的整體考量、進行資料移動的三個不同層級、並詳細說明一些可用的各種程序。</block>
   <block id="e4f5be46ae4ba14b76a89bda7881372b" category="admonition">以上連結的文件取代了先前發佈的技術報告 _TR-3633 ： ONTAP 上的 Oracle 資料庫； TR-4591 ： Oracle 資料保護：備份、還原、複寫； TR-4592 ： MetroCluster 上的 Oracle ；以及 TR-4534 ：將 Oracle 資料庫移轉至 NetApp 儲存系統</block>
   <block id="e9fdc3c5ca7c79c691c7346ca380acc3" category="inline-link-macro">TR-4969 ： AFF A 系列和 C 系列上的 Oracle 資料庫效能</block>
   <block id="1618301be2b0df44a706d7f377805004" category="paragraph"><block ref="1f934d5f57a5250d03419c74843c6682" category="inline-link-macro-rx"></block>
@@ -444,21 +430,35 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
 ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬體升級、以及從外部儲存陣列匯入 LUN 的原生功能。最多可將 24 個節點叢集在一起、同時透過網路檔案系統（ NFS ）、伺服器訊息區（ SMB ）、 iSCSI 、光纖通道（ FC ）和非揮發性記憶體高速（ NVMe ）傳輸協定來提供資料。此外、 Snapshot 技術是建立數萬個線上備份和完整運作資料庫複本的基礎。除了豐富的 ONTAP 功能集之外、還有各式各樣的使用者需求、包括資料庫大小、效能需求和資料保護需求。瞭解使用 AFF 儲存系統（包括 A 系列和 C 系列）的虛擬化資料庫效能、其中涵蓋兩種 AFF 選項之間的最大值和實際差異。</block>
   <block id="69b19eb816b6aa3a4cf6ced850ae07c0" category="paragraph">PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。NetApp ONTAP 是執行 PostgreSQL 資料庫的絕佳選擇、可確保其可靠性、高效能及高效率的資料管理功能。</block>
   <block id="23c3aa00d9e3e310482ad2f6bf882d8d" category="inline-link-macro">ONTAP 最佳實務做法的 PostgreSQL 資料庫</block>
-  <block id="7a683ff5651b05979e1f4d485a8c2ea2" category="paragraph"><block ref="1b3f5db610dfbb814d0074c80a2fc154" category="inline-link-macro-rx"></block>
-PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。它受一般中介軟體套件的支援（例如 PHP 、 Java 、 Python 、 Tcl/Tk 、 ODBC 、 和 JDBC) ，過去一直是開放原始碼資料庫管理系統的熱門選擇。瞭解在 ONTAP 上部署 PostgreSQL 的組態需求、以及調整與儲存組態的相關指引。</block>
   <block id="a94a42eca1830870728b000728f0404b" category="admonition">本文件取代先前發佈的技術報告 TR-4770 ： ONTAP 最佳實務實務的 PostgreSQL 資料庫。</block>
   <block id="2c1b27a986b5e37a810d61f72b23ee4b" category="paragraph">設定、管理及自動化 SAP 解決方案的最佳實務做法、請參閱 NetApp SAP 解決方案頁面。</block>
   <block id="79e3a796ebb97492e0ca65b735e63753" category="inline-link-macro">ONTAP 上的 SAP HANA 資料庫解決方案</block>
   <block id="ada0578499f1a7909dee7f18bbd44352" category="paragraph"><block ref="ada0578499f1a7909dee7f18bbd44352" category="inline-link-macro-rx"></block></block>
-  <block id="b95930318a2f91ec4d45f0fd7e0d3780" category="paragraph"><block ref="55ea95c307f7d48d1b66f99b3d58fd2c" category="inline-link-macro-rx"></block>
- ONTAP 在將近 20 年來一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能來簡化管理、同時降低成本。本文件介紹適用於 vSphere 的 ONTAP 解決方案、包括最新的產品資訊和建議實務做法、以簡化部署、降低風險並簡化管理。</block>
-  <block id="f687545e7021e47ad2ad47b77c6a77c0" category="paragraph"><block ref="7b22df97815eb5c18e8311555800e216" category="inline-link-macro-rx"></block>
-ONTAP 在過去二十多年來一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能來簡化管理、同時降低成本。本文件涵蓋適用於 VMware vSphere 虛擬磁碟區（ VVols ）的 ONTAP 功能、包括最新的產品資訊和使用案例、以及建議的實務做法和其他資訊、可簡化部署並減少錯誤。</block>
-  <block id="855f561053661f6b6c149d7f4efb3ccd" category="paragraph"><block ref="ed605e08075d0f81fac176559934ed0d" category="inline-link-macro-rx"></block>
-ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能、以簡化管理、同時降低成本。本文件將介紹 VMware 領先業界的災難恢復（ DR ）軟體 VMware Site Recovery Manager （ SRM ） ONTAP 解決方案、包括最新產品資訊和建議實務做法、以簡化部署、降低風險並簡化後續管理。</block>
-  <block id="2c18550d81a29bce4177077d36bb753f" category="paragraph"><block ref="bdbecb1d49bff31e06c4e311d3cda21d" category="inline-link-macro-rx"></block>
-本文件說明保護 ONTAP 工具的技術與技術、以保護 VMware vSphere 9.X 免受產品環境中現有和新興威脅的影響。</block>
-  <block id="c1ae4f225c294477261f42a0dd304f82" category="paragraph"><block ref="1613985e7ad5ae2de87c7552845ae65e" category="inline-link-macro-rx"></block>
-本文件說明用於保護 NetApp SnapCenter Plug-in for VMware vSphere 4.X 免受產品環境中現有和新興威脅的技術與技術。</block>
   <block id="a440b0e78204c6f9b29a7d388e209033" category="sidebar">ONTAP 上的 Microsoft SQL Server</block>
+  <block id="bf516b5e063503df33730496f5cd0e61" category="paragraph"><block ref="2ec362a557f59f60518807a9741e8a00" category="inline-link-macro-rx"></block>
+ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能、以簡化管理、同時降低成本。瞭解 VMware 領先業界的災難恢復（ DR ）軟體 VMware Site Recovery Manager （ SRM ）推薦的 ONTAP 解決方案、包括最新產品資訊和建議實務做法、以簡化部署、降低風險並簡化後續管理。</block>
+  <block id="0655f58a0e33e8062619dcfd012221cc" category="paragraph"><block ref="8b011bfaf7ed1ab91e2467210b049c9a" category="inline-link-macro-rx"></block>
+瞭解儲存管理員和資料庫管理員如何在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 。</block>
+  <block id="308de49ae5ecd612ee1f6ede409393ff" category="paragraph"><block ref="c3c557e05338fa6d9f996133fa1f30be" category="inline-link-macro-rx"></block>
+MySQL 及其變種（包括 MariaDB 和 Percona ）廣泛用於許多企業應用程式。這些應用程式涵蓋全球社群網站和大量的經濟應用系統、以及包含數千個資料庫執行個體的中小企業代管系統。瞭解在 ONTAP 上部署 MySQL 的組態需求、以及調整與儲存組態的相關指引。</block>
+  <block id="f5c54c33c88e0585ee80e87ca3197073" category="paragraph"><block ref="4342e369cb6f1d964722ca0d02f1386e" category="inline-link-macro-rx"></block>
+瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功部署 Oracle 的建議實務做法。</block>
+  <block id="d9aed574544bc03e259a4405706be41b" category="paragraph"><block ref="c655069b4f1dd03de49e67de429d75a7" category="inline-link-macro-rx"></block>
+瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功備份、恢復、複寫及提供災難恢復給 Oracle 的建議實務做法。</block>
+  <block id="7f682b39f7484c77db73063e07feb42c" category="paragraph"><block ref="a2a9fdf9b575841ff3ebbf6a46a0d6a8" category="inline-link-macro-rx"></block>
+瞭解在 MetroCluster 和 SnapMirror 業務連續性上操作 Oracle 資料庫的建議實務做法、測試程序及其他考量事項。</block>
+  <block id="217012d66e394711c10af45660913535" category="paragraph"><block ref="219a1452b62030a0afffbbfaf92a0a13" category="inline-link-macro-rx"></block>
+瞭解規劃移轉策略的整體考量、進行資料移動的三個不同層級、並詳細說明一些可用的各種程序。</block>
+  <block id="27aa6b2f69ccddf1851189034cceb6bb" category="paragraph"><block ref="27f14f00a6d55e3bbd1e610cf06da66c" category="inline-link-macro-rx"></block>
+PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。它受一般中介軟體套件的支援（例如 PHP 、 Java 、 Python 、 Tcl/Tk 、 ODBC 、 和 JDBC) ，過去一直是開放原始碼資料庫管理系統的熱門選擇。瞭解在 ONTAP 上部署 PostgreSQL 的組態需求、以及調整與儲存組態的相關指引。</block>
+  <block id="826026c30c4ca2614aff7c91a294ac33" category="paragraph"><block ref="f77ce835a7e66c79c654dd9aafd799fa" category="inline-link-macro-rx"></block>
+ ONTAP 在將近 20 年來一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能來簡化管理、同時降低成本。本文件介紹適用於 vSphere 的 ONTAP 解決方案、包括最新的產品資訊和建議實務做法、以簡化部署、降低風險並簡化管理。</block>
+  <block id="fc3ed6568bd8880a995c7c104a9bb7cc" category="paragraph"><block ref="ec1806039bacab99dff7403678d94933" category="inline-link-macro-rx"></block>
+ONTAP 在過去二十多年來一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能來簡化管理、同時降低成本。本文件涵蓋適用於 VMware vSphere 虛擬磁碟區（ VVols ）的 ONTAP 功能、包括最新的產品資訊和使用案例、以及建議的實務做法和其他資訊、可簡化部署並減少錯誤。</block>
+  <block id="f3f43e990c459318ca22a14868d0a86c" category="paragraph"><block ref="3671c46bfb89eb7b5f693efef09d6fe2" category="inline-link-macro-rx"></block>
+ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能、以簡化管理、同時降低成本。本文件將介紹 VMware 領先業界的災難恢復（ DR ）軟體 VMware Site Recovery Manager （ SRM ） ONTAP 解決方案、包括最新產品資訊和建議實務做法、以簡化部署、降低風險並簡化後續管理。</block>
+  <block id="1636ef3be0df3888fe8f9d43b270f262" category="paragraph"><block ref="e297b38d510d5eb8dcdec5b7674a5f51" category="inline-link-macro-rx"></block>
+本文件說明保護 ONTAP 工具的技術與技術、以保護 VMware vSphere 9.X 免受產品環境中現有和新興威脅的影響。</block>
+  <block id="b02eab33effe45ad95bb024ee01bf111" category="paragraph"><block ref="2d9c6af5124ecdcd73f23abea0e29951" category="inline-link-macro-rx"></block>
+本文件說明用於保護 NetApp SnapCenter Plug-in for VMware vSphere 4.X 免受產品環境中現有和新興威脅的技術與技術。</block>
 </blocks>
