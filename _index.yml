@@ -1,5 +1,9 @@
 ---
 indexpage:
+  title: ONTAP 技術報告
+  summary: ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署。某些 ONTAP 技術報告提供 ONTAP
+    功能的架構背景和建議實務做法。
+  keywords: ONTAP 9, ONTAP, Technical Reports, TR,
   lead: ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署。某些 ONTAP 技術報告提供 ONTAP
     功能的架構背景和建議實務做法。
   tiles:
