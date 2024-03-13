@@ -463,4 +463,8 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
 <block ref="ddd7bb6791d512b6bbd035245f183b42" category="inline-link-macro-rx"></block>
 <block ref="2f9e1ae374fcd81bbb2bbbd4546951d9" category="inline-link-macro-rx"></block></block>
   <block id="beb3ca55ed0a53a38a2b97540b05d6e4" category="sidebar">ONTAP 上的 Microsoft SQL Server</block>
+  <block id="8db7df66ab1d7ab5f1dc947acdb5fae4" category="section-title">記錄</block>
+  <block id="4f86fd480a3b60659d82af4d7287d57a" category="inline-link-macro">TR-4303 ：登入 ONTAP</block>
+  <block id="ffd46bdf1b63cf5b513ae89527869e27" category="paragraph"><block ref="9345b88722e99c268b49c1da01abbe4c" category="inline-link-macro-rx"></block>
+瞭解如何定義 ONTAP 產生的不同記錄、提供的功能、以及如何檢視和存取記錄。</block>
 </blocks>
