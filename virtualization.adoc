@@ -35,3 +35,6 @@ link:https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware-security-tools.h
 
 link:https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware-security-snapcenter.html["WP-7355 ： SnapCenter 外掛程式 VMware vSphere - 產品安全性"]
 本文件說明用於保護 NetApp SnapCenter Plug-in for VMware vSphere 4.X 免受產品環境中現有和新興威脅的技術與技術。
+
+link:https://docs.netapp.com/us-en/ontap-apps-dbs/microsoft/win_overview.html["TR-4568 ：適用於 Windows Server 的 NetApp 部署準則和儲存最佳實務做法"]
+Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、虛擬化、雲端、虛擬桌面基礎架構、 存取保護、資訊保護、 Web 服務、應用程式平台基礎架構等。本文件著重於 Microsoft Windows 、特別著重於 Hyper-V 虛擬化技術、包括最新產品資訊和建議實務做法、以簡化部署、降低風險及簡化管理。

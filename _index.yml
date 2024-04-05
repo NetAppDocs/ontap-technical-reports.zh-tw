@@ -121,5 +121,7 @@ indexpage:
       url: virtualization.html
     - title: VMware Site Recovery Manager 搭配 ONTAP
       url: virtualization.html
+    - title: Microsoft Windows Server （ Hyper-V ）
+      url: virtualization.html
     - title: 其他虛擬化技術報告
       url: virtualization.html

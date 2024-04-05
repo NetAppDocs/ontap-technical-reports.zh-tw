@@ -463,8 +463,8 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
 <block ref="ddd7bb6791d512b6bbd035245f183b42" category="inline-link-macro-rx"></block>
 <block ref="2f9e1ae374fcd81bbb2bbbd4546951d9" category="inline-link-macro-rx"></block></block>
   <block id="beb3ca55ed0a53a38a2b97540b05d6e4" category="sidebar">ONTAP 上的 Microsoft SQL Server</block>
-  <block id="8db7df66ab1d7ab5f1dc947acdb5fae4" category="section-title">記錄</block>
-  <block id="4f86fd480a3b60659d82af4d7287d57a" category="inline-link-macro">TR-4303 ：登入 ONTAP</block>
-  <block id="ffd46bdf1b63cf5b513ae89527869e27" category="paragraph"><block ref="9345b88722e99c268b49c1da01abbe4c" category="inline-link-macro-rx"></block>
-瞭解如何定義 ONTAP 產生的不同記錄、提供的功能、以及如何檢視和存取記錄。</block>
+  <block id="4ffeff5e5bc550c2069e1c9f5c8faf9b" category="inline-link-macro">TR-4568 ：適用於 Windows Server 的 NetApp 部署準則和儲存最佳實務做法</block>
+  <block id="11001fb821f9ba1fb2e3a93608a688cb" category="paragraph"><block ref="c141febea7d2bd403fd12cb6dd24d35c" category="inline-link-macro-rx"></block>
+Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、虛擬化、雲端、虛擬桌面基礎架構、 存取保護、資訊保護、 Web 服務、應用程式平台基礎架構等。本文件著重於 Microsoft Windows 、特別著重於 Hyper-V 虛擬化技術、包括最新產品資訊和建議實務做法、以簡化部署、降低風險及簡化管理。</block>
+  <block id="b0da974886af36b76614baf1f4df0289" category="sidebar">Microsoft Windows Server （ Hyper-V ）</block>
 </blocks>
