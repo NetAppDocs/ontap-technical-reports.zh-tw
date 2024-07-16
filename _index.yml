@@ -84,7 +84,7 @@ indexpage:
     - title: NetApp 勒索軟體解決方案
       url: security.html
     - title: NetApp 與 Zero Trust
-      url: security.html
+      url: https://docs.netapp.com/us-en/ontap/zero-trust/zero-trust-overview.html
     - title: 使用 NetApp SnapLock 的符合 WORM 儲存設備
       url: security.html
     - title: 驗證（ SSH 、 MFA ）

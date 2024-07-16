@@ -35,8 +35,7 @@ link:https://www.netapp.com/pdf.html?item=/media/6158-tr4526.pdf["TR-4526 ：使
 
 == 零信任
 
-link:https://www.netapp.com/pdf.html?item=/media/19756-tr-4829.pdf["TR-4829 ： NetApp 與 Zero Trust"^]
-零信任傳統上是一種以網路為中心的方法、用於建構微核心和周邊（ MCAP ）、以控制區段閘道的方式來保護資料、服務、應用程式或資產。ONTAP 採用以資料為中心的 Zero Trust 方法、讓儲存管理系統成為區段閘道、以保護及監控客戶資料的存取。特別是、 FPolicy Zero Trust 引擎和 FPolicy 合作夥伴生態系統成為控制中心、可深入瞭解正常和異常的資料存取模式、並識別內部威脅。
+link:https://docs.netapp.com/us-en/ontap/zero-trust/zero-trust-overview.html["NetApp 與 Zero Trust"] 零信任傳統上是一種以網路為中心的方法、用於建構微核心和周邊（ MCAP ）、以控制區段閘道的方式來保護資料、服務、應用程式或資產。ONTAP 採用以資料為中心的 Zero Trust 方法、讓儲存管理系統成為區段閘道、以保護及監控客戶資料的存取。特別是、 FPolicy Zero Trust 引擎和 FPolicy 合作夥伴生態系統成為控制中心、可深入瞭解正常和異常的資料存取模式、並識別內部威脅。
 
 
 

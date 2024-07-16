@@ -259,7 +259,6 @@ SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可
 瞭解 FabricPool 的優點和組態選項、包括 Oracle 關聯式資料庫管理系統（ RDBMS ）。</block>
   <block id="afe5567d4585c6b672134af6bf96570a" category="summary">這些技術報告概述 NetApp ONTAP 的安全性、以及建議的實務做法。</block>
   <block id="e6bd708199eed7d8bf33ef8308be0b3e" category="doc">安全技術報告</block>
-  <block id="786a25f6930c9ae71ad21603f498741d" category="paragraph">ONTAP 持續進化、安全性是解決方案不可或缺的一部分。最新版的 ONTAP 包含許多新的安全功能、這些功能對貴組織來說非常重要、可以保護其資料在混合雲中的安全性、防止勒索軟體攻擊、並遵循業界建議的實務做法。這些新功能也能協助貴組織邁向 Zero Trust 模式。</block>
   <block id="232a2b16a1710c0ed1d16548ba8bb8f1" category="section-title">勒索軟體</block>
   <block id="afd7e2b4105b3c0f637124474c6780aa" category="inline-link-macro">TR-4572 ：勒索軟體的 NetApp 解決方案</block>
   <block id="df81339197d6de37b537d325e629a34e" category="paragraph"><block ref="a2efee7226a0c9a1c73909308a4929db" category="inline-link-macro-rx"></block>
@@ -268,9 +267,6 @@ SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可
   <block id="6e10a9f29ea4d83a086b7ceba4cc08f6" category="paragraph"><block ref="bfdf2cce49faba7e8af63e592a46208a" category="inline-link-macro-rx"></block>
 許多企業都仰賴一次寫入、多次讀取（ WORM ）資料儲存設備來滿足法規遵循要求、或只是在資料保護策略中新增另一層。瞭解如何將 ONTAP 的 WORM 解決方案 SnapLock 整合至需要 WORM 資料儲存的環境。</block>
   <block id="95708632a08675f7e77e5312ce2c047c" category="section-title">零信任</block>
-  <block id="bbcfb10585a3382302149f55fb634e3a" category="inline-link-macro">TR-4829 ： NetApp 與 Zero Trust</block>
-  <block id="dbc994b1de7c805f4c68c6a884d9974a" category="paragraph"><block ref="ede7b56a16d5b347f860a68734d83076" category="inline-link-macro-rx"></block>
-零信任傳統上是一種以網路為中心的方法、用於建構微核心和周邊（ MCAP ）、以控制區段閘道的方式來保護資料、服務、應用程式或資產。ONTAP 採用以資料為中心的 Zero Trust 方法、讓儲存管理系統成為區段閘道、以保護及監控客戶資料的存取。特別是、 FPolicy Zero Trust 引擎和 FPolicy 合作夥伴生態系統成為控制中心、可深入瞭解正常和異常的資料存取模式、並識別內部威脅。</block>
   <block id="1a98f49f191845835d6fd3e13eb29812" category="section-title">多因素驗證</block>
   <block id="c7c6fadf35a14d865d768c5f30ccec0b" category="inline-link-macro">TR-4647 ： ONTAP 最佳實務做法與實作指南中的多因素驗證</block>
   <block id="51c9464c6f30a83c1321f77012016e78" category="paragraph"><block ref="d26c196c7d19a03267c0e824fa346801" category="inline-link-macro-rx"></block>
@@ -467,8 +463,8 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
   <block id="11001fb821f9ba1fb2e3a93608a688cb" category="paragraph"><block ref="c141febea7d2bd403fd12cb6dd24d35c" category="inline-link-macro-rx"></block>
 Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、虛擬化、雲端、虛擬桌面基礎架構、 存取保護、資訊保護、 Web 服務、應用程式平台基礎架構等。本文件著重於 Microsoft Windows 、特別著重於 Hyper-V 虛擬化技術、包括最新產品資訊和建議實務做法、以簡化部署、降低風險及簡化管理。</block>
   <block id="b0da974886af36b76614baf1f4df0289" category="sidebar">Microsoft Windows Server （ Hyper-V ）</block>
-  <block id="ea80e7a221b7d29abbf2b1def0f49eff" category="inline-link-macro">適用於 VMware 的 ONTAP 工具安全強化指南</block>
-  <block id="f0363ce68d8f8c316c89e502fa07f4a6" category="paragraph"><block ref="5b7528c0e47af54726e633b3e59db241" category="inline-link-macro-rx"></block>
-瞭解如何為 VMware vSphere 設定 ONTAP 工具、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。</block>
   <block id="47d29daaa26fbfa9c9a069d4cd023ac1" category="sidebar">適用於 VMware vSphere 的 ONTAP 工具安全性強化指南</block>
+  <block id="afe5eececc3992e7e8e44f347b2bbc31" category="paragraph"><block ref="0b6b331794436048d74957e0e33c82da" category="inline-link-macro-rx"></block> 瞭解如何為 VMware vSphere 設定 ONTAP 工具、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。</block>
+  <block id="616a596fed976ac186fb4ab027a61a06" category="paragraph">ONTAP 持續進化、安全性是解決方案不可或缺的一部分。最新版的 ONTAP 包含許多新的安全功能、這些功能對貴組織來說非常重要、可以保護其資料在混合雲中的安全性、防止勒索軟體攻擊、並遵循業界建議的實務做法。這些新功能也能協助貴組織邁向 Zero Trust 模式。</block>
+  <block id="2158f5b864e69e6da6a479c8dfd0d7c3" category="paragraph"><block ref="f37660acb14ff92b1690c18e493ff86b" category="inline-link-macro-rx"></block> 零信任傳統上是一種以網路為中心的方法、用於建構微核心和周邊（ MCAP ）、以控制區段閘道的方式來保護資料、服務、應用程式或資產。ONTAP 採用以資料為中心的 Zero Trust 方法、讓儲存管理系統成為區段閘道、以保護及監控客戶資料的存取。特別是、 FPolicy Zero Trust 引擎和 FPolicy 合作夥伴生態系統成為控制中心、可深入瞭解正常和異常的資料存取模式、並識別內部威脅。</block>
 </blocks>
