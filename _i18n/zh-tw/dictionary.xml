@@ -170,8 +170,6 @@ Microsoft 在 SMB 3.0 傳輸協定中引進多通道、其目標是藉由解決 
   <block id="e574d7c876885d39755e7d1bc4ae649e" category="paragraph">這些技術報告會在上進行擴充 <block ref="3e8d3a4b0bb1c244f96701a010228216" category="inline-link-macro-rx"></block> 產品文件。</block>
   <block id="d0880bbafb975bde57898f147e117781" category="section-title">強化指南</block>
   <block id="6eca5c80f314351da24d27dbbeb934fa" category="inline-link-macro">TR-4569 ： NetApp ONTAP 安全強化指南</block>
-  <block id="f4992bf9be0782c19e6fdb45bbc6f038" category="paragraph"><block ref="df6160c2a0bec26bee907d0f07aed808" category="inline-link-macro-rx"></block>
-瞭解如何設定 NetApp ONTAP 、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。</block>
   <block id="4b7d52b632284033085bcb2442dcb916" category="inline-link-macro">TR-4957 ： NetApp SnapCenter 安全強化指南</block>
   <block id="11de28f8883d2023258fafb8ee5fb4df" category="paragraph"><block ref="32cda38a3dba662f660e5eca3be0043a" category="inline-link-macro-rx"></block>
 瞭解如何設定 NetApp SnapCenter 軟體、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。</block>
@@ -467,4 +465,5 @@ Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、�
   <block id="afe5eececc3992e7e8e44f347b2bbc31" category="paragraph"><block ref="0b6b331794436048d74957e0e33c82da" category="inline-link-macro-rx"></block> 瞭解如何為 VMware vSphere 設定 ONTAP 工具、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。</block>
   <block id="616a596fed976ac186fb4ab027a61a06" category="paragraph">ONTAP 持續進化、安全性是解決方案不可或缺的一部分。最新版的 ONTAP 包含許多新的安全功能、這些功能對貴組織來說非常重要、可以保護其資料在混合雲中的安全性、防止勒索軟體攻擊、並遵循業界建議的實務做法。這些新功能也能協助貴組織邁向 Zero Trust 模式。</block>
   <block id="2158f5b864e69e6da6a479c8dfd0d7c3" category="paragraph"><block ref="f37660acb14ff92b1690c18e493ff86b" category="inline-link-macro-rx"></block> 零信任傳統上是一種以網路為中心的方法、用於建構微核心和周邊（ MCAP ）、以控制區段閘道的方式來保護資料、服務、應用程式或資產。ONTAP 採用以資料為中心的 Zero Trust 方法、讓儲存管理系統成為區段閘道、以保護及監控客戶資料的存取。特別是、 FPolicy Zero Trust 引擎和 FPolicy 合作夥伴生態系統成為控制中心、可深入瞭解正常和異常的資料存取模式、並識別內部威脅。</block>
+  <block id="56a039847999d09d030634c93d94d482" category="paragraph"><block ref="e061895df87abfcd5ea0e2dd38821d28" category="inline-link-macro-rx"></block> 瞭解如何設定 NetApp ONTAP 、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。</block>
 </blocks>
