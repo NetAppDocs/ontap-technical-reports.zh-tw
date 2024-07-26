@@ -21,8 +21,8 @@ indexpage:
       url: apps-dbs.html#sap-hana
   - title: 營運不中斷
     links:
-    - title: SnapMirror營運不中斷（SMBC）
-      url: business-continuity.html
+    - title: SnapMirror 主動同步
+      url: https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/index.html
     - title: MetroCluster 解決方案架構與設計
       url: business-continuity.html
     - title: 知識產權MetroCluster

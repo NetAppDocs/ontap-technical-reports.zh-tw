@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices, SM-BC, SnapMirror Business Continuity 
 permalink: business-continuity.html 
 summary: 這些技術報告概述 NetApp ONTAP 的營運持續性、以及建議的實務做法 
 ---
@@ -14,19 +14,18 @@ summary: 這些技術報告概述 NetApp ONTAP 的營運持續性、以及建議
 
 
 [role="lead"]
-NetApp 提供多種解決方案、可在應用程式和資料上線時進行合理化、以符合成本效益的方式改善效能。資料保護、複寫及持續可用度： ONTAP 資料管理可透過設定 IT 原則管理來簡化資料保護作業、同時透過 MetroCluster 和 SnapMirror 業務持續運作來提供業務持續性。
+NetApp 提供多種解決方案、可在應用程式和資料上線時進行合理化、以符合成本效益的方式改善效能。資料保護、複寫及持續可用度： ONTAP 資料管理可透過設定 IT 原則管理來簡化資料保護作業、同時透過 MetroCluster 和 SnapMirror 主動式同步提供業務連續性。
 
 [NOTE]
 ====
-這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/smbc/index.html["ONTAP SnapMirror 業務持續運作"] 和 link:https://docs.netapp.com/us-en/ontap-metrocluster/index.html["ONTAP MetroCluster"] 產品文件。
+這些技術報告會針對和產品文件進行擴充 link:https://docs.netapp.com/us-en/ontap/smbc/index.html["ONTAP SnapMirror 主動同步"] link:https://docs.netapp.com/us-en/ontap-metrocluster/index.html["ONTAP MetroCluster"] 。
 
 ====
 
 
-== SnapMirror營運不中斷（SMBC）
+== SnapMirror 主動式同步（前身為 SM-BC ）
 
-link:https://www.netapp.com/pdf.html?item=/media/21888-tr-4878.pdf["TR-4878 ： SnapMirror 業務連續性（ SM-BC ）"^]
-SnapMirror Business Continuity （ SM-BC ）是一款持續可用的儲存解決方案、具備應用程式層級精細度、適用於在 AFF 或所有 SAN 陣列（ ASA ）儲存系統上執行的 ONTAP 、以滿足最關鍵業務應用程式的 RPO 0 和 RTO 0 需求。
+link:https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/index.html["TR-4878 ： SnapMirror 主動同步"^] SnapMirror 主動式同步是一種持續可用的儲存解決方案、具備應用程式層級的精細度、適用於在 AFF 或所有 SAN 陣列（ ASA ）儲存系統上執行的 ONTAP 、以滿足最關鍵業務應用程式的 RPO 0 和 RTO 0 需求。
 
 
 

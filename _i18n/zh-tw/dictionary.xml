@@ -69,23 +69,13 @@ FlexCache 是一種快取技術、可在相同或不同的 ONTAP 叢集上建立
   <block id="e26db0138fc05145ed94ee1f1cd92b64" category="inline-link-macro">TR-4695 ：使用 FabricPool 進行資料庫儲存分層</block>
   <block id="6ea3c6416acaabdf419275588df7f764" category="paragraph"><block ref="0f6da34639ae3a472dc5fdf06f6c7519" category="inline-link-macro-rx"></block>
 瞭解 FabricPool 的優點和組態選項、包括 Oracle 關聯式資料庫管理系統（ RDBMS ）。</block>
-  <block id="df1217c57234952b108fdf8edeea9c1f" category="inline-link-macro">TR-4899 ： Oracle 資料庫透明化應用程式容錯移轉、採用 SnapMirror Business Continuity</block>
-  <block id="b72e09398681a9062ccd0090b9726391" category="paragraph"><block ref="9ac6d7d78a5408ebec6295c5b91049c1" category="inline-link-macro-rx"></block>
-SnapMirror Business Continuity （ SM-BC ）和 Oracle Real Application Cluster （ RAC ）可在發生站台中斷和真正災難時、提供透明的應用程式容錯移轉（ TAF ）和持續性。瞭解 AFF 儲存陣列的組態指南和建議實務做法、並將 SMBC 作為 Oracle RAC 的儲存元件。</block>
   <block id="20edcec83b5ec5c0064ad8013e36923e" category="inline-link-macro">TR-4876 ：採用 ONTAP 解決方案和部署最佳實務做法的 Oracle 多租戶</block>
   <block id="37cf945b6fa0182e1288122764b0e5c0" category="paragraph"><block ref="1285e23f10a9e18278d2c6e638032a3f" category="inline-link-macro-rx"></block>
 瞭解解決方案建議的實務做法、瞭解如何使用 ONTAP 儲存設備來配置、管理及保護 Oracle 多租戶資料庫、以充分發揮 Oracle 多租戶資料庫的效益、以及 ONTAP 軟體的功能。</block>
   <block id="399bd1ee587245ecac6f39beaa99886f" category="section-title">PostgreSQL</block>
   <block id="38d8bbc60e04ec3f712089a191e11bc0" category="summary">這些技術報告概述 NetApp ONTAP 的營運持續性、以及建議的實務做法</block>
   <block id="96323bdc332765b9211ff3f9ba1e5e21" category="doc">營運不中斷技術報告</block>
-  <block id="af1ff78198ebe07ec4e7f54b33766c19" category="paragraph">NetApp 提供多種解決方案、可在應用程式和資料上線時進行合理化、以符合成本效益的方式改善效能。資料保護、複寫及持續可用度： ONTAP 資料管理可透過設定 IT 原則管理來簡化資料保護作業、同時透過 MetroCluster 和 SnapMirror 業務持續運作來提供業務持續性。</block>
-  <block id="39b0dc37ea1ddd4007baaf5cc0073251" category="inline-link-macro">ONTAP SnapMirror 業務持續運作</block>
   <block id="18f57d600a92c92b9c8e184c2871790b" category="inline-link-macro">ONTAP MetroCluster</block>
-  <block id="7c6c52011182351a302482a52746b200" category="paragraph">這些技術報告會在上進行擴充 <block ref="dcfc6b38559c4256190664addc167f09" category="inline-link-macro-rx"></block> 和 <block ref="c3546ed1acbc93cc8865ba8cc6d620ce" category="inline-link-macro-rx"></block> 產品文件。</block>
-  <block id="704de765250161b4c06ce64f26a08d82" category="section-title">SnapMirror營運不中斷（SMBC）</block>
-  <block id="9c24652fa5c48bb02fb4d94e586e451a" category="inline-link-macro">TR-4878 ： SnapMirror 業務連續性（ SM-BC ）</block>
-  <block id="5786362dce5c9f77bbc57e94b44f3e27" category="paragraph"><block ref="7fe3405091906f7f62069f8d3521e969" category="inline-link-macro-rx"></block>
-SnapMirror Business Continuity （ SM-BC ）是一款持續可用的儲存解決方案、具備應用程式層級精細度、適用於在 AFF 或所有 SAN 陣列（ ASA ）儲存系統上執行的 ONTAP 、以滿足最關鍵業務應用程式的 RPO 0 和 RTO 0 需求。</block>
   <block id="1749d12df3df2319d3eee218a277ff83" category="section-title">MetroCluster</block>
   <block id="8cfbc6352d8ced5b800023a1d24ac804" category="inline-link-macro">TR-4705 ： NetApp MetroCluster 解決方案架構與設計</block>
   <block id="4c51a3fcdb358ea77ba4e6480c162f6a" category="paragraph"><block ref="4f2a5ddc71107b4c5210f0d334a301b5" category="inline-link-macro-rx"></block>
@@ -298,7 +288,6 @@ SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可
   <block id="556eda250d1f196adc09c3afcd396b84" category="sidebar">MetroCluster 解決方案架構與設計</block>
   <block id="4767099b22895a8101a1cba45d8cf6e9" category="sidebar">知識產權MetroCluster</block>
   <block id="eab1124b93650078ec1e8e3092712538" category="sidebar">FC MetroCluster</block>
-  <block id="745e09dfe45dd426c5e73339b93791a9" category="sidebar">其他營運不中斷技術報告</block>
   <block id="c5c30671213f4d20d0d3e001be835fff" category="sidebar">SnapMirror 非同步組態和最佳實務做法</block>
   <block id="b151fa9d3a99ac1198c348082841dadb" category="sidebar">SnapMirror 同步組態和最佳實務做法</block>
   <block id="db43ac1a3df915eac1e2b05048e0ff14" category="sidebar">使用 SnapLock 的符合 WORM 儲存設備</block>
@@ -466,4 +455,14 @@ Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、�
   <block id="616a596fed976ac186fb4ab027a61a06" category="paragraph">ONTAP 持續進化、安全性是解決方案不可或缺的一部分。最新版的 ONTAP 包含許多新的安全功能、這些功能對貴組織來說非常重要、可以保護其資料在混合雲中的安全性、防止勒索軟體攻擊、並遵循業界建議的實務做法。這些新功能也能協助貴組織邁向 Zero Trust 模式。</block>
   <block id="2158f5b864e69e6da6a479c8dfd0d7c3" category="paragraph"><block ref="f37660acb14ff92b1690c18e493ff86b" category="inline-link-macro-rx"></block> 零信任傳統上是一種以網路為中心的方法、用於建構微核心和周邊（ MCAP ）、以控制區段閘道的方式來保護資料、服務、應用程式或資產。ONTAP 採用以資料為中心的 Zero Trust 方法、讓儲存管理系統成為區段閘道、以保護及監控客戶資料的存取。特別是、 FPolicy Zero Trust 引擎和 FPolicy 合作夥伴生態系統成為控制中心、可深入瞭解正常和異常的資料存取模式、並識別內部威脅。</block>
   <block id="56a039847999d09d030634c93d94d482" category="paragraph"><block ref="e061895df87abfcd5ea0e2dd38821d28" category="inline-link-macro-rx"></block> 瞭解如何設定 NetApp ONTAP 、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。</block>
+  <block id="c7829f629f3055286ada7794ca794cf8" category="inline-link-macro">TR-4899 ： Oracle 資料庫透明化應用程式容錯移轉、採用 SnapMirror 主動式同步</block>
+  <block id="cedd348454f1f9667db3e89a651bdc45" category="paragraph"><block ref="e193433d9852787148d6bfe70e72ce80" category="inline-link-macro-rx"></block> SnapMirror 主動式同步（前身為 SM-BC ）和 Oracle Real Application Cluster （ RAC ）可在發生站台中斷和真正災難時、提供透明的應用程式容錯移轉（ TAF ）和持續性。瞭解 AFF 儲存陣列的組態指南和建議實務做法、其中 SnapMirror Active Sync 是 Oracle RAC 的儲存元件。</block>
+  <block id="7bdf3df5c52772427d684241666dda12" category="paragraph">NetApp 提供多種解決方案、可在應用程式和資料上線時進行合理化、以符合成本效益的方式改善效能。資料保護、複寫及持續可用度： ONTAP 資料管理可透過設定 IT 原則管理來簡化資料保護作業、同時透過 MetroCluster 和 SnapMirror 主動式同步提供業務連續性。</block>
+  <block id="574cb45b1bf07bb44acd3de641840a4b" category="inline-link-macro">ONTAP SnapMirror 主動同步</block>
+  <block id="d47c49799806bec64465b383db014b54" category="paragraph">這些技術報告會針對和產品文件進行擴充 <block ref="84fa0d1714185699150766ccc4696a58" category="inline-link-macro-rx"></block> <block ref="c3546ed1acbc93cc8865ba8cc6d620ce" category="inline-link-macro-rx"></block> 。</block>
+  <block id="0dfa6915a212660244fd00959d91d3cf" category="section-title">SnapMirror 主動式同步（前身為 SM-BC ）</block>
+  <block id="2e8ac1c0380452780be33d178e20a254" category="inline-link-macro">TR-4878 ： SnapMirror 主動同步</block>
+  <block id="090b3022d203896fbe5e649fe4e00563" category="paragraph"><block ref="d2c109124f2b9db130918a5c3429109e" category="inline-link-macro-rx"></block> SnapMirror 主動式同步是一種持續可用的儲存解決方案、具備應用程式層級的精細度、適用於在 AFF 或所有 SAN 陣列（ ASA ）儲存系統上執行的 ONTAP 、以滿足最關鍵業務應用程式的 RPO 0 和 RTO 0 需求。</block>
+  <block id="c0b79db5f258f0c991a383cbdbf001dd" category="sidebar">SnapMirror 主動同步</block>
+  <block id="84b4efc4ad7afb4d75b9901868fc3167" category="sidebar">其他營運不中斷技術報告</block>
 </blocks>

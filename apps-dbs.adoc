@@ -76,8 +76,7 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
 link:https://www.netapp.com/pdf.html?item=/media/9138-tr4695.pdf["TR-4695 ：使用 FabricPool 進行資料庫儲存分層"^]
 瞭解 FabricPool 的優點和組態選項、包括 Oracle 關聯式資料庫管理系統（ RDBMS ）。
 
-link:https://www.netapp.com/pdf.html?item=/media/40384-tr-4899.pdf["TR-4899 ： Oracle 資料庫透明化應用程式容錯移轉、採用 SnapMirror Business Continuity"^]
-SnapMirror Business Continuity （ SM-BC ）和 Oracle Real Application Cluster （ RAC ）可在發生站台中斷和真正災難時、提供透明的應用程式容錯移轉（ TAF ）和持續性。瞭解 AFF 儲存陣列的組態指南和建議實務做法、並將 SMBC 作為 Oracle RAC 的儲存元件。
+link:https://www.netapp.com/pdf.html?item=/media/40384-tr-4899.pdf["TR-4899 ： Oracle 資料庫透明化應用程式容錯移轉、採用 SnapMirror 主動式同步"^] SnapMirror 主動式同步（前身為 SM-BC ）和 Oracle Real Application Cluster （ RAC ）可在發生站台中斷和真正災難時、提供透明的應用程式容錯移轉（ TAF ）和持續性。瞭解 AFF 儲存陣列的組態指南和建議實務做法、其中 SnapMirror Active Sync 是 Oracle RAC 的儲存元件。
 
 link:https://www.netapp.com/pdf.html?item=/media/21901-tr-4876.pdf["TR-4876 ：採用 ONTAP 解決方案和部署最佳實務做法的 Oracle 多租戶"^]
 瞭解解決方案建議的實務做法、瞭解如何使用 ONTAP 儲存設備來配置、管理及保護 Oracle 多租戶資料庫、以充分發揮 Oracle 多租戶資料庫的效益、以及 ONTAP 軟體的功能。
