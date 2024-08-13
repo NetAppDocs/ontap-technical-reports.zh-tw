@@ -81,9 +81,6 @@ FlexCache 是一種快取技術、可在相同或不同的 ONTAP 叢集上建立
   <block id="4c51a3fcdb358ea77ba4e6480c162f6a" category="paragraph"><block ref="4f2a5ddc71107b4c5210f0d334a301b5" category="inline-link-macro-rx"></block>
 本文件說明 ONTAP 中 MetroCluster 功能的高階架構和設計概念。</block>
   <block id="577971aa0199b86832dd14a0bc065722" category="inline-link-macro">TR-4689 ： NetApp MetroCluster IP</block>
-  <block id="f7359ddc38932bd9c6b16b1c7ac6b76e" category="paragraph">* MetroCluster IP*
-<block ref="702aece58417da0f07683c0a2bc2de04" category="inline-link-macro-rx"></block>
-MetroCluster 是適用於在 FAS 和 AFF 系統上執行的 ONTAP 的持續可用儲存解決方案。MetroCluster IP 是採用乙太網路型後端儲存架構的最新進化產品。MetroCluster IP 提供高度備援的組態、以滿足最關鍵業務應用程式的需求。MetroCluster IP 包含在 ONTAP 中、可為使用 ONTAP 儲存設備的用戶端和伺服器提供 NAS 和 SAN 連線。</block>
   <block id="fa0e3cb985e828073f466cabcba86492" category="inline-link-macro">TR-4375 ： NetApp MetroCluster FC</block>
   <block id="e99f8b0ccb185a35ae5bd9c697f58a81" category="paragraph">* MetroCluster FC*
 <block ref="1bface5a173eefb1d9e7e7b00b6f5d8f" category="inline-link-macro-rx"></block>
@@ -465,4 +462,7 @@ Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、�
   <block id="090b3022d203896fbe5e649fe4e00563" category="paragraph"><block ref="d2c109124f2b9db130918a5c3429109e" category="inline-link-macro-rx"></block> SnapMirror 主動式同步是一種持續可用的儲存解決方案、具備應用程式層級的精細度、適用於在 AFF 或所有 SAN 陣列（ ASA ）儲存系統上執行的 ONTAP 、以滿足最關鍵業務應用程式的 RPO 0 和 RTO 0 需求。</block>
   <block id="c0b79db5f258f0c991a383cbdbf001dd" category="sidebar">SnapMirror 主動同步</block>
   <block id="84b4efc4ad7afb4d75b9901868fc3167" category="sidebar">其他營運不中斷技術報告</block>
+  <block id="9d41fe83ece2774d76ce37a02fd33989" category="paragraph">* MetroCluster IP* <block ref="ecc10974060ef0129cd60d68e8751f4e" category="inline-link-macro-rx"></block> MetroCluster 是適用於在 FAS 和 AFF 系統上執行的 ONTAP 的持續可用儲存解決方案。MetroCluster IP 是採用乙太網路型後端儲存架構的最新進化產品。MetroCluster IP 提供高度備援的組態、以滿足最關鍵業務應用程式的需求。MetroCluster IP 包含在 ONTAP 中、可為使用 ONTAP 儲存設備的用戶端和伺服器提供 NAS 和 SAN 連線。</block>
+  <block id="a617a1589fbc51aa91ee344b7a8c5019" category="section-title">FlexCache 回寫</block>
+  <block id="1023a95850648d729854972f880d5dd8" category="paragraph"><block ref="4546cc9f634c66c8aeff46cf87ac369c" category="inline-link-macro-rx"></block> FlexCache 回寫是 ONTAP 9.15.1 推出的另一種寫入快取的作業模式。回寫功能可將寫入內容提交至快取的穩定儲存設備、並將其確認給用戶端、而無需等待資料傳送至原始伺服器。資料會以非同步方式重新排清回來源。因此、全球分散式檔案系統可讓寫入作業以接近本機的速度執行特定工作負載和環境、提供顯著的效能效益。</block>
 </blocks>

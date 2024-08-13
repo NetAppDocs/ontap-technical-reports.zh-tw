@@ -30,6 +30,12 @@ FlexCache 是一種快取技術、可在相同或不同的 ONTAP 叢集上建立
 
 
 
+== FlexCache 回寫
+
+link:https://docs.netapp.com/us-en/ontap/flexcache-writeback/flexcache-write-back-overview.html["FlexCache 回寫"^] FlexCache 回寫是 ONTAP 9.15.1 推出的另一種寫入快取的作業模式。回寫功能可將寫入內容提交至快取的穩定儲存設備、並將其確認給用戶端、而無需等待資料傳送至原始伺服器。資料會以非同步方式重新排清回來源。因此、全球分散式檔案系統可讓寫入作業以接近本機的速度執行特定工作負載和環境、提供顯著的效能效益。
+
+
+
 == 資料量FlexGroup
 
 link:https://www.netapp.com/pdf.html?item=/media/17251-tr4571a.pdf["TR-4571a ： FlexGroup 十大最佳實務做法"^]
