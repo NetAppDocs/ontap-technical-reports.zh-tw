@@ -25,8 +25,7 @@ ONTAP 持續進化、安全性是解決方案不可或缺的一部分。最新�
 
 == 勒索軟體
 
-link:https://www.netapp.com/pdf.html?item=/media/7334-tr4572.pdf["TR-4572 ：勒索軟體的 NetApp 解決方案"^]
-瞭解勒索軟體如何進化、以及如何利用 NetApp 解決方案來識別攻擊、防止擴散、並儘快恢復。本文件所提供的指引與解決方案旨在協助組織擁有網路彈性解決方案、同時符合其規定的資訊系統機密性、完整性及可用度安全目標。
+link:https://docs.netapp.com/us-en/ontap/ransomware-solutions/ransomware-overview.html["TR-4572 ：勒索軟體的 NetApp 解決方案"^] 瞭解勒索軟體如何進化、以及如何利用 NetApp 解決方案來識別攻擊、防止擴散、並儘快恢復。本文件所提供的指引與解決方案旨在協助組織擁有網路彈性解決方案、同時符合其規定的資訊系統機密性、完整性及可用度安全目標。
 
 link:https://www.netapp.com/pdf.html?item=/media/6158-tr4526.pdf["TR-4526 ：使用 NetApp SnapLock 的符合 WORM 儲存設備"^]
 許多企業都仰賴一次寫入、多次讀取（ WORM ）資料儲存設備來滿足法規遵循要求、或只是在資料保護策略中新增另一層。瞭解如何將 ONTAP 的 WORM 解決方案 SnapLock 整合至需要 WORM 資料儲存的環境。
