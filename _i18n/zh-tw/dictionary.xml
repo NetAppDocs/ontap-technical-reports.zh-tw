@@ -388,8 +388,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="2c1b27a986b5e37a810d61f72b23ee4b" category="paragraph">設定、管理及自動化 SAP 解決方案的最佳實務做法、請參閱 NetApp SAP 解決方案頁面。</block>
   <block id="79e3a796ebb97492e0ca65b735e63753" category="inline-link-macro">ONTAP 上的 SAP HANA 資料庫解決方案</block>
   <block id="ada0578499f1a7909dee7f18bbd44352" category="paragraph"><block ref="ada0578499f1a7909dee7f18bbd44352" category="inline-link-macro-rx"></block></block>
-  <block id="bf516b5e063503df33730496f5cd0e61" category="paragraph"><block ref="2ec362a557f59f60518807a9741e8a00" category="inline-link-macro-rx"></block>
-ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能、以簡化管理、同時降低成本。瞭解 VMware 領先業界的災難恢復（ DR ）軟體 VMware Site Recovery Manager （ SRM ）推薦的 ONTAP 解決方案、包括最新產品資訊和建議實務做法、以簡化部署、降低風險並簡化後續管理。</block>
   <block id="0655f58a0e33e8062619dcfd012221cc" category="paragraph"><block ref="8b011bfaf7ed1ab91e2467210b049c9a" category="inline-link-macro-rx"></block>
 瞭解儲存管理員和資料庫管理員如何在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 。</block>
   <block id="308de49ae5ecd612ee1f6ede409393ff" category="paragraph"><block ref="c3c557e05338fa6d9f996133fa1f30be" category="inline-link-macro-rx"></block>
@@ -464,4 +462,8 @@ Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、�
   <block id="a617a1589fbc51aa91ee344b7a8c5019" category="section-title">FlexCache 回寫</block>
   <block id="1023a95850648d729854972f880d5dd8" category="paragraph"><block ref="4546cc9f634c66c8aeff46cf87ac369c" category="inline-link-macro-rx"></block> FlexCache 回寫是 ONTAP 9.15.1 推出的另一種寫入快取的作業模式。回寫功能可將寫入內容提交至快取的穩定儲存設備、並將其確認給用戶端、而無需等待資料傳送至原始伺服器。資料會以非同步方式重新排清回來源。因此、全球分散式檔案系統可讓寫入作業以接近本機的速度執行特定工作負載和環境、提供顯著的效能效益。</block>
   <block id="1088e62eddbf9e553d6ce3869bb4c822" category="paragraph"><block ref="54a8bbc6323712b4103dba886677318d" category="inline-link-macro-rx"></block> 瞭解勒索軟體如何進化、以及如何利用 NetApp 解決方案來識別攻擊、防止擴散、並儘快恢復。本文件所提供的指引與解決方案旨在協助組織擁有網路彈性解決方案、同時符合其規定的資訊系統機密性、完整性及可用度安全目標。</block>
+  <block id="5306ae1644c92b97abf3b1c4050c8926" category="paragraph"><block ref="d486044208318d8adecc9ddd2f9433ed" category="inline-link-macro-rx"></block> ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能、以簡化管理、同時降低成本。瞭解 VMware 領先業界的災難恢復（ DR ）軟體 VMware Site Recovery Manager （ SRM ）推薦的 ONTAP 解決方案、包括最新產品資訊和建議實務做法、以簡化部署、降低風險並簡化後續管理。</block>
+  <block id="91d998bab304adb0fd27858a4295dcac" category="section-title">ONTAP 網路保存庫</block>
+  <block id="fc46505b6029ab4d0e386a4540afeecd" category="paragraph"><block ref="79305a8b61b53acc892506e6bcd6f49f" category="inline-link-macro-rx"></block>NetApp 的 ONTAP 型網路資料保險箱為組織提供全方位且靈活的解決方案、以保護最重要的資料資產。ONTAP 運用邏輯氣帶和強大的強化方法、讓您建立安全、隔離的儲存環境、以因應不斷演變的網路威脅。透過 ONTAP 、您可以確保資料的機密性、完整性和可用度、同時維持儲存基礎架構的敏捷度和效率。</block>
+  <block id="7d561ff1da15ec2093387d3679da3eb8" category="paragraph">這些技術報告會針對產品文件進行擴充<block ref="9caf0d21f047a5bbe99f0781b871b34b" category="inline-link-macro-rx"></block>。</block>
 </blocks>

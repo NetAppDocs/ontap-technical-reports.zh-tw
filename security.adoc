@@ -18,9 +18,15 @@ ONTAP 持續進化、安全性是解決方案不可或缺的一部分。最新�
 
 [NOTE]
 ====
-這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/security-encryption/index.html["ONTAP 安全性與資料加密"] 產品文件。
+這些技術報告會針對產品文件進行擴充link:https://docs.netapp.com/us-en/ontap/security-encryption/index.html["ONTAP 安全性與資料加密"^]。
 
 ====
+
+
+== ONTAP 網路保存庫
+
+link:https://docs.netapp.com/us-en/netapp-solutions/cyber-vault/ontap-cyber-vault-overview.html["ONTAP 網路保存庫"^]NetApp 的 ONTAP 型網路資料保險箱為組織提供全方位且靈活的解決方案、以保護最重要的資料資產。ONTAP 運用邏輯氣帶和強大的強化方法、讓您建立安全、隔離的儲存環境、以因應不斷演變的網路威脅。透過 ONTAP 、您可以確保資料的機密性、完整性和可用度、同時維持儲存基礎架構的敏捷度和效率。
+
 
 
 == 勒索軟體

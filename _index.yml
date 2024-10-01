@@ -83,6 +83,8 @@ indexpage:
     links:
     - title: 安全強化指南
       url: security-hardening-guides.html
+    - title: ONTAP 網路保存庫
+      url: https://docs.netapp.com/us-en/netapp-solutions/cyber-vault/ontap-cyber-vault-overview.html
     - title: NetApp 勒索軟體解決方案
       url: https://docs.netapp.com/us-en/ontap/ransomware-solutions/ransomware-overview.html
     - title: NetApp 與 Zero Trust
