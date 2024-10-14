@@ -10,6 +10,7 @@ summary: 這些技術報告提供 NetApp ONTAP 分層的概觀、以及建議的
 :nofooter: 
 :icons: font
 :linkattrs: 
+:imagesdir: ./media/
 
 
 [role="lead"]

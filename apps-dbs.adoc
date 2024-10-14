@@ -14,7 +14,7 @@ summary: 這些技術報告概述 ONTAP 上的應用程式和資料庫、以及�
 
 
 [role="lead"]
-ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保護基礎。下列技術報告提供 NetApp 針對 Microsoft SQL Server 、 MySQL 、 Oracle 、 PostgreSQL 和 SAP HANA 所建議的實務做法和實作程序指引。
+ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保護基礎。下列技術報告提供 NetApp 針對 Microsoft SQL Server 、 MySQL 、 Oracle 、 PostgreSQL 、 SAP HANA 及 Epic 的建議實務做法與實作程序指引。
 
 
 
@@ -22,8 +22,7 @@ ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保�
 
 SQL Server 是 Microsoft 資料平台的基礎、無論是在內部部署或雲端、都能以記憶體內建技術提供關鍵任務效能、並更快洞悉任何資料。
 
-link:https://docs.netapp.com/us-en/ontap-apps-dbs/mssql/mssql-overview.html["Microsoft SQL Server with ONTAP 的最佳實務做法"]
-瞭解儲存管理員和資料庫管理員如何在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 。
+link:https://docs.netapp.com/us-en/ontap-apps-dbs/mssql/mssql-overview.html["Microsoft SQL Server with ONTAP 的最佳實務做法"^]瞭解儲存管理員和資料庫管理員如何在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 。
 
 
 NOTE: 本文件取代先前發佈的技術報告 _TR-4590 ： Microsoft SQL Server 與 ONTAP 的最佳實務做法指南。 _
@@ -40,8 +39,7 @@ link:https://www.netapp.com/pdf.html?item=/media/12400-tr4714.pdf["TR-4714 ：�
 
 本文檔介紹了配置要求，並提供了有關在 ONTAP 上部署 MySQL 的調整和存儲配置的指導。
 
-link:https://docs.netapp.com/us-en/ontap-apps-dbs/mysql/mysql-overview.html["NetApp ONTAP 最佳實務做法的 MySQL 資料庫"]
-MySQL 及其變種（包括 MariaDB 和 Percona ）廣泛用於許多企業應用程式。這些應用程式涵蓋全球社群網站和大量的經濟應用系統、以及包含數千個資料庫執行個體的中小企業代管系統。瞭解在 ONTAP 上部署 MySQL 的組態需求、以及調整與儲存組態的相關指引。
+link:https://docs.netapp.com/us-en/ontap-apps-dbs/mysql/mysql-overview.html["NetApp ONTAP 最佳實務做法的 MySQL 資料庫"^]MySQL 及其變種（包括 MariaDB 和 Percona ）廣泛用於許多企業應用程式。這些應用程式涵蓋全球社群網站和大量的經濟應用系統、以及包含數千個資料庫執行個體的中小企業代管系統。瞭解在 ONTAP 上部署 MySQL 的組態需求、以及調整與儲存組態的相關指引。
 
 
 NOTE: 本文件取代先前發佈的技術報告 _TR-4722 ： NetApp ONTAP 最佳實務做法的 MySQL 資料庫。 _
@@ -52,17 +50,13 @@ NOTE: 本文件取代先前發佈的技術報告 _TR-4722 ： NetApp ONTAP 最�
 
 ONTAP 專為 Oracle 資料庫所設計。數十年來、 ONTAP 已針對關聯式資料庫 I/O 的獨特需求進行最佳化、並特別建立多項 ONTAP 功能、以滿足 Oracle 資料庫的需求、甚至是 Oracle Inc. 本身的要求。
 
-link:https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-overview.html["ONTAP 上的 Oracle 資料庫"]
-瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功部署 Oracle 的建議實務做法。
+link:https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-overview.html["ONTAP 上的 Oracle 資料庫"^]瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功部署 Oracle 的建議實務做法。
 
-link:https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-dp-overview.html["使用 ONTAP 保護 Oracle 資料"]
-瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功備份、恢復、複寫及提供災難恢復給 Oracle 的建議實務做法。
+link:https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-dp-overview.html["使用 ONTAP 保護 Oracle 資料"^]瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功備份、恢復、複寫及提供災難恢復給 Oracle 的建議實務做法。
 
-link:https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-dr-overview.html["使用 ONTAP 進行 Oracle 災難恢復"]
-瞭解在 MetroCluster 和 SnapMirror 業務連續性上操作 Oracle 資料庫的建議實務做法、測試程序及其他考量事項。
+link:https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-dr-overview.html["使用 ONTAP 進行 Oracle 災難恢復"^]瞭解在 MetroCluster 和 SnapMirror 業務持續運作上操作 Oracle 資料庫的建議實務做法、測試程序及其他考量。
 
-link:https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-migration-overview.html["將 Oracle 資料庫移轉至 ONTAP 儲存系統"]
-瞭解規劃移轉策略的整體考量、進行資料移動的三個不同層級、並詳細說明一些可用的各種程序。
+link:https://docs.netapp.com/us-en/ontap-apps-dbs/oracle/oracle-migration-overview.html["將 Oracle 資料庫移轉至 ONTAP 儲存系統"^]瞭解規劃移轉策略的整體考量、進行資料移動的三個不同層級、並詳細說明一些可用的各種程序。
 
 
 NOTE: 以上連結的文件取代了先前發佈的技術報告 _TR-3633 ： ONTAP 上的 Oracle 資料庫； TR-4591 ： Oracle 資料保護：備份、還原、複寫； TR-4592 ： MetroCluster 上的 Oracle ；以及 TR-4534 ：將 Oracle 資料庫移轉至 NetApp 儲存系統
@@ -87,16 +81,22 @@ link:https://www.netapp.com/pdf.html?item=/media/21901-tr-4876.pdf["TR-4876 ：�
 
 PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。NetApp ONTAP 是執行 PostgreSQL 資料庫的絕佳選擇、可確保其可靠性、高效能及高效率的資料管理功能。
 
-link:https://docs.netapp.com/us-en/ontap-apps-dbs/postgres/postgres-overview.html["ONTAP 最佳實務做法的 PostgreSQL 資料庫"]
-PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。它受一般中介軟體套件的支援（例如 PHP 、 Java 、 Python 、 Tcl/Tk 、 ODBC 、 和 JDBC) ，過去一直是開放原始碼資料庫管理系統的熱門選擇。瞭解在 ONTAP 上部署 PostgreSQL 的組態需求、以及調整與儲存組態的相關指引。
+link:https://docs.netapp.com/us-en/ontap-apps-dbs/postgres/postgres-overview.html["ONTAP 最佳實務做法的 PostgreSQL 資料庫"^]PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。它受一般中介軟體套件的支援（例如 PHP 、 Java 、 Python 、 Tcl/Tk 、 ODBC 、 和 JDBC) ，過去一直是開放原始碼資料庫管理系統的熱門選擇。瞭解在 ONTAP 上部署 PostgreSQL 的組態需求、以及調整與儲存組態的相關指引。
 
 
-NOTE: 本文件取代先前發佈的技術報告 TR-4770 ： ONTAP 最佳實務實務的 PostgreSQL 資料庫。
+NOTE: 本文件取代先前發表的技術報告 _TR-4770 ： ONTAP 最佳實務做法的 PostgreSQL 資料庫。
 
 
 
 == SAP HANA
 
-設定、管理及自動化 SAP 解決方案的最佳實務做法、請參閱 NetApp SAP 解決方案頁面。
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/["ONTAP 上的 SAP HANA 資料庫解決方案"^]設定、管理及自動化 SAP 解決方案的最佳實務做法、請參閱 NetApp SAP 解決方案頁面。
 
-link:https://docs.netapp.com/us-en/netapp-solutions-sap/["ONTAP 上的 SAP HANA 資料庫解決方案"]
+
+
+== 致勝
+
+link:https://docs.netapp.com/us-en/ontap-apps-dbs/epic/epic-overview.html["EPIC on ONTAP 最佳實務做法"^]瞭解在內部部署和雲端部署 Epic 的最佳實務做法、同時符合在 ONTAP 上適當部署的組態標準的指南。
+
+
+NOTE: 本文件取代先前發表的技術報告 _TR-3923 ： Epic 的 NetApp 最佳實務做法。

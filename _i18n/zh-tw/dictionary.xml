@@ -230,7 +230,6 @@ SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可
 瞭解如何設定 SnapCenter 、以協助組織達成資訊系統機密性、完整性和可用度等規定的安全目標。</block>
   <block id="141350544bb9055d329f2c611da39532" category="summary">這些技術報告提供 NetApp ONTAP 分層的概觀、以及建議的實務做法。</block>
   <block id="f887aa58f254d680de7bd891d2be7d1a" category="doc">分層技術報告</block>
-  <block id="6f6a139045eae112c22973735a0e9109" category="paragraph">有了 FabricPool 資料分層解決方案、企業的 Flash 系統整體使用者體驗就能改善、同時避免重新架構應用程式以提高儲存效率的難題。FabricPool 可減少系統環境的儲存佔用空間及相關成本。作用中資料仍保留在高效能 SSD 上。非使用中資料會分層化為低成本物件儲存、同時保留儲存效率。</block>
   <block id="990ddb1a4a5333b31f268a30646a04db" category="inline-link-macro">ONTAP FabricPool</block>
   <block id="d78bbea9f2f3a40b75f9b857fb2f6850" category="paragraph">這些技術報告會在上進行擴充 <block ref="9f02b1f102d9449a407132c4b67ab5fc" category="inline-link-macro-rx"></block> 產品文件。</block>
   <block id="c3528a5e48bbe189e76cf8d737aa5961" category="inline-link-macro">TR-4598：FabricPool 最佳實務做法</block>
@@ -280,13 +279,7 @@ SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可
   <block id="a3d8d5aab8801e818f1ef65d0656ac6f" category="inline-link-macro">WP-7355 ： SnapCenter 外掛程式 VMware vSphere - 產品安全性</block>
   <block id="6d4e2f1f073dd653734779d5d0cf0f77" category="sidebar">ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署。某些 ONTAP 技術報告提供 ONTAP 功能的架構背景和建議實務做法。</block>
   <block id="9eaca569c6f5ca3388f5613da3aa008c" category="sidebar">ONTAP 上的 Oracle 資料庫</block>
-  <block id="556eda250d1f196adc09c3afcd396b84" category="sidebar">MetroCluster 解決方案架構與設計</block>
-  <block id="4767099b22895a8101a1cba45d8cf6e9" category="sidebar">知識產權MetroCluster</block>
-  <block id="eab1124b93650078ec1e8e3092712538" category="sidebar">FC MetroCluster</block>
-  <block id="c5c30671213f4d20d0d3e001be835fff" category="sidebar">SnapMirror 非同步組態和最佳實務做法</block>
-  <block id="b151fa9d3a99ac1198c348082841dadb" category="sidebar">SnapMirror 同步組態和最佳實務做法</block>
   <block id="db43ac1a3df915eac1e2b05048e0ff14" category="sidebar">使用 SnapLock 的符合 WORM 儲存設備</block>
-  <block id="35b0462c5bb2a4fdc39750037610b26b" category="sidebar">額外的資料保護與災難恢復技術報告</block>
   <block id="098a9352bab68d0361bda3b31e3eaf76" category="sidebar">資料量FlexCache</block>
   <block id="98128573f1e72d145cae478573fe7e78" category="sidebar">FlexGroup 大量實作與最佳實務做法</block>
   <block id="0a66e21020f14b45688f8e77b7e20b00" category="sidebar">資料保護與備份 ONTAP FlexGroup 磁碟區</block>
@@ -297,15 +290,12 @@ SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可
   <block id="31ca7aa5951254f3675ee33de50f7780" category="sidebar">名稱服務最佳實務做法</block>
   <block id="fd4fb5e4cf43e214576dfc0e251fb50d" category="sidebar">ONTAP 中的 NFS Kerberos</block>
   <block id="0908ed986c402b0d82409382576f03e5" category="sidebar">其他 NAS 技術報告</block>
-  <block id="6fce9db621e9f4b6fd60e707035ec03a" category="sidebar">BGP/VIP 搭配 ONTAP</block>
   <block id="b8bc0e6a162c69f8935ea868dd0979e9" category="sidebar">ONTAP 中現代 SAN 的最佳實務做法</block>
   <block id="127df462941ca837507ee75e016f4b04" category="sidebar">使用 NVMe over Fabrics （ NVMe of ）實作及設定現代化 SAN</block>
   <block id="e668c61f387e7319a559126e87ff0207" category="sidebar">ONTAP AFF All SAN Array （ ASA ）系統</block>
   <block id="80bed208c8c2b2b37854ecf2fcf63939" category="sidebar">NetApp 勒索軟體解決方案</block>
   <block id="63ab8aaa1f35361bdf5c84b3d1dd4765" category="sidebar">NetApp 與 Zero Trust</block>
-  <block id="2b1882b52bf0c1c3070f8c109bac0cb8" category="sidebar">使用 NetApp SnapLock 的符合 WORM 儲存設備</block>
   <block id="318a48e62d72677582dc9f48f0d4d7ed" category="sidebar">驗證（ SSH 、 MFA ）</block>
-  <block id="3346583295d2f989677e5eaa1cec935e" category="sidebar">ONTAP 中的安全多租戶共享</block>
   <block id="78c62b440b6934886ff35073f6d2d20e" category="sidebar">其他安全技術報告</block>
   <block id="7e5dd2fcf84a948c9fc94ed527184b65" category="sidebar">SnapCenter for Microsoft SQL</block>
   <block id="85b5ea7ba0f09e645b16f4e67a103712" category="sidebar">適用於虛擬化的 SnapCenter</block>
@@ -319,7 +309,6 @@ SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可
   <block id="2d90ac09cbf108bddad31dd341f8614e" category="sidebar">VMware Site Recovery Manager 搭配 ONTAP</block>
   <block id="16d877785afd5e8f401c4bd07d5afe32" category="sidebar">其他虛擬化技術報告</block>
   <block id="16eb034c60d3efff32199367e1dacd1f" category="sidebar">應用程式與資料庫</block>
-  <block id="3c2615f951be2a520d1b872deaa1da54" category="sidebar">營運不中斷</block>
   <block id="03c39d763ca15978d9ef16c2ba5fe98a" category="sidebar">資料保護與災難恢復</block>
   <block id="4a86e7f91bacee45f7da12b91e420cf6" category="sidebar">FlexCache 和 FlexGroup 磁碟區</block>
   <block id="c07ee5debf5f3a3fef16c1ee5e8e4942" category="sidebar">NAS</block>
@@ -334,7 +323,6 @@ SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可
 SnapCenter 是一個統一且可擴充的平台、可為 SAP HANA 及其他資料庫提供應用程式一致的資料保護。支援集中控制和監督、同時委派使用者管理應用程式專屬的備份、還原和複製工作的能力。SnapCenter藉助SnapCenter 於功能強大的功能、資料庫和儲存管理員只需學習單一工具、即可管理各種應用程式和資料庫的備份、還原和複製作業。</block>
   <block id="86083f3ea21c2385b4f013aae3c57858" category="section-title">SAP HANA</block>
   <block id="9b73989307c1975dfa4d5e1581e4afe8" category="paragraph">通知檔案提供有關 NetApp 軟體所使用之協力廠商版權與授權的資訊。</block>
-  <block id="b40ff77cb48a86ef1345e1d3bf483086" category="paragraph">ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保護基礎。下列技術報告提供 NetApp 針對 Microsoft SQL Server 、 MySQL 、 Oracle 、 PostgreSQL 和 SAP HANA 所建議的實務做法和實作程序指引。</block>
   <block id="d4ae77cd65c244ceb4277b27553d6931" category="sidebar">ONTAP 上的 MySQL 資料庫</block>
   <block id="10907e7ac5ab6e5235a23898a2331b31" category="sidebar">ONTAP 上的 PostgreSQL 資料庫</block>
   <block id="58be4918f9d0ced977d0da75ca36c36f" category="sidebar">ONTAP 上的 SAP HANA</block>
@@ -384,22 +372,7 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
 ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬體升級、以及從外部儲存陣列匯入 LUN 的原生功能。最多可將 24 個節點叢集在一起、同時透過網路檔案系統（ NFS ）、伺服器訊息區（ SMB ）、 iSCSI 、光纖通道（ FC ）和非揮發性記憶體高速（ NVMe ）傳輸協定來提供資料。此外、 Snapshot 技術是建立數萬個線上備份和完整運作資料庫複本的基礎。除了豐富的 ONTAP 功能集之外、還有各式各樣的使用者需求、包括資料庫大小、效能需求和資料保護需求。瞭解使用 AFF 儲存系統（包括 A 系列和 C 系列）的虛擬化資料庫效能、其中涵蓋兩種 AFF 選項之間的最大值和實際差異。</block>
   <block id="69b19eb816b6aa3a4cf6ced850ae07c0" category="paragraph">PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。NetApp ONTAP 是執行 PostgreSQL 資料庫的絕佳選擇、可確保其可靠性、高效能及高效率的資料管理功能。</block>
   <block id="23c3aa00d9e3e310482ad2f6bf882d8d" category="inline-link-macro">ONTAP 最佳實務做法的 PostgreSQL 資料庫</block>
-  <block id="a94a42eca1830870728b000728f0404b" category="admonition">本文件取代先前發佈的技術報告 TR-4770 ： ONTAP 最佳實務實務的 PostgreSQL 資料庫。</block>
-  <block id="2c1b27a986b5e37a810d61f72b23ee4b" category="paragraph">設定、管理及自動化 SAP 解決方案的最佳實務做法、請參閱 NetApp SAP 解決方案頁面。</block>
   <block id="79e3a796ebb97492e0ca65b735e63753" category="inline-link-macro">ONTAP 上的 SAP HANA 資料庫解決方案</block>
-  <block id="ada0578499f1a7909dee7f18bbd44352" category="paragraph"><block ref="ada0578499f1a7909dee7f18bbd44352" category="inline-link-macro-rx"></block></block>
-  <block id="0655f58a0e33e8062619dcfd012221cc" category="paragraph"><block ref="8b011bfaf7ed1ab91e2467210b049c9a" category="inline-link-macro-rx"></block>
-瞭解儲存管理員和資料庫管理員如何在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 。</block>
-  <block id="308de49ae5ecd612ee1f6ede409393ff" category="paragraph"><block ref="c3c557e05338fa6d9f996133fa1f30be" category="inline-link-macro-rx"></block>
-MySQL 及其變種（包括 MariaDB 和 Percona ）廣泛用於許多企業應用程式。這些應用程式涵蓋全球社群網站和大量的經濟應用系統、以及包含數千個資料庫執行個體的中小企業代管系統。瞭解在 ONTAP 上部署 MySQL 的組態需求、以及調整與儲存組態的相關指引。</block>
-  <block id="f5c54c33c88e0585ee80e87ca3197073" category="paragraph"><block ref="4342e369cb6f1d964722ca0d02f1386e" category="inline-link-macro-rx"></block>
-瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功部署 Oracle 的建議實務做法。</block>
-  <block id="7f682b39f7484c77db73063e07feb42c" category="paragraph"><block ref="a2a9fdf9b575841ff3ebbf6a46a0d6a8" category="inline-link-macro-rx"></block>
-瞭解在 MetroCluster 和 SnapMirror 業務連續性上操作 Oracle 資料庫的建議實務做法、測試程序及其他考量事項。</block>
-  <block id="217012d66e394711c10af45660913535" category="paragraph"><block ref="219a1452b62030a0afffbbfaf92a0a13" category="inline-link-macro-rx"></block>
-瞭解規劃移轉策略的整體考量、進行資料移動的三個不同層級、並詳細說明一些可用的各種程序。</block>
-  <block id="27aa6b2f69ccddf1851189034cceb6bb" category="paragraph"><block ref="27f14f00a6d55e3bbd1e610cf06da66c" category="inline-link-macro-rx"></block>
-PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。它受一般中介軟體套件的支援（例如 PHP 、 Java 、 Python 、 Tcl/Tk 、 ODBC 、 和 JDBC) ，過去一直是開放原始碼資料庫管理系統的熱門選擇。瞭解在 ONTAP 上部署 PostgreSQL 的組態需求、以及調整與儲存組態的相關指引。</block>
   <block id="826026c30c4ca2614aff7c91a294ac33" category="paragraph"><block ref="f77ce835a7e66c79c654dd9aafd799fa" category="inline-link-macro-rx"></block>
  ONTAP 在將近 20 年來一直是 VMware vSphere 環境的領先儲存解決方案、並持續新增創新功能來簡化管理、同時降低成本。本文件介紹適用於 vSphere 的 ONTAP 解決方案、包括最新的產品資訊和建議實務做法、以簡化部署、降低風險並簡化管理。</block>
   <block id="fc3ed6568bd8880a995c7c104a9bb7cc" category="paragraph"><block ref="ec1806039bacab99dff7403678d94933" category="inline-link-macro-rx"></block>
@@ -410,8 +383,6 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
 本文件說明保護 ONTAP 工具的技術與技術、以保護 VMware vSphere 9.X 免受產品環境中現有和新興威脅的影響。</block>
   <block id="b02eab33effe45ad95bb024ee01bf111" category="paragraph"><block ref="2d9c6af5124ecdcd73f23abea0e29951" category="inline-link-macro-rx"></block>
 本文件說明用於保護 NetApp SnapCenter Plug-in for VMware vSphere 4.X 免受產品環境中現有和新興威脅的技術與技術。</block>
-  <block id="e74dea5ebe0bf602183d15a978202e4a" category="paragraph"><block ref="ccbfbdd26305051b6ddb45fe28dfc4cd" category="inline-link-macro-rx"></block>
-瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功備份、恢復、複寫及提供災難恢復給 Oracle 的建議實務做法。</block>
   <block id="98ea16e049d26c017c083e3896766015" category="inline-link-macro">ONTAP 9.14.1 注意事項</block>
   <block id="2a0d0e639657d07a66d55606242f8863" category="inline-link-macro">ONTAP 9.14.0 注意事項</block>
   <block id="523c8b1e9973fa88312759bc71eec732" category="paragraph"><block ref="d16c9b11843460f788b4709fb5f6f9c0" category="inline-link-macro-rx"></block>
@@ -466,4 +437,23 @@ Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、�
   <block id="91d998bab304adb0fd27858a4295dcac" category="section-title">ONTAP 網路保存庫</block>
   <block id="fc46505b6029ab4d0e386a4540afeecd" category="paragraph"><block ref="79305a8b61b53acc892506e6bcd6f49f" category="inline-link-macro-rx"></block>NetApp 的 ONTAP 型網路資料保險箱為組織提供全方位且靈活的解決方案、以保護最重要的資料資產。ONTAP 運用邏輯氣帶和強大的強化方法、讓您建立安全、隔離的儲存環境、以因應不斷演變的網路威脅。透過 ONTAP 、您可以確保資料的機密性、完整性和可用度、同時維持儲存基礎架構的敏捷度和效率。</block>
   <block id="7d561ff1da15ec2093387d3679da3eb8" category="paragraph">這些技術報告會針對產品文件進行擴充<block ref="9caf0d21f047a5bbe99f0781b871b34b" category="inline-link-macro-rx"></block>。</block>
+  <block id="6c69d4f99413bb5a9b156a25d2cf986b" category="paragraph">ONTAP 是許多企業應用程式與資料庫技術的資料管理與資料保護基礎。下列技術報告提供 NetApp 針對 Microsoft SQL Server 、 MySQL 、 Oracle 、 PostgreSQL 、 SAP HANA 及 Epic 的建議實務做法與實作程序指引。</block>
+  <block id="6e2e380abc17b356c021c6eaedfcbe7b" category="paragraph"><block ref="dda11880c15064cc2934ea0825cc3c19" category="inline-link-macro-rx"></block>瞭解儲存管理員和資料庫管理員如何在 ONTAP 儲存設備上成功部署 Microsoft SQL Server 。</block>
+  <block id="26f069297e02e5ad6ecf9f64cc484c7a" category="paragraph"><block ref="af2bfb7e3ab22f5d266a0c806a1d07ac" category="inline-link-macro-rx"></block>MySQL 及其變種（包括 MariaDB 和 Percona ）廣泛用於許多企業應用程式。這些應用程式涵蓋全球社群網站和大量的經濟應用系統、以及包含數千個資料庫執行個體的中小企業代管系統。瞭解在 ONTAP 上部署 MySQL 的組態需求、以及調整與儲存組態的相關指引。</block>
+  <block id="b0a39641283aacead2a426fbdc2bbfd0" category="paragraph"><block ref="188684da2e037979155870e39852328b" category="inline-link-macro-rx"></block>瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功部署 Oracle 的建議實務做法。</block>
+  <block id="9b4fe2ba9616027d35f151afa26cbc3e" category="paragraph"><block ref="9d36b6e30cad9d0ac84fbbd43c31ff6d" category="inline-link-macro-rx"></block>瞭解可讓儲存管理員和資料庫管理員在 ONTAP 儲存設備上成功備份、恢復、複寫及提供災難恢復給 Oracle 的建議實務做法。</block>
+  <block id="00a9a7a9c2f14a08da84a855c82cc1c3" category="paragraph"><block ref="3155c50aa9b5c0151c90959d7a9e2224" category="inline-link-macro-rx"></block>瞭解在 MetroCluster 和 SnapMirror 業務持續運作上操作 Oracle 資料庫的建議實務做法、測試程序及其他考量。</block>
+  <block id="b11b157f5b37226ddd8d5ce665048ee5" category="paragraph"><block ref="0477cd7e99e124c6cf7b0db67c7e79ee" category="inline-link-macro-rx"></block>瞭解規劃移轉策略的整體考量、進行資料移動的三個不同層級、並詳細說明一些可用的各種程序。</block>
+  <block id="34d927a46becf135a2aec2255adb426c" category="paragraph"><block ref="e2f1db1f1e1924e4a7f681f4ed50f9a6" category="inline-link-macro-rx"></block>PostgreSQL 隨附的變種包括 PostgreSQL 、 PostgreSQL Plus 和 EDBS PostgreSQL 進階伺服器（ EPAS ）。PostgreSQL 通常部署為多層應用程式的後端資料庫。它受一般中介軟體套件的支援（例如 PHP 、 Java 、 Python 、 Tcl/Tk 、 ODBC 、 和 JDBC) ，過去一直是開放原始碼資料庫管理系統的熱門選擇。瞭解在 ONTAP 上部署 PostgreSQL 的組態需求、以及調整與儲存組態的相關指引。</block>
+  <block id="800794313cc8ab76ce45502a6bb87823" category="admonition">本文件取代先前發表的技術報告 _TR-4770 ： ONTAP 最佳實務做法的 PostgreSQL 資料庫。</block>
+  <block id="a82e2a1df9719702aad7724b0723df6a" category="paragraph"><block ref="703f493a3e35d4c40ac02146c0687d3b" category="inline-link-macro-rx"></block>設定、管理及自動化 SAP 解決方案的最佳實務做法、請參閱 NetApp SAP 解決方案頁面。</block>
+  <block id="e3f530e977d74053c6d70eb84886e756" category="section-title">致勝</block>
+  <block id="351526fb72e0747e1fa795bd0096c575" category="inline-link-macro">EPIC on ONTAP 最佳實務做法</block>
+  <block id="d8a3be24f4544a7166c77d2343f676c2" category="paragraph"><block ref="8b3d4e727ce205aacc125da8a1c6deaa" category="inline-link-macro-rx"></block>瞭解在內部部署和雲端部署 Epic 的最佳實務做法、同時符合在 ONTAP 上適當部署的組態標準的指南。</block>
+  <block id="a4b81d17e57a0c5c8b3d20fc8f3fb965" category="admonition">本文件取代先前發表的技術報告 _TR-3923 ： Epic 的 NetApp 最佳實務做法。</block>
+  <block id="672e4842d536a92709590c3949bd3076" category="paragraph">有了 FabricPool 資料分層解決方案、企業的 Flash 系統整體使用者體驗就能改善、同時避免重新架構應用程式以提高儲存效率的難題。FabricPool 可減少系統環境的儲存佔用空間及相關成本。作用中資料仍保留在高效能 SSD 上。非使用中資料會分層化為低成本物件儲存、同時保留儲存效率。</block>
+  <block id="53f102b306ab1aba43e9e20701dc32f2" category="sidebar">ONTAP 上的 EPIC</block>
+  <block id="6393d669ce30abc667ac49b55f562310" category="sidebar">資料保護、災難恢復和業務持續運作</block>
+  <block id="64af762eb6280d5cce6eda4b03a6e65c" category="sidebar">SnapMirror 組態與最佳實務做法</block>
+  <block id="0d59051e1739c44ad573da05fecfe0e1" category="sidebar">MetroCluster IP 與 FC</block>
 </blocks>

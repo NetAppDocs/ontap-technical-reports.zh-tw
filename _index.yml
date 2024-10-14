@@ -3,7 +3,7 @@ indexpage:
   title: ONTAP 技術報告
   summary: ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署。某些 ONTAP 技術報告提供 ONTAP
     功能的架構背景和建議實務做法。
-  keywords: ONTAP 9, ONTAP, Technical Reports, TR,
+  keywords: ONTAP 9, ONTAP, Technical Reports, TR
   lead: ONTAP 技術報告提供額外的環境、可在不同的生態系統或不同的傳輸協定中規劃及最佳化 ONTAP 部署。某些 ONTAP 技術報告提供 ONTAP
     功能的架構背景和建議實務做法。
   tiles:
@@ -19,28 +19,20 @@ indexpage:
       url: apps-dbs.html#postgresql
     - title: ONTAP 上的 SAP HANA
       url: apps-dbs.html#sap-hana
-  - title: 營運不中斷
+    - title: ONTAP 上的 EPIC
+      url: https://docs.netapp.com/us-en/ontap-apps-dbs/epic/epic-overview.html
+  - title: 資料保護、災難恢復和業務持續運作
     links:
-    - title: SnapMirror 主動同步
-      url: https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/index.html
-    - title: MetroCluster 解決方案架構與設計
-      url: business-continuity.html
-    - title: 知識產權MetroCluster
-      url: business-continuity.html
-    - title: FC MetroCluster
-      url: business-continuity.html
-    - title: 其他營運不中斷技術報告
-      url: business-continuity.html
-  - title: 資料保護與災難恢復
-    links:
-    - title: SnapMirror 非同步組態和最佳實務做法
-      url: data-protection-disaster-recovery.html
-    - title: SnapMirror 同步組態和最佳實務做法
+    - title: SnapMirror 組態與最佳實務做法
       url: data-protection-disaster-recovery.html
     - title: 使用 SnapLock 的符合 WORM 儲存設備
       url: data-protection-disaster-recovery.html
-    - title: 額外的資料保護與災難恢復技術報告
-      url: data-protection-disaster-recovery.html
+    - title: SnapMirror 主動同步
+      url: https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/index.html
+    - title: MetroCluster IP 與 FC
+      url: business-continuity.html
+    - title: 其他營運不中斷技術報告
+      url: business-continuity.html
   - title: FlexCache 和 FlexGroup 磁碟區
     links:
     - title: 資料量FlexCache
@@ -67,10 +59,6 @@ indexpage:
       url: nas.html
     - title: 其他 NAS 技術報告
       url: nas.html
-  - title: 網路
-    links:
-    - title: BGP/VIP 搭配 ONTAP
-      url: networking.html
   - title: SAN
     links:
     - title: ONTAP 中現代 SAN 的最佳實務做法
@@ -89,11 +77,7 @@ indexpage:
       url: https://docs.netapp.com/us-en/ontap/ransomware-solutions/ransomware-overview.html
     - title: NetApp 與 Zero Trust
       url: https://docs.netapp.com/us-en/ontap/zero-trust/zero-trust-overview.html
-    - title: 使用 NetApp SnapLock 的符合 WORM 儲存設備
-      url: security.html
     - title: 驗證（ SSH 、 MFA ）
-      url: security.html
-    - title: ONTAP 中的安全多租戶共享
       url: security.html
     - title: 其他安全技術報告
       url: security.html
