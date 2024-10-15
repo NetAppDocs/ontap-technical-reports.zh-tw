@@ -456,4 +456,6 @@ Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、�
   <block id="6393d669ce30abc667ac49b55f562310" category="sidebar">資料保護、災難恢復和業務持續運作</block>
   <block id="64af762eb6280d5cce6eda4b03a6e65c" category="sidebar">SnapMirror 組態與最佳實務做法</block>
   <block id="0d59051e1739c44ad573da05fecfe0e1" category="sidebar">MetroCluster IP 與 FC</block>
+  <block id="b845152aee89efdb663c0e7c1522d7bf" category="inline-link-macro">MetroCluster tiebreaker 主機和資料庫的安全性強化指南</block>
+  <block id="ee1c2b388c2a8f940cf512d5f930d4f5" category="paragraph"><block ref="3ba6a3982660c818149aaeadc40d89b3" category="inline-link-macro-rx"></block>瞭解如何設定 NetApp MetroCluster tiebreaker 主機和資料庫、以協助組織達成資訊系統機密性、完整性和可用度的規定安全目標。</block>
 </blocks>

@@ -40,3 +40,5 @@ link:https://netapp.com/pdf.html?item=/media/78654-tr-4943.pdf["TR-4943 ： NetA
 
 link:https://www.netapp.com/pdf.html?item=/media/78941-tr-4945.pdf["TR-4945 ： NetApp Manageability SDK 的安全強化指南"^]
 瞭解如何設定 NetApp Manageability SDK （ NMSDK ）、以協助組織達成資訊系統機密性、完整性和可用度的規定安全目標。
+
+link:https://docs.netapp.com/us-en/ontap-metrocluster/tiebreaker/install_security.html["MetroCluster tiebreaker 主機和資料庫的安全性強化指南"^]瞭解如何設定 NetApp MetroCluster tiebreaker 主機和資料庫、以協助組織達成資訊系統機密性、完整性和可用度的規定安全目標。
