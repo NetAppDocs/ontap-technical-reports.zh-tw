@@ -49,8 +49,7 @@ link:https://www.netapp.com/pdf.html?item=/media/27436-tr-4887.pdf["TR-4887 ： 
 
 == SS3 ONTAP
 
-link:https://www.netapp.com/pdf.html?item=/media/17219-tr4814.pdf["TR-4814 ： ONTAP 最佳實務做法中的 S3"^]
-瞭解將 Amazon Simple Storage Service （ S3 ）與 ONTAP 軟體搭配使用的建議實務做法、以及將 ONTAP 作為物件存放區與原生 S3 應用程式搭配使用的功能和組態、或作為 FabricPool 的分層目的地。
+link:https://docs.netapp.com/us-en/ontap/s3-config/index.html["TR-4814 ： ONTAP 最佳實務做法中的 S3"^] 瞭解將 Amazon Simple Storage Service （ S3 ）與 ONTAP 軟體搭配使用的建議實務做法，以及將 ONTAP 作為物件存放區與原生 S3 應用程式搭配使用的功能和組態，或作為 FabricPool 的分層目的地。
 
 
 

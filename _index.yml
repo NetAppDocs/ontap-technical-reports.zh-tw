@@ -52,7 +52,7 @@ indexpage:
     - title: ONTAP 中的多重傳輸協定 NAS 總覽與最佳實務做法
       url: nas.html
     - title: S3的ONTAP 最佳實務做法
-      url: nas.html
+      url: https://docs.netapp.com/us-en/ontap/s3-config/index.html
     - title: 名稱服務最佳實務做法
       url: nas.html
     - title: ONTAP 中的 NFS Kerberos

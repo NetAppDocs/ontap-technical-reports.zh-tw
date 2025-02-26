@@ -125,8 +125,6 @@ Microsoft 在 SMB 3.0 傳輸協定中引進多通道、其目標是藉由解決 
 瞭解多重傳輸協定 NAS 存取如何在 ONTAP 中運作、以及多重傳輸協定環境的建議實務做法。</block>
   <block id="1716834171e243de0f898a67621b6624" category="section-title">SS3 ONTAP</block>
   <block id="12d693aa0c15330c6f5d608b0a1eb6c3" category="inline-link-macro">TR-4814 ： ONTAP 最佳實務做法中的 S3</block>
-  <block id="8a9f413c7d192f7ee13320a2b74b4ecc" category="paragraph"><block ref="3f5613d82639ca68ec10bef37723bdeb" category="inline-link-macro-rx"></block>
-瞭解將 Amazon Simple Storage Service （ S3 ）與 ONTAP 軟體搭配使用的建議實務做法、以及將 ONTAP 作為物件存放區與原生 S3 應用程式搭配使用的功能和組態、或作為 FabricPool 的分層目的地。</block>
   <block id="a4273e3e312edbc9d5bd7c188aecc370" category="section-title">名稱服務</block>
   <block id="98c6ad5dad288854428df19a0833d709" category="inline-link-macro">TR-4523 ： ONTAP 中的 DNS 負載平衡</block>
   <block id="7a50564c3d71f025f2e39ea6c508a8ab" category="paragraph"><block ref="ea931303ddc872579ef3f1a3e7507b66" category="inline-link-macro-rx"></block>
@@ -458,4 +456,5 @@ Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、�
   <block id="0d59051e1739c44ad573da05fecfe0e1" category="sidebar">MetroCluster IP 與 FC</block>
   <block id="b845152aee89efdb663c0e7c1522d7bf" category="inline-link-macro">MetroCluster tiebreaker 主機和資料庫的安全性強化指南</block>
   <block id="ee1c2b388c2a8f940cf512d5f930d4f5" category="paragraph"><block ref="3ba6a3982660c818149aaeadc40d89b3" category="inline-link-macro-rx"></block>瞭解如何設定 NetApp MetroCluster tiebreaker 主機和資料庫、以協助組織達成資訊系統機密性、完整性和可用度的規定安全目標。</block>
+  <block id="3e0f59fca19e9a4d246c3e746b14f879" category="paragraph"><block ref="e2f5d130ca2d9c5351a2d7cbfddc082b" category="inline-link-macro-rx"></block> 瞭解將 Amazon Simple Storage Service （ S3 ）與 ONTAP 軟體搭配使用的建議實務做法，以及將 ONTAP 作為物件存放區與原生 S3 應用程式搭配使用的功能和組態，或作為 FabricPool 的分層目的地。</block>
 </blocks>
