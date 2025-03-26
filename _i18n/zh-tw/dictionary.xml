@@ -383,30 +383,6 @@ ONTAP 自 2002 年引進現代化資料中心以來、一直是 VMware vSphere �
 本文件說明用於保護 NetApp SnapCenter Plug-in for VMware vSphere 4.X 免受產品環境中現有和新興威脅的技術與技術。</block>
   <block id="98ea16e049d26c017c083e3896766015" category="inline-link-macro">ONTAP 9.14.1 注意事項</block>
   <block id="2a0d0e639657d07a66d55606242f8863" category="inline-link-macro">ONTAP 9.14.0 注意事項</block>
-  <block id="523c8b1e9973fa88312759bc71eec732" category="paragraph"><block ref="d16c9b11843460f788b4709fb5f6f9c0" category="inline-link-macro-rx"></block>
-<block ref="5032e7169b10b3f96d6c299a82923a0e" category="inline-link-macro-rx"></block>
-<block ref="f7a2b1db149ed9886af0ce846dbc3e14" category="inline-link-macro-rx"></block>
-<block ref="b349c509ad858348b30db7e73307e3aa" category="inline-link-macro-rx"></block>
-<block ref="0dce234dfded58bd461541473b86e42a" category="inline-link-macro-rx"></block>
-<block ref="9760ec4df13f0afbdfec88ae16c871ae" category="inline-link-macro-rx"></block>
-<block ref="b6dab2933dfb92cf0c1355707a4aec7c" category="inline-link-macro-rx"></block>
-<block ref="1b7c80b26162b03bd0addd587f70df55" category="inline-link-macro-rx"></block>
-<block ref="14faf912aa42102a6628af4551e02583" category="inline-link-macro-rx"></block>
-<block ref="a90f36d649d3be5d386cc3563ab044fb" category="inline-link-macro-rx"></block>
-<block ref="2cd65b4a044075cfd9ad4a91f42fdff4" category="inline-link-macro-rx"></block>
-<block ref="5e764cc3fdcc19ff667796e414159bdc" category="inline-link-macro-rx"></block>
-<block ref="561451f09c7bca700ea0d7833cd9e92e" category="inline-link-macro-rx"></block>
-<block ref="d23d341a344216fbf99a91152429d49c" category="inline-link-macro-rx"></block>
-<block ref="b35e8fbd7b0369b23734510994911ec4" category="inline-link-macro-rx"></block>
-<block ref="41d4305cf7a6acb595086f123121a781" category="inline-link-macro-rx"></block>
-<block ref="ea685649fabe77da53e843fec56f72b8" category="inline-link-macro-rx"></block></block>
-  <block id="9f875be69c7685bab2118b783273f9cb" category="section-title">MCC IP的中介ONTAP</block>
-  <block id="9c737a80c28b60fa0a89b239e49754be" category="inline-link-macro">9.9.1 ONTAP MCC IP的靜態中介器注意事項</block>
-  <block id="fa29a7a0592293de2c9dcc278d56bc7e" category="inline-link-macro">9.8 ONTAP MCC IP的靜態中介器注意事項</block>
-  <block id="186313e86066c6c03d059adfc998c283" category="inline-link-macro">9.7 ONTAP 中介程序 MCC IP 通知</block>
-  <block id="da86bbce92dc808c91ba1376c176a12f" category="paragraph"><block ref="03dc7d738ea465fbcf752653ce5a8a9f" category="inline-link-macro-rx"></block>
-<block ref="ddd7bb6791d512b6bbd035245f183b42" category="inline-link-macro-rx"></block>
-<block ref="2f9e1ae374fcd81bbb2bbbd4546951d9" category="inline-link-macro-rx"></block></block>
   <block id="beb3ca55ed0a53a38a2b97540b05d6e4" category="sidebar">ONTAP 上的 Microsoft SQL Server</block>
   <block id="4ffeff5e5bc550c2069e1c9f5c8faf9b" category="inline-link-macro">TR-4568 ：適用於 Windows Server 的 NetApp 部署準則和儲存最佳實務做法</block>
   <block id="11001fb821f9ba1fb2e3a93608a688cb" category="paragraph"><block ref="c141febea7d2bd403fd12cb6dd24d35c" category="inline-link-macro-rx"></block>
@@ -457,4 +433,14 @@ Microsoft Windows Server 是企業級作業系統、涵蓋網路、安全性、�
   <block id="b845152aee89efdb663c0e7c1522d7bf" category="inline-link-macro">MetroCluster tiebreaker 主機和資料庫的安全性強化指南</block>
   <block id="ee1c2b388c2a8f940cf512d5f930d4f5" category="paragraph"><block ref="3ba6a3982660c818149aaeadc40d89b3" category="inline-link-macro-rx"></block>瞭解如何設定 NetApp MetroCluster tiebreaker 主機和資料庫、以協助組織達成資訊系統機密性、完整性和可用度的規定安全目標。</block>
   <block id="3e0f59fca19e9a4d246c3e746b14f879" category="paragraph"><block ref="e2f5d130ca2d9c5351a2d7cbfddc082b" category="inline-link-macro-rx"></block> 瞭解將 Amazon Simple Storage Service （ S3 ）與 ONTAP 軟體搭配使用的建議實務做法，以及將 ONTAP 作為物件存放區與原生 S3 應用程式搭配使用的功能和組態，或作為 FabricPool 的分層目的地。</block>
+  <block id="3f808654ebfed6aae875b71a402ac91b" category="inline-link-macro">ONTAP 9.16.1 注意事項</block>
+  <block id="afb530fcc81b2978f808bd5327a32c87" category="inline-link-macro">ONTAP 9.16.0 注意事項</block>
+  <block id="d804afb237a517c556722013a1b8ec73" category="inline-link-macro">ONTAP 9.15.1 注意事項</block>
+  <block id="5f016d328522d91c512269e0786e144d" category="inline-link-macro">ONTAP 9.15.0 注意事項</block>
+  <block id="d13ca0508189923e4791d61e82518903" category="paragraph"><block ref="ee254fc53b05f67f41ce3314151253c2" category="inline-link-macro-rx"></block> <block ref="83cffbd8d99e434b2f5f3940f69ff8e4" category="inline-link-macro-rx"></block> <block ref="23ce2232a13ec581d8a1f356c5cc2645" category="inline-link-macro-rx"></block> <block ref="4d4f1ffb0dbcd5627ca696d020c34dce" category="inline-link-macro-rx"></block> <block ref="d16c9b11843460f788b4709fb5f6f9c0" category="inline-link-macro-rx"></block> <block ref="5032e7169b10b3f96d6c299a82923a0e" category="inline-link-macro-rx"></block> <block ref="f7a2b1db149ed9886af0ce846dbc3e14" category="inline-link-macro-rx"></block> <block ref="b349c509ad858348b30db7e73307e3aa" category="inline-link-macro-rx"></block> <block ref="0dce234dfded58bd461541473b86e42a" category="inline-link-macro-rx"></block> <block ref="9760ec4df13f0afbdfec88ae16c871ae" category="inline-link-macro-rx"></block> <block ref="b6dab2933dfb92cf0c1355707a4aec7c" category="inline-link-macro-rx"></block> <block ref="1b7c80b26162b03bd0addd587f70df55" category="inline-link-macro-rx"></block> <block ref="14faf912aa42102a6628af4551e02583" category="inline-link-macro-rx"></block> <block ref="a90f36d649d3be5d386cc3563ab044fb" category="inline-link-macro-rx"></block> <block ref="2cd65b4a044075cfd9ad4a91f42fdff4" category="inline-link-macro-rx"></block> <block ref="5e764cc3fdcc19ff667796e414159bdc" category="inline-link-macro-rx"></block> <block ref="561451f09c7bca700ea0d7833cd9e92e" category="inline-link-macro-rx"></block> <block ref="d23d341a344216fbf99a91152429d49c" category="inline-link-macro-rx"></block> <block ref="b35e8fbd7b0369b23734510994911ec4" category="inline-link-macro-rx"></block> <block ref="41d4305cf7a6acb595086f123121a781" category="inline-link-macro-rx"></block> <block ref="ea685649fabe77da53e843fec56f72b8" category="inline-link-macro-rx"></block></block>
+  <block id="c9e7f99d53af8a795853cdf25af30b41" category="section-title">適用於 MetroCluster IP 組態的 ONTAP Mediator</block>
+  <block id="f6cab8e78e70dc1f9720a3ef038776e0" category="inline-link-macro">9.9.1 MetroCluster IP 組態的 ONTAP Mediator 注意事項</block>
+  <block id="ebe991cfd03b446bbf8687699ccbd660" category="inline-link-macro">9.8 適用於 MetroCluster IP 組態的 ONTAP Mediator 注意事項</block>
+  <block id="2db41096b15f25232cba7341c2140448" category="inline-link-macro">9.7 適用於 MetroCluster IP 組態的 ONTAP Mediator 注意事項</block>
+  <block id="f81cc577527b8b7cad4405edd62a83d4" category="paragraph"><block ref="3e82164cf34143fb60c8ff9df8c41c0a" category="inline-link-macro-rx"></block> <block ref="d53517b81c95b1c10115cf953ff553c1" category="inline-link-macro-rx"></block> <block ref="b1bde49b948d4004f51f0cd5e9a9e990" category="inline-link-macro-rx"></block></block>
 </blocks>
