@@ -1,10 +1,10 @@
 ---
+permalink: snapcenter.html 
 sidebar: sidebar 
 keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
-permalink: snapcenter.html 
 summary: 這些技術報告提供 SnapCenter with NetApp ONTAP 的概觀、以及建議的實務做法。 
 ---
-= SnapCenter 技術報告
+= ONTAP SnapCenter 技術報告
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -18,7 +18,7 @@ SnapCenter 提供統一化的平台、可實現應用程式一致的資料保護
 
 [NOTE]
 ====
-這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/snapcenter/index.html["SnapCenter"] 產品文件。
+這些技術報告會針對產品文件進行擴充link:https://docs.netapp.com/us-en/snapcenter/index.html["SnapCenter"^]。
 
 ====
 
@@ -28,8 +28,7 @@ SnapCenter 提供統一化的平台、可實現應用程式一致的資料保護
 link:https://www.netapp.com/pdf.html?item=/media/12403-tr4700.pdf["TR-4700 ：適用於 Oracle 資料庫的 SnapCenter 外掛程式最佳實務做法"^]
 NetApp SnapCenter 是一套統一且可擴充的平台、可提供 Oracle 一致的資料保護功能、透過集中化的控制與監督功能、將複雜的作業自動化。瞭解使用 SnapCenter 部署 Oracle 資料庫的建議實務做法。
 
-link:https://docs.netapp.com/us-en/netapp-solutions/databases/snapctr_svcs_ora.html["TR-4964 ：使用 SnapCenter 服務備份、還原及複製 Oracle 資料庫"]
-瞭解如何設定 SnapCenter 服務來備份、還原及複製部署至 Amazon FSX 的 Oracle 資料庫、以供 ONTAP 儲存設備和 EC2 運算執行個體使用。SnapCenter 服務雖然設定和使用容易得多、但透過 SnapCenter 介面提供主要功能。
+link:https://docs.netapp.com/us-en/netapp-solutions/databases/snapctr_svcs_ora.html["TR-4964 ：使用 SnapCenter 服務備份、還原及複製 Oracle 資料庫"^]瞭解如何設定 SnapCenter 服務來備份，還原及複製部署至 Amazon FSX 的 Oracle 資料庫，以供 ONTAP 儲存設備和 EC2 運算執行個體使用。SnapCenter 服務雖然設定和使用容易得多、但透過 SnapCenter 介面提供主要功能。
 
 
 
@@ -49,20 +48,16 @@ link:https://www.netapp.com/es/pdf.html?item=/es/media/12398-tr-4681.pdf["TR-468
 
 == SnapCenter for SAP HANA
 
-link:https://docs.netapp.com/us-en/netapp-solutions-sap/backup/saphana-br-scs-overview.html["TR-4614：SAP HANA備份與還原SnapCenter 功能搭配使用"]
-SnapCenter 是一個統一且可擴充的平台、可為 SAP HANA 及其他資料庫提供應用程式一致的資料保護。支援集中控制和監督、同時委派使用者管理應用程式專屬的備份、還原和複製工作的能力。SnapCenter藉助SnapCenter 於功能強大的功能、資料庫和儲存管理員只需學習單一工具、即可管理各種應用程式和資料庫的備份、還原和複製作業。
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/backup/saphana-br-scs-overview.html["TR-4614：SAP HANA備份與還原SnapCenter 功能搭配使用"^]SnapCenter 是一個統一且可擴充的平台，可為 SAP HANA 及其他資料庫提供應用程式一致的資料保護。支援集中控制和監督、同時委派使用者管理應用程式專屬的備份、還原和複製工作的能力。SnapCenter藉助SnapCenter 於功能強大的功能、資料庫和儲存管理員只需學習單一工具、即可管理各種應用程式和資料庫的備份、還原和複製作業。
 
-link:https://docs.netapp.com/us-en/netapp-solutions-sap/backup/amazon-fsx-overview.html["TR-4926：適用於NetApp ONTAP 的Amazon FSX上的SAP HANA - SnapCenter 利用NetApp進行備份與還原"]
-瞭解 Amazon FSX for NetApp ONTAP 和 SnapCenter 上的 SAP HANA 資料保護建議實務做法。主題包括 SnapCenter 概念、組態建議和作業工作流程、包括組態、備份作業、 以及還原與還原作業。
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/backup/amazon-fsx-overview.html["TR-4926：適用於NetApp ONTAP 的Amazon FSX上的SAP HANA - SnapCenter 利用NetApp進行備份與還原"^]瞭解 Amazon FSX for NetApp ONTAP 和 SnapCenter 上的 SAP HANA 資料保護建議實務做法。主題包括 SnapCenter 概念、組態建議和作業工作流程、包括組態、備份作業、 以及還原與還原作業。
 
-link:https://docs.netapp.com/us-en/netapp-solutions-sap/lifecycle/sc-copy-clone-introduction.html["TR-4667 ：利用 SnapCenter 將 SAP HANA 系統複製與複製作業自動化"]
-SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項、可讓 SAP 基礎管理員加速和自動化 SAP 系統複製、複製或重新整理作業。立即瞭解在任何主要或次要儲存設備上選擇任何 SnapCenter Snapshot 備份的選項、可讓您解決最重要的使用案例、包括邏輯毀損、災難恢復測試或 SAP QA 系統的重新整理。
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/lifecycle/sc-copy-clone-introduction.html["TR-4667 ：利用 SnapCenter 將 SAP HANA 系統複製與複製作業自動化"^]SnapCenter 儲存複製和靈活定義複製前和複製後作業的選項，可讓 SAP 基礎管理員加速和自動化 SAP 系統複製，複製或重新整理作業。立即瞭解在任何主要或次要儲存設備上選擇任何 SnapCenter Snapshot 備份的選項、可讓您解決最重要的使用案例、包括邏輯毀損、災難恢復測試或 SAP QA 系統的重新整理。
 
 link:https://www.netapp.com/pdf.html?item=/media/17030-tr4719.pdf["TR-4719 ： SAP HANA 系統複寫備份與還原、採用 SnapCenter 技術"^]
 瞭解 SnapCenter 技術和 SAP HANA 外掛程式如何在 SAP HANA 系統複製環境中用於備份與還原。
 
-link:https://docs.netapp.com/us-en/netapp-solutions-sap/lifecycle/sc-copy-clone-introduction.html["TR-4667 ：利用 SnapCenter 將 SAP HANA 系統複製與複製作業自動化"]
-在儲存層上建立應用程式一致的 NetApp Snapshot 備份、是系統複本和系統複製作業的基礎。儲存型Snapshot備份是使用SnapCenter 適用於SAP HANA的NetApp還原外掛程式和SAP HANA資料庫提供的介面來建立。此功能可在SAP HANA備份目錄中登錄Snapshot備份、以便將備份用於還原與還原、以及複製作業。SnapCenter
+link:https://docs.netapp.com/us-en/netapp-solutions-sap/lifecycle/sc-copy-clone-introduction.html["TR-4667 ：利用 SnapCenter 將 SAP HANA 系統複製與複製作業自動化"^]在儲存層上建立應用程式一致的 NetApp Snapshot 備份，是系統複本和系統複製作業的基礎。儲存型Snapshot備份是使用SnapCenter 適用於SAP HANA的NetApp還原外掛程式和SAP HANA資料庫提供的介面來建立。此功能可在SAP HANA備份目錄中登錄Snapshot備份、以便將備份用於還原與還原、以及複製作業。SnapCenter
 
 
 

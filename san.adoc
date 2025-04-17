@@ -1,10 +1,10 @@
 ---
+permalink: san.html 
 sidebar: sidebar 
 keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, SAN, NVMe, NVMeoF, NVMeoTCP, NVMeoFC, iSCSI, fibre channel, fiber channel, igroups, namespaces, namespace, LUN, subsystem, best practices, best-practices 
-permalink: san.html 
 summary: 這些技術報告概述 ONTAP 的區塊協定、以及建議的實務做法。 
 ---
-= SAN 技術報告
+= ONTAP SAN 技術報告
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,11 +14,11 @@ summary: 這些技術報告概述 ONTAP 的區塊協定、以及建議的實務�
 
 
 [role="lead"]
-ONTAP SAN 儲存設備提供簡化的 SAN 體驗、可為貴組織的關鍵任務資料庫和其他 SAN 工作負載提供高可用度。ONTAP SAN 與 Oracle 、 SAP 和 Microsoft SQL Server 資料庫整合了同級最佳的資料服務、加上 VMware 和其他領先業界的 Hypervisor 、可為企業資料庫應用程式提供更快的價值實現時間。
+ONTAP SAN 儲存設備提供簡化的 SAN 體驗，可為貴組織的關鍵任務資料庫和其他 SAN 工作負載提供高可用度。ONTAP SAN 與 Oracle 、 SAP 和 Microsoft SQL Server 資料庫整合了同級最佳的資料服務、加上 VMware 和其他領先業界的 Hypervisor 、可為企業資料庫應用程式提供更快的價值實現時間。
 
 [NOTE]
 ====
-這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/san-management/index.html["ONTAP SAN 儲存管理"] 產品文件。
+這些技術報告會針對產品文件進行擴充link:https://docs.netapp.com/us-en/ontap/san-management/index.html["ONTAP SAN 儲存管理"^]。
 
 ====
 link:https://www.netapp.com/pdf.html?item=/media/10680-tr4080.pdf["TR-4080 ： ONTAP 中現代 SAN 的最佳實務做法"^]

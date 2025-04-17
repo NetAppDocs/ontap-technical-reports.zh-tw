@@ -1,10 +1,10 @@
 ---
+permalink: nas-containers.html 
 sidebar: sidebar 
 keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
-permalink: nas-containers.html 
 summary: 這些技術報告提供 NetApp ONTAP 中 FlexCache 和 FlexGroup 磁碟區的概觀、以及最佳實務建議 
 ---
-= FlexCache 與 FlexGroup Volume 技術報告
+= ONTAP FlexCache 與 FlexGroup Volume 技術報告
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -18,7 +18,7 @@ NetApp NAS 解決方案可簡化資料管理、協助您跟上成長腳步、同
 
 [NOTE]
 ====
-這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/task_nas_flexcache.html["ONTAP FlexCache Volume"] 和 link:https://docs.netapp.com/us-en/ontap/task_nas_provision_flexgroup.html["ONTAP FlexGroup Volume"] 產品文件。
+這些技術報告會針對和產品文件進行擴充 link:https://docs.netapp.com/us-en/ontap/task_nas_flexcache.html["ONTAP FlexCache Volume"^] link:https://docs.netapp.com/us-en/ontap/task_nas_provision_flexgroup.html["ONTAP FlexGroup Volume"^] 。
 
 ====
 

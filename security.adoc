@@ -1,10 +1,10 @@
 ---
-sidebar: sidebar 
-keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, MAV, MFA, Ransomware, Security, best practices, best-practices, tamperproof, tamper proof, tamperproof snapshots tamper-proof snapshots 
 permalink: security.html 
+keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, MAV, MFA, Ransomware, Security, best practices, best-practices, tamperproof, tamper proof, tamperproof snapshots tamper-proof snapshots 
+sidebar: sidebar 
 summary: 這些技術報告概述 NetApp ONTAP 的安全性、以及建議的實務做法。 
 ---
-= 安全技術報告
+= ONTAP 安全技術報告
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -31,7 +31,7 @@ link:https://docs.netapp.com/us-en/netapp-solutions/cyber-vault/ontap-cyber-vaul
 
 == 勒索軟體
 
-link:https://docs.netapp.com/us-en/ontap/ransomware-solutions/ransomware-overview.html["TR-4572 ：勒索軟體的 NetApp 解決方案"^] 瞭解勒索軟體如何進化、以及如何利用 NetApp 解決方案來識別攻擊、防止擴散、並儘快恢復。本文件所提供的指引與解決方案旨在協助組織擁有網路彈性解決方案、同時符合其規定的資訊系統機密性、完整性及可用度安全目標。
+link:./ransomware-solutions/ransomware-overview.html["TR-4572 ：勒索軟體的 NetApp 解決方案"] 瞭解勒索軟體如何進化、以及如何利用 NetApp 解決方案來識別攻擊、防止擴散、並儘快恢復。本文件所提供的指引與解決方案旨在協助組織擁有網路彈性解決方案、同時符合其規定的資訊系統機密性、完整性及可用度安全目標。
 
 link:https://www.netapp.com/pdf.html?item=/media/6158-tr4526.pdf["TR-4526 ：使用 NetApp SnapLock 的符合 WORM 儲存設備"^]
 許多企業都仰賴一次寫入、多次讀取（ WORM ）資料儲存設備來滿足法規遵循要求、或只是在資料保護策略中新增另一層。瞭解如何將 ONTAP 的 WORM 解決方案 SnapLock 整合至需要 WORM 資料儲存的環境。
@@ -40,7 +40,7 @@ link:https://www.netapp.com/pdf.html?item=/media/6158-tr4526.pdf["TR-4526 ：使
 
 == 零信任
 
-link:https://docs.netapp.com/us-en/ontap/zero-trust/zero-trust-overview.html["NetApp 與 Zero Trust"] 零信任傳統上是一種以網路為中心的方法、用於建構微核心和周邊（ MCAP ）、以控制區段閘道的方式來保護資料、服務、應用程式或資產。ONTAP 採用以資料為中心的 Zero Trust 方法、讓儲存管理系統成為區段閘道、以保護及監控客戶資料的存取。特別是、 FPolicy Zero Trust 引擎和 FPolicy 合作夥伴生態系統成為控制中心、可深入瞭解正常和異常的資料存取模式、並識別內部威脅。
+link:./zero-trust/zero-trust-overview.html["NetApp 與 Zero Trust"] 零信任傳統上是一種以網路為中心的方法、用於建構微核心和周邊（ MCAP ）、以控制區段閘道的方式來保護資料、服務、應用程式或資產。ONTAP 採用以資料為中心的 Zero Trust 方法、讓儲存管理系統成為區段閘道、以保護及監控客戶資料的存取。特別是、 FPolicy Zero Trust 引擎和 FPolicy 合作夥伴生態系統成為控制中心、可深入瞭解正常和異常的資料存取模式、並識別內部威脅。
 
 
 
@@ -65,3 +65,9 @@ link:https://www.netapp.com/pdf.html?item=/media/16886-tr-4160.pdf["TR-4160 ： 
 
 link:https://www.netapp.com/pdf.html?item=/media/17180-tr4401.pdf["TR-4401 ： PCI-DSS 4.0 和 ONTAP"^]
 瞭解如何根據 PCI DSS 4.0 標準驗證系統、並符合您套用至 NetApp ONTAP 系統的控制項要求。
+
+
+
+== 屬性型存取控制
+
+link:./abac/abac-overview.html["使用 ONTAP 進行屬性型存取控制"]瞭解如何設定 NFSv4.2 安全性標籤和延伸屬性（ xATT ），以支援角色型存取控制（ RBAC ）和屬性型存取控制（ ABAC ），這是根據使用者，資源和環境屬性來定義權限的授權策略。

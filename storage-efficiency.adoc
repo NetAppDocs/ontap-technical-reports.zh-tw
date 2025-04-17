@@ -1,10 +1,10 @@
 ---
+permalink: storage-efficiency.html 
 sidebar: sidebar 
 keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
-permalink: storage-efficiency.html 
 summary: 這些技術報告概述 NetApp ONTAP 的儲存效率、以及建議的實務做法。 
 ---
-= 儲存效率技術報告
+= ONTAP 儲存效率技術報告
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -18,9 +18,6 @@ ONTAP 提供全方位的儲存效率功能組合。即時資料壓縮、重複�
 
 [NOTE]
 ====
-重複資料刪除的程序文件可在以下網址找到： link:https://docs.netapp.com/us-en/ontap/volumes/enable-deduplication-volume-task.html["重複資料刪除文件"]
-壓縮的程序文件可在以下網址找到： link:https://docs.netapp.com/us-en/ontap/volumes/enable-data-compression-volume-task.html["壓縮文件"]
-如需瞭解溫度敏感儲存效率的程序文件、請參閱 link:https://docs.netapp.com/us-en/ontap/volumes/enable-temperature-sensitive-efficiency-concept.html["對溫度敏感的儲存效率文件"]
-有關壓縮的程序文件、請參閱 link:https://docs.netapp.com/us-en/ontap/volumes/enable-inline-data-compaction-fas-systems-task.html["壓縮文件"]
+如需重複資料刪除link:https://docs.netapp.com/us-en/ontap/volumes/enable-deduplication-volume-task.html["重複資料刪除文件"^]的程序文件，請參閱壓縮程序文件link:https://docs.netapp.com/us-en/ontap/volumes/enable-data-compression-volume-task.html["壓縮文件"^]，網址為：。如需瞭解溫度敏感儲存效率的程序文件，請參閱link:https://docs.netapp.com/us-en/ontap/volumes/enable-temperature-sensitive-efficiency-concept.html["對溫度敏感的儲存效率文件"^]壓縮程序文件link:https://docs.netapp.com/us-en/ontap/volumes/enable-inline-data-compaction-fas-systems-task.html["壓縮文件"^]
 
 ====

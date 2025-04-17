@@ -1,10 +1,10 @@
 ---
+permalink: apps-dbs.html 
 sidebar: sidebar 
 keywords: Databases, Applications, Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
-permalink: apps-dbs.html 
 summary: 這些技術報告概述 ONTAP 上的應用程式和資料庫、以及建議的實務做法 
 ---
-= 應用程式與資料庫技術報告
+= ONTAP 及應用程式與資料庫技術報告
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 

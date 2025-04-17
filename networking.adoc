@@ -1,10 +1,10 @@
 ---
+permalink: networking.html 
 sidebar: sidebar 
 keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices 
-permalink: networking.html 
 summary: 這些技術報告提供 NetApp ONTAP 網路的概觀、以及建議的實務做法。 
 ---
-= 網路技術報告
+= ONTAP 網路技術報告
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -18,7 +18,7 @@ ONTAP 提供各種不同的網路功能和組態、以滿足最嚴苛的橫向�
 
 [NOTE]
 ====
-這些技術報告會在上進行擴充 link:https://docs.netapp.com/us-en/ontap/network-management/index.html["ONTAP 網路管理"] 產品文件。
+這些技術報告會針對產品文件進行擴充link:https://docs.netapp.com/us-en/ontap/network-management/index.html["ONTAP 網路管理"^]。
 
 ====
 link:https://www.netapp.com/pdf.html?item=/media/79703-TR-4949.pdf["TR-4949 ：在資料中心使用 ONTAP 的 BGP/VIP"^]

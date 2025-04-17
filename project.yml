@@ -27,9 +27,17 @@ sidebar:
   - title: SAN
     url: "/san.html"
   - title: 安全性
-    url: "/security.html"
-  - title: 安全強化指南
-    url: "/security-hardening-guides.html"
+    entries:
+    - title: 總覽
+      url: "/security.html"
+    - section: ransomware-solutions
+    - section: zero-trust
+    - section: abac
+  - title: 強化安全性
+    entries:
+    - title: 總覽
+      url: "/security-hardening-guides.html"
+    - section: ontap-security-hardening
   - title: SnapCenter
     url: "/snapcenter.html"
   - title: 分層

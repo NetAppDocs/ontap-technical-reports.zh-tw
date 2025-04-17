@@ -74,9 +74,9 @@ indexpage:
     - title: ONTAP 網路保存庫
       url: https://docs.netapp.com/us-en/netapp-solutions/cyber-vault/ontap-cyber-vault-overview.html
     - title: NetApp 勒索軟體解決方案
-      url: https://docs.netapp.com/us-en/ontap/ransomware-solutions/ransomware-overview.html
+      url: "/ransomware-solutions/ransomware-overview.html"
     - title: NetApp 與 Zero Trust
-      url: https://docs.netapp.com/us-en/ontap/zero-trust/zero-trust-overview.html
+      url: "/zero-trust/zero-trust-overview.html"
     - title: 驗證（ SSH 、 MFA ）
       url: security.html
     - title: 其他安全技術報告

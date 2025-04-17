@@ -1,7 +1,7 @@
 ---
+permalink: business-continuity.html 
 sidebar: sidebar 
 keywords: Technical Reports, TR, NetApp TR, ONTAP TR, ONTAP, ONTAP 9, best practices, best-practices, SM-BC, SnapMirror Business Continuity 
-permalink: business-continuity.html 
 summary: 這些技術報告概述 NetApp ONTAP 的營運持續性、以及建議的實務做法 
 ---
 = 營運不中斷技術報告
@@ -18,7 +18,7 @@ NetApp 提供多種解決方案、可在應用程式和資料上線時進行合�
 
 [NOTE]
 ====
-這些技術報告會針對和產品文件進行擴充 link:https://docs.netapp.com/us-en/ontap/smbc/index.html["ONTAP SnapMirror 主動同步"] link:https://docs.netapp.com/us-en/ontap-metrocluster/index.html["ONTAP MetroCluster"] 。
+這些技術報告會針對和產品文件進行擴充 link:https://docs.netapp.com/us-en/ontap/smbc/index.html["ONTAP SnapMirror 主動同步"^] link:https://docs.netapp.com/us-en/ontap-metrocluster/index.html["ONTAP MetroCluster"^] 。
 
 ====
 
@@ -34,8 +34,8 @@ link:https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/index.html["TR-4
 link:https://www.netapp.com/pdf.html?item=/media/13480-tr4705.pdf["TR-4705 ： NetApp MetroCluster 解決方案架構與設計"^]
 本文件說明 ONTAP 中 MetroCluster 功能的高階架構和設計概念。
 
-* MetroCluster IP* link:https://www.netapp.com/pdf.html?item=/media/13481-tr4689pdf.pdf["TR-4689 ： NetApp MetroCluster IP"^] MetroCluster 是適用於在 FAS 和 AFF 系統上執行的 ONTAP 的持續可用儲存解決方案。MetroCluster IP 是採用乙太網路型後端儲存架構的最新進化產品。MetroCluster IP 提供高度備援的組態、以滿足最關鍵業務應用程式的需求。MetroCluster IP 包含在 ONTAP 中、可為使用 ONTAP 儲存設備的用戶端和伺服器提供 NAS 和 SAN 連線。
+.知識產權MetroCluster
+link:https://www.netapp.com/pdf.html?item=/media/13481-tr4689pdf.pdf["TR-4689 ： NetApp MetroCluster IP"^]MetroCluster 是適用於在 FAS 和 AFF 系統上執行的 ONTAP 的持續可用儲存解決方案。MetroCluster IP 是採用乙太網路型後端儲存架構的最新進化產品。MetroCluster IP 提供高度備援的組態、以滿足最關鍵業務應用程式的需求。MetroCluster IP 包含在 ONTAP 中、可為使用 ONTAP 儲存設備的用戶端和伺服器提供 NAS 和 SAN 連線。
 
-* MetroCluster FC*
-link:https://www.netapp.com/pdf.html?item=/media/13482-tr4375.pdf["TR-4375 ： NetApp MetroCluster FC"^]
-MetroCluster 為任務關鍵型應用程式提供跨地理區分離資料中心的持續資料可用度。瞭解 MetroCluster FC 建議實務做法、設計決策及支援的組態。
+.部分FC MetroCluster
+link:https://www.netapp.com/pdf.html?item=/media/13482-tr4375.pdf["TR-4375 ： NetApp MetroCluster FC"^]MetroCluster 為任務關鍵型應用程式提供跨地理區分離資料中心的持續資料可用度。瞭解 MetroCluster FC 建議實務做法、設計決策及支援的組態。
