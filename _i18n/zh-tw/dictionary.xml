@@ -1794,7 +1794,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="50f0055dd25143ce1041a1e865a7cff2" category="paragraph">有關報告漏洞和事件、 NetApp 安全響應和客戶機密性的信息，請參閱<block ref="85e584d5dd95cb24acf0575604062318" category="inline-link-rx"></block>。</block>
   <block id="3b878279a04dc47d60932cb294d96259" category="sidebar">總覽</block>
   <block id="addb25ae677e0b8a55734ab57c09d585" category="sidebar">強化安全性</block>
-  <block id="1aa0723459b84338c8aad8382638c878" category="sidebar">ONTAP 強化準則</block>
   <block id="ca8c02fc98ee18dce1a2f0c4acf7cd56" category="sidebar">本機儲存管理員帳戶</block>
   <block id="d3d5dd45b51e06a8bf7d70c42f06240c" category="sidebar">多重管理員驗證</block>
   <block id="4cd4399cfc2bfd6d194da77235de119a" category="sidebar">Snapshot 複本鎖定</block>
@@ -1803,15 +1802,15 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="b835d7094831b4ed2a38af1dbd1fe404" category="sidebar">FIPS 模式、 TLS 和 SSL 管理</block>
   <block id="8e48f26dee6c1917b45f1d05c19074d7" category="sidebar">設定 CIFS SMB 簽署與封裝</block>
   <block id="94e6cee7fe1a1375bf9dc65d4f0dd995" category="sidebar">LIF安全性</block>
-  <block id="4b3b5551c4f327daecfcde4636aca278" category="sidebar">關於 NetApp 勒索軟體保護</block>
   <block id="dcd771e3d20c3c7415e08f5bf28a6e38" category="sidebar">勒索軟體和 NetApp 的保護產品組合</block>
   <block id="06205ba9447bbde00fbe939539a25870" category="sidebar">SnapLock 和防竄改快照複本</block>
   <block id="e6a3ee6f35767ceec82038d17d54fb88" category="sidebar">CI 儲存工作負載安全（ CISWS ）</block>
   <block id="e59f82f50a98ebe0abf3807c82f2a63b" category="sidebar">網路拖運</block>
   <block id="9c93de8987f6abeac5c25e0855470103" category="sidebar">Active IQ 勒索軟體保護</block>
-  <block id="3cecaa4840f4146d89b6a6560054fc43" category="sidebar">啟用 Zero Trust 模式</block>
   <block id="c8b78402f94fce212009aa61ceb6fa0d" category="sidebar">Zero Trust 總覽</block>
   <block id="ebf6adb994a800f01712f5271da576c8" category="sidebar">ARCHITECT Zero Trust 方法</block>
   <block id="30b66b872763a94b8ae22c6953d55a41" category="sidebar">大規模自動化零信任</block>
   <block id="a919cbb519743fc10912cc33b7fce224" category="sidebar">Zero Trust 混合雲部署</block>
+  <block id="31f4bfc29163ac1c62592e45806e4c89" category="sidebar">ONTAP 安全強化準則</block>
+  <block id="998827b90d84e6f2876b33dda3bee943" category="sidebar">NetApp 勒索軟體解決方案</block>
 </blocks>
