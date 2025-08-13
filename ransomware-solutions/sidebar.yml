@@ -8,8 +8,8 @@ entries:
   url: "/ransomware-solutions/ransomware-snaplock-tamperproof-snapshots.html"
 - title: FPolicy 檔案封鎖
   url: "/ransomware-solutions/ransomware-fpolicy.html"
-- title: CI 儲存工作負載安全（ CISWS ）
-  url: "/ransomware-solutions/ransomware-CI-workload-security.html"
+- title: Data Infrastructure Insights儲存工作負載安全
+  url: "/ransomware-solutions/ransomware-DII-workload-security.html"
 - title: 自主勒索軟體保護（Arp）
   url: "/ransomware-solutions/ransomware-protection.html"
 - title: 網路拖運
