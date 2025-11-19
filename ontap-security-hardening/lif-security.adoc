@@ -53,4 +53,6 @@ LIF 角色可以是：
 
 
 ====
-如需更多關於保護生命安全的資訊，請參閱 link:https://docs.netapp.com/us-en/ontap/networking/configure_firewall_policies_for_lifs.html["設定lifs的防火牆原則"^]。
+要了解有關保護 LIF 的更多信息，請參閱 link:https://docs.netapp.com/us-en/ontap/networking/configure_firewall_policies_for_lifs.html["設定lifs的防火牆原則"^]。本頁面也提供了從ONTAP 9.10.1 開始的 LIF 服務策略的詳細資訊。
+
+要了解有關如何建立新服務策略的更多信息，請參閱 `network interface service-policy create` 命令 link:https://docs.netapp.com/us-en/ontap-cli/network-interface-service-policy-create.html["命令參考。"^]
