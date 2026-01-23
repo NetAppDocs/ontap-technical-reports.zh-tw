@@ -18,9 +18,9 @@ summary: 限制管理和診斷帳戶的存取考量
 孤立帳戶是一種主要的安全媒介、通常會導致弱點、包括權限升級。這些是不必要且未使用的帳戶、保留在使用者帳戶儲存庫中。這些帳戶主要是從未使用過的預設帳戶、或從未更新或變更過密碼的帳戶。為了解決此問題、 ONTAP 支援移除和重新命名帳戶。
 
 
-NOTE: ONTAP 無法移除或重新命名內建帳戶。不過、 NetApp 建議您使用鎖定命令鎖定任何不需要的內建帳戶。
+NOTE: 您無法刪除或重新命名內建帳戶。如果管理員刪除了帳戶，系統重新啟動後，該內建帳戶將會重新建立。*NetApp 建議*使用 lock 指令鎖定任何不需要的內建帳戶。
 
-雖然孤立帳戶是重大的安全問題、 NetApp 強烈建議您測試從本機帳戶儲存庫移除帳戶的效果。
+雖然孤立帳戶是重要的安全問題，但 *NetApp 強烈建議* 測試從本機帳戶庫中刪除帳戶的影響。
 
 
 
@@ -32,7 +32,7 @@ NOTE: ONTAP 無法移除或重新命名內建帳戶。不過、 NetApp 建議您
 ----
 cluster1::*> security login show -vserver cluster1
 
-Vserver: cluster1
+vserver: cluster1
                              Authentication             Acct   Is-Nsswitch
 User/Group Name  Application Method    Role Name        Locked Group
 ---------------- ----------- --------- ---------------- ------ -----------
