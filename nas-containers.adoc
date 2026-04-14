@@ -38,12 +38,6 @@ link:https://docs.netapp.com/us-en/ontap/flexcache-writeback/flexcache-write-bac
 
 == 資料量FlexGroup
 
-link:https://www.netapp.com/pdf.html?item=/media/17251-tr4571a.pdf["TR-4571a ： FlexGroup 十大最佳實務做法"^]
-本技術報告是 TR-4571 的精簡版： NetApp ONTAP FlexGroup Volume 快速使用的最佳實務做法與實作指南。
-
-link:https://www.netapp.com/pdf.html?item=/media/7337-tr4557.pdf["TR-4557 ： NetApp ONTAP FlexGroup Volume - 技術概觀"^]
-瞭解 FlexGroup Volume （ ONTAP 橫向擴充 NAS 容器）、它將近乎無限的容量與中繼資料繁重工作負載中可預測的低延遲效能融合在一起。
-
 link:https://www.netapp.com/pdf.html?item=/media/12385-tr4571.pdf["TR-4571 ： NetApp ONTAP FlexGroup Volume 最佳實務做法與實作指南"^]
 瞭解 FlexGroup Volume 、建議實務做法和實作秘訣。FlexGroup Volume 是 ONTAP 橫向擴充 NAS 容器的演進、可在中繼資料繁重的工作負載中、將幾乎無限的容量與可預測的低延遲效能混合在一起。
 
