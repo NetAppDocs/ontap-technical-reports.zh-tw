@@ -1,0 +1,21 @@
+---
+sidebar: sidebar 
+permalink: afx-overview/afx-overview-related-info.html 
+keywords: netapp afx, resources, documentation, links, data sheet 
+summary: 請查看以下資源，以深入瞭解 NetApp AFX。 
+---
+= 何處可找到其他資訊
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx-overview/
+
+
+[role="lead"]
+如需深入瞭解本文件所述資訊，請參閱下列文件和 / 或網站：
+
+* Hardware Universe link:https://hwu.netapp.com/["https://hwu.netapp.com/"^]
+* NetApp AFX 產品頁面https://www.netapp.com/afx/[]
+* NetApp AFX：可擴充、安全的 AI 資料基礎架構link:https://www.netapp.com/blog/afx-scalable-secure-ai-data-infrastructure/["https://www.netapp.com/blog/afx-scalable-secure-ai-data-infrastructure/"^]
+* 在 NFSv3 或 NFSv4.x 之間做決定？選擇越來越清楚了… link:https://community.netapp.com/t5/Tech-ONTAP-Blogs/Deciding-between-NFSv3-or-NFSv4-x-The-choice-is-getting-clearer["https://community.netapp.com/t5/Tech-ONTAP-Blogs/Deciding-between-NFSv3-or-NFSv4-x-The-choice-is-getting-clearer"^]
+* NetApp AFX 資料表 link:https://www.netapp.com/media/142853-ds-3466-netapp-afx-datasheet.pdf["https://www.netapp.com/media/142853-ds-3466-netapp-afx-datasheet.pdf"^]
+

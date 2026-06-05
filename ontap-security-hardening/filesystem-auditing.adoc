@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: ontap-security-hardening/filesystem-auditing.html 
-keywords: tr-4569, ontap hardening guide, security, vserver audit create, file, folder, share access, files created, modified, or deleted, successful file read access, failed attempts to read or write files, folder permission changes, restriction of REST access and manipulate SMB/CIFS or NFS files 
+keywords: tr-4569, ontap hardening guide, security, vserver audit create, file, folder, share access, files created, modified, or deleted, successful file read access, failed attempts to read or write files, folder permission changes, restriction of REST access and manipulate SMB or NFS files 
 summary: 您必須啟用 CIFS 稽核、才能產生稽核事件。使用「 vserver 稽核建立」命令來建立稽核組態。 
 ---
 = NAS 檔案系統稽核

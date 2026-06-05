@@ -1,0 +1,105 @@
+---
+sidebar: sidebar 
+permalink: afx-overview/afx-overview-hardware.html 
+keywords: netapp afx, hardware, nodes, shelves, switches, disks, nvme 
+summary: 本頁詳細介紹了 NetApp AFX 叢集硬體，包括節點、機架、交換器和支援的磁碟類型。 
+---
+= 硬體詳細資料
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx-overview/
+
+
+[role="lead"]
+以下章節涵蓋有關 NetApp AFX 叢集硬體的詳細資訊。如需 NetApp AFX 硬體的最新資訊，請參閱link:https://hwu.netapp.com["https://hwu.netapp.com"^]。
+
+
+
+== 支援的硬體
+
+有關 NetApp AFX 支援的硬體的最新資訊，請查看 link:https://hwu.netapp.com["https://hwu.netapp.com"^]。
+
+
+
+== 節點
+
+NetApp AFX 節點是基於為統一 ONTAP 叢集提供的 AFF A1K 型節點。這些節點沒有板載磁碟用於儲存，採用模組化設計，可根據效能需求輕鬆新增和移除節點。每個節點佔用 2U 的機架空間，並且隨著新增到 AFX 叢集中的節點數量增加，效能呈線性增長。
+
+*NetApp AFX 1K 節點詳細資料*
+
+image:image42.png["影像"]
+
+
+
+=== 硬體插槽
+
+NetApp AFX 1K 節點使用下列插槽分配。
+
+* 插槽 1 專用於 HA 複寫
+* 插槽 7 專用於叢集複寫
+* 插槽 10 和 11 專用於儲存櫃通訊
+
+
+
+
+== 書架
+
+NetApp AFX 機架採用與 AFF 系統相同的機殼。AFX 機架的主要差異在於所使用的模組。NSM140 模組可提供更強大的效能，並有助於實現解耦式 ONTAP。以下是一些關鍵注意事項：
+
+* 僅支援完全填滿的磁碟櫃。
+* 當插入電源後，NetApp AFX 會自動偵測到磁碟櫃。
+* 目前不支援移除機櫃。
+
+
+*NetApp AFX 機架式機櫃詳細資料*
+
+image:image43.png["影像"]
+
+
+
+== 交換器
+
+NetApp AFX 仍然使用後端叢集交換器進行叢集內通訊，例如叢集資料庫複寫、遠端資料作業、儲存作業和 NVRAM 鏡射。從功能上看，統一 ONTAP 和 NetApp AFX 叢集交換器之間的唯一區別在於：
+
+* 400GbE 支援
+* 新的 HA VLAN
+* 如需更多資訊、請參閱 link:https://www.cisco.com/site/us/en/products/collateral/networking/switches/nexus-9000-series-switches/nexus-9300-gx2-series-fixed-switches-data-sheet.html["Cisco 交換器資料表"^] 。
+
+
+*NetApp AFX 叢集交換器*
+
+image:image44.png["影像"]
+
+
+
+=== 叢集交換器連線能力
+
+NetApp AFX 的許多主要架構概念都大量使用了後端叢集交換器。例如，叢集介面、儲存適配器、儲存機櫃和 NVRAM 卡都連接到叢集交換器。目前，所有這些介面僅支援 100GB 通訊，而交換器支援 400GB。因此，100GB 介面透過 4 x 100GB 分線電纜連接到交換器上的 400GB 介面。這種方法減少了交換器上使用的連接埠數量。例如，16 x 100GB 儲存機櫃模組連接埠僅使用交換器上的 4 個連接埠，而節點上總共 8 個連接埠使用 2 個交換器連接埠。
+
+*NetApp AFX 交換器佈線*
+
+image:image45.png["影像"]
+
+
+
+== 磁碟類型和大小
+
+NetApp AFX 目前僅支援以下尺寸的 NVMe 附加 SSD ：
+
+* 7.6 TB
+* 15.3 TB
+* 30.1 TB
+* 60.6 TB
+
+
+
+
+=== TLC 與 QLC
+
+NetApp AFX 可同時支援 TLC 和 QLC 兩種快閃記憶體類型。7.6TB 和 15.3TB 的硬碟採用 TLC 閃存，而容量大於 30.1TB 的硬碟則採用 QLC 快閃記憶體。無論採用何種快閃記憶體類型，均可符合 NVIDIA SuperPod 認證的效能標準。
+
+所有與 NetApp AFX 系統搭配使用的硬碟均為高效能硬碟，QLC 和 TLC 的讀取效能幾乎相同。QLC 的寫入效能略遜於 TLC，並且在寫入密集型工作負載下可能會出現更明顯的損耗平衡現象。
+
+有關效能數據，請參閱 link:afx-overview-performance.html#per-shelf-performance["每個磁碟櫃效能"]。
+
+在選擇使用的磁碟機類型時，請考慮儲存設備將承載哪些工作負載，以及涉及的效能 / 容量密度權衡。

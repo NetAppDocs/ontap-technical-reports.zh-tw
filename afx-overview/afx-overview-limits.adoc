@@ -1,0 +1,211 @@
+---
+sidebar: sidebar 
+permalink: afx-overview/afx-overview-limits.html 
+keywords: netapp afx, maximums, minimums, limits, capacity, nodes, volumes 
+summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和最小值。 
+---
+= 最大值和限制
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx-overview/
+
+
+[role="lead"]
+以下部分將介紹 NetApp AFX 叢集與統一 ONTAP 相比的最大值和最小值。
+
+如需最新限制，請參閱 link:http://hwu.netapp.com/["Hardware Universe"^]。
+
+*NetApp AFX 最大值與最小值*
+
+|===
+| 限制 | 統一 ONTAP | NetApp AFX 
+
+
+| Volume 數量（叢集）  a| 
+* 30,000（取決於平台）
+
+ a| 
+* 30,000
+
+
+
+
+| Aggregate 大小  a| 
+* 800 TB
+
+ a| 
+* N/A
+
+
+
+
+| 節點計數  a| 
+* 24
+
+ a| 
+* 8 (9.17.1)
+* 32（9.19.1RC1）
+
+
+
+
+| 總容量  a| 
+* 取決於節點和磁碟機。如需詳細資訊、請參閱 link:http://hwu.netapp.com["hwu.netapp.com"^]。
+
+ a| 
+* 2PB（9.17.1）
+* 3PB（9.18.1RC1）
+* 16PB （9.18.1GA 版本）
+* 20PB（9.19.1RC0）
+* 32PB（9.19.1RC1）
+
+
+
+
+| 支援的磁碟櫃數量  a| 
+* 每個 HA 配對 8 個
+* 每個叢集 192 個
+
+ a| 
+* 每個叢集 12 個（9.18.1GA）
+* 每個叢集 17 個（9.19.1RC0）
+* 每個叢集 25 個（9.19.1RC1）（無 HA 配對限制）
+
+
+
+
+| 支援的磁碟機總數  a| 
+* 每個 HA 配對 240 個
+* 2880（24 個節點）
+
+ a| 
+* 每個叢集 288 個（根據磁碟櫃數量限制；無 HA 配對限制）
+* 每個叢集 408 個 (9.19.1RC0)
+* 每個叢集 600 個（9.19.1RC1）
+
+
+
+
+| Volume 大小  a| 
+* 300TB（FlexVol）
+* 60PB（FlexGroup）
+
+ a| 
+* 300TB（FlexVol）
+* 60PB（FlexGroup）*
+
+
+
+
+| 每個磁碟區的檔案數量上限  a| 
+* 20 億（FlexVol）
+* 4000 億（FlexGroup）
+
+ a| 
+* 20 億（FlexVol）
+* 4000 億（FlexGroup）
+
+
+
+
+| 每個目錄的最大檔案數（預設 320MB maxdirsize 值）  a| 
+* 約 400 萬（FlexVol）
+* 約 200 萬（FlexGroup）
+
+ a| 
+* 約 400 萬（FlexVol）
+* 約 200 萬（FlexGroup）
+
+
+
+
+| SnapMirror 同時傳輸  a| 
+* 250
+
+ a| 
+* 250
+
+
+
+
+| qtree 數量  a| 
+* 4096
+
+ a| 
+* 4096
+
+
+
+
+| 每個節點的最大 TCP 連線數  a| 
+* 100,000
+
+ a| 
+* 100,000
+
+
+
+
+| 每個節點的鎖定數量上限  a| 
+* 300 萬
+
+ a| 
+* 300 萬
+
+
+
+
+| 最大資料介面數（叢集）  a| 
+* 4096
+
+ a| 
+* 4096
+
+
+
+
+| 最大成分數 – FlexGroup  a| 
+* 200
+
+ a| 
+* 200
+* 9.19.1 RC1 中的 512
+
+
+
+
+| 叢集間 LIF 數量上限  a| 
+* 8
+
+ a| 
+* 8
+
+
+
+
+| IP 空間的最大數量  a| 
+* 512
+
+ a| 
+* 512
+
+
+
+
+| 每個來源的 FlexCache 最大數量  a| 
+* 100
+
+ a| 
+* 100
+
+
+
+
+| FlexCache 的最大數量（節點）  a| 
+* 400
+
+ a| 
+* 400
+
+
+|===

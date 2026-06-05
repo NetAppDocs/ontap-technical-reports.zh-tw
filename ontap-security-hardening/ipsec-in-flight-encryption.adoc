@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: ontap-security-hardening/ipsec-in-flight-encryption.html 
-keywords: tr-4569, ontap hardening guide, NFS, iSCSI, SMB/CIFS, no Kerberos, IKE v2, SVM, PSK, certificate, no license 
-summary: IPsec 提供 NFS 或 SMB/CIFS 加密的替代方案、也是 iSCSI 流量唯一的傳輸中加密選項。 
+keywords: tr-4569, ontap hardening guide, NFS, iSCSI, SMB, Kerberos, IKE v2, SVM, PSK, certificate, no license 
+summary: IPsec 為 NFS 或 SMB 加密提供了一種替代方案，並且是 iSCSI 流量傳輸過程中唯一的加密選項。 
 ---
 = IPsec 資料傳輸中加密
 :allow-uri-read: 

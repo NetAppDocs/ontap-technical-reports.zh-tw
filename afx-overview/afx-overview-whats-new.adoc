@@ -1,0 +1,43 @@
+---
+sidebar: sidebar 
+permalink: afx-overview/afx-overview-whats-new.html 
+keywords: netapp afx, new features, release notes, version history, ontap 
+summary: 本頁面涵蓋 NetApp AFX 的最新更新，並將隨著每個新版本的發布而更新。 
+---
+= NetApp AFX 的新特性
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx-overview/
+
+
+[role="lead"]
+本部分涵蓋 NetApp AFX 的最新更新，並將隨每個新版本更新。請定期查看此處以獲取新資訊，同時也請查看版本發布說明。
+
+
+
+== NetApp ONTAP for AFX 最新版本有哪些新功能？
+
+最新版本：
+
+ONTAP 9.19.1RC1（截至 2026 年 5 月）
+
+NetApp AFX 的新增功能：
+
+* 全域重複資料刪除
+* 動態儲存效率
+* 進階預先讀取
+* 支援 32 個節點
+* 32PB 支援
+* 每個 FlexGroup Volume 512 個組成磁碟區
+
+
+
+
+== 版本歷史記錄
+
+|===
+| 版本 | 日期 | 文件版本歷史記錄 
+
+
+| 版本 1.0 | 2026 年 6 月 | 初始版本 
+|===

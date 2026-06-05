@@ -1,0 +1,99 @@
+---
+sidebar: sidebar 
+permalink: afx-overview/afx-overview-capabilities.html 
+keywords: netapp afx, networking, security, data protection, nondisruptive, volumes 
+summary: NetApp AFX 支援與統一 ONTAP 相同的網路堆疊、安全功能、資料保護技術、不中斷營運和磁碟區類型，但有一些調整。 
+---
+= 網路、安全性與作業
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx-overview/
+
+
+[role="lead"]
+NetApp AFX 支援與統一 ONTAP 相同的網路堆疊、安全功能、資料保護技術、不中斷營運和磁碟區類型，但針對分離式架構進行了一些獨特的調整。
+
+
+
+== 網路
+
+NetApp AFX 中的網路堆疊與統一 ONTAP 相同。
+
+* 資料 LIF 仍用於向內部和外部服務提供網路位址。
+* 每個節點都有自己的一組實體連接埠和虛擬連接埠。
+* VLAN、ifgroup 和 BGP 仍受支援。
+* LIF 仍然可以在叢集中的實體節點和連接埠之間進行容錯移轉。
+* IPspace / 廣播網域的設定仍然相同。
+* 每個 SVM 都可以擁有自己專用的資料網路。
+* 管理網路可以與資料網路分開。
+* 除了新增 400GB 網路支援外，用戶端資料網路沒有其他變更。
+* 後端叢集交換器仍然透過 NetApp 提供的「黃金組態」檔案進行設定。
+
+
+一些主要的網路差異包括：
+
+* 後端叢集網路連接埠現在僅支援與叢集交換器的 100 GB 連線。
+* 由於叢集交換器支援 400GB 頻寬，後端節點連線使用 4 x 100GB 分線纜線，以減少交換器上使用的連接埠數量。
+* 現在，透過交換器上的新 HA VLAN 組態，NVRAM 會在後端叢集網路的 HA 配對之間進行鏡射。
+* AI Data Engine 預設會新增一個新的 DCN 網路。這些 IP 位址會自動生成,並可根據需要進行變更。
+
+
+
+
+== 安全性
+
+NetApp AFX 執行 ONTAP，這表示它使用與 ONTAP 相同的安全性。所有加密模組都相同，這表示一旦認證程序完成，安全認證將會相同。NetApp AFX 也運用與統一 ONTAP 相同的安全加密支援。
+
+此外， NetApp AFX 支援統一 ONTAP 提供的許多安全功能，包括（但不限於）：
+
+* 自主勒索軟體保護
+* 安全的多租戶
+* 靜態加密（Volume 加密）和傳輸中加密（TLS 1.3）
+* 自加密硬碟（SED）
+* NFS 和 SMB Kerberos 驗證與加密
+* 多管理員驗證
+* SnapLock
+
+
+有關統一 ONTAP 已獲得的認證（以及其他安全強化資訊）、請參閱：
+
+* link:https://security.netapp.com/certifications["NetApp 產品安全"^]
+* link:https://docs.netapp.com/us-en/ontap-technical-reports/ontap-security-hardening/security-hardening-overview.html["ONTAP 安全強化概述"^]
+
+
+
+
+== 快照和資料保護
+
+NetApp AFX 採用與統一 ONTAP 相同的快照和複寫技術，這些功能的工作方式沒有重大變化。實際上，AFX 可以使用您熟悉的 link:https://docs.netapp.com/us-en/ontap/data-protection/compatible-ontap-versions-snapmirror-concept.html["規則和組態"^] 與統一 ONTAP 系統進行雙向複寫。
+
+AFX 中複製的唯一例外情況是 FlexGroup 磁碟區複製到統一 ONTAP 系統。在這種情況下,目標統一 ONTAP 系統必須運作 ONTAP 9.16.1 或更高版本才能提供高階容量平衡支援。
+
+
+
+== 不中斷營運
+
+ONTAP 提供不中斷營運作業，例如磁碟區移動、升級、叢集維護、儲存設備容錯移轉等。NetApp AFX 提供相同的不中斷營運作業，但有一些調整。
+
+* Volume 移動仍然不會造成中斷，但不再需要複本。
+* 儲存容錯移轉仍然不會造成中斷，但在初始容錯移轉之後，磁碟區會在叢集中所有存續的節點之間重新平衡。
+* LIF 遷移是相同的。
+* 硬體維護和升級方式相同。
+
+
+
+
+== 磁碟區類型
+
+Unified ONTAP 支援多種不同的磁碟區類型，例如：
+
+* FlexVols
+* 資料量FlexGroup
+* FlexCache
+* FlexClone
+* 物件儲存貯體
+
+
+NetApp AFX 為每種磁碟區類型提供全面支援，並且 FlexCache 磁碟區與統一的 ONTAP 系統完全互通。
+
+如需 FlexGroup 磁碟區如何從 AFX 架構中受益的詳細資訊，請參閱link:afx-overview-architecture.html#flexgroup-volume-management-improvements["FlexGroup Volume 管理改進"]。

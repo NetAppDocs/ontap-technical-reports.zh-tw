@@ -1,16 +1,16 @@
 ---
 settings:
-  name: ONTAP Technical Reports
+  name: NetApp Technical Reports
   search: ontap-technical-reports, ontap-apps-dbs, netapp-solutions-sap
   internal:
-    pdf_enabled: true
+    pdf_enabled: false
   prod:
     pdf_enabled: true
     harmony_enabled: false
   langs: zh-tw,us-en,de-de,es-es,fr-fr,it-it,pt-br,ja-jp,ko-kr,zh-cn
 sidebar:
   entries:
-  - title: ONTAP 技術報告
+  - title: NetApp 技術報告
     url: "/index.html"
   - title: 應用程式與資料庫
     url: "/apps-dbs.html"
@@ -38,6 +38,10 @@ sidebar:
     - title: 總覽
       url: "/security-hardening-guides.html"
     - section: ontap-security-hardening
+  - title: 儲存系統
+    entries:
+    - title: AFX
+      section: afx-overview
   - title: SnapCenter
     url: "/snapcenter.html"
   - title: 分層
