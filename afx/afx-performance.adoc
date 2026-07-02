@@ -1,13 +1,13 @@
 ---
 sidebar: sidebar 
-permalink: afx-overview/afx-overview-performance.html 
+permalink: afx/afx-performance.html 
 keywords: netapp afx, performance, nfsv4, benchmarks, read-ahead, throughput 
 summary: NetApp AFX 的設計以效能和可擴充性為核心，專門針對需要高讀寫吞吐量的工作負載。 
 ---
 = 效能
 :allow-uri-read: 
 :icons: font
-:imagesdir: ../media/afx-overview/
+:imagesdir: ../media/afx/
 
 
 [role="lead"]
@@ -36,7 +36,7 @@ NOTE: 如需最新的效能預估，請洽詢您的 NetApp 銷售團隊。
 
 == 每個磁碟櫃效能
 
-每個儲存架包含高效能儲存架模組，配備 16 個 100GB 乙太網路連接埠，利用 RoCEv2 通訊實現與叢集中運算節點的高頻寬儲存互動。與任何實體資源一樣，這些儲存架的效能也有其極限——尤其因為 NetApp AFX 可以呈現多個指向同一組磁碟的節點。下表顯示了單一儲存架對 TLC 和 QLC 磁碟機的估計最大讀取和寫入效能。有關 TLC 和 QLC 差異的更多資訊，請參閱 link:afx-overview-hardware.html#tlc-vs-qlc["TLC 與 QLC"]。
+每個儲存架包含高效能儲存架模組，配備 16 個 100GB 乙太網路連接埠，利用 RoCEv2 通訊實現與叢集中運算節點的高頻寬儲存互動。與任何實體資源一樣，這些儲存架的效能也有其極限——尤其因為 NetApp AFX 可以呈現多個指向同一組磁碟的節點。下表顯示了單一儲存架對 TLC 和 QLC 磁碟機的估計最大讀取和寫入效能。有關 TLC 和 QLC 差異的更多資訊，請參閱 link:afx-hardware.html#tlc-vs-qlc["TLC 與 QLC"]。
 
 *每個磁碟櫃的效能預估*
 

@@ -41,7 +41,7 @@ sidebar:
   - title: 儲存系統
     entries:
     - title: AFX
-      section: afx-overview
+      section: afx
   - title: SnapCenter
     url: "/snapcenter.html"
   - title: 分層

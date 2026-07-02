@@ -1,0 +1,8 @@
+---
+permalink: afx-overview/afx-overview-performance.html 
+redirect: afx/afx-performance.html 
+---
+= 
+:allow-uri-read: 
+
+

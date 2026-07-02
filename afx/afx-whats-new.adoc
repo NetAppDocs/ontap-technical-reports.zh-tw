@@ -1,13 +1,13 @@
 ---
 sidebar: sidebar 
-permalink: afx-overview/afx-overview-whats-new.html 
+permalink: afx/afx-whats-new.html 
 keywords: netapp afx, new features, release notes, version history, ontap 
 summary: 本頁面涵蓋 NetApp AFX 的最新更新，並將隨著每個新版本的發布而更新。 
 ---
 = NetApp AFX 的新特性
 :allow-uri-read: 
 :icons: font
-:imagesdir: ../media/afx-overview/
+:imagesdir: ../media/afx/
 
 
 [role="lead"]

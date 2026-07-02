@@ -1,13 +1,13 @@
 ---
 sidebar: sidebar 
-permalink: afx-overview/afx-overview-hardware.html 
+permalink: afx/afx-hardware.html 
 keywords: netapp afx, hardware, nodes, shelves, switches, disks, nvme 
 summary: 本頁詳細介紹了 NetApp AFX 叢集硬體，包括節點、機架、交換器和支援的磁碟類型。 
 ---
 = 硬體詳細資料
 :allow-uri-read: 
 :icons: font
-:imagesdir: ../media/afx-overview/
+:imagesdir: ../media/afx/
 
 
 [role="lead"]
@@ -100,6 +100,6 @@ NetApp AFX 可同時支援 TLC 和 QLC 兩種快閃記憶體類型。7.6TB 和 1
 
 所有與 NetApp AFX 系統搭配使用的硬碟均為高效能硬碟，QLC 和 TLC 的讀取效能幾乎相同。QLC 的寫入效能略遜於 TLC，並且在寫入密集型工作負載下可能會出現更明顯的損耗平衡現象。
 
-有關效能數據，請參閱 link:afx-overview-performance.html#per-shelf-performance["每個磁碟櫃效能"]。
+有關效能數據，請參閱 link:afx-performance.html#per-shelf-performance["每個磁碟櫃效能"]。
 
 在選擇使用的磁碟機類型時，請考慮儲存設備將承載哪些工作負載，以及涉及的效能 / 容量密度權衡。

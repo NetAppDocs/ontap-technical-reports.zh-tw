@@ -1,0 +1,8 @@
+---
+permalink: afx-overview/afx-overview-architecture.html 
+redirect: afx/afx-architecture.html 
+---
+= 
+:allow-uri-read: 
+
+

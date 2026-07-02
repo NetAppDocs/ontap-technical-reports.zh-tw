@@ -1,0 +1,8 @@
+---
+permalink: afx-overview/afx-overview-hardware.html 
+redirect: afx/afx-hardware.html 
+---
+= 
+:allow-uri-read: 
+
+

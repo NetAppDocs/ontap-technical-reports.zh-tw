@@ -1,13 +1,13 @@
 ---
 sidebar: sidebar 
-permalink: afx-overview/afx-overview-capabilities.html 
+permalink: afx/afx-capabilities.html 
 keywords: netapp afx, networking, security, data protection, nondisruptive, volumes 
 summary: NetApp AFX 支援與統一 ONTAP 相同的網路堆疊、安全功能、資料保護技術、不中斷營運和磁碟區類型，但有一些調整。 
 ---
 = 網路、安全性與作業
 :allow-uri-read: 
 :icons: font
-:imagesdir: ../media/afx-overview/
+:imagesdir: ../media/afx/
 
 
 [role="lead"]
@@ -96,4 +96,4 @@ Unified ONTAP 支援多種不同的磁碟區類型，例如：
 
 NetApp AFX 為每種磁碟區類型提供全面支援，並且 FlexCache 磁碟區與統一的 ONTAP 系統完全互通。
 
-如需 FlexGroup 磁碟區如何從 AFX 架構中受益的詳細資訊，請參閱link:afx-overview-architecture.html#flexgroup-volume-management-improvements["FlexGroup Volume 管理改進"]。
+如需 FlexGroup 磁碟區如何從 AFX 架構中受益的詳細資訊，請參閱link:afx-architecture.html#flexgroup-volume-management-improvements["FlexGroup Volume 管理改進"]。

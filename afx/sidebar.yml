@@ -1,0 +1,22 @@
+---
+section: afx
+title: AFX
+entries:
+- title: 總覽
+  url: "/afx/afx-learn-about.html"
+- title: 新增功能
+  url: "/afx/afx-whats-new.html"
+- title: 架構
+  url: "/afx/afx-architecture.html"
+- title: 效能
+  url: "/afx/afx-performance.html"
+- title: 管理
+  url: "/afx/afx-management.html"
+- title: 功能
+  url: "/afx/afx-capabilities.html"
+- title: 硬體
+  url: "/afx/afx-hardware.html"
+- title: 最大值和限制
+  url: "/afx/afx-limits.html"
+- title: 相關資訊
+  url: "/afx/afx-related-info.html"

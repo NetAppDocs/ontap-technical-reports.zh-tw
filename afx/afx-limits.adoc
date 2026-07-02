@@ -1,13 +1,13 @@
 ---
 sidebar: sidebar 
-permalink: afx-overview/afx-overview-limits.html 
+permalink: afx/afx-limits.html 
 keywords: netapp afx, maximums, minimums, limits, capacity, nodes, volumes 
 summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和最小值。 
 ---
 = 最大值和限制
 :allow-uri-read: 
 :icons: font
-:imagesdir: ../media/afx-overview/
+:imagesdir: ../media/afx/
 
 
 [role="lead"]

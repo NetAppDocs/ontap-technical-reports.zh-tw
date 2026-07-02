@@ -1,0 +1,8 @@
+---
+permalink: afx-overview/afx-overview-capabilities.html 
+redirect: afx/afx-capabilities.html 
+---
+= 
+:allow-uri-read: 
+
+
