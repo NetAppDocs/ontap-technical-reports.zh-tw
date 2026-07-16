@@ -1,6 +1,6 @@
 ---
 permalink: afx-overview/afx-overview-related-info.html 
-redirect: afx/afx-related-info.html 
+redirect: ontap-technical-reports/afx/afx-related-info.html 
 ---
 = 
 :allow-uri-read: 

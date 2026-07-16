@@ -15,6 +15,7 @@ ONTAP 提供各種機制、確保 ONTAP 映像在升級和開機時有效。
 
 
 
+[[upgrade-image-validation]]
 == 升級映像驗證
 
 程式碼簽章可協助驗證透過不中斷營運的映像更新或自動不中斷營運的映像更新、 CLI 或 ONTAP API 所安裝的 ONTAP 映像是由 NetApp 真正製作、且未遭竄改。升級映像驗證已在 ONTAP 9.3 中推出。
@@ -23,6 +24,7 @@ ONTAP 提供各種機制、確保 ONTAP 映像在升級和開機時有效。
 
 
 
+[[boot-time-image-validation]]
 == 開機時間映像驗證
 
 從 ONTAP 9.4 開始、統一化可延伸韌體介面（ UEFI ）安全開機已啟用 NetApp AFF A800 、 AFF A220 、 FAS2750 和 FAS2720 系統、以及採用 UEFI BIOS 的後續新一代系統。

@@ -18,6 +18,7 @@ summary: 這些技術報告概述了 NetApp ONTAP 的產業解決方案、以及
 
 
 
+[[eda]]
 == EDA
 
 link:https://www.netapp.com/pdf.html?item=/media/19368-tr-4617.pdf["ONTAP 的電子設計自動化最佳實務做法"^]
@@ -25,6 +26,7 @@ link:https://www.netapp.com/pdf.html?item=/media/19368-tr-4617.pdf["ONTAP 的電
 
 
 
+[[healthcare]]
 == 醫療
 
 link:https://www.netapp.com/pdf.html?item=/media/17137-tr3928pdf.pdf["適用於 Epic 的 NetApp 最佳實務做法"^]

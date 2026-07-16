@@ -1,6 +1,6 @@
 ---
 permalink: afx-overview/afx-overview-limits.html 
-redirect: afx/afx-limits.html 
+redirect: ontap-technical-reports/afx/afx-limits.html 
 ---
 = 
 :allow-uri-read: 

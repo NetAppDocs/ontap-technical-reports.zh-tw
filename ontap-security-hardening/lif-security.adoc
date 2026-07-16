@@ -15,6 +15,7 @@ LIF 是 IP 位址或全球連接埠名稱（ WWPN ）、具有相關特性、例
 
 
 
+[[lif-roles]]
 == LIF 角色
 
 LIF 角色可以是：
@@ -28,6 +29,7 @@ LIF 角色可以是：
 
 
 
+[[security-characteristics-of-each-lif-role]]
 == 每個 LIF 角色的安全特性
 
 [cols="21%,13%,14%,18%,18%,16%"]

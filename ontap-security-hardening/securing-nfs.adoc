@@ -41,6 +41,7 @@ NOTE: 具有匯出規則的匯出原則必須存在於 SVM 上、用戶端才能
 
 
 
+[[rules-for-access-level-parameters-in-export-rules]]
 == 匯出規則中存取層級參數的規則
 
 [cols="2a,2a"]
@@ -91,6 +92,7 @@ NOTE: 具有匯出規則的匯出原則必須存在於 SVM 上、用戶端才能
 
 
 
+[[rules-for-access-parameter-outcomes]]
 == 存取參數結果規則
 
 [cols="50%,50%"]
@@ -113,6 +115,7 @@ NOTE: 此限制不適用於 `-superuser` 參數、因為即使未指定、此參
 |===
 
 
+[[kerberos-5-and-krb5p]]
 == Kerberos 5 和 Krb5p
 
 從 ONTAP 9 開始、支援使用隱私權服務（ krb5p ）進行 Kerberos 5 驗證。krbp5 驗證模式是安全的、使用校驗和來加密用戶端和伺服器之間的所有流量、可防止資料竄改和窺探。ONTAP 解決方案支援 Kerberos 的 128 位元和 256 位元 AES 加密。隱私權服務包括驗證所接收資料的完整性、驗證使用者、以及在傳輸前加密資料。

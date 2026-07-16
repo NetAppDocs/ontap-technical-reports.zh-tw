@@ -15,6 +15,7 @@ ONTAP 提供數種方法，可用於達成檔案層級屬性型存取控制（ A
 
 
 
+[[nfs-v4-2-security-labels]]
 == NFS v4.2 安全性標籤
 
 從 ONTAP 9.9.1 開始，支援名為 NFS 的 NFS v4.2 功能。
@@ -33,6 +34,7 @@ NFS v4.2 安全性標籤的使用案例包括：
 
 
 
+[[enable-nfs-v4-2-security-labels]]
 === 啟用NFS v4.2安全性標籤
 
 您可以使用下列命令來啟用或停用 NFS v4.2 安全性標籤（需要進階權限）：
@@ -45,6 +47,7 @@ vserver nfs modify -vserver <svm_name> -v4.2-seclabel <disabled|enabled>
 
 
 
+[[enforcement-modes-for-nfs-v4-2-security-labels]]
 === NFS v4.2 安全性標籤的強制模式
 
 從 ONTAP 9.9.1 開始， ONTAP 支援下列強制模式：
@@ -63,6 +66,7 @@ NOTE: ONTAP 目前不支援「完整模式」（儲存及強制執行 MAC 標籤
 
 
 
+[[nfs-v4-2-security-labels-examples]]
 === NFS v4.2 安全性標籤範例
 
 以下組態範例示範使用 Red Hat Enterprise Linux 9.3 （ Plow ）版本的概念。
@@ -126,6 +130,7 @@ NOTE: ONTAP 目前不支援「完整模式」（儲存及強制執行 MAC 標籤
 |===
 
 
+[[extended-attributes-xattrs]]
 == 延伸屬性（ xatts ）
 
 從 ONTAP 9.12.1 開始， ONTAP 支援 xatts 。 xatts 允許中繼資料與系統所提供的檔案和目錄相關聯，例如存取控制清單（ ACL ）或使用者定義的屬性。
@@ -157,6 +162,7 @@ xattr 使用案例範例：
 
 
 
+[[commands-for-managing-xattrs]]
 === 用於管理 xattis 的命令
 
 * `setfattr`設定檔案或目錄的延伸屬性：
@@ -192,6 +198,7 @@ getfattr -n user.comment example.txt
 
 
 
+[[xattr-key-value-pair-examples]]
 === xattr 金鑰值配對範例
 
 下表顯示兩個 xattr 金鑰值配對範例：
@@ -216,6 +223,7 @@ getfattr -n user.comment example.txt
 |===
 
 
+[[user-permissions-with-ace-for-xattrs]]
 === 使用者對 xattis 的 ACE 權限
 
 存取控制項目（ ACE ）是 ACL 中的元件，可定義授予個別使用者或特定資源（例如檔案或目錄）使用者群組的存取權限。每個 ACE 都會指定允許或拒絕的存取類型，並與特定的安全性主體（使用者或群組身分識別）相關聯。
@@ -238,6 +246,7 @@ getfattr -n user.comment example.txt
 |===
 
 
+[[integration-with-abac-identity-and-access-control-software]]
 == 與 ABAC 身分識別與存取控制軟體整合
 
 為了充分發揮 ABAC 的功能， ONTAP 可以與 ABAC 導向的身分識別與存取管理軟體整合。
@@ -274,6 +283,7 @@ image:abac-access-architecture.png["ABAC 存取架構"]
 
 
 
+[[ontap-cloning-and-snapmirror]]
 == ONTAP 複製與 SnapMirror
 
 ONTAP 的複製和 SnapMirror 技術旨在提供高效可靠的資料複寫和複製功能，確保檔案資料的所有層面（包括 xatts ）都會隨檔案一起保留和傳輸。 xattis 非常重要，因為它們會儲存與檔案相關的額外中繼資料，例如安全標籤，存取控制資訊和使用者定義的資料，這些資料對於維護檔案的內容和完整性非常重要。
@@ -287,6 +297,7 @@ NOTE: NFS v4.2 安全性標籤有中定義的注意事項<<NFS v4.2 安全性標
 
 
 
+[[auditing-changes-to-labels]]
 == 稽核標籤變更
 
 稽核對 xattis 或 NFS 安全性標籤所做的變更，是檔案系統管理與安全性的關鍵層面。標準檔案系統稽核工具可監控及記錄檔案系統的所有變更，包括修改 xattis 和安全性標籤。
@@ -325,6 +336,7 @@ link:https://docs.netapp.com/us-en/ontap/nas-audit/two-parts-fpolicy-solution-co
 
 
 
+[[examples-of-controlling-access-to-data]]
 == 控制資料存取的範例
 
 以下儲存在 John R. Smith 的 PKI 認證書中的資料項目範例，說明如何將 NetApp 方法套用至檔案，並提供精細的存取控制。

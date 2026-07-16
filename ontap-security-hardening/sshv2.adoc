@@ -24,6 +24,7 @@ NetApp 建議：
 ====
 
 
+[[supported-ciphers-and-key-exchanges]]
 == 支援的密碼與金鑰交換
 
 [cols="42%,58%"]
@@ -59,6 +60,7 @@ NetApp 建議：
 |===
 
 
+[[supported-aes-and-3des-symmetric-encryptions]]
 == 支援的 AES 和 3DES 對稱加密
 
 ONTAP 也支援下列類型的 AES 和 3DES 對稱加密（也稱為加密）：
