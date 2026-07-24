@@ -1,0 +1,68 @@
+---
+sidebar: sidebar 
+permalink: nfs-tls/nfs-tls-architecture.html 
+keywords: nfs, tls, architecture, data flow, ha takeover, svm-dr, metrocluster 
+summary: NFS over TLS 是 ONTAP NFS 伺服器的每 LIF 傳輸安全性功能，依 SVM 設定，並在整個叢集中複寫。 
+---
+= 架構
+:toc: macro
+:hardbreaks:
+:toclevels: 1
+:allow-uri-read: 
+:toc: 
+:toclevels: 1
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+:toc-position: content
+
+
+[role="lead"]
+NFS over TLS 是 ONTAP NFS 伺服器的每個 LIF 傳輸安全功能。它為用戶端和 ONTAP NFS 伺服器之間的 NFS 流量套用 TLS 保護。組態透過 `vserver nfs tls interface`命令系列和對應的 `/api/protocols/nfs/tls/interfaces` REST 資源進行管理。
+
+組態作用域限定於 SVM，應用於每個 LIF，並在叢集範圍內複寫。目前託管 LIF 的任何節點都套用相同的 TLS 設定。沒有叢集範圍的開關選項。啟用和停用操作均針對每個 LIF 單獨進行。
+
+
+
+[[external-dependencies]]
+== 外部相依性
+
+在 9.19.1 版本中，NFS TLS 信號交換路徑不會向外部憑證授權單位 （CA） 或 OCSP 回應程序發出任何傳出呼叫。鏈結和主體替代名稱 （SAN） 驗證會在本機針對 SVM 已安裝的憑證資料執行。
+
+
+
+[[data-flow]]
+== 資料流
+
+NFSv3 和 NFSv4 在向 TCP 連接埠 2049 發送第一個 NULL 呼叫/回應對之後，都會對整個 NFS 有效負載加密。NULL 呼叫包含 RFC 9289 中定義的新 `AUTH_TLS`認證資料類型，表示用戶端打算使用 TLS。伺服器會以 NULL 回覆來表示接受或拒絕 TLS 升級。如果用戶端收到驗收，則會透過相同的 TCP 連線繼續執行 TLS 1.3 信號交換。如果信號交換成功完成，則所有後續的 NFS RPC 都會封裝在 TLS 記錄中，並在傳輸過程中加密。
+
+NFSv3 和 NFSv4.x 之間存在一個差異：NFSv3 依賴輔助協定-`rpcbind`（portmapper） `mountd`、NLM（Network Lock Manager）和 NSM（Network Status Monitor）——這些協定不會透過受 TLS 保護的連線傳輸，而是以明文形式傳輸。有法規遵循要求（規定必須對儲存設備流量進行完整加密）的組織，在選擇 NFSv3 和 NFSv4.x 時應將此納入考量。NFSv4.x 消除了這些側通道協定；所有 NFSv4.x 流量均集中至連接埠 2049，並在 TLS 信號交換後進行加密。
+
+image:nfs-tls-v3-handshake.png["caption=\"NFS over TLS 信號交換序列圖\", alt=\"顯示用戶端與 ONTAP NFS 伺服器之間 NFS over TLS 信號交換流程的序列圖。\""]
+
+NFSv4.x 不使用輔助協議，因此所有 NFSv4.x RPC 在 TLS 信號交換之後都會加密。
+
+image:nfs-tls-v4-handshake.png["caption=\"NFSv4.1 over TLS 信號交換序列圖\", alt=\"顯示用戶端與 ONTAP NFS 伺服器之間 NFSv4.1 over TLS 信號交換流程的序列圖。\""]
+
+ONTAP 在目前託管 LIF 的節點上的 NFS 伺服器上終止 TLS 連線。在傳輸層之上，NFS 伺服器處理 RPC 的方式與非 TLS NFS 連線完全相同。
+
+
+
+[[ha-takeover-behavior]]
+== HA 接管行為
+
+現有的 NFS over TLS 工作階段在 HA 接管或非計畫性節點當機後將無法繼續運作。TLS 是一種建立在 TCP 上的工作階段層級傳輸協定。當與節點的 TCP 連線中斷時，TLS 工作階段也會隨之中斷。
+
+接管後，用戶端重新連線並完成新的 TLS 1.3 信號交換。合作夥伴節點使用相同的複寫 TLS 組態——憑證繫結、主機驗證設定和 SAN 驗證設定——因為組態記錄會在整個叢集中複寫。
+
+TLS 工作階段票證和預共享金鑰 （PSK） 僅在節點本地有效，不會轉移給合作夥伴。接管時可能會出現重連風暴，並需要進行完整的 TLS 信號交換。
+
+
+
+[[metrocluster-and-svm-dr-behavior]]
+== MetroCluster 以及 SVM-DR 行為
+
+TLS 介面憑證和組態透過標準 SVM-DR 和 MetroCluster SVM 層級複寫路徑隨 SVM 複寫。在身分保留切換後，目的地 SVM 會沿用相同的每個 LIF TLS 組態。
+
+ `-allow-nfs-tls-only`匯出原則規則中的欄位會透過標準的匯出原則複寫路徑與匯出原則規則的其餘部分一起複寫。在 SVM-DR 中，當原則隨 SVM 一起複寫時，規則也會隨原則一起複寫。

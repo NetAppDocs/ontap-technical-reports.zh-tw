@@ -20,10 +20,13 @@ sidebar:
     url: "/data-protection-disaster-recovery.html"
   - title: FlexCache 和 FlexGroup 磁碟區
     url: "/nas-containers.html"
-  - title: NAS
-    url: "/nas.html"
   - title: 網路
     url: "/networking.html"
+  - title: NFS
+    entries:
+    - title: 總覽
+      url: "/nfs.html"
+    - section: nfs-tls
   - title: SAN
     url: "/san.html"
   - title: 安全性
@@ -38,6 +41,10 @@ sidebar:
     - title: 總覽
       url: "/security-hardening-guides.html"
     - section: ontap-security-hardening
+  - title: S3
+    url: "/s3.html"
+  - title: 中小企業
+    url: "/smb.html"
   - title: 儲存系統
     entries:
     - title: AFX

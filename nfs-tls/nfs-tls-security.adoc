@@ -1,0 +1,116 @@
+---
+sidebar: sidebar 
+permalink: nfs-tls/nfs-tls-security.html 
+keywords: nfs, tls, security, rbac, encryption, auditing, certificates, mtls 
+summary: NFS over TLS 使用標準的 ONTAP RBAC，每個 LIF 都需要一個 X.509 伺服器憑證，並且僅支援 TLS 1.3。 
+---
+= 安全性
+:toc: macro
+:hardbreaks:
+:toclevels: 1
+:allow-uri-read: 
+:toc: 
+:toclevels: 1
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+:toc-position: content
+
+
+[role="lead"]
+本頁涵蓋 ONTAP 9.19.1 中 NFS over TLS 的 RBAC 要求、憑證驗證、加密參數、稽核和已知安全性限制。
+
+
+
+[[role-and-rbac-requirements]]
+== 角色和 RBAC 要求
+
+ `vserver nfs tls interface`命令族 - -`enable`、 `disable`、 `modify`，以及 `show`-- 的範圍為 SVM 範圍。它可由叢集 `admin`角色執行，或由所屬 SVM 的 `vsadmin`執行。
+
+此 `-allow-nfs-tls-only`欄位 `vserver export-policy rule`是現有匯出規則物件的寫入欄位。它使用標準匯出原則規則 RBAC。
+
+REST 端點 `/api/protocols/nfs/tls/interfaces`與上述 CLI 命令一一對應。它們使用標準的 NAS 管理員 RBAC。未定義單獨的 REST 角色。
+
+
+
+[[authentication-and-authorization]]
+== 驗證與授權
+
+在 LIF 上啟用基於 TLS 的 NFS 需要透過 `security certificate install`在 SVM 上安裝伺服器 X.509 憑證。此憑證在啟用時使用 `-certificate-name`綁定至每個 LIF。
+
+ONTAP 對提供的伺服器憑證執行兩項檢查：
+
+. 憑證的通用名稱 (CN) 必須與 LIF 的完整網域名稱 (FQDN) 相符。
+. LIF 的 IP 位址必須出現在憑證的「主題備用名稱 (SAN)」清單中。
+
+
+一個可選的 `-skip-san-validation`布林值（預設值 `false`）用於在啟用或修改時抑制 SAN 檢查。
+
+每次檢查故障都會傳回一個不同的錯誤。
+
+相互 TLS （mTLS） 主機驗證是可選的。將 `-enforce-host-auth true`設定為 `vserver nfs tls interface enable`或 `modify`以啟用此功能。預設值為 `false`，表示僅伺服器驗證。用戶端憑證將根據 SVM 已安裝的 CA 信任鏈進行驗證，該信任鏈由您負責資源配置。
+
+
+
+[[user-authentication]]
+=== 使用者驗證
+
+使用者身分驗證不受 TLS 的影響。TLS 增加了傳輸過程中的保密性和主機驗證。 `AUTH_SYS`UNIX UID/GID 或 `RPCSEC_GSS` Kerberos 仍必須用於 RPC 使用者身分驗證。RFC 9289 對此有明確規定：TLS 保護傳輸層，而現有的 NFS 驗證機制則像以往一樣處理使用者身分驗證。
+
+
+
+[[encryption]]
+== 加密
+
+
+
+[[in-transit]]
+=== 在途中
+
+在 LIF 上啟用 NFS over TLS 時，僅使用 TLS 1.3 版本。支援以下密碼套件：
+
+* `TLS_AES_128_GCM_SHA256`
+* `TLS_AES_256_GCM_SHA384`
+* `TLS_CHACHA20_POLY1305_SHA256`
+
+
+密鑰交換採用基於 `secp384r1`曲線的 ECDHE 協定。加密適用於透過啟用 TLS 的 LIF 傳輸的 NFSv3 和 NFSv4.x 流量。
+
+
+
+[[auditing]]
+== 稽核
+
+所有 NFS over TLS 組態變更都會記錄在標準 ONTAP 稽核日誌中(`security audit log show`）。以下操作會被記錄：
+
+* `vserver nfs tls interface enable`
+* `vserver nfs tls interface modify`
+* `vserver nfs tls interface disable`
+* `vserver export-policy rule create -allow-nfs-tls-only`
+* `vserver export-policy rule modify -allow-nfs-tls-only`
+
+
+唯讀 `show` 和 `GET` 操作遵循標準 ONTAP 稽核原則，通常不會記錄，除非稽核已設定為記錄這些操作。
+
+在 NFS over TLS 資料路徑上會發出三個客戶可見的 EMS 事件。如需事件詳細資料、觸發條件和速率限制，請參閱link:nfs-tls-monitor.html["EMS 訊息"]。
+
+
+
+[[tenancy-boundary]]
+== 租賃邊界
+
+NFS over TLS 組態是按 SVM 進行的。SVM 管理員只能檢視和管理屬於其自身 SVM 的 LIF 上的 TLS 組態。叢集管理員可以查看所有 SVM。
+
+伺服器憑證引用是 SVM 本機的。組態會在整個叢集中複寫，以便為指定 LIF 提供服務的任何節點都套用相同的 TLS 組態。
+
+
+
+[[known-security-relevant-limitations]]
+== 已知的安全相關限制
+
+**自簽名憑證警告。**CLI `enable`和 `modify`命令會警告您，自簽名憑證會使您容易受到中間人攻擊。請使用透過 `security certificate install`安裝的 CA 簽署憑證。
+
+**雙向 TLS 是可選的。** 預設情況下 `-enforce-host-auth false`，NFS over TLS 可保護傳輸過程中的機密性和完整性，並向用戶端驗證伺服器身分——但不會以密碼編譯方式驗證用戶端主機。如果您需要此功能，請明確啟用 mTLS。
+
+**TLS 強制執行是針對每個匯出原則規則，而非全域。**在您對相關匯出原則規則設定 `-allow-nfs-tls-only true`之前，同一個 LIF 仍可接受來自該規則允許的用戶端的非 TLS NFS 連線。

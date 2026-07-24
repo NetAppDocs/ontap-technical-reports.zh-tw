@@ -1,0 +1,60 @@
+---
+sidebar: sidebar 
+permalink: nfs-tls/nfs-tls-use-cases.html 
+keywords: nfs, tls, use cases, kerberos, mtls, enforcement, zero trust, workloads, performance, connection churn 
+summary: NFS over TLS 可在不使用 Kerberos 的情況下實現線上加密、每個用戶端的 TLS 強制執行以及相互用戶端身分驗證。並非所有工作負載都適合。 
+---
+= 使用案例和工作負載
+:toc: macro
+:hardbreaks:
+:toclevels: 1
+:allow-uri-read: 
+:toc: 
+:toclevels: 1
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+:toc-position: content
+
+
+[role="lead"]
+NFS over TLS 非常適合以下三種常見的部署場景：無需 Kerberos 基礎架構的線上加密、對共享的匯出的每個用戶端強制執行 TLS 以及相互用戶端身分驗證。
+
+並非所有工作負載都能同等受益——了解哪些模式適用、哪些模式不適用，將有助於您規劃部署。
+
+
+
+[[use-cases]]
+== 使用案例
+
+*無需 Kerberos 基礎架構即可實現線上 NFS 加密。*如果您需要 NFS 資料傳輸加密，但又不想部署和操作金鑰發佈中心 （KDC）、向用戶端發佈金鑰表，或擴展 Kerberos 領域以涵蓋您的 NAS 用戶端，NFS over TLS 可直接解決此問題。您只需為每個儲存虛擬機器 （SVM） 安裝一個伺服器憑證，在每個應承載加密 NFS 的資料邏輯介面 （LIF） 上啟用 NFS over TLS，用戶端即可在標準 NFS 連接埠上協商 TLS 1.3 帶內加密。無需新的驗證服務。
+
+*針對共享的 NFS 匯出的每個用戶端 TLS 強制執行。*如果您的用戶端中既有需要加密的，也有不需要加密的，您需要一種方法來強制受規範的用戶端使用加密路徑，同時又不影響其他用戶端。匯出原則規則選項 `-allow-nfs-tls-only true`正是為此而設計的。它會拒絕相符用戶端透過 TCP 進行非 TLS 裝載，同時保持其他匯出原則規則不變。
+
+*用於儲存到用戶端信任的雙向用戶端身分驗證 （mTLS）。*如果您遵循零信任連網原則，或有強化要求，需要儲存控制器驗證每個連接用戶端的主機身份，請使用每個 LIF 的雙向 TLS 選項。Set `-enforce-host-auth true` on `vserver nfs tls interface enable` or `vserver nfs tls interface modify`。ONTAP 接著會在 TLS 信號交換時，根據 SVM 安裝的憑證授權單位 （CA） 信任鏈驗證每個連接用戶端的 X.509 憑證，並拒絕未提供受信任憑證的用戶端。這可實現「只有我已註冊的主機群才能存取此 NFS LIF」的密碼編譯強制執行，並在現有匯出原則主機篩選器之外額外運作。
+
+
+
+[[workloads]]
+== 工作負載
+
+加密並非免費。TLS 信號交換會產生可衡量的開銷，而 TLS 記錄加密會為每次 RPC 呼叫增加例行成本。效能影響會因工作負載、平台以及是否啟用硬體卸載而有很大差異。詳情請參閱 link:nfs-tls-performance.html["效能"]。
+
+
+
+[[workload-patterns]]
+=== 工作負載模式
+
+對於用戶端數量穩定的長期 NFS 裝載來說，非常適合。TLS 信號交換是每次連線都會產生的費用，在裝載時和工作階段重建時都會收取——如果您的用戶端數量不多且穩定，每次裝載後都能保持裝載數小時甚至數天，那麼您完全可以承擔這部分費用。
+
+如果您已妥善管理 LIF 到主機名稱的對應關係（例如，由您控制的 DNS 記錄），您會發現透過 TLS 資源配置 NFS 非常簡單。此功能是針對每個 LIF 進行組態設定的：您需要安裝一個伺服器憑證，其通用名稱 （CN） 與 LIF 的完整網域名稱 （FQDN） 相符，且其主體別名 （SAN） 清單包含 LIF 的 IP 位址。
+
+當您的安全性要求是網路傳輸機密性、伺服器身分以及（可選的）用戶端主機身分時，NFS over TLS 是正確的工具——而這正是 TLS 所提供的特性。
+
+
+
+[[workload-anti-patterns]]
+=== 工作負載反模式
+
+連線頻繁切換或大規模裝載風暴都不適合使用 TLS。每個新的 TLS 連線都需要支付 TLS 1.3 信號交換的費用，包括非對稱密碼編譯、憑證驗證和可選的 mTLS 鏈驗證。如果許多用戶端裝載、執行少量工作、取下並重複重新連線，則將重複支付信號交換費用，而非分攤這些費用。

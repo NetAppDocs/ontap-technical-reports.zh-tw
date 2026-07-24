@@ -1,0 +1,66 @@
+---
+sidebar: sidebar 
+permalink: nfs-tls/nfs-tls-monitor.html 
+keywords: nfs, tls, monitor, counters, ems, events, statistics, observability 
+summary: NFS over TLS 會在 nfs_tls 物件上公開 Counter Manager 計數器，以及四個 EMS 事件，用於追蹤連線健全狀況和強制執行行為。 
+---
+= 透過 TLS 監控 NFS
+:toc: macro
+:hardbreaks:
+:toclevels: 1
+:allow-uri-read: 
+:toc: 
+:toclevels: 1
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+:toc-position: content
+
+
+[role="lead"]
+透過 TLS 的 NFS 會在 `nfs_tls`物件上公開 Counter Manager 計數器和四個 EMS 事件，您可以使用這些事件來追蹤連線健全狀況和強制執行行為。
+
+
+
+[[counter-manager-counters]]
+== Counter Manager 計數器
+
+所有 NFS over TLS Counter Manager 計數器都位於 admin-scope 物件中 `nfs_tls`。使用 `statistics show -object nfs_tls`查看它們。使用 `-counter <name>`可篩選至單一計數器，或使用 `-instance`將範圍限定至特定的 SVM 或節點列。
+
+*識別符/標籤計數器（字串）：*
+
+* `nfs_tls:instance_name`-- 該列的執行個體名稱（組成 SVM 名稱）。
+* `nfs_tls:instance_uuid`-- 列的執行個體 UUID（組成 SVM 識別碼）。
+* `nfs_tls:vserver_id`--彙總列的 SVM 識別碼標籤。
+* `nfs_tls:vserver_name`--彙總列的 SVM 名稱標籤。
+* `nfs_tls:node_name`-- 彙總行的節點名稱標籤。
+
+
+*連接數計數器（速率）：*
+
+* `nfs_tls:tls_total_connection_requests`--已處理的 NFS-over-TLS 連線請求總數（成功 + 故障）。
+* `nfs_tls:tls_connection_success`--成功建立 NFS over TLS 連線。
+* `nfs_tls:tls_disabled_connection_failures`--由於 SVM 上已停用 NFS over TLS，連線遭到拒絕。
+* `nfs_tls:tls_connection_handshake_failures`--TLS 信號交換期間失敗的連線。
+* `nfs_tls:tls_configuration_not_found`--連線嘗試遭拒，因為 SVM/LIF 配對不存在 TLS 組態。
+* `nfs_tls:tls_connection_mismatch`--由於記憶體中的連線識別碼與信號交換完成期間觀察到的連線不符而導致的連線故障。
+
+
+*延遲計數器（平均值）：*
+
+* `nfs_tls:tls_handshake_average_latency`--平均 TLS 信號交換延遲（以微秒為單位）。基本計數器： `tls_connection_success`。
+
+
+
+
+[[event-management-system-ems-messages]]
+== 事件管理系統 (EMS) 訊息
+
+NFS 伺服器在 NFS over TLS 資料路徑上發出四個客戶可見的 EMS 事件。使用 `event log show`查看這些事件。
+
+`Nblade.TLSConfigError`:: 嚴重性 `ERR`，限速 10 分鐘。當用戶端嘗試在未設定 TLS 組態的 SVM/LIF 上透過 TLS 進行 NFS 時觸發。記錄的欄位：用戶端 IP 位址、SVM 名稱、LIF IP 位址。若要解決此問題，請使用 `vserver nfs tls interface enable`啟用組態。
+`Nblade.TLSHandshakeFailed`:: 嚴重性 `ERR`，限速 10 分鐘。當用戶端和伺服器之間的 TLS 信號交換失敗時觸發。記錄的欄位：SVM 名稱、LIF IP 位址、用戶端（遠端） IP 位址、伺服器憑證 UUID。若要解決此問題，請驗證 LIF 上的 TLS 組態並檢查網路健全狀況。如果問題仍然存在，請聯絡 NetApp 支援。
+`Nblade.NfsTlsDisabled`:: 嚴重性 `ALERT`，速率限制 24 小時。當用戶端嘗試在已停用該功能的 SVM 上使用 NFS over TLS 時觸發。記錄欄位：SVM 名稱。
+`Nblade.nfsTLSAccessErr`:: 嚴重性 `ERR`。當符合匯出原則規則的用戶端 `-allow-nfs-tls-only true`嘗試在未啟用 TLS 的情況下裝載或存取 NFS 路徑時觸發。使用此事件可確認是否已如預期般封鎖非 TLS 用戶端。
+

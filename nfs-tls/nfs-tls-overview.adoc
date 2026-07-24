@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: nfs-tls/nfs-tls-overview.html 
+keywords: nfs, tls, encryption, ontap, rfc9289, in-transit, prerequisites, requirements 
+summary: ONTAP 9.19.1 引進了原生 NFS over TLS，無需 Kerberos 或 IPsec 即可根據 RFC 9289 對 NFS RPC 流量進行傳輸中加密。 
+---
+= NFS over TLS 總覽
+:toc: macro
+:hardbreaks:
+:toclevels: 1
+:allow-uri-read: 
+:toc: 
+:toclevels: 1
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+:toc-position: content
+
+
+[role="lead"]
+ONTAP 9.19.1 引進了 NFS over TLS，這是人們期待已久的加密 NFS 流量的「便利按鈕」。
+
+在此功能推出之前，NFS 傳輸過程中加密有效負載僅限於 IPsec 或 Kerberos。雖然兩者都有效，但組態繁瑣，且效能損失可能非常顯著。這兩種方法都是「附加」解決方案——並非在專門針對 NFS 的 RFC 中定義。link:https://www.rfc-editor.org/rfc/rfc9289.html["RFC 9289"]，標題為「Toward Remote Procedure Call Encryption by Default」，改變了這一現狀。現在，NFSv3 和 NFSv4.x 可以使用 TLS 1.3 對傳輸中的 NFS RPC 流量進行加密。無需 Kerberos。無需 IPsec。
+
+
+
+[[prerequisites]]
+== 先決條件
+
+若要使用 ONTAP NFS over TLS，您必須符合以下要求。
+
+* ……執行 ONTAP 9.19.1
++
+** 目前不支援 ONTAP 雲端個人化設置
+
+
+* ……已獲得 NFS 授權
+* ……在 link:https://imt.netapp.com["NetApp 相容性矩陣"] 中找到 NFS 用戶端
+
+
+
+
+[[what-it-doesnt-do]]
+== 它不執行的功能
+
+NFS over TLS 保護傳輸階層安全，但不會改變 NFS 對使用者進行驗證的方式。
+
+*基於憑證的使用者身分驗證。*NFS over TLS *並未提供新的使用者身分驗證機制*。您仍然需要 `auth_sys`或 `krb5`來進行使用者身分驗證。您仍然可以使用 `krb5i`和 `krb5p`，但 TLS 會使它們的完整性和隱私保護變得備援——而且您仍然會承受效能損失。

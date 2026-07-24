@@ -1,0 +1,59 @@
+---
+sidebar: sidebar 
+permalink: nfs-tls/nfs-tls-performance.html 
+keywords: nfs, tls, performance, cpu, offload, ktls, connectx, handshake latency 
+summary: TLS 會增加 CPU、記憶體容量和網路例行成本。CX6-Dx 和 CX7 網路卡上的硬體卸載可顯著降低穩定狀態下的 CPU 例行成本。 
+---
+= 效能
+:toc: macro
+:hardbreaks:
+:toclevels: 1
+:allow-uri-read: 
+:toc: 
+:toclevels: 1
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+:toc-position: content
+
+
+[role="lead"]
+TLS 會增加三個資源維度的成本：CPU、記憶體容量和網路。
+
+
+
+[[resource-cost-overview]]
+== 資源成本總覽
+
+*CPU* 是主要開銷。TLS 1.3 信號交換是一次性的、每次連線的例行成本，涵蓋非對稱密碼編譯、憑證解析和金鑰交換。連線建立後，穩定狀態的例行成本是使用 AES-GCM 或 ChaCha20-Poly1305 進行對稱記錄加密。在配備 Mellanox ConnectX-6 Dx （CX6-Dx） 或 ConnectX-7 （CX7） 網路卡的平台上，網路卡本身透過核心 TLS （KTLS） 卸載執行加密和解密，從而顯著降低穩定狀態下的 CPU 例行成本。
+
+*記憶體容量*影響較低。TLS 會新增每個連線的工作階段狀態，以及每個節點的 TLS 組態快取。快取大小有限制；項目會根據存留時間 （TTL） 進行老化，並在背景中重新整理。
+
+*Network* 例行成本很小。TLS 1.3 記錄訊框機制會增加每個記錄的固定例行成本和一個驗證標籤。信號交換僅在連線設定時增加往返次數，而非每次 RPC 呼叫時增加往返次數。
+
+
+
+[[tls-performance-penalty]]
+== TLS 效能損失
+
+ONTAP 中 NFS over TLS 有兩種不同的路徑：硬體卸載路徑和軟體 TLS 路徑。硬體卸載路徑適用於配備 CX6-Dx 或 CX7 NIC 的平台。軟體 TLS 路徑則用於不具備卸載功能之 NIC 的平台。
+
+在配備支援卸載功能的網路卡的平台上，在各種工作負載下，效能與純文字 NFS 的效能相差約 10%。在不具備卸載功能的網路卡的平台上，軟體 TLS 路徑對工作負載更為敏感，在最壞情況下，處理量可能比純文字 NFS 降低約 30%。這些數據僅供參考，並非保證的效能指標。實際結果會因工作負載類型、I/O 大小和連線數而異。如果在同一節點上混合使用 TLS 和非 TLS 流量，則預期非 TLS 處理量也會受到影響。
+
+
+
+[[scaling-factors]]
+== 縮放因子
+
+以下因素會增加彙總 TLS CPU 例行成本或信號交換延遲：
+
+*連線頻繁切換。*每次建立新連線都會產生信號交換例行成本。經常開啟和結案與 NFS 伺服器 TCP 連線的工作負載，其彙總 TLS CPU 高於連線持續時間較長的工作負載。
+
+*接管或網路事件後的裝載風暴。*許多用戶端同時重新連線的工作負載（例如 HA 接管後）將為每個連線支付完整的 TLS 1.3 信號交換成本。請相應地監控 `nfs_tls:tls_handshake_average_latency`並規劃連線餘裕。
+
+*大量不同的用戶端身分（相互 TLS）。*相互 TLS (mTLS) 部署會根據要驗證的唯一用戶端憑證數量來擴展信號交換 CPU。
+
+*mTLS 與僅伺服器端 TLS 的差異*啟用主機驗證 （mTLS） 會在伺服器端增加用戶端憑證驗證，因此每次信號交換的成本會比僅伺服器端 TLS 略高。但每次 RPC 的穩定狀態成本不變。
+
+*TLS 組態變更。*TLS 介面組態的頻繁變更（憑證輪換、啟用/停用週期）會使每個節點的 TLS 組態快取失效，並強制將查詢作業返回管理主機，從而短暫提高信號交換延遲。
