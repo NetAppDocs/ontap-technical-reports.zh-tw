@@ -2256,15 +2256,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="db205ae8bdf2835682d741206291c18c" category="list-text">每個 FlexGroup Volume 512 個組成磁碟區</block>
   <block id="4bb047f8c530785002e490ef17fa725e" category="section-title">何處可找到其他資訊</block>
   <block id="7d5b957cd473f6eaf5ad335a9c63c4ff" category="paragraph">如需深入瞭解本文件所述資訊，請參閱下列文件和 / 或網站：</block>
-  <block id="edd1ab4aa75a5fec969c05a8b30f7159" category="inline-link-macro"><block ref="edd1ab4aa75a5fec969c05a8b30f7159" category="inline-link-rx"></block></block>
-  <block id="f9cfe6815bd47be353c3bb39a0139fa8" category="list-text">Hardware Universe <block ref="9b728666388740f3273b7fd3c79f41a3" category="inline-link-macro-rx"></block></block>
-  <block id="82d68405cccf1e20bdf17e9113f92699" category="list-text">NetApp AFX 產品頁面<block ref="41c1c71697c17785bd4ba5e736738c42" category="inline-link-rx"></block></block>
-  <block id="ffa8e3dd54a1aebd2bec70c8e324c546" category="inline-link-macro"><block ref="ffa8e3dd54a1aebd2bec70c8e324c546" category="inline-link-rx"></block></block>
-  <block id="858cf9c99b0b862efd234a7e9baf6925" category="list-text">NetApp AFX：可擴充、安全的 AI 資料基礎架構<block ref="3aa6bc3cce342e09582bd41034e5d890" category="inline-link-macro-rx"></block></block>
-  <block id="c2d05aa5a52a26363457404a67c100ec" category="inline-link-macro"><block ref="c2d05aa5a52a26363457404a67c100ec" category="inline-link-rx"></block></block>
-  <block id="113b6ad1210d507cfbdeea8852c55c42" category="list-text">在 NFSv3 或 NFSv4.x 之間做決定？選擇越來越清楚了… <block ref="557477dbf74915d5a818c1f69c0f8792" category="inline-link-macro-rx"></block></block>
-  <block id="6220eabe39a1109ebb5f7cbb5b71d2b4" category="inline-link-macro"><block ref="6220eabe39a1109ebb5f7cbb5b71d2b4" category="inline-link-rx"></block></block>
-  <block id="56f8963bb7cc32c1d25e21641bd952b7" category="list-text">NetApp AFX 資料表 <block ref="41fee6b02e5a22a1b6d68a533a507406" category="inline-link-macro-rx"></block></block>
   <block id="f6a738f75f76f62a241636eca02cd87d" category="section-title">版本歷史記錄</block>
   <block id="34b6cd75171affba6957e308dcbd92be" category="cell">版本</block>
   <block id="44749712dbec183e983dcd78a7736c41" category="cell">日期</block>
@@ -2351,7 +2342,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="458a3f89edcc08eb6255ebe8b1d42393" category="paragraph">*NetApp AFX – NFSv4.1 順序 IO 效能（ONTAP 9.18.1）*</block>
   <block id="bddd597f0eec2113f06b93b0277da19f" category="paragraph">更令人印象深刻的是，NFSv4.x 在效能瓶頸之一——元資料方面也取得了顯著改進。這些是隨機 IO，通常在 4K 範圍內，用於管理檔案擁有者和屬性、建立和列出檔案等等。由於 NFSv4.x 的狀態性，這類操作往往會消耗更多 CPU 資源並增加延遲，從而降低整體效能。</block>
   <block id="8d3bd41fd952027a466e35605cbd651b" category="paragraph">*NetApp AFX – ONTAP 9.18.1 中的 NFSv4.1 元資料 IO 效能*</block>
-  <block id="cbbe23e446b1acb5414c4f9076c4423a" category="summary">請查看以下資源，以深入瞭解 NetApp AFX。</block>
   <block id="739f428040feee735e00029f2f74aaad" category="summary">本頁面涵蓋 NetApp AFX 的最新更新，並將隨著每個新版本的發布而更新。</block>
   <block id="89bef61b77bccd688eb4c742aab2b38b" category="doc">NetApp AFX 的新特性</block>
   <block id="f5cb5bdaaa412361fa89cf3912168e46" category="summary">IPsec 為 NFS 或 SMB 加密提供了一種替代方案，並且是 iSCSI 流量傳輸過程中唯一的加密選項。</block>
@@ -2675,4 +2665,14 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="4ade1e690485ace608877ec90f1e5fbc" category="sidebar">基於 TLS 的 NFS</block>
   <block id="e2ab7c65b21ed8cc1c3b642b5e36429e" category="sidebar">S3</block>
   <block id="d2986ac8cb6bd55892099c1ffd6b1f6f" category="sidebar">監視器</block>
+  <block id="df9fc6fb0a33d6cde6e33be08fe5e535" category="summary">請查閱以下資源，以了解更多關於 NetApp AFX 的資訊。</block>
+  <block id="6ec228dfe84ccdb5f038627d2fe43701" category="list-text"><block ref="6ec228dfe84ccdb5f038627d2fe43701" category="inline-link-macro-rx"></block></block>
+  <block id="9506948fa02ccc59526718a774fd3c27" category="inline-link-macro">AFX 產品頁面</block>
+  <block id="32b85f1fb1ba3c98ea8567a645fabe95" category="list-text"><block ref="32b85f1fb1ba3c98ea8567a645fabe95" category="inline-link-macro-rx"></block></block>
+  <block id="ba863d8bcb98bbbfb1e9cd9cc7dcf912" category="inline-link-macro">建構人工智慧驅動型企業：基礎架構為何至關重要</block>
+  <block id="ec283cf2fa72cc250368fbff3fe539e1" category="list-text"><block ref="ec283cf2fa72cc250368fbff3fe539e1" category="inline-link-macro-rx"></block></block>
+  <block id="ff5020c223b5f9cee31f72d1bd7e8170" category="inline-link-macro">部落格：NFSv3 和 NFSv4.X 哪個比較好？</block>
+  <block id="083f5724b7ba8a1aee93e65207c1ca46" category="list-text"><block ref="083f5724b7ba8a1aee93e65207c1ca46" category="inline-link-macro-rx"></block></block>
+  <block id="0b177bc573a406d57588f5636aee8329" category="inline-link-macro">AFX 規格書</block>
+  <block id="ccc213f9aa4c560ef128ce5b7fec0244" category="list-text"><block ref="ccc213f9aa4c560ef128ce5b7fec0244" category="inline-link-macro-rx"></block></block>
 </blocks>
