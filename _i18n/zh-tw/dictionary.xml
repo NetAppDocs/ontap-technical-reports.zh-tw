@@ -2345,8 +2345,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="739f428040feee735e00029f2f74aaad" category="summary">本頁面涵蓋 NetApp AFX 的最新更新，並將隨著每個新版本的發布而更新。</block>
   <block id="89bef61b77bccd688eb4c742aab2b38b" category="doc">NetApp AFX 的新特性</block>
   <block id="f5cb5bdaaa412361fa89cf3912168e46" category="summary">IPsec 為 NFS 或 SMB 加密提供了一種替代方案，並且是 iSCSI 流量傳輸過程中唯一的加密選項。</block>
-  <block id="0edc4f2a9dbc6aeccfda9e35d7fc1e2c" category="sidebar">NetApp 技術報告為在不同生態系統或不同協議下規劃和最佳化部署提供了更多背景資訊。部分 ONTAP 技術報告提供了 ONTAP 特性和功能的架構背景和推薦實務。</block>
-  <block id="769f9a17e2917e1c464ebd1dfbcbc78f" category="sidebar">NetApp 技術報告</block>
   <block id="5c6ab1284b6b7a5a7102854a969c99be" category="sidebar">儲存系統</block>
   <block id="e9d7397e9772df2e11071d57657f4b22" category="sidebar">AFX</block>
   <block id="33871b6190a8d5adbe8b15282054766c" category="sidebar">新增功能</block>
@@ -2528,7 +2526,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="799311ec2a93db750cc80868f6de9f45" category="list-text">嚴重性<block ref="320f86f60f25459ba5550e000b2c3929" prefix=" " category="inline-code"></block>，速率限制 24 小時。當用戶端嘗試在已停用該功能的 SVM 上使用 NFS over TLS 時觸發。記錄欄位：SVM 名稱。</block>
   <block id="3073a9f5875a227e23219f0525b7efbd" category="list-text"><block ref="77e0cb8b7c203cd744328c65b0690682" prefix="" category="inline-code"></block></block>
   <block id="4dd7e90fe2de7e36ca6e0f6c4551de0c" category="list-text">嚴重性<block ref="cd22bad976363fdd1bfbf6759fede482" prefix=" " category="inline-code"></block>。當符合匯出原則規則的用戶端<block ref="0db3324f6e6bdfb7434bca0fd896c8b2" prefix=" " category="inline-code"></block>嘗試在未啟用 TLS 的情況下裝載或存取 NFS 路徑時觸發。使用此事件可確認是否已如預期般封鎖非 TLS 用戶端。</block>
-  <block id="d4d963696760850746648f3a41f8ecd1" category="summary">ONTAP 9.19.1 引進了原生 NFS over TLS，無需 Kerberos 或 IPsec 即可根據 RFC 9289 對 NFS RPC 流量進行傳輸中加密。</block>
   <block id="08ed4a47b941685c9edbc9dcd5d9ee57" category="doc">NFS over TLS 總覽</block>
   <block id="2ae4132b55036d673c6efc936c13f75e" category="paragraph">ONTAP 9.19.1 引進了 NFS over TLS，這是人們期待已久的加密 NFS 流量的「便利按鈕」。</block>
   <block id="ffea051388edee8ef372949be32bff50" category="inline-link-macro">RFC 9289</block>
@@ -2559,7 +2556,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="af308a9544f9cd6667d954e201388346" category="paragraph">*大量不同的用戶端身分（相互 TLS）。*相互 TLS (mTLS) 部署會根據要驗證的唯一用戶端憑證數量來擴展信號交換 CPU。</block>
   <block id="21864784471d974f421182a25769daa9" category="paragraph">*mTLS 與僅伺服器端 TLS 的差異*啟用主機驗證 （mTLS） 會在伺服器端增加用戶端憑證驗證，因此每次信號交換的成本會比僅伺服器端 TLS 略高。但每次 RPC 的穩定狀態成本不變。</block>
   <block id="097bc9f656efd3efd7bb245df52f4e67" category="paragraph">*TLS 組態變更。*TLS 介面組態的頻繁變更（憑證輪換、啟用/停用週期）會使每個節點的 TLS 組態快取失效，並強制將查詢作業返回管理主機，從而短暫提高信號交換延遲。</block>
-  <block id="60d3ef38aef28b0416bcd458ffc3d840" category="summary">NFS over TLS 符合標準 ONTAP 匯出原則控制，並透過 SVM-DR 和 MetroCluster 進行複寫。本頁也涵蓋連線限制、強制執行行為和操作建議。</block>
   <block id="8d217ebd6342c5cff32664c568fede0c" category="doc">互通性和局限性</block>
   <block id="ff876c23f5a4e3c38b9a50b2f7b4a1fa" category="paragraph">NFS over TLS 可與標準 ONTAP 匯出原則控制項搭配使用，透過 SVM-DR 和 MetroCluster 進行複寫，並具有一些在部署之前應了解的硬性平台限制和操作建議。</block>
   <block id="67a915151759ecc737f698391f7cfd08" category="section-title">互通性</block>
@@ -2675,4 +2671,8 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="083f5724b7ba8a1aee93e65207c1ca46" category="list-text"><block ref="083f5724b7ba8a1aee93e65207c1ca46" category="inline-link-macro-rx"></block></block>
   <block id="0b177bc573a406d57588f5636aee8329" category="inline-link-macro">AFX 規格書</block>
   <block id="ccc213f9aa4c560ef128ce5b7fec0244" category="list-text"><block ref="ccc213f9aa4c560ef128ce5b7fec0244" category="inline-link-macro-rx"></block></block>
+  <block id="28c20cc636e9273bfdbbb9e04c22b3eb" category="summary">ONTAP 9.19.1 引進了原生 NFS over TLS，無需 Kerberos 或 IPsec 即可依照 RFC 9289 對 NFS 進行傳輸中加密。</block>
+  <block id="49f0664f282179029e2131d30362f45d" category="summary">NFS over TLS 可與標準 ONTAP 匯出原則控制項搭配使用，並透過 SVM-DR 和 MetroCluster 進行複製。本頁也涵蓋連線限制、強制執行行為和操作建議。</block>
+  <block id="7ec1eb1e8c27af2d560415def72f2dcf" category="sidebar">ONTAP 技術報告為在不同生態系統或不同協定下規劃和最佳化部署提供了更多背景資訊。部分 ONTAP 技術報告也提供了 ONTAP 特性和功能的架構背景和最佳實務建議。</block>
+  <block id="9678a7dcb872318bf33163b8a1ba5331" category="sidebar">ONTAP 技術報告</block>
 </blocks>

@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: nfs-tls/nfs-tls-reference.html 
 keywords: nfs, tls, interoperability, svm-dr, metrocluster, snapmirror, limits, connection limit, enforcement, recommendations 
-summary: NFS over TLS 符合標準 ONTAP 匯出原則控制，並透過 SVM-DR 和 MetroCluster 進行複寫。本頁也涵蓋連線限制、強制執行行為和操作建議。 
+summary: NFS over TLS 可與標準 ONTAP 匯出原則控制項搭配使用，並透過 SVM-DR 和 MetroCluster 進行複製。本頁也涵蓋連線限制、強制執行行為和操作建議。 
 ---
 = 互通性和局限性
 :toc: macro
