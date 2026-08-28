@@ -34,7 +34,7 @@ summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和�
 * 800 TB
 
  a| 
-* N/A
+* 不適用（無實體聚合）
 
 
 
@@ -44,7 +44,7 @@ summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和�
 
  a| 
 * 8 (9.17.1)
-* 32（9.19.1RC1）
+* 32（9.19.1GA）
 
 
 
@@ -57,7 +57,7 @@ summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和�
 * 3PB（9.18.1RC1）
 * 16PB （9.18.1GA 版本）
 * 20PB（9.19.1RC0）
-* 32PB（9.19.1RC1）
+* 32PB（9.19.1GA）
 
 
 
@@ -69,7 +69,7 @@ summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和�
  a| 
 * 每個叢集 12 個（9.18.1GA）
 * 每個叢集 17 個（9.19.1RC0）
-* 每個叢集 25 個（9.19.1RC1）（無 HA 配對限制）
+* 每個叢集 27 個（9.19.1GA）（無 HA 配對限制）
 
 
 
@@ -81,7 +81,7 @@ summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和�
  a| 
 * 每個叢集 288 個（根據磁碟櫃數量限制；無 HA 配對限制）
 * 每個叢集 408 個 (9.19.1RC0)
-* 每個叢集 600 個（9.19.1RC1）
+* 每個叢集 648 個（9.19.1GA）
 
 
 
@@ -92,7 +92,18 @@ summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和�
 
  a| 
 * 300TB（FlexVol）
-* 60PB（FlexGroup）*
+* 60PB（FlexGroup - 9.19.1 版之前）*
+* ~153PB（FlexGroup - 9.19.1 及更新版本）*
+
+
+
+
+| 最大 FlexGroup 成分數量  a| 
+* 200
+
+ a| 
+* 200（9.18.1 及更早版本）
+* 512（9.19.1GA）
 
 
 
@@ -104,6 +115,7 @@ summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和�
  a| 
 * 20 億（FlexVol）
 * 4000 億（FlexGroup）
+* 1 兆（FlexGroup - 9.19.1GA 及更新版本）
 
 
 
@@ -164,16 +176,6 @@ summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和�
 
 
 
-| 最大成分數 – FlexGroup  a| 
-* 200
-
- a| 
-* 200
-* 9.19.1 RC1 中的 512
-
-
-
-
 | 叢集間 LIF 數量上限  a| 
 * 8
 
@@ -208,4 +210,13 @@ summary: 本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和�
 * 400
 
 
+|===
+[role="small"]
+_*FlexGroup 最大大小將限制為 32PB 實體大小。_
+
+[cols="1,1"]
+|===
+
+
+| link:afx-hardware.html["以前的"] | link:afx-related-info.html["下一篇：相關訊息"] 
 |===

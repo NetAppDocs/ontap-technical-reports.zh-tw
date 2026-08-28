@@ -1,0 +1,51 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-capacity-pool.html 
+keywords: netapp afx, single capacity pool, storage availability zone, aggregates, capacity 
+summary: 了解 NetApp AFX 儲存可用區如何以單一叢集範圍的容量資源池取代實體彙總。 
+---
+= 單一容量資源池
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+NetApp AFX 將每個節點的實體彙總替換為可供整個叢集使用的單一儲存可用區。
+
+
+
+[[no-more-physical-aggregates]]
+== 不再有實體 Aggregate
+
+Unified ONTAP 將磁碟分組到 RAID 群組中，然後將它們組合成一個稱為 Aggregate 的容量結構。此 Aggregate 用於向儲存系統呈現實體容量，並決定了可用於建立磁碟區以服務最終使用者資料的空間邊界。每個節點必須至少分配一個 Aggregate，這些 Aggregate 的當前容量上限為 800TB。一旦達到此上限，將沒有更多空間用於寫入操作。
+
+實體 Aggregate 也可能帶來一些容量管理方面的挑戰，因為儲存管理員有時需要手動調整 Volume 的位置，以保持叢集節點間的容量平衡。當採用橫向擴展 Volume 架構（例如 FlexGroup Volume）時，這些挑戰會更加突出。Aggregate 的大小、磁碟數量、磁碟類型等也可能存在差異，這會導致在存取不同節點時出現效能差異。
+
+*統一 ONTAP 中的 Aggregate*
+
+image:image8.png["影像"]
+
+NetApp AFX 將實體集合體的概念虛擬化，並由 ONTAP 管理，然後透過全新的 Storage Availability Zone，將實體容量管理從每個節點的方法轉變為每個叢集。這個單一容量池提供「所見即所得」的空間管理方式。
+
+*NetApp AFX 儲存可用區*
+
+image:image9.png["影像"]
+
+
+
+[[data-written-to-any-and-all-disks-in-the-availability-zone]]
+== 寫入可用區域中任何 ( 和所有 ) 磁碟的資料
+
+NetApp AFX 移除了磁碟擁有權的概念，並將實體集合體的架構轉變為由 ONTAP 管理的虛擬化方式，讓為叢集購買的所有容量都可供連接至該叢集的節點使用。使用 AFX 時，所有節點都能寫入儲存可用性區域中的任何磁碟，無論節點：磁碟區擁有權為何。節點仍然有磁碟區擁有權的概念，因為寫入仍需經過 NVRAM，但該資料可以儲存在任何可用容量中。這表示可以有更多磁碟參與單一工作負載，進而帶來效能上的優勢。
+
+*資料如何進入 Storage Availability Zone*
+
+image:image11.png["影像"]
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-node-disk.html["上一頁：節點到磁碟的關係"] | link:afx-architecture-nvram-ha.html["接下來：複寫的 NVRAM 和 HA 故障移轉行為"] 
+|===

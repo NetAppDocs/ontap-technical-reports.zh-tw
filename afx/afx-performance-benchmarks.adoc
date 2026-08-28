@@ -1,0 +1,361 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-performance-benchmarks.html 
+keywords: netapp afx, performance, benchmarks, elbencho, nfs, mount options, best practices 
+summary: 重現 NetApp AFX 效能基準測試結果的指南，包括匯出原則、Volume、裝載、用戶端和網路方面的考量。 
+---
+= 效能基準測試技巧
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+本頁提供組態指南，用於重現 NetApp link:afx-performance.html#benchmark-results["基準測試結果"] 中所述的 AFX 效能基準測試結果。這些是通用注意事項和組態指南，而不是完整的測試流程。
+
+如需 NFS 通訊協定背景及建議做法，請參閱 link:https://www.netapp.com/pdf.html?item=/media/10720-tr-4067.pdf["TR-4067 ： ONTAP 最佳實務做法與實作指南中的 NFS"^] 和 link:afx-performance.html#nfsv4x-performance-enhancements["NFSv4.x 效能增強功能"]。
+
+用於 Volume 建立、LIF 管理和用戶端調校的 NAS 基準測試指令碼可在 link:https://github.com/whyistheinternetbroken/Benchmarking/tree/main/ONTAP["基準測試/ONTAP"^] 儲存庫中取得。
+
+
+
+[[performance-testing-considerations]]
+== 效能測試注意事項
+
+效能測試通常旨在找出系統在特定工作負載場景下的效能極限。大多數情況下，ONTAP 的預設設定無需調整即可滿足大多數工作負載的效能要求，但在某些情況下，您可能需要調整某些組態以最佳化系統。
+
+
+
+[[nfs-export-policy-configuration]]
+== NFS 匯出原則組態
+
+ONTAP 中的匯出原則用於控制對 NFS 匯出的存取。每個 Volume 都需要設定匯出原則，並在原則中設定規則。如果原則中未設定任何規則，則視為「禁止存取」。如需詳細資訊，請參閱 link:https://docs.netapp.com/us-en/ontap-technical-reports/ontap-security-hardening/securing-nfs.html["NFS 安全性"^] 和 link:https://docs.netapp.com/us-en/ontap/nfs-config/export-policies-concept.html["ONTAP 匯出原則文件"^]。
+
+對於效能基準測試，我們可能不太關注用於測試的用戶端的權限，而是希望避免任何與權限相關的錯誤。因此，建議確保所有匯出原則規則都設定為對資料 Volume 完全開放存取，但僅限於用於存取資料集的用戶端。此外，vsroot 原則*必須*允許原則中路徑遍歷的讀取存取權限。
+
+*vsroot 原則（使用「預設」原則）*
+
+[listing]
+----
+export-policy rule create -policyname default -clientmatch 0/0 -rorule any -rwrule never
+----
+*資料 Volume 原則*
+
+[listing]
+----
+export-policy create -policyname [name] -vserver [SVM]
+export-policy rule create -policyname [name] -clientmatch [client1],[client2],..[clientN] -rorule any -rwrule any -superuser any -anon 0 -chown-mode unrestricted -ntfs-unix-security-ops ignore
+----
+
+
+[[nfs-server-configuration]]
+== NFS 伺服器組態
+
+以下 NFS 伺服器選項用於內部 AFX 效能基準測試執行。其他 NFS 伺服器選項也可以啟用（例如，NFSv4 ACL 支援），但它們超出了這些基準測試提示的範圍。有關 AFX 上 NFSv4.1、pNFS 和工作階段中繼效能的詳細資訊，請參閱 link:afx-performance.html#nfsv4x-performance-enhancements["NFSv4.x 效能增強功能"]。
+
+|===
+| 選項 | 價值 
+
+
+| v4.1 | 已啟用 
+
+
+| v4-id-domain | [網域名稱]* 
+
+
+| v4.1-pnfs | 已啟用 
+
+
+| v4.1-trunking | 已啟用 
+
+
+| tcp-max-transfer-size | 262144 
+
+
+| v3-64bit-identifiers | 已啟用 
+
+
+| v4-64bit-identifiers | 已啟用 
+
+
+| v3 | 已啟用 
+
+
+| v4.1-read-delegation | 已停用 
+
+
+| v4.1-write-delegation | 已停用 
+
+
+| rdma | 已啟用（選用） 
+
+
+| v4.0 | 已停用 
+
+
+| v3-hide-snapshot | 已啟用 
+
+
+| 僅裝載根目錄 | 已停用 
+
+
+| nfs-rootonly | 已停用 
+|===
+*NFSv4 ID 網域可以是任何值，前提是與 NFS 用戶端上設定的值相符。
+
+驗證用戶端上的 NFSv4 ID 網域：
+
+[listing]
+----
+# nfsidmap -d
+user-domain.company.com
+# cat /etc/idmapd.conf | grep Domain
+Domain = user-domain.company.com
+----
+
+NOTE: 如果這些命令無法運作，則可能是您尚未安裝運用 NFSv4.x 所需的正確 NFS 軟體套件。例如，Debian/Ubuntu 系統需要 nfs-common。
+
+以下 CLI 命令套用用於內部效能基準測試執行的 NFS 伺服器組態。可透過 SSH 連線至叢集並套用此組態的指令碼位於 link:https://github.com/whyistheinternetbroken/Benchmarking/blob/main/ONTAP/NAS/configure-nfs-server.sh["ONTAP/NAS/configure-nfs-server.sh"^]。
+
+
+NOTE: RDMA 可降低延遲並提高大多數工作負載的處理量——約 10-30%。有關 NFS over RDMA，請參閱 link:https://docs.netapp.com/us-en/ontap/nfs-rdma/index.html["ONTAP NFS over RDMA 文件"^]。
+
+[listing]
+----
+set advanced; nfs modify -vserver [SVM] -v3 enabled -v4.1 enabled -v4.0 disabled -v4-id-domain [yourdomain.com] -v4.1-pnfs enabled -v4.1-trunking enabled -v4-64bit-identifiers enabled -v3-64bit-identifiers enabled -chown-mode unrestricted -tcp-max-xfer-size 262144 -mount-rootonly disabled -nfs-rootonly disabled -v3-hide-snapshot enabled -rdma [enabled optional]
+----
+
+
+[[volume-configuration]]
+== Volume 組態
+
+以下部分介紹 Volume 的建立和組態注意事項，並說明在初始建立期間應使用的選項。有關 FlexGroup Volume 在 AFX 中的運作方式，請參閱 link:afx-architecture-flexgroup.html#flexgroup-volume-management-improvements["FlexGroup Volume 管理改進"]、link:afx-capabilities.html#volume-types["磁碟區類型"] 和 link:https://www.netapp.com/pdf.html?item=/media/12385-tr4571.pdf["TR-4571 ： NetApp ONTAP FlexGroup Volume 最佳實務做法與實作指南"^]。
+
+|===
+| 設定 | 價值 
+
+
+| 磁碟區類型 | FlexGroup 
+
+
+| 建立方法 | CLI 
+|===
+[listing]
+----
+set diag; vol create -vserver [SVM] -volume [name] -size [size] -junction-path [/path] -unix-permissions 777 -files-set-maximum true -maxdir-size 4G -is-large-size-enabled true -snapshot-policy none -autosize-mode grow_shrink -policy [data policy] -snapdir-access false
+----
+預設設定已更改：
+
+* Snapshot 原則已停用
+* Maxfiles 增加
+* Maxdirsize 已增加
+* 支援大尺寸
+* 已啟用自動調整大小
+* UNIX 權限 777
+* 檔案系統分析已停用
+* Snapdir 存取為 false
+
+
+
+
+[[special-considerations-flexgroup-volumes]]
+=== 特殊考量事項——FlexGroup Volume
+
+如果工作負載在單一資料夾中建立了許多大檔案（>1GB），請將 Volume 的工作流程修改為資料：
+
+[listing]
+----
+AFX::> set advanced; vol modify -vserver [SVM] -volume [FlexGroup name] -workflow data
+----
+如果工作負載是託管在 FlexGroup Volume 上的 VMware 資料存放區，請停用 `-gdd`選項（精細資料分佈）。AFX 上的虛擬化不支援 NFS 複本卸載的 GDD；請參閱link:afx-architecture-feature-support.html#ontap-features-that-have-been-removedare-unsupported-with-afx["ONTAP 已移除或 AFX 不支援的功能"]。
+
+[listing]
+----
+AFX::> set diag; vol modify -vserver [SVM] -volume [FlexGroup name] -granular-data disabled
+----
+
+
+[[why-snapshots-are-disabled]]
+=== 為什麼快照功能停用
+
+通常情況下，ONTAP 中的快照不會對整體系統效能造成不利影響。有關快照和複寫在 AFX 上的工作原理，請參閱 link:afx-capabilities.html#snapshots-and-data-protection["快照和資料保護"]。但是，在基準測試中，我們會基於以下兩個原因停用快照：
+
+* 對環境進行精細控制——我們可以在需要時建立快照，以便更好地控制建立快照的情境，並更輕鬆地衡量其影響。
+* 資料流失——許多基準測試會建立大量資料，然後再刪除這些資料，這將迅速增加 Volume 上任何現有快照的大小。為避免空間分配問題，我們停用快照。
+
+
+
+NOTE: 同時停用 Snapdir 存取，以防止對快照進行不必要的檔案系統遍歷。
+
+
+
+[[mount-options]]
+== 掛載選項
+
+一般來說，裝載選項會根據特定使用案例而有所不同。本節旨在展示我們在內部效能測試中使用的一般使用案例裝載選項清單。如果 NFS 伺服器已依照<<NFS 伺服器組態>>所示正確設定，則無需指定 NFS 版本或 wsize/rsize 選項。
+
+基本選項（適用於所有用戶端/案例）：
+
+[listing]
+----
+-o tcp,hard,intr
+----
+*會話中繼（作業系統特定）*
+
+Session trunking 也列在 link:afx-performance.html#benchmark-results["基準測試結果"] 組態 (`trunkdiscovery`）。如需 NFSv4.x 多重路徑 IO 內容，請參閱 link:afx-performance.html#nfsv4x-performance-enhancements["NFSv4.x 效能增強功能"]。
+
+[listing]
+----
+RHEL: trunkdiscovery
+Ubuntu (depends on version): trunkdiscovery (newer releases)
+                             max_connect=4 (older releases)
+----
+*RDMA 特定選項*
+
+如需透過 RDMA 進行 NFS，請參閱 link:https://docs.netapp.com/us-en/ontap/nfs-rdma/index.html["ONTAP NFS over RDMA 文件"^]。
+
+[listing]
+----
+rdma,write=eager
+----
+
+
+[[other-mount-options]]
+=== 其他裝載選項
+
+某些工作負載在基準測試期間可能會受益於特殊的裝載選項。下表列出了一些此類選項，以及哪些使用案例可能獲得效能提升。
+
+*其他 NFS 裝載選項及其使用案例*
+
+|===
+| NFS 裝載選項 | 說明 | 使用案例 
+
+
+| `nocto` | 停用「close-to-open」快取一致性。用戶端在開啟檔案時不會重新驗證快取的檔案屬性，而是依賴快取資料，即使這些資料可能已過時。 | 適用於讀取密集型、單一用戶端工作負載，且檔案很少更改（例如，靜態網頁內容、軟體庫、唯讀媒體封存）。不適用於多用戶端寫入。 
+
+
+| `cto` | 啟用接近開啟的快取一致性（預設）。當檔案開啟時，用戶端會向伺服器確認其快取複本是否仍然有效。這可確保在一個用戶端上關閉的檔案，在另一個用戶端上開啟時仍為最新版本。 | 資料一致性至關重要的多用戶端共享存取工作負載（例如，共享的主目錄、協作開發環境）。 
+
+
+| `actimeo` | 將所有屬性快取逾時時間（acregmin、acregmax、acdirmin、acdirmax）設定為以秒為單位的單一值。控制用戶端在與伺服器重新驗證之前信任快取的檔案/目錄中繼資料的時間。 | 當您需要統一的快取原則時，可以簡化調校。高值有利於讀取密集型/靜態工作負載；低值（例如，actimeo=0）適合需要近乎即時一致性的快速變化資料。 
+
+
+| `acregmin` | 設定用戶端快取常規檔案屬性的最短時間（秒），超過此時間後將重新驗證檔案屬性。預設值通常為 3 秒。 | 頻繁更新小檔案的工作負載，需要在新鮮度與效能之間進行微調（例如，日誌擷取、組態檔案輪詢）。 
+
+
+| `acregmax` | 設定用戶端快取普通檔案屬性的最長時間（秒）。預設值通常為 60 秒。 | 大多數靜態檔案工作負載中，延伸最大值可減少中繼資料通訊（例如，大型唯讀資料集、套件儲存庫）。 
+
+
+| `acdirmin` | 設定用戶端快取目錄屬性的最短時間（秒），超過此時間後將重新驗證。預設值通常為 30 秒。 | 經常列出或建立目錄的工作負載（例如，建置系統、使用 Maildir 格式的郵件佇列），目錄的新鮮度至關重要。 
+
+
+| `acdirmax` | 設定用戶端快取目錄屬性的最長時間（秒）。預設值通常為 60 秒。 | 穩定的目錄結構很少變更——提高此值可減少 GETATTR 呼叫（例如，大型靜態目錄樹、歸檔儲存設備）。 
+
+
+| `clientaddr` | 指定要向 NFS 伺服器通告的用戶端 IP 位址，用於回呼通訊（NFSv4/v4.1+）。伺服器使用此位址發送委派召回和其他回呼。 | 多宿主用戶端或具有複雜連網的環境（例如，具有多個 NIC 的用戶端、VPN/覆蓋網路或 NAT），其中自動偵測到的位址可能不正確。 
+
+
+| `nconnect` | 為單一裝載建立多個 TCP 連線（最多指定數量）到 NFS 伺服器，允許透過分隔的連線進行並行 I/O。 | 適用於受限於單一 TCP 串流的高處理量、I/O 密集型工作負載（例如，大型檔案傳輸、HPC/科學運算、影片編輯、資料庫備份、大數據資料分析）。在大頻寬網路（10 GbE+）上尤其有利。 
+
+
+| `krb5,krb5i,krb5p` | 指定裝載時使用的 Kerberos 安全性類型。需要 Kerberos 組態才能正常運作。如需詳細資訊，請參閱 link:https://www.netapp.com/media/19384-tr-4616.pdf["TR-4616：ONTAP 中與 Active Directory 整合的 NFS Kerberos"^]。 | 保護 NFS 裝載會對效能產生負面影響。 
+|===
+
+
+[[client-configuration]]
+== 用戶端組態
+
+用於內部基準測試的用戶端組態，包括網卡和作業系統調校指令碼，已在link:https://github.com/whyistheinternetbroken/Benchmarking/tree/main/Clients["基準測試/用戶端"^]儲存庫中列出。以下內容包含一些額外的組態注意事項。此清單並非詳盡無遺，將隨時間推移進行修改，以容納更多使用案例/場景。
+
+
+
+[[nfs-readahead]]
+=== NFS 預讀
+
+用戶端 NFS 預讀（如下）是 Linux 安裝點設定。它與 AFX 上的 ONTAP Volume 層級link:afx-performance.html#aggressive-read-ahead["主動預讀"]（跨檔案連續讀取）是分隔的。
+
+從：link:https://learn.microsoft.com/en-us/azure/azure-netapp-files/performance-linux-nfs-read-ahead["適用於 Azure NetApp Files 的 Linux NFS 預讀最佳實務"^]
+
+NFS 預讀功能會在應用程式發出 I/O 請求之前，預先從檔案讀取資料區塊。其設計旨在提高用戶端的連續讀取處理量。直到最近，所有現代 Linux 發行版都將預讀值設定為已裝載檔案系統 rsize 的 15 倍。
+
+RHEL 8.3 和 Ubuntu 18.04 引入了一些更改，可能會對用戶端連續讀取效能造成負面影響。與早期版本不同，這些發行版將預讀大小預設為 128 KiB，無論使用何種 rsize 裝載選項。從預讀大小較大的版本升級到預設預讀大小為 128 KiB 的版本後，連續讀取效能有所下降。但是，預讀大小可以動態且持續地向上調整。例如，使用 SAS GRID 進行的測試發現，15,360 KiB 的讀取大小優於 3,840 KiB、960 KiB 和 128 KiB。目前尚未執行足夠多的超過 15,360 KiB 的測試，無法確定其正面或負面影響。
+
+NFS 預讀是在 NFS 檔案系統的安裝點定義的。若要顯示目前值，請使用 grep 指令搜尋裝載路徑 `/proc/self/mountinfo`，然後使用裝置號碼檢視 `/sys/class/bdi/<device>/read_ahead_kb`：
+
+[listing]
+----
+# grep /mountpath/ /proc/self/mountinfo | awk '{ print $3 }'
+# cat /sys/class/bdi/<device>/read_ahead_kb
+----
+提供了一個方便的指令碼，用於檢視或動態設定預讀，詳見 link:https://learn.microsoft.com/en-us/azure/azure-netapp-files/performance-linux-nfs-read-ahead["適用於 Azure NetApp Files 的 Linux NFS 預讀最佳實務"^]。
+
+
+
+[[network-configuration]]
+== 網路組態
+
+以下部分涵蓋用戶端和儲存網路的一些通用連網指南。這些指南是根據我們進行的內部基準測試。有關 AFX 連網差異，請參閱 link:afx-capabilities.html#networking["網路"] 和 link:afx-hardware.html#switches["硬體：交換器"]。
+
+
+
+[[storage-network-considerations]]
+=== 儲存網路注意事項
+
+* 每個節點、每個 SVM 至少一個資料 IP 位址（每個節點越多越好）
+* 每個節點、每個 SVM 最多可分配 16 個 IP 位址。
+* 所有資料介面均可路由至所有用戶端
+* 使用 LACP 的每個節點綁定/組隊連接埠
+* MTU 大小為 9000（端點對端點）
+* 使用 RDMA 時啟用優先權流程控制（PFC 優先權 3）
+* DNS 輪詢/負載平衡設定為包含所有資料介面 IP 位址
+
+
+
+
+[[client-network-considerations]]
+=== 用戶端網路注意事項
+
+* 雙網卡綁定實作 RoCE（LACP）
+* RX/TX 環形緩衝區設定為 8192
+* 每個網路卡配置 PFC 和 DSCP（使用 RDMA 時）
+* 使用 cma_roce_tos 設定 RoCE 流量類別（使用 RDMA 時）
+* sunrpc.rdma_slot_table_entries 設定為 200
+
+
+
+
+[[additional-ontap-feature-considerations]]
+== ONTAP 的其他功能注意事項
+
+以下內容涵蓋了特定 ONTAP 功能組態修改，這些修改未涵蓋於 <<NFS 匯出原則組態>>、<<Volume 組態>>、<<掛載選項>>、<<用戶端組態>> 或 <<網路組態>> 中。
+
+
+
+[[disable-storage-efficiencies]]
+=== 停用儲存效率
+
+一般來說，儲存效率是生產工作負載的一大賣點，因為它們可以在各種工作負載下產生大量空間節約效益。然而，在效能基準測試中，儲存效率的價值較低（因為許多模擬工作負載要麼是不可壓縮的，要麼是零位元組工作負載，且始終進行重複資料刪除）。因此，我們建議在執行基準測試時停用所有儲存效率功能。
+
+有關 AFX 儲存效率的工作原理（包括全域重複資料刪除），請參閱 link:afx-architecture-storage-efficiency.html#deduplication-domains["重複資料刪除網域"]、link:https://docs.netapp.com/us-en/ontap-technical-reports/storage-efficiency.html["ONTAP 儲存效率技術報告"^] 和 link:https://docs.netapp.com/us-en/ontap-afx/release-notes/whats-new-9191.html["ONTAP 9.19.1 中的動態儲存效率"^]。
+
+[listing]
+----
+vol efficiency off -volume [name] -vserver [SVM]
+
+aggr efficiency modify -aggregate data* -cross-volume-background-dedupe false -cross-volume-inline-dedupe false
+
+aggr efficiency wise-tsse modify -aggregate data* -enable-workload-informed-tsse false
+----
+
+
+[[aggressive-readahead]]
+=== 積極預讀
+
+積極的預讀可以幫助提升特定工作負載（例如順序命名的檔案）的讀取效能。功能組態、注意事項和統計資料的相關資訊，請參閱 link:afx-performance.html#aggressive-read-ahead["積極的預先讀取"]。另請參閱 link:https://docs.netapp.com/us-en/ontap-afx/administer/additional-ontap-svm.html#cross-file-sequential-read["AFX SVM 管理中的跨檔案連續讀取"^]。
+
+[cols="1,1"]
+|===
+
+
+| link:afx-performance.html["以前的"] | link:afx-management.html["接下來：管理"] 
+|===

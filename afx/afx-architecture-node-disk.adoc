@@ -1,0 +1,44 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-node-disk.html 
+keywords: netapp afx, node-to-disk relationships, disk ownership, storage availability zone 
+summary: 了解 NetApp AFX 如何讓每個儲存節點都能看見每個磁碟，並取消磁碟所有權。 
+---
+= 節點到磁碟的關係
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+NetApp AFX 透過將所有節點和機架連接到同一個後端網路，改變了儲存節點和磁碟之間的關係。
+
+在統一的 ONTAP 架構中，讀寫操作會被導向到特定的磁碟子集。因此，即使在 24 節點叢集中擁有 24 個磁碟架（每個節點一個磁碟架），在任何給定時間，每個節點也只能直接存取一個磁碟架，這限制了叢集的容量和效能。
+
+image:image5.png["影像"]
+
+此外，由於 NVRAM 在 HA 配對之間直接連接，節點必須實際位於彼此相鄰的位置，並且作為容錯移轉目標時耦合性更強。例如，當一個節點容錯移轉到其合作夥伴節點時，它實際能夠存取的唯一磁碟就是 HA 配對網域中的磁碟。
+
+*HA 故障轉移期間的統一 ONTAP 叢集*
+
+image:image6.png["影像"]
+
+在 NetApp AFX 中，磁碟呈現給運算節點的方式發生了一些重大變化。
+
+
+
+[[all-disks-are-visible-to-all-storage-nodes-no-disk-ownership]]
+== 所有儲存節點均可看到所有磁碟 -- 不存在磁碟所有權歸屬問題。
+
+在 NetApp AFX 中，節點和機架都連接到同一個後端交換器，這使得 ONTAP 可以將磁碟的整體可見性網域擴展到整個堆疊。因此，沒有節點擁有任何特定的磁碟。相反地，所有磁碟都參與單一容量資源池，稱為 Storage Availability Zone （儲存可用性區域），可提供更簡單的容量管理和更高的效能潛力（更多可用磁碟意味著更多可用效能）。
+
+*NetApp AFX 儲存可用區*
+
+image:image7.png["影像"]
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture.html["上一篇：架構"] | link:afx-architecture-capacity-pool.html["下一篇：單一容量資源池"] 
+|===

@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: afx/afx-management.html 
-keywords: netapp afx, cli, system manager, rest api, management tools, gui 
-summary: 雖然 NetApp AFX 在儲存呈現方式上存在一些相當大的架構差異，但 ONTAP 的功能集和管理方式實際上並沒有改變。 
+keywords: netapp afx, capacity management, storage availability zone, cli, system manager, rest api, management tools, gui 
+summary: 了解 NetApp AFX 儲存可用區如何簡化容量管理，同時保留熟悉的 ONTAP 管理工具。 
 ---
 = 管理工具
 :allow-uri-read: 
@@ -61,6 +61,33 @@ image:image41.png["影像"]
 
 
 
+[[capacity-management]]
+== 容量管理
+
+NetApp AFX 儲存可用區將管理端點從基於節點和 Aggregate 的方式簡化為整個叢集可用的單一容量資源池。隨著磁碟區的增長和收縮，ONTAP 會自動從儲存可用區借用和釋放容量。
+
+因此，儲存管理員不再需要費心在多達 24 個節點和數百個 Aggregate 中尋找和管理可用空間。現在，只需在一個地方即可管理和檢視容量。
+
+例如，在統一 ONTAP 的 CLI 中，如果要查看叢集的總實體容量資訊，可以使用「`aggregate show-space`」命令，該命令會列印所有 aggregate 項目。而在 NetApp AFX 中，可以使用「`cluster space show`」指令，該指令只會顯示單一儲存可用區。
+
+*統一 ONTAP 和 NetApp AFX 中容量 CLI 指令的並排比較*
+
+image:image19.png["影像"]
+
+在 Unified ONTAP System Manager GUI 中，使用層級來顯示容量。實際上，GUI 會嘗試透過加總總數來顯示叢集的整體容量，但仍會以每個 Aggregate 為基礎顯示整體使用情況。
+
+*System Manager 容量檢視 – Unified ONTAP*
+
+image:image20.png["影像"]
+
+在 NetApp AFX System Manager 中，叢集空間的檢視幾乎相同，但由於沒有 Aggregate，因此無需進行額外的計算。您看到的容量就是您獲得的容量。
+
+*System Manager 容量檢視 – NetApp AFX*
+
+image:image21.png["影像"]
+
+
+
 [[rest-apis]]
 == REST API
 
@@ -83,3 +110,10 @@ NetApp AFX 目前不支援：
 
 * NetApp ActiveIQ Unified Manager
 
+
+[cols="1,1"]
+|===
+
+
+| link:afx-performance-benchmarks.html["以前的"] | link:afx-capabilities.html["接下來：功能"] 
+|===

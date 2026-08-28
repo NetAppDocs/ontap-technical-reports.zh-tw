@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-root-volume.html 
+keywords: netapp afx, root volume, boot media, nvme, m.2, cluster database 
+summary: 了解 NetApp AFX 如何虛擬化根目錄 Volume 並將開機映像和叢集資料庫移至就職開機媒體。 
+---
+= 根磁碟區變更
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+NetApp AFX 移除實體根目錄彙總，並使用就職 NVMe 開機媒體作為開機映像和複寫叢集資料庫。
+
+
+
+[[root-volume-changes]]
+== 根磁碟區變更
+
+在 NetApp ONTAP 中，每個節點都被指派一個根磁碟區，用於存放系統特定的檔案和功能，例如日誌檔案、開機映像、核心檔案、叢集資料庫等等。
+
+在統一的 ONTAP 中，這些根磁碟區位於實體根 Aggregate 上。為了減少根 Aggregate 使用的容量，它們是透過進階磁碟分割（ADP）在資料磁碟機分割區上建立的。
+
+NetApp AFX 架構移除了實體聚合，因此也不再需要根聚合和 ADP。根磁碟區的概念仍然存在，但它們現在位於容量池的虛擬化區域中，無需額外配置。此外，根磁碟區的功能也發生了變化。開機映像和複寫的叢集資料庫從儲存堆疊移至每個 AFX 節點上的板載開機媒體。現在，即使儲存堆疊存取中斷，節點仍然可以開機並保持叢集資格，從而簡化了疑難排解的複雜性。
+
+
+
+[[onboard-boot-media]]
+== 機載開機媒體
+
+NetApp AFX 節點利用內建的開機媒體，這是一個 NVMe 連接的 M.2 裝置，容量約為 3.8TB。這些開機裝置包含開機映像檔和複寫的資料庫，這些都與儲存機櫃分離，當發生磁碟存取問題時可提供額外的備援。如果開機媒體故障，該節點將由其 HA 夥伴接管，並可更換開機媒體。更換後，儲存管理員會將新的 ONTAP 映像載入該裝置，ONTAP 會自動重建叢集資料庫以恢復完整功能。
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-cluster-scale.html["上一頁：叢集規模"] | link:afx-performance.html["接下來：效能"] 
+|===

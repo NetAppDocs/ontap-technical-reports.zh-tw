@@ -7,9 +7,35 @@ entries:
 - title: 新增功能
   url: "/afx/afx-whats-new.html"
 - title: 架構
-  url: "/afx/afx-architecture.html"
+  entries:
+  - title: 總覽
+    url: "/afx/afx-architecture.html"
+  - title: 節點到磁碟的關係
+    url: "/afx/afx-architecture-node-disk.html"
+  - title: 單一容量資源池
+    url: "/afx/afx-architecture-capacity-pool.html"
+  - title: 複製的 NVRAM 與 HA 故障轉移行為
+    url: "/afx/afx-architecture-nvram-ha.html"
+  - title: 獨立線性尺度
+    url: "/afx/afx-architecture-independent-scale.html"
+  - title: RAID 變更
+    url: "/afx/afx-architecture-raid.html"
+  - title: 儲存效率
+    url: "/afx/afx-architecture-storage-efficiency.html"
+  - title: ONTAP 功能支援變更
+    url: "/afx/afx-architecture-feature-support.html"
+  - title: FlexGroup 管理改善
+    url: "/afx/afx-architecture-flexgroup.html"
+  - title: Volume 移動
+    url: "/afx/afx-architecture-volume-moves.html"
+  - title: 叢集規模
+    url: "/afx/afx-architecture-cluster-scale.html"
+  - title: 根磁碟區變更
+    url: "/afx/afx-architecture-root-volume.html"
 - title: 效能
   url: "/afx/afx-performance.html"
+- title: 效能基準測試技巧
+  url: "/afx/afx-performance-benchmarks.html"
 - title: 管理
   url: "/afx/afx-management.html"
 - title: 功能

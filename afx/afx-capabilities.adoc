@@ -33,8 +33,8 @@ NetApp AFX 中的網路堆疊與統一 ONTAP 相同。
 
 一些主要的網路差異包括：
 
-* 後端叢集網路連接埠現在僅支援與叢集交換器的 100 GB 連線。
-* 由於叢集交換器支援 400GB 頻寬，後端節點連線使用 4 x 100GB 分線纜線，以減少交換器上使用的連接埠數量。
+* 後端叢集網路連接埠在 AFX 1K 平台上僅支援與叢集交換器的 100GB 連接，在 AFX 2K 平台上支援 400GB 連接。
+* 由於叢集交換器支援 400GB 頻寬，後端節點連接在 AFX 1K 上使用 4 條 100GB 分支線纜，以減少交換器上佔用的連接埠數量。AFX 2K 將使用 1:1 的 400GB 連線與交換器對接。
 * 現在，透過交換器上的新 HA VLAN 組態，NVRAM 會在後端叢集網路的 HA 配對之間進行鏡射。
 * AI Data Engine 預設會新增一個新的 DCN 網路。這些 IP 位址會自動生成,並可根據需要進行變更。
 
@@ -101,4 +101,11 @@ Unified ONTAP 支援多種不同的磁碟區類型，例如：
 
 NetApp AFX 為每種磁碟區類型提供全面支援，並且 FlexCache 磁碟區與統一的 ONTAP 系統完全互通。
 
-如需 FlexGroup 磁碟區如何從 AFX 架構中受益的詳細資訊，請參閱link:afx-architecture.html#flexgroup-volume-management-improvements["FlexGroup Volume 管理改進"]。
+如需 FlexGroup 磁碟區如何從 AFX 架構中受益的詳細資訊，請參閱link:afx-architecture-flexgroup.html#flexgroup-volume-management-improvements["FlexGroup Volume 管理改進"]。
+
+[cols="1,1"]
+|===
+
+
+| link:afx-management.html["以前的"] | link:afx-hardware.html["接下來：硬體"] 
+|===

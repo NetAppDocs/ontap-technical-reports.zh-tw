@@ -14,8 +14,17 @@ summary: 請查閱以下資源，以了解更多關於 NetApp AFX 的資訊。
 如需深入瞭解本文件所述資訊，請參閱下列文件和 / 或網站：
 
 * link:https://hwu.netapp.com/["Hardware Universe"]
+* link:https://docs.netapp.com/us-en/ontap-afx/index.html["AFX 文件"]
+* link:https://docs.netapp.com/us-en/ontap-afx/release-notes/whats-new-9191.html["ONTAP 9.19.1 為 AFX 儲存設備系統新增了哪些功能？"]
 * link:https://www.netapp.com/afx/["AFX 產品頁面"]
 * link:https://www.netapp.com/blog/afx-scalable-secure-ai-data-infrastructure/["建構人工智慧驅動型企業：基礎架構為何至關重要"]
 * link:https://community.netapp.com/t5/Tech-ONTAP-Blogs/Deciding-between-NFSv3-or-NFSv4-x-The-choice-is-getting-clearer/ba-p/465963["部落格：NFSv3 和 NFSv4.X 哪個比較好？"]
 * link:https://www.netapp.com/media/142853-ds-3466-netapp-afx-datasheet.pdf["AFX 規格書"]
 
+
+[cols="1,1"]
+|===
+
+
+| link:afx-limits.html["以前的"] |  
+|===

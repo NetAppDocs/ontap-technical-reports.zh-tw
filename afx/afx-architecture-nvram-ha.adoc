@@ -1,0 +1,73 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-nvram-ha.html 
+keywords: netapp afx, nvram replication, high availability, ha failover, volume rebalance 
+summary: 了解 NetApp AFX 如何透過後端網路複寫 NVRAM，以及在 HA 故障轉移期間重新平衡 Volume。 
+---
+= 複製的 NVRAM 與 HA 故障轉移行為
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+NetApp AFX 將 NVRAM 複寫移至後端叢集網路，並使用零複製 Volume 移動性在節點故障後重新平衡工作。
+
+
+
+[[nvram-moved-from-direct-connection-to-switched-replication]]
+== NVRAM 從直接連線遷移到交換複寫
+
+ONTAP 使用 NVRAM 作為暫存區，以保護傳入叢集的寫入作業。ONTAP 叢集中的每個節點都配備一塊帶電池備援的 NVRAM 卡。當客戶端向磁碟區發送寫入作業時，資料會先儲存在 NVRAM 中。當 NVRAM 被填滿或 10 秒定時器逾時（以先到者為準）時，NVRAM 的內容會被刷新到磁碟。這被稱為一致性點。
+
+NVRAM 內容也會在 HA 對之間不斷複製，這進一步有助於保護資料一致性，因為如果節點發生故障，NVRAM 內容將保留在倖存的節點上並提交到磁碟。
+
+在統一的 ONTAP 叢集中，HA 配對之間的 NVRAM 卡直接相互連接。NetApp AFX 將 NVRAM 複寫移至後端叢集網路。因此，HA 合作夥伴節點對於節點沒有如此嚴格的距離要求。相反地，HA 配對可以分隔到乙太網路的最大距離。
+
+*NetApp AFX NVRAM 複寫 *
+
+image:image10.png["影像"]
+
+
+
+[[ha-failover-behavior]]
+== HA 故障轉移行為
+
+在統一的 ONTAP 架構中，節點擁有磁碟和 Aggregate，資料透過 Volume 進行服務。寫入作業使用本機節點的 NVRAM 刷新到該節點擁有的磁碟。當節點重新啟動或發生故障時，ONTAP 將觸發故障節點資源的接管，將磁碟和 Aggregate 的所有權轉移給合作夥伴節點。網路介面也會故障轉移到 IP 位址空間中的連接埠。由於 NVRAM 內容在 HA 配對之間持續複寫，因此節點會刷新 NVRAM 內容，以提交故障節點寫入磁碟的資料。之後，倖存節點將擁有故障節點的 Aggregate 和 Volume，直到故障節點恢復正常。這意味著，所有流向這些 Volume（以及倖存節點已擁有的 Volume）的流量都將在單一節點上處理，直到故障轉移問題解決為止。
+
+作為初始統一 ONTAP 叢集部署的一部分，建議事先規劃容錯移轉，以避免單一節點使其合作夥伴過載。這本身就是一個挑戰，因為很難預測哪些磁碟區可能會成為效能霸凌者，但諸如不中斷營運的磁碟區移動和磁碟區服務品質原則等功能可以協助緩解。
+
+下圖顯示統一的 ONTAP 叢集如何在節點間造成效能不均衡，以及故障轉移在某些情況下如何導致效能下降。
+
+*統一 ONTAP – 節點利用率可能存在不平衡*
+
+image:image25.png["影像"]
+
+當 HA 配對的節點在磁碟區數量和效能使用率方面變得不平衡時、節點容錯移轉會影響整體效能、因為存續的節點現在將擁有所有故障節點的磁碟區。同時、叢集中的其他節點可能有空間承擔額外的工作。
+
+*Unified ONTAP – 容錯移轉對節點使用率的影響*
+
+image:image26.png["影像"]
+
+如上所示，當 HA 合作夥伴需要承擔額外任務時，可能會出現過載，並影響該節點上所有磁碟區的效能。磁碟區遷移可以緩解這種情況，但這需要在節點之間進行複製（需要可用空間），而且所需時間可能超過節點故障復原所需的時間。此外，如果您遷移磁碟區，它不會故障復原到原始節點。而是會保留在您遷移到的節點上。
+
+使用 NetApp AFX 時，節點容錯移轉會表現出一些不同的行為。
+
+* 由於節點不擁有磁碟，也沒有實體 Aggregate，因此節點容錯移轉不需要轉移這些資源。相反地，只有網路介面和 Volume 所有權會轉移到其他節點。
+* NVRAM 提交仍然會發生，但透過 HA 網路而不是直接連線進行。
+* 磁碟區完成向夥伴節點的初始容錯移轉後，AFX 會將磁碟區重新分佈到叢集中的其他倖存節點上。這得歸功於零複製磁碟區移動技術。
+* 當節點恢復後，磁碟區將移回原始節點。
+
+
+NetApp AFX 已經維持叢集中各個節點的效能平衡，以保持相對均勻的使用率，因此當發生容錯移轉並重新平衡磁碟區時，叢集中的節點使用率應該大致相同。
+
+*NetApp AFX - 故障轉移後的磁碟區重新平衡*
+
+image:image27.png["影像"]
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-capacity-pool.html["上一頁：單一容量資源池"] | link:afx-architecture-independent-scale.html["下一篇：獨立線性尺度"] 
+|===

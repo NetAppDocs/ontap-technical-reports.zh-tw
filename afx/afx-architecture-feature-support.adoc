@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-feature-support.html 
+keywords: netapp afx, ontap feature support, unsupported features, metrocluster, fabricpool, block protocols 
+summary: 查看在 NetApp AFX 中已變更、已移除或不支援的 ONTAP 功能。 
+---
+= ONTAP 功能支援變更
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+NetApp AFX 的高效能 NAS 和物件設計改變了 ONTAP 某些功能和介面的可用度。
+
+
+
+[[ontap-features-that-have-been-removed-or-are-unsupported-with-afx]]
+[[ontap-features-that-have-been-removedare-unsupported-with-afx]]
+== ONTAP 已移除或 AFX 不支援的功能
+
+NetApp AFX 專為高效能 NAS 和物件工作負載而設計，特別適用於（但不限於）人工智慧訓練和推理領域。在 NetApp AFX 的設計過程中，我們決定停用 ONTAP 中的一些功能。
+
+* 由於專注於高效能 NAS 和物件儲存，NetApp AFX 解決方案已移除區塊儲存工作負載。它不支援 FCP、iSCSI 或 NVMe 資料協定，並且沒有計劃添加區塊儲存協定。
+* Disaggregated 與 de-aggregated 同義,這表示 aggregate（至少在實體儲存管理概念上）已被移除。移除實體 aggregate 不僅簡化了 ONTAP 中的容量管理,也提供了實現單一容量池的機制。
+* 移除 Aggregate 意味著 Aggregate 特定功能也會被移除。例如，MetroCluster 利用 Aggregate 層級的鏡射來實現站台容錯移轉功能。因此，MetroCluster 也已從 NetApp AFX 移除。站台容錯移轉功能將由 ONTAP 9.19.1GA 中提供的新 SnapMirror Active-Sync for NAS 功能提供。
+* 名為 FabricPool 的冷資料分層功能目前也無法用於 NetApp AFX，因為它也是特定於 Aggregate 的。
+* 由於採用了新的容量架構，NetApp AFX 中也不再需要基於複製的磁碟區移動。如需詳細資訊，請參閱 link:afx-architecture-volume-moves.html#zero-copy-volume-moves["零複本磁碟區移動"]。
+* 功能移除也意味著一些 CLI/GUI/REST API 的變更，因此任何不再支援的功能的命令或 API 呼叫也將被移除。
+* 目前 NetApp AFX 無法使用 ZAPI。
+* 用於虛擬化的 NFS 複製卸載（僅限具有精細資料分佈的 FlexGroup 磁碟區）
+
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-storage-efficiency.html["上一頁：儲存效率"] | link:afx-architecture-flexgroup.html["接下來：FlexGroup 管理改善"] 
+|===

@@ -11,7 +11,7 @@ summary: 本頁面涵蓋 NetApp AFX 的最新更新，並將隨著每個新版�
 
 
 [role="lead"]
-本部分涵蓋 NetApp AFX 的最新更新，並將隨每個新版本更新。請定期查看此處以獲取新資訊，同時也請查看版本發布說明。
+本部分涵蓋 NetApp AFX 的最新更新，並將隨每個新版本而更新。請定期查看此處以獲取新資訊，同時也請查看link:https://docs.netapp.com/us-en/ontap-afx/release-notes/whats-new-9191.html["ONTAP 9.19.1 AFX 版本說明"^]。
 
 
 
@@ -20,16 +20,16 @@ summary: 本頁面涵蓋 NetApp AFX 的最新更新，並將隨著每個新版�
 
 最新版本：
 
-ONTAP 9.19.1RC1（截至 2026 年 5 月）
+ONTAP 9.19.1GA（截至 2026 年 8 月）
 
 NetApp AFX 的新增功能：
 
-* 全域重複資料刪除
-* 動態儲存效率
-* 進階預先讀取
-* 支援 32 個節點
-* 32PB 支援
-* 每個 FlexGroup Volume 512 個組成磁碟區
+* link:afx-architecture-storage-efficiency.html#deduplication-domains["全域重複資料刪除"]（另見 link:https://docs.netapp.com/us-en/ontap-afx/administer/additional-ontap-svm.html#global-deduplication["AFX SVM 管理"^]）
+* link:https://docs.netapp.com/us-en/ontap-afx/release-notes/whats-new-9191.html["動態儲存效率"^]
+* link:afx-performance.html#aggressive-read-ahead["進階預先讀取"]（跨檔案順序讀取；另見 link:https://docs.netapp.com/us-en/ontap-afx/administer/additional-ontap-svm.html#cross-file-sequential-read["AFX SVM 管理"^]）
+* link:afx-architecture-cluster-scale.html#cluster-scale-and-expansion["支援 32 個節點"]（另見 link:afx-limits.html["最大值和限制"]）
+* link:afx-limits.html["32PB 支援"]
+* link:afx-limits.html["每個 FlexGroup Volume 512 個組成磁碟區"]
 
 
 
@@ -41,5 +41,14 @@ NetApp AFX 的新增功能：
 | 版本 | 日期 | 文件版本歷史記錄 
 
 
+| 版本 1.1 | 2026年8月 | 本技術報告已更新至 ONTAP 9.19.1GA 版本。內容涵蓋新的 AFX 功能、32 節點和 32PB 規模、AFX 1K 和 AFX 2K 的效能和硬體、叢集交換器和機櫃規模調整、更新的平台限制、效能基準測試技巧頁面以及產品文件的其他連結。 
+
+
 | 版本 1.0 | 2026 年 6 月 | 初始版本 
+|===
+[cols="1,1"]
+|===
+
+
+| link:afx-learn-about.html["以前的"] | link:afx-architecture.html["下一篇：架構"] 
 |===

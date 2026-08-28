@@ -1,0 +1,43 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-independent-scale.html 
+keywords: netapp afx, independent scale, linear scale, compute, capacity, performance 
+summary: 了解 NetApp AFX 如何在提供線性節點效能的同時，獨立擴展運算和容量。 
+---
+= 獨立線性尺度
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+分離式 NetApp AFX 架構使容量和運算資源能夠獨立擴展，節點效能能夠線性擴展。
+
+
+
+[[independent-scale-of-capacity-and-compute-nodes]]
+== 獨立擴充容量和運算節點
+
+在 NetApp AFX 架構中，硬體資源實作了解耦，節點不再需要同時新增關聯的磁碟。當叢集的效能相關資源（例如 RAM、CPU 或網路吞吐量）不足時，只需在叢集中新增儲存節點，即可利用現有的儲存可用區。反之，如果需要的是容量，則只需添加儲存架即可。這種靈活性確保您只購買所需的資源，從而避免過度配置。
+
+*NetApp AFX – 獨立擴充*
+
+image:image12.png["影像"]
+
+
+
+[[linear-scaling-of-node-performance]]
+== 節點效能的線性擴充
+
+隨著節點加入 AFF 叢集，工作負載將獲得更多的 CPU、RAM 和網路資源。隨著這些資源納入環境中，效能提升呈線性成長。下圖顯示隨著節點增加，效能如何提升。
+
+*隨著 NetApp AFX 節點數量的增加，效能呈現線性提升*
+
+image:image13.png["影像"]
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-nvram-ha.html["前文：複製的 NVRAM 和 HA 故障轉移行為"] | link:afx-architecture-raid.html["接下來：RAID 變更"] 
+|===

@@ -1,0 +1,61 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-storage-efficiency.html 
+keywords: netapp afx, storage efficiency, deduplication, global deduplication, storage availability zone 
+summary: 了解 NetApp AFX 重複資料刪除網域的變化，以及 ONTAP 9.19.1 如何提供全域重複資料刪除。 
+---
+= 儲存效率
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+NetApp AFX 變更了重複資料刪除邊界，並且從 ONTAP 9.19.1 開始，支援跨儲存可用區的全域重複資料刪除網域。
+
+
+
+[[deduplication-domains]]
+== 重複資料刪除網域
+
+重複資料刪除允許儲存系統在其檔案系統中尋找重複區塊，然後建立指向單一區塊的指標，以減少已使用容量的總量。在統一的 ONTAP 中，重複資料刪除遵循特定的邊界來決定哪些區塊可以被刪減。這些邊界取決於所使用的重複資料刪除類型。一般來說：
+
+* 基於 Volume 的重複資料刪除 -> Volume 邊界
+* 跨磁碟區重複資料刪除 -> Aggregate 邊界
+
+
+*統一的 ONTAP 重複資料刪除網域*
+
+image:image17.png["影像"]
+
+由於 NetApp AFX 移除了實體聚合並將容量管理遷移到新的儲存可用區，重複資料刪除域的邊界也隨之改變。在 AFX 中，重複資料刪除域位於磁碟區層級（類似於統一 ONTAP）和節點層級（而非聚合層級），這是在 9.19.1 版本之前的情況。
+
+從 ONTAP 9.19.1 開始，AFX 支援儲存可用區層級的全域重複資料刪除網域，因此叢集儲存資源池中的所有重複區塊都以相同的方式處理。
+
+*NetApp AFX – 全域重複資料刪除網域（ONTAP 9.19.1）*
+
+image:image18.png["影像"]
+
+下表比較了不同情境下重複資料的容量行為。在統一的 ONTAP 中，由於檔案副本跨越節點和彙總（以及去重域），空間節約效益會降低。在 9.19.1 之前的 AFX 中，當副本跨越節點時也會發生相同情況。從 9.19.1 開始，全域重複資料刪除在整個 Storage Availability Zone 中套用相同的空間節約效益。
+
+*針對相同 10GB 檔案的重複資料刪除行為 – 統一的 ONTAP 和 NetApp AFX*
+
+[cols="3,1,1,1"]
+|===
+| 情境 | 統一 ONTAP | AFX 9.18.1 | AFX 9.19.1 
+
+
+| 同一磁碟區中四個相同的 10GB 檔案副本（磁碟區重複資料刪除） | 10 GB | 10 GB | 10 GB 
+
+
+| 同一 10GB 檔案可存在四個副本，分別位於不同 Volume、相同彙總（統一 ONTAP）或相同節點（AFX）；已啟用跨 Volume 重複資料刪除。 | 10 GB | 10 GB | 10 GB 
+
+
+| 同一 10GB 檔案的四個複本，分別位於 4 個不同的 Volume、4 個不同的彙總（統一 ONTAP）或 4 個不同的節點（AFX）；已啟用跨 Volume 重複資料刪除。 | 40 GB | 40 GB | 10 GB 
+|===
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-raid.html["上一篇：RAID 變更"] | link:afx-architecture-feature-support.html["接下來：ONTAP 功能支援變更"] 
+|===

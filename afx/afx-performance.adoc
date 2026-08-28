@@ -18,9 +18,15 @@ NetApp AFX 的設計以效能和擴充性為核心，專門針對需要高讀寫
 [[per-node-performance]]
 == 每個節點的效能
 
-每個 NetApp AFX 儲存節點都提供特定的讀取和寫入吞吐量。隨著節點加入叢集中，效能會線性成長，如本文件「節點效能的線性擴展」部分所述。
+每個 NetApp AFX 儲存節點都提供特定的讀取和寫入處理量。隨著節點新增至叢集中，效能會線性增加，如 link:afx-architecture-independent-scale.html#linear-scaling-of-node-performance["節點效能的線性擴充"] 中所述。
 
-目前，節點類型為 link:https://www.netapp.com/media/142853-ds-3466-netapp-afx-datasheet.pdf["AFX 1K"^]，讀寫吞吐量大致如下所示。隨著 NetApp AFX 可用硬體的更新，這些限制可能會改變。注意：如下面的「基準測試結果」部分所示，使用多個客戶端讀取和寫入多個檔案時達到了最高效能。
+目前，節點類型為 link:https://www.netapp.com/media/142853-ds-3466-netapp-afx-datasheet.pdf["AFX 1K"^] 和 link:https://www.netapp.com/media/142853-ds-3466-netapp-afx-datasheet.pdf["AFX 2K"^]，其讀寫處理量大致如下所示*。隨著 NetApp AFX 可用的硬體更新，這些限制可能會變更。
+
+* 使用 link:https://github.com/breuner/elbencho["ElBencho"^] 基準測試工具和連續讀取/寫入獲得的效能數據。
+
+
+
+NOTE: 如下面的link:#benchmark-results["基準測試結果"]章節所示，使用多個用戶端讀取和寫入多個檔案可達到最佳效能。
 
 *每節點效能預估*
 
@@ -29,6 +35,9 @@ NetApp AFX 的設計以效能和擴充性為核心，專門針對需要高讀寫
 
 
 | AFX 1K | 約 35GB/s | 約 10GB/s 
+
+
+| AFX 2K | 約 35GB/s | 約 17GB/s（提升 70%） 
 |===
 
 NOTE: 如需最新的效能預估，請洽詢您的 NetApp 銷售團隊。
@@ -60,17 +69,17 @@ NOTE: 如需最新的效能預估，請洽詢您的 NetApp 銷售團隊。
 
 「效能密度」的概念使儲存管理員能夠最大限度地利用現有硬體，而無需過度配置儲存環境。
 
-例如，在統一的 ONTAP 叢集中，由於每個節點都有自己的一組磁碟，因此效能僅限於該節點擁有的磁碟；由於只有一個節點可以存取一組磁碟，因此它不一定能充分利用可用磁碟並達到其最大效能。
-
 *統一 ONTAP – 效能劃分方式*
 
 image:image32.png["影像"]
 
-NetApp AFX 將所有磁碟匯集到單一儲存可用區域中，因此所有節點都可以運用所有磁碟。而且由於磁碟和節點是分離的，因此您不需要那麼多機櫃就能獲得相同的效能。這樣可以壓縮效能並最大化機櫃的最大效能潛力。
+例如，在統一的 ONTAP 叢集中，每個節點都有自己的一組專用磁碟。因此，效能僅導向該節點所擁有的磁碟。由於一個節點只能存取一組磁碟，因此效能將僅限於它可以直接存取的磁碟。
 
 *NetApp AFX – 效能密度*
 
 image:image33.png["影像"]
+
+NetApp AFX 將所有可用磁碟匯集到一個名為儲存可用區 （SAZ） 的單一容量資源池。因此，所有節點都可以運用所有可用磁碟進行讀寫操作。由於磁碟和節點是解耦的，與統一的 ONTAP 架構相比，您不一定需要使用那麼多機櫃即可獲得相同（或更高）的處理量效能。NetApp AFX 的解耦架構最大限度地發揮了磁碟櫃的效能潛力。
 
 
 
@@ -81,7 +90,7 @@ Unified ONTAP 節點每個節點至少需要一組磁碟，且單一節點可以
 
 NetApp AFX 將所有磁碟櫃提供給所有節點。每個磁碟櫃包含具有 16 x 100GB RoCE 功能介面的模組，以增加每個磁碟櫃允許的總效能量。因此，您可以使用多個節點飽和單一磁碟櫃，這些節點將對同一組磁碟進行讀取和寫入。
 
-截至 ONTAP 9.19.1，節點：機櫃飽和度比率約為 4:1。
+從 ONTAP 9.19.1 開始，節點：機櫃飽和比率至少為 4:1，8:3 也是可能的。
 
 
 
@@ -91,8 +100,8 @@ NetApp AFX 將所有磁碟櫃提供給所有節點。每個磁碟櫃包含具有
 以下部分介紹使用具有下列組態參數的 NetApp AFX 叢集進行基準測試的結果。
 
 * 4 個節點、4 個資料介面
-* 2 個磁碟櫃（7.6TB 磁碟機）
-* ONTAP 9.19.1
+* 2 個機櫃
+* ONTAP 9.19.1GA
 * NFSv4.2（pNFS、工作階段主幹連線）
 * FlexGroup Volume
 * link:https://github.com/breuner/elbencho["ElBencho"^] 基準測試
@@ -103,6 +112,9 @@ NetApp AFX 將所有磁碟櫃提供給所有節點。每個磁碟櫃包含具有
 
 
 上述組態達到了 4 節點叢集可用的最大讀取速度（~134GB/s），並且正好達到每個節點允許的最大寫入速度（40GB/s）。
+
+
+NOTE: 請參閱 link:afx-performance-benchmarks.html["效能基準測試技巧"] 相關章節，以了解如何重現這些結果。
 
 *NetApp AFX – ElBencho 讀取效能，4 個節點*
 
@@ -146,7 +158,8 @@ cross_file_sequential_read 會根據檔案名稱預測下一個要讀取的檔�
 
 然而、NFSv3 並非沒有限制。協定的無狀態特性雖然有利於效能、並可將儲存容錯移轉的中斷降至最低、但對於資料一致性和鎖定管理而言並不理想。NFS 伺服器並不會真正追蹤鎖定狀態、因此如果發生故障、NFS 伺服器可能會或可能不會釋放鎖定、而 NFS 用戶端可能不知道檔案是否已鎖定。
 
- Security for NFSv3 is also a bit lacking. The protocol requires multiple open firewall ports to function properly and numeric IDs are sent in plaintext over the wire. Furthermore, NFS does not have robust ACL support, and does not include native file and folder auditing. As a result of these limitations, NFSv4 was created in 2003 via link:https://datatracker.ietf.org/doc/html/rfc3530[RFC-3530^] (obsoleted in 2015 by link:https://datatracker.ietf.org/doc/html/rfc7530[RFC-7530^]).
+NFSv3 的安全性也存在一些不足之處。該協定需要開啟多個防火牆連接埠才能正常運作，且數位 ID 以明文形式有線傳輸。此外，NFS 缺乏強大的存取控制清單 （ACL） 支援，也不包含原生檔案和資料夾稽核功能。由於這些限制，NFSv4 於 2003 年透過 link:https://datatracker.ietf.org/doc/html/rfc3530["RFC-3530"^]（於 2015 年由 link:https://datatracker.ietf.org/doc/html/rfc7530["RFC-7530"^] 取代）建立。
+
 雖然 NFSv4.x 已經存在了 20 多年，但由於一些原因，它仍然沒有被廣泛採用。
 
 * 身分識別管理的複雜性：許多環境沒有名稱服務基礎架構來正確利用 NFSv4.x 中的名稱字串和 Kerberos 安全性需求。
@@ -212,6 +225,13 @@ image:image36.png["影像"]
 
 我們的效能工程團隊對標準 AI 影像、EDA 和軟體建置基準的效能進行了比較，發現與先前的 ONTAP 版本相比有了巨大的提升。
 
-*NetApp AFX – ONTAP 9.18.1 中的 NFSv4.1 元資料 IO 效能*
+*NetApp AFX – NetApp AFX 中的 NFSv4.1 中繼資料 IO 效能*
 
 image:image37.png["影像"]
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-root-volume.html["上一頁：根 Volume 變更"] | link:afx-performance-benchmarks.html["接下來：效能基準測試技巧"] 
+|===

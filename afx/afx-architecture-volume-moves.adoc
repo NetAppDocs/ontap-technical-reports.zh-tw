@@ -1,0 +1,70 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-volume-moves.html 
+keywords: netapp afx, volume moves, zero-copy, performance balancing, automated storage administration 
+summary: 了解 NetApp AFX 如何使用零拷貝 Volume 遷移來實現自動化管理和效能平衡。 
+---
+= Volume 移動
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+NetApp AFX 可在節點之間轉移 Volume 所有權，而無需複製 Volume 資料，從而實現快速自動化和效能驅動型的負載平衡。
+
+
+
+[[how-the-storage-availability-zone-changes-volume-behavior]]
+== 儲存可用區如何改變 Volume 的行為
+
+在 NetApp AFX 的儲存可用區中，所有容量都在所有節點之間共享。雖然節點仍然擁有各自的 Volume，但 ONTAP 會根據每個節點在任何指定時間的實際需求，透過借用和釋放容量來自動管理每個節點的容量使用。這意味著儲存設備管理員不再需要擔心如何最佳地平衡可用空間。這種新方法也提供了一種讓 Volume 能在節點之間更自由移動的機制。
+
+
+
+[[zero-copy-volume-moves]]
+== 零複本磁碟區移動
+
+Unified ONTAP 提供了一種在節點或 Aggregate 之間無中斷地移動 Volume 的方法，以此來管理整個叢集的效能和容量使用情況。
+
+當磁碟區移動開始時，會發生以下情況：
+
+* 在指定的目標 Aggregate 上建立新的空磁碟區
+* Volume 中繼資料（例如儲存效率資訊、檔案控點等）會複寫到新的目的地 Volume
+* 磁碟區資料透過 SnapMirror 技術經由後端叢集網路複製到目的地磁碟區，目的地 Aggregate 需要有可用的可用空間才能進行移動，否則移動工作將會失敗
+* 磁碟區複寫會再次執行，以確保兩個磁碟區與任何資料變更保持一致
+* 啟動切換流程，將來源磁碟區離線，並將目的地磁碟區升級為新的來源磁碟區供用戶端使用
+* 用戶端 IO 在切換過程中會短暫暫停，但無需重新掛載
+
+
+在 NetApp AFX 中，儲存可用區會將所有容量提供給所有節點，所有節點都可以寫入該儲存池中的任何磁碟。一旦資料放置完成，即使磁碟區被移動，資料也會保持在原位。這意味著無需複製資料。磁碟區移動程序與統一 ONTAP 相同，只是無需透過 SnapMirror 複製資料。不需要額外的容量。
+
+*NetApp AFX 中的零複製磁碟區移動*
+
+image:image24.png["影像"]
+
+輕量級的磁碟區遷移功能使 AFX 能夠自動執行許多管理任務，而不會受到效能或容量的限制。這些磁碟區遷移功能在 NetApp AFX 提供的一些新功能中已應用，如下文所述。
+
+
+
+[[performance-driven-volume-moves]]
+== 效能導向的磁碟區移動
+
+NetApp AFX 的零複製磁碟區移動功能，表示它可以在不複製資料的情況下根據需要重新平衡磁碟區，這使其能夠快速執行，且無需額外容量。這表示磁碟區移動可以成為 ONTAP 叢集自動負載平衡中更重要的一環。現在移動磁碟區幾乎不產生任何成本，ONTAP 可以利用這個有價值的工具，納入如以效能為導向的磁碟區負載平衡等功能。
+
+在執行 ONTAP 9.18.1 及更新版本的 NetApp AFX 中，節點、HA 配對和磁碟區使用率會持續受到監控，同時也會收集和分析效能資料。如果節點的使用率超出定義的臨界值，ONTAP 會自動選取要移至使用率較低節點的磁碟區，以維持整個叢集的平衡效能。
+
+*NetApp AFX 中效能驅動的磁碟區移動 – 高使用率觸發磁碟區移動*
+
+image:image28.png["影像"]
+
+*NetApp AFX 中效能驅動的磁碟區移動 – 磁碟區移動後的平衡節點使用率*
+
+image:image29.png["影像"]
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-flexgroup.html["上一篇：FlexGroup 管理改善"] | link:afx-architecture-cluster-scale.html["下一步：叢集規模"] 
+|===

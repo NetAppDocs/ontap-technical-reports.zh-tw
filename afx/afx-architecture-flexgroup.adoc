@@ -1,0 +1,44 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-flexgroup.html 
+keywords: netapp afx, flexgroup, advanced capacity balancing, volume management, storage availability zone 
+summary: 了解 NetApp AFX 容量架構如何簡化 FlexGroup Volume 管理。 
+---
+= FlexGroup 管理改善
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+NetApp AFX 中的單一儲存設備可用區域減少了 FlexGroup Volume 所需的基礎架構管理。
+
+整體而言，NetApp AFX 管理不會改變叢集的管理機制。管理員仍然可以利用 CLI、GUI 和 REST API 登入並配置叢集。但 NetApp AFX 確實提供了一個改善儲存管理操作方式的機會。
+
+
+
+[[flexgroup-volume-management-improvements]]
+== FlexGroup Volume 管理改進
+
+FlexGroup 磁碟區由多個底層 FlexVol 組成磁碟區構成，這些底層組成磁碟區分佈在叢集中的多個節點和聚合中，並以單一大型命名空間的形式呈現給 NAS 用戶端。FlexGroup 磁碟區為高效能工作負載提供效能、擴充性、負載平衡和檔案數量的優勢。然而，由於磁碟區需要在節點和聚合之間進行協調，因此當容量開始飽和時，它們有時會遇到一些物理限制，因為聚合提供的獨立檔案系統也具有獨立的容量使用和限制。例如，如果包含 FlexGroup 磁碟區組成磁碟區的某個聚合在叢集中的其他聚合之前開始飽和，則整個 FlexGroup 本身可能會出現容量或效能問題。
+
+因此，儲存管理員可能會過度擔心底層 FlexGroup 基礎架構，而忽略了維護環境的其他方面。
+
+*FlexGroup 磁碟區配置 - 統一化 ONTAP Aggregate*
+
+image:image22.png["影像"]
+
+NetApp AFX 將容量集中在一個儲存可用區中，這更貼近 FlexGroup 磁碟區的預期運作方式。所有磁碟區都位於同一個容量池中，而不是分佈在多個大小可能不同的獨立 Aggregate 中的多個組成磁碟區，這大大簡化了使用 FlexGroup 磁碟區的整體管理開銷。
+
+此外，AFX 預設會為 FlexGroup 磁碟區啟用進階容量平衡功能，有助於更妥善地在磁碟區中分配較大的檔案。現在，FlexGroup 磁碟區組成要素較不需要管理概念，而是在背景中靜靜地執行其工作。
+
+*FlexGroup Volume 配置 - NetApp AFX*
+
+image:image23.png["影像"]
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-feature-support.html["上一篇：ONTAP 功能支援變更"] | link:afx-architecture-volume-moves.html["下一步：Volume 移動"] 
+|===

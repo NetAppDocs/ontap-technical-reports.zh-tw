@@ -1885,9 +1885,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="ec8691da9bf60fda22f12e08033d054b" category="cell">磁碟機大小</block>
   <block id="ac42a71dfe464f09e55a57f84ceb163f" category="cell">近似原始容量（統一）</block>
   <block id="46cc5fb7e0299e674d5da41e0dad3a1f" category="cell">近似原始容量（AFX）</block>
-  <block id="c7d332a0c322abaf8181c5babf32fd81" category="cell">7.6 TB</block>
-  <block id="e50bccab556ac30cde3b134fb81a2530" category="cell">約 547.2TB</block>
-  <block id="08dedfbf48e1600e5cfd9c8c2745fec6" category="cell">約 608TB（+60.8TB）</block>
   <block id="1f04a7c587f50d269f44d43229c966ac" category="cell">15.3 TB</block>
   <block id="9a2d1eca7e54938f79761d06b7caaf18" category="cell">~1101.6TB</block>
   <block id="5e741ceec539284f7a96b67008f0e517" category="cell">約 1224TB (+122.4TB)</block>
@@ -1906,23 +1903,13 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="6f9f45d520cffb99bb950d8fda5dbdba" category="list-text">基於 Volume 的重複資料刪除 -&gt; Volume 邊界</block>
   <block id="438a3758b0006aebd9a250021848cc7c" category="list-text">跨磁碟區重複資料刪除 -&gt; Aggregate 邊界</block>
   <block id="21b0b029300c61135ad9721104b8348a" category="paragraph"><block ref="21b0b029300c61135ad9721104b8348a" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="f89efbc018eb553bd85f13f9d3ff23d7" category="paragraph">下表顯示了統一 ONTAP 中不同場景下重複資料的容量變化。由於檔案副本跨越節點和 aggregate（從而跨越重複資料刪除網域），因此節省的空間會減少。</block>
   <block id="54861efdd06fc309e1c9a420feff98eb" category="cell">情境</block>
-  <block id="77d8eb15db31182d5d16adaae1167a58" category="cell">已使用空間</block>
   <block id="f891059e8c06b24c2303442e1ea0b502" category="cell">同一磁碟區中四個相同的 10GB 檔案副本（磁碟區重複資料刪除）</block>
   <block id="4ac1352d5b927390a1b2f14dac0647d9" category="cell">10 GB</block>
-  <block id="c11f0e78ef3de243c83f7ec7deb5ec59" category="cell">同一個 10GB 檔案的四個副本、不同的磁碟區、相同的 Aggregate（已啟用跨磁碟區重複資料刪除）</block>
-  <block id="e5368f4f57a5e8656e84b995331e8fc1" category="cell">同一個 10GB 檔案的四個副本，分別位於 4 個不同的磁碟區、4 個不同的 Aggregate（已啟用跨磁碟區重複資料刪除）</block>
   <block id="006d8b5945ff5ea00e335cd43159f15a" category="cell">40 GB</block>
   <block id="554c7e5aa7d4f0b74f57389da62e73c1" category="paragraph">由於 NetApp AFX 移除了實體聚合並將容量管理遷移到新的儲存可用區，重複資料刪除域的邊界也隨之改變。在 AFX 中，重複資料刪除域位於磁碟區層級（類似於統一 ONTAP）和節點層級（而非聚合層級），這是在 9.19.1 版本之前的情況。</block>
   <block id="079395b0c979d0b54fc2b1c99f54e40e" category="paragraph">從 ONTAP 9.19.1 開始，AFX 支援儲存可用區層級的全域重複資料刪除網域，因此叢集儲存資源池中的所有重複區塊都以相同的方式處理。</block>
   <block id="f83df156391f38ff73d1a49f6a8425e6" category="paragraph"><block ref="f83df156391f38ff73d1a49f6a8425e6" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="e156c20f9a8ac4def7069dda32e8320e" category="paragraph">下表顯示 NetApp AFX 中不同案例下重複資料的容量行為。</block>
-  <block id="a9cd3bbc2e51a6e1347445b84d798f2a" category="cell">10GB（9.18.1）10GB（9.19.1）</block>
-  <block id="df90a1a2cc2054e32c9c28d5c25e62cf" category="cell">同一 10GB 檔案的四個副本，位於不同的磁碟區，同一節點（已啟用跨磁碟區重複資料刪除）</block>
-  <block id="0b3bf068e64e34843d3d704e013cb2b2" category="cell">同一個 10GB 檔案的四個副本，分別位於 4 個不同的磁碟區、4 個不同的節點上（已啟用跨磁碟區重複資料刪除）</block>
-  <block id="8869b48ff17dcbd09bde895bd5027ed2" category="cell">40GB（9.18.1）10GB（9.19.1）</block>
-  <block id="6e5fc7251e1276f061a3ac94294d4ce6" category="section-title">已移除/不再支援的功能</block>
   <block id="c1da2d4d510103b46e423190aacd1d6b" category="paragraph">NetApp AFX 專為高效能 NAS 和物件工作負載而設計，特別適用於（但不限於）人工智慧訓練和推理領域。在 NetApp AFX 的設計過程中，我們決定停用 ONTAP 中的一些功能。</block>
   <block id="763ebb6b2480e502c5034139361bcc1d" category="list-text">由於專注於高效能 NAS 和物件儲存，NetApp AFX 解決方案已移除區塊儲存工作負載。它不支援 FCP、iSCSI 或 NVMe 資料協定，並且沒有計劃添加區塊儲存協定。</block>
   <block id="ee62ec9079a51f3f2d61fb5c219e4c5b" category="list-text">Disaggregated 與 de-aggregated 同義,這表示 aggregate（至少在實體儲存管理概念上）已被移除。移除實體 aggregate 不僅簡化了 ONTAP 中的容量管理,也提供了實現單一容量池的機制。</block>
@@ -1931,9 +1918,7 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="144508c60f3cca56510b134fc12e757f" category="list-text">功能移除也意味著一些 CLI/GUI/REST API 的變更，因此任何不再支援的功能的命令或 API 呼叫也將被移除。</block>
   <block id="900a913e531c8157d7a2f4a97608dc94" category="list-text">目前 NetApp AFX 無法使用 ZAPI。</block>
   <block id="e89ad37d68f36cce38303bc48e8c2fe6" category="list-text">用於虛擬化的 NFS 複製卸載（僅限具有精細資料分佈的 FlexGroup 磁碟區）</block>
-  <block id="f8c9693eb34a8916c9e613f8afca2ef1" category="section-title">ONTAP 管理變更</block>
   <block id="cea3622035a3726dec586cdf9fabcb7a" category="paragraph">整體而言，NetApp AFX 管理不會改變叢集的管理機制。管理員仍然可以利用 CLI、GUI 和 REST API 登入並配置叢集。但 NetApp AFX 確實提供了一個改善儲存管理操作方式的機會。</block>
-  <block id="e025f27af7a0ab530c0c79e51c8ddc21" category="section-title">更簡化的容量管理</block>
   <block id="85e6f6e2e02603e4a6c37196e99d68e7" category="paragraph">NetApp AFX 儲存可用區將管理端點從基於節點和 Aggregate 的方式簡化為整個叢集可用的單一容量資源池。隨著磁碟區的增長和收縮，ONTAP 會自動從儲存可用區借用和釋放容量。</block>
   <block id="ddeb7090eb04d100bcabff49f47b2bef" category="paragraph">因此，儲存管理員不再需要費心在多達 24 個節點和數百個 Aggregate 中尋找和管理可用空間。現在，只需在一個地方即可管理和檢視容量。</block>
   <block id="68ab8227a681f41895474e422eb3d350" category="paragraph"><block ref="68ab8227a681f41895474e422eb3d350" category="inline-image-macro-rx" type="image"></block></block>
@@ -1948,8 +1933,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="1f22cd8cc995516df6a340339e98aa43" category="paragraph">NetApp AFX 將容量集中在一個儲存可用區中，這更貼近 FlexGroup 磁碟區的預期運作方式。所有磁碟區都位於同一個容量池中，而不是分佈在多個大小可能不同的獨立 Aggregate 中的多個組成磁碟區，這大大簡化了使用 FlexGroup 磁碟區的整體管理開銷。</block>
   <block id="49328713bd4daf43cf93136d33988aec" category="paragraph">此外，AFX 預設會為 FlexGroup 磁碟區啟用進階容量平衡功能，有助於更妥善地在磁碟區中分配較大的檔案。現在，FlexGroup 磁碟區組成要素較不需要管理概念，而是在背景中靜靜地執行其工作。</block>
   <block id="b04c6be3a0c2715cf298c6858aafdec2" category="paragraph"><block ref="b04c6be3a0c2715cf298c6858aafdec2" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="591b7e4a83822f3477d36ac1390ed210" category="section-title">自動化儲存管理任務</block>
-  <block id="e5acbb4916e4ad745f7ab261de87bba8" category="paragraph">在 NetApp AFX 中使用 Storage Availability Zone 時，所有容量都會在所有節點之間共享。雖然節點仍擁有磁碟區，但 ONTAP 會根據每個節點在任何特定時間的需求，透過借用和釋放容量來自動管理每個節點的容量使用量。這意味著儲存管理員不再需要擔心如何以最佳方式平衡可用空間。</block>
   <block id="b9bfd8cd96f3dc16633eb7ac3cf9d518" category="paragraph">此外，ONTAP 可自動管理 RAID 群組，無需管理員幹預，即可將新新增的磁碟新增至現有或新建的 RAID 群組。ONTAP 還可跨節點管理磁碟區遷移，而無需複製資料。</block>
   <block id="913ef981ae568ab215ce9a179461e1e1" category="section-title">零複本磁碟區移動</block>
   <block id="bc9a4f65b3b66945205ca7605583f7c8" category="paragraph">Unified ONTAP 提供了一種在節點或 Aggregate 之間無中斷地移動 Volume 的方法，以此來管理整個叢集的效能和容量使用情況。</block>
@@ -2021,19 +2004,14 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="f3e451363190c1f43ef5d709f51ce4e7" category="cell">70GB/s TLC 35GB/s QLC</block>
   <block id="56b8b83f998dd9761119047c9d76dbfe" category="section-title">效能密度</block>
   <block id="c1a2f8f6f3bfbadf11742b61cc98b0c4" category="paragraph">在分散式 ONTAP 架構中，將儲存節點與磁碟櫃分離，可讓更多節點將流量推送到較少的磁碟櫃，這有助於減少資料中心的整體佔用空間，只需使用所需的容量即可獲得最大效能。</block>
-  <block id="4ae4c8e1d2b552815258c78743bb204e" category="paragraph">例如，在統一的 ONTAP 叢集中，由於每個節點都有自己的一組磁碟，因此效能僅限於該節點擁有的磁碟；由於只有一個節點可以存取一組磁碟，因此它不一定能充分利用可用磁碟並達到其最大效能。</block>
   <block id="33f4eb7eed8d8b2113c48953bac67bf8" category="paragraph"><block ref="33f4eb7eed8d8b2113c48953bac67bf8" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="d5cb33c5c027f61f5d28891275974f9d" category="paragraph">NetApp AFX 將所有磁碟匯集到單一儲存可用區域中，因此所有節點都可以運用所有磁碟。而且由於磁碟和節點是分離的，因此您不需要那麼多機櫃就能獲得相同的效能。這樣可以壓縮效能並最大化機櫃的最大效能潛力。</block>
   <block id="99eb2edd23e124ad314a265478aad0a7" category="paragraph"><block ref="99eb2edd23e124ad314a265478aad0a7" category="inline-image-macro-rx" type="image"></block></block>
   <block id="c5403d6a6718b58910134e247573ddcd" category="section-title">節點與機櫃比率</block>
   <block id="5a9b6da3c89cc10b2605462a01ff5d1e" category="paragraph">Unified ONTAP 節點每個節點至少需要一組磁碟，且單一節點可以連接多個磁碟櫃。因此，單一節點可能會出現效能瓶頸，可能無法充分利用其自身的磁碟。</block>
   <block id="962bc0f988d9a6b087f2e852d024b921" category="paragraph">NetApp AFX 將所有磁碟櫃提供給所有節點。每個磁碟櫃包含具有 16 x 100GB RoCE 功能介面的模組，以增加每個磁碟櫃允許的總效能量。因此，您可以使用多個節點飽和單一磁碟櫃，這些節點將對同一組磁碟進行讀取和寫入。</block>
-  <block id="76ec7f81b3187ef46319086883f7fbd6" category="paragraph">截至 ONTAP 9.19.1，節點：機櫃飽和度比率約為 4:1。</block>
   <block id="81517b0fa3a8d75c3583bca55033c957" category="section-title">基準測試結果</block>
   <block id="5fb3d68ef18b7e2fc36d57ce8a8e106a" category="paragraph">以下部分介紹使用具有下列組態參數的 NetApp AFX 叢集進行基準測試的結果。</block>
   <block id="3e6a751b39e6b30cc5ad600e2e6371be" category="list-text">4 個節點、4 個資料介面</block>
-  <block id="b827d6860b20dc1f1de306f24773c085" category="list-text">2 個磁碟櫃（7.6TB 磁碟機）</block>
-  <block id="ea7f38fbe84ac28be0f7c90cca730a69" category="list-text">ONTAP 9.19.1</block>
   <block id="85d0f94acd6137c52384e071c0beb76b" category="list-text">NFSv4.2（pNFS、工作階段主幹連線）</block>
   <block id="e9db3004828d9514fafc57881dfbdbd2" category="list-text">FlexGroup Volume</block>
   <block id="4c4ae09914e5fd587c43d091395a2882" category="inline-link-macro">ElBencho</block>
@@ -2112,8 +2090,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="fa7e3ce056e445f916459f4372867737" category="list-text">管理網路可以與資料網路分開。</block>
   <block id="0444184d88145af9b161901b5b6ba1e9" category="list-text">除了新增 400GB 網路支援外，用戶端資料網路沒有其他變更。</block>
   <block id="9b9a79176e66304af399df0747b11958" category="paragraph">一些主要的網路差異包括：</block>
-  <block id="d6e99a721e3959d61475fb8a779af6da" category="list-text">後端叢集網路連接埠現在僅支援與叢集交換器的 100 GB 連線。</block>
-  <block id="7e4a61956036e6a0f962729225a087fd" category="list-text">由於叢集交換器支援 400GB 頻寬，後端節點連線使用 4 x 100GB 分線纜線，以減少交換器上使用的連接埠數量。</block>
   <block id="3642ca6533d5185a15902437ef4ed2cb" category="list-text">現在，透過交換器上的新 HA VLAN 組態，NVRAM 會在後端叢集網路的 HA 配對之間進行鏡射。</block>
   <block id="5af24813aa4e491fa55cdff2a9e543b1" category="list-text">AI Data Engine 預設會新增一個新的 DCN 網路。這些 IP 位址會自動生成,並可根據需要進行變更。</block>
   <block id="2d6547f7462502cd7177c73060bb9b5b" category="paragraph">NetApp AFX 執行 ONTAP，這表示它使用與 ONTAP 相同的安全性。所有加密模組都相同，這表示一旦認證程序完成，安全認證將會相同。NetApp AFX 也運用與統一 ONTAP 相同的安全加密支援。</block>
@@ -2149,7 +2125,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="b2a10addfa20e797512c93a082680656" category="section-title">支援的硬體</block>
   <block id="30cf7a36a073e8f6f943d72fb5d6ba32" category="paragraph">有關 NetApp AFX 支援的硬體的最新資訊，請查看 <block ref="fbd1b799f21dab00963646892e0a8bc0" category="inline-link-macro-rx"></block>。</block>
   <block id="187c6ad3a74cc93ac6c2229d398e383e" category="section-title">節點</block>
-  <block id="3cf2439f2c058990ff372e335184dd99" category="paragraph">NetApp AFX 節點是基於為統一 ONTAP 叢集提供的 AFF A1K 型節點。這些節點沒有板載磁碟用於儲存，採用模組化設計，可根據效能需求輕鬆新增和移除節點。每個節點佔用 2U 的機架空間，並且隨著新增到 AFX 叢集中的節點數量增加，效能呈線性增長。</block>
   <block id="d5e794e7dbae5aaa599a71bcdb41beef" category="paragraph"><block ref="d5e794e7dbae5aaa599a71bcdb41beef" category="inline-image-macro-rx" type="image"></block></block>
   <block id="40a737e5041c4ace9449f041a4a18b80" category="section-title">硬體插槽</block>
   <block id="92d6e217184c21d30e8aeb113e46244e" category="paragraph">NetApp AFX 1K 節點使用下列插槽分配。</block>
@@ -2170,14 +2145,12 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="dccb27e8b03cb56df2a6877ed19a9fd8" category="list-text">如需更多資訊、請參閱 <block ref="90cb3a4603072e0b41362ef1057cf320" category="inline-link-macro-rx"></block> 。</block>
   <block id="73ed82219e935d8e1007e1c3f266cba7" category="paragraph"><block ref="73ed82219e935d8e1007e1c3f266cba7" category="inline-image-macro-rx" type="image"></block></block>
   <block id="ebc44233941122337b29386177d91130" category="section-title">叢集交換器連線能力</block>
-  <block id="47db3bf9cf495bcc67c8e360c1e98aa9" category="paragraph">NetApp AFX 的許多主要架構概念都大量使用了後端叢集交換器。例如，叢集介面、儲存適配器、儲存機櫃和 NVRAM 卡都連接到叢集交換器。目前，所有這些介面僅支援 100GB 通訊，而交換器支援 400GB。因此，100GB 介面透過 4 x 100GB 分線電纜連接到交換器上的 400GB 介面。這種方法減少了交換器上使用的連接埠數量。例如，16 x 100GB 儲存機櫃模組連接埠僅使用交換器上的 4 個連接埠，而節點上總共 8 個連接埠使用 2 個交換器連接埠。</block>
   <block id="57b5f0954762dfdb314fe646634d976a" category="paragraph"><block ref="57b5f0954762dfdb314fe646634d976a" category="inline-image-macro-rx" type="image"></block></block>
   <block id="8c5ddc935447794865d4cbffec8a3d20" category="section-title">磁碟類型和大小</block>
   <block id="97f14179dd02ff11f07602385544cf86" category="paragraph">NetApp AFX 目前僅支援以下尺寸的 NVMe 附加 SSD ：</block>
   <block id="ce5fba88cb69cd2186756f8faf58b8d9" category="list-text">30.1 TB</block>
   <block id="e86d671ba5d15a1c611be884ea7cf55a" category="list-text">60.6 TB</block>
   <block id="1d19d1aa0e80c186229626ee1f0041e4" category="section-title">TLC 與 QLC</block>
-  <block id="7a2e1ddf0e6216bfff611dd9ae70ce57" category="paragraph">NetApp AFX 可同時支援 TLC 和 QLC 兩種快閃記憶體類型。7.6TB 和 15.3TB 的硬碟採用 TLC 閃存，而容量大於 30.1TB 的硬碟則採用 QLC 快閃記憶體。無論採用何種快閃記憶體類型，均可符合 NVIDIA SuperPod 認證的效能標準。</block>
   <block id="3490c43d24f428db31d4011fa273ef4a" category="paragraph">所有與 NetApp AFX 系統搭配使用的硬碟均為高效能硬碟，QLC 和 TLC 的讀取效能幾乎相同。QLC 的寫入效能略遜於 TLC，並且在寫入密集型工作負載下可能會出現更明顯的損耗平衡現象。</block>
   <block id="e9c6d4b89f2fd8f80f0238667ae15952" category="paragraph">在選擇使用的磁碟機類型時，請考慮儲存設備將承載哪些工作負載，以及涉及的效能 / 容量密度權衡。</block>
   <block id="760b833cb870c3441ec6b8c08f6ec02b" category="paragraph">以下部分將介紹 NetApp AFX 叢集與統一 ONTAP 相比的最大值和最小值。</block>
@@ -2189,11 +2162,9 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="8487699fb65ed58bf886a609cc850b23" category="list-text">30,000</block>
   <block id="f64bc191156dac76ffce8622c16cb21d" category="cell">Aggregate 大小</block>
   <block id="b1e8908d89a1ad733767a64e964d99a1" category="list-text">800 TB</block>
-  <block id="382b0f5185773fa0f67a8ed8056c7759" category="list-text">N/A</block>
   <block id="f143d990b31f7ac5e79358104cb48aff" category="cell">節點計數</block>
   <block id="1ff1de774005f8da13f42943881c655f" category="list-text">24</block>
   <block id="aa1d200574a94cfcb3d0759a739c4dd9" category="list-text">8 (9.17.1)</block>
-  <block id="2d971449b9b517e5d9b06c0774a86eb5" category="list-text">32（9.19.1RC1）</block>
   <block id="a720679b3b1209f744e43750ba9fde85" category="cell">總容量</block>
   <block id="5404442a7ea7dc52ed099fdd23e4199c" category="inline-link-macro">hwu.netapp.com</block>
   <block id="682e0c17b99d72fabde958b4e8c0d999" category="list-text">取決於節點和磁碟機。如需詳細資訊、請參閱 <block ref="523b424ce9b7195ce25d27d4cc912219" category="inline-link-macro-rx"></block>。</block>
@@ -2201,23 +2172,19 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="704a0d93f7b6ca8da6cbce9ed5971f0e" category="list-text">3PB（9.18.1RC1）</block>
   <block id="bd73788e2d7ae873811b5f0a7396e233" category="list-text">16PB （9.18.1GA 版本）</block>
   <block id="f97ef3dbbb7841f0aa42a42747c2a0ee" category="list-text">20PB（9.19.1RC0）</block>
-  <block id="653c5fed5c5f4dcbffe13c96221408cd" category="list-text">32PB（9.19.1RC1）</block>
   <block id="b7766a901d78384091033386c4093325" category="cell">支援的磁碟櫃數量</block>
   <block id="91706301a0c706cc2b6ed119849431ab" category="list-text">每個 HA 配對 8 個</block>
   <block id="2b74c007e56a8be14949b63b9c86ef6d" category="list-text">每個叢集 192 個</block>
   <block id="140cff9a338f00caa42bc917c0418ca5" category="list-text">每個叢集 12 個（9.18.1GA）</block>
   <block id="8f913e0a31e7129dc8f1303d1c3bbb6e" category="list-text">每個叢集 17 個（9.19.1RC0）</block>
-  <block id="ce3356bb97f3c0c67abc10dbbe67295d" category="list-text">每個叢集 25 個（9.19.1RC1）（無 HA 配對限制）</block>
   <block id="cba50d32905010ba6b646887e5e895fb" category="cell">支援的磁碟機總數</block>
   <block id="0776e87be9974c41478d5bd51d257edd" category="list-text">每個 HA 配對 240 個</block>
   <block id="1e55cbc137a2331e70c391fc4fd9c60e" category="list-text">2880（24 個節點）</block>
   <block id="10f58cba14d2923711530ca627a44630" category="list-text">每個叢集 288 個（根據磁碟櫃數量限制；無 HA 配對限制）</block>
   <block id="4ae417e18c2dbaa126c383d02921071f" category="list-text">每個叢集 408 個 (9.19.1RC0)</block>
-  <block id="68c6eeaf09540ebb55999b818976f02b" category="list-text">每個叢集 600 個（9.19.1RC1）</block>
   <block id="6bb41960470a19d97556b9240ac0b3ff" category="cell">Volume 大小</block>
   <block id="8998a6f31a494ea1f237e3fa701e0ed9" category="list-text">300TB（FlexVol）</block>
   <block id="b10a65115e7a646fec0fd28107237725" category="list-text">60PB（FlexGroup）</block>
-  <block id="0bab89c96b68baae41f5285b98af3ac5" category="list-text">60PB（FlexGroup）*</block>
   <block id="c211a42bcb266c4a94bd61b00651fb1c" category="cell">每個磁碟區的檔案數量上限</block>
   <block id="b693a2bd240e09ce2afb4bc4488dc1a4" category="list-text">20 億（FlexVol）</block>
   <block id="9337be44c241fe6070fdf7a59195811d" category="list-text">4000 億（FlexGroup）</block>
@@ -2233,9 +2200,7 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="b7639b383cb3a4cab77aa12f58aa915b" category="cell">每個節點的鎖定數量上限</block>
   <block id="1ec14607f84befa006cafa9013c8912f" category="list-text">300 萬</block>
   <block id="6849c78228c7cd366db4c21c9938140f" category="cell">最大資料介面數（叢集）</block>
-  <block id="c903af30d83599be98f0662224f2c47d" category="cell">最大成分數 – FlexGroup</block>
   <block id="3644a684f98ea8fe223c713b77189a77" category="list-text">200</block>
-  <block id="b6eddf963db615d515417f95e5dc2fa9" category="list-text">9.19.1 RC1 中的 512</block>
   <block id="a3dffa639f016fdda26bbc66ef4e8297" category="cell">叢集間 LIF 數量上限</block>
   <block id="bc7755ec4d34c6846a5772829cb17914" category="cell">IP 空間的最大數量</block>
   <block id="10a7cdd970fe135cf4f7bb55c0e3b59f" category="list-text">512</block>
@@ -2244,9 +2209,7 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="f687535718e53d023297c10d45c01270" category="cell">FlexCache 的最大數量（節點）</block>
   <block id="18d8042386b79e2c279fd162df0205c8" category="list-text">400</block>
   <block id="53de1c7cdb80f3c7e5a41e6540841720" category="section-title">NetApp ONTAP for AFX 最新版本有哪些新功能？</block>
-  <block id="0acc25e6e7239d394aedd7b0e37728b5" category="paragraph">本部分涵蓋 NetApp AFX 的最新更新，並將隨每個新版本更新。請定期查看此處以獲取新資訊，同時也請查看版本發布說明。</block>
   <block id="bff2eea4246a1f0ecb68fc0c8a335f25" category="paragraph">最新版本：</block>
-  <block id="7dd300df1c1cbba0e8f3f2216e700979" category="paragraph">ONTAP 9.19.1RC1（截至 2026 年 5 月）</block>
   <block id="27c085bde15f2bb253b0aee8a5f084c2" category="paragraph">NetApp AFX 的新增功能：</block>
   <block id="d2faa14ab70288d07188a62b2f1242e8" category="list-text">全域重複資料刪除</block>
   <block id="1f72924400244c635421d0b144e597e4" category="list-text">動態儲存效率</block>
@@ -2278,10 +2241,7 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="5f009470c525619904fd84251f905a7e" category="paragraph">*大致原始容量比較，84 個硬碟 – Unified ONTAP 和 NetApp AFX*</block>
   <block id="d8ed1a209c750a3dc71890cc94412b31" category="paragraph">*NetApp AFX 中的磁碟重建*</block>
   <block id="dc1b0acbe90560cc5a5e94e6e90708ba" category="paragraph">*統一的 ONTAP 重複資料刪除網域*</block>
-  <block id="b12d1303cded0366ad3fa9aa6d34be4a" category="paragraph">*針對相同 10GB 檔案在不同情境下的去重行為 – 統一 ONTAP*</block>
   <block id="7b5e9f2c0d06f5a691b8531801c6399b" category="paragraph">*NetApp AFX – 全域重複資料刪除網域（ONTAP 9.19.1）*</block>
-  <block id="a040d8510d49a488312dd741d89e9ca6" category="paragraph">*針對相同 10GB 檔案在不同場景下的去重行為 – NetApp AFX*</block>
-  <block id="186cb1a33e8e53960ebea64a2e6d0b69" category="list-text">由於採用了新的容量架構，NetApp AFX 中也不再需要基於複製的磁碟區移動。如需詳細資訊，請參閱<block ref="b59888323cfca50660660414893d5a3c" category="inline-xref-macro-rx"></block>。</block>
   <block id="f80e34d35179b16c68ce3cb79ad36d9e" category="paragraph">例如，在統一 ONTAP 的 CLI 中，如果要查看叢集的總實體容量資訊，可以使用「`aggregate show-space`」命令，該命令會列印所有 aggregate 項目。而在 NetApp AFX 中，可以使用「`cluster space show`」指令，該指令只會顯示單一儲存可用區。</block>
   <block id="42afd96b757f8f9bd0f24bdf70f4bf70" category="paragraph">*統一 ONTAP 和 NetApp AFX 中容量 CLI 指令的並排比較*</block>
   <block id="bdc937cba7fe46550f14e60dabe07eec" category="paragraph">*System Manager 容量檢視 – Unified ONTAP*</block>
@@ -2316,7 +2276,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="ad5caac66af524a44d92b4cc1c8ad87f" category="summary">本頁介紹了 NetApp AFX 群集與統一 ONTAP 相比的最大值和最小值。</block>
   <block id="ea629c640de47abfbd9731f1383d108a" category="doc">最大值和限制</block>
   <block id="0fc87a3629114127c8f973f35e3c57ba" category="paragraph">*NetApp AFX 最大值與最小值*</block>
-  <block id="5b8dee0cb73a41462c6285f68c17d093" category="summary">雖然 NetApp AFX 在儲存呈現方式上存在一些相當大的架構差異，但 ONTAP 的功能集和管理方式實際上並沒有改變。</block>
   <block id="cb981099a03b9edaa33f39b7fc686d56" category="doc">管理工具</block>
   <block id="02a6e2c6554c926b5858f18226afa7f4" category="paragraph">NetApp AFX CLI 的唯一真正區別在於新增和移除的功能（如本文檔「」部分所述）。如果某個功能（例如 aggregate 或 Metrocluster）被移除，則對應的 CLI 指令將不再可用。</block>
   <block id="971d55389f6a3f4ab4d365e1d96ca63d" category="paragraph">*並排查看統一的 ONTAP 和 NetApp AFX System Manager 登入頁面*</block>
@@ -2326,8 +2285,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="f5e64500886f685b50bab074f7baaf8b" category="paragraph">*NetApp AFX 佈線視圖*</block>
   <block id="0ba14e1ce49ecde8fd2a51e3f76b6ee2" category="paragraph">NetApp AFX 也致力於保留大部分 ONTAP REST API 調用，這意味著如果您已建立了一套基於 REST API 的自動化工具，它們在大多數情況下仍然可以使用。主要例外情況包括聚合、Metrocluster、SAN 和一些效能計數器。完整的 REST API 文件可在 NetApp AFX 叢集的 System Manager 中找到，瀏覽至 \https://clus_mgmt_ip/docs/api。</block>
   <block id="10f8b4caccad4d5001f788be83e36b4a" category="summary">NetApp AFX 的設計以效能和可擴充性為核心，專門針對需要高讀寫吞吐量的工作負載。</block>
-  <block id="26fb7c096cf7c88b9c31d41be766163e" category="paragraph">每個 NetApp AFX 儲存節點都提供特定的讀取和寫入吞吐量。隨著節點加入叢集中，效能會線性成長，如本文件「節點效能的線性擴展」部分所述。</block>
-  <block id="f72f669b81d6cf52d23dfe312609010f" category="paragraph">目前，節點類型為 <block ref="9cf787ca68118452f94875110bf7c0d8" category="inline-link-macro-rx"></block>，讀寫吞吐量大致如下所示。隨著 NetApp AFX 可用硬體的更新，這些限制可能會改變。注意：如下面的「基準測試結果」部分所示，使用多個客戶端讀取和寫入多個檔案時達到了最高效能。</block>
   <block id="1966077bb0e25c1b863a791297107edf" category="paragraph">*每節點效能預估*</block>
   <block id="b1091795c1256c094d3449a2a2bc6deb" category="paragraph">*每個磁碟櫃的效能預估*</block>
   <block id="450baef0095326f9d30e6c8ca1f65004" category="paragraph">「效能密度」的概念使儲存管理員能夠最大限度地利用現有硬體，而無需過度配置儲存環境。</block>
@@ -2341,7 +2298,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="1eef8946d0cbeaecb21b2a938827040e" category="paragraph">效能提升較為顯著的領域之一是順序 IO（即可預測且依序執行的 IO 操作）。在使用 fio 進行的標準效能測試中，執行 ONTAP 9.18.1 的 AFX 的順序讀取效能提升了近 30%，順序寫入效能提升了 10%。</block>
   <block id="458a3f89edcc08eb6255ebe8b1d42393" category="paragraph">*NetApp AFX – NFSv4.1 順序 IO 效能（ONTAP 9.18.1）*</block>
   <block id="bddd597f0eec2113f06b93b0277da19f" category="paragraph">更令人印象深刻的是，NFSv4.x 在效能瓶頸之一——元資料方面也取得了顯著改進。這些是隨機 IO，通常在 4K 範圍內，用於管理檔案擁有者和屬性、建立和列出檔案等等。由於 NFSv4.x 的狀態性，這類操作往往會消耗更多 CPU 資源並增加延遲，從而降低整體效能。</block>
-  <block id="8d3bd41fd952027a466e35605cbd651b" category="paragraph">*NetApp AFX – ONTAP 9.18.1 中的 NFSv4.1 元資料 IO 效能*</block>
   <block id="739f428040feee735e00029f2f74aaad" category="summary">本頁面涵蓋 NetApp AFX 的最新更新，並將隨著每個新版本的發布而更新。</block>
   <block id="89bef61b77bccd688eb4c742aab2b38b" category="doc">NetApp AFX 的新特性</block>
   <block id="f5cb5bdaaa412361fa89cf3912168e46" category="summary">IPsec 為 NFS 或 SMB 加密提供了一種替代方案，並且是 iSCSI 流量傳輸過程中唯一的加密選項。</block>
@@ -2351,7 +2307,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="2d242bb36ec91b32005f9296ff03a912" category="sidebar">架構</block>
   <block id="fe4dbcab9b910577e5035e97ac068dae" category="sidebar">管理</block>
   <block id="3c02a379965ab0dfcd77b1c484450433" category="sidebar">硬體</block>
-  <block id="8f1489908bad45f32b26cd4889b15ee5" category="paragraph">如需 FlexGroup 磁碟區如何從 AFX 架構中受益的詳細資訊，請參閱<block ref="1cec0d1b278569accc3f4a62eef15ba5" category="inline-link-macro-rx"></block>。</block>
   <block id="3b694df11e6b19386eb830eb2e4f1789" category="paragraph">有關效能數據，請參閱 <block ref="77269db3bbc523c64a6951fea568b858" category="inline-link-macro-rx"></block>。</block>
   <block id="766623d3580d9065fc0a0d4ec5735932" category="paragraph">每個儲存架包含高效能儲存架模組，配備 16 個 100GB 乙太網路連接埠，利用 RoCEv2 通訊實現與叢集中運算節點的高頻寬儲存互動。與任何實體資源一樣，這些儲存架的效能也有其極限——尤其因為 NetApp AFX 可以呈現多個指向同一組磁碟的節點。下表顯示了單一儲存架對 TLC 和 QLC 磁碟機的估計最大讀取和寫入效能。有關 TLC 和 QLC 差異的更多資訊，請參閱 <block ref="6bb0fbcc06f13ae4b085b96edf84ff05" category="inline-link-macro-rx"></block>。</block>
   <block id="1acada88d3bde4f0f20b477fc6b57ea4" category="paragraph"><block ref="ce43ad346de589cf0a1fba5f344a1b6d" category="inline-link-macro-rx"></block> MetroCluster IP 是適用於運作在 FAS 和 AFF 系統上的 ONTAP 的持續可用儲存解決方案。MetroCluster IP 是最新一代的儲存方案，採用基於乙太網路的後端儲存網路。MetroCluster IP 提供高度備援的組態，以滿足最關鍵業務應用的需求。MetroCluster IP 已整合到 ONTAP 中，並為使用 ONTAP 儲存設備的用戶端和伺服器提供 NAS 和 SAN 連線。</block>
@@ -2675,4 +2630,373 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="49f0664f282179029e2131d30362f45d" category="summary">NFS over TLS 可與標準 ONTAP 匯出原則控制項搭配使用，並透過 SVM-DR 和 MetroCluster 進行複製。本頁也涵蓋連線限制、強制執行行為和操作建議。</block>
   <block id="7ec1eb1e8c27af2d560415def72f2dcf" category="sidebar">ONTAP 技術報告為在不同生態系統或不同協定下規劃和最佳化部署提供了更多背景資訊。部分 ONTAP 技術報告也提供了 ONTAP 特性和功能的架構背景和最佳實務建議。</block>
   <block id="9678a7dcb872318bf33163b8a1ba5331" category="sidebar">ONTAP 技術報告</block>
+  <block id="54ec3a53c78919e9407a57725c4375f5" category="summary">了解 NetApp AFX 儲存可用區如何以單一叢集範圍的容量資源池取代實體彙總。</block>
+  <block id="5b62d0d4bed05d1bafa800b03e4547d3" category="doc">單一容量資源池</block>
+  <block id="a4f3bbb6371419955168ca5b4cd75e14" category="paragraph">NetApp AFX 將每個節點的實體彙總替換為可供整個叢集使用的單一儲存可用區。</block>
+  <block id="86e42f283c0e7ce37049767109379be0" category="inline-link-macro">上一頁：節點到磁碟的關係</block>
+  <block id="d817615aa101085b02d44d8e0e823dab" category="cell"><block ref="d817615aa101085b02d44d8e0e823dab" category="inline-link-macro-rx"></block></block>
+  <block id="034209d6ad41d67b2159d052ccbde0ac" category="inline-link-macro">接下來：複寫的 NVRAM 和 HA 故障移轉行為</block>
+  <block id="76a2767d019330ede157390b01693459" category="cell"><block ref="76a2767d019330ede157390b01693459" category="inline-link-macro-rx"></block></block>
+  <block id="35a27f61604d63f66f775a8d3a5cf7bb" category="summary">了解 NetApp AFX 如何自動新增和移除節點，並將叢集擴展至 32 個節點和 32PB。</block>
+  <block id="ae899ba07529811c7eb33a8faf905a65" category="doc">叢集規模</block>
+  <block id="cb8b98fa7e8e25975fc798c7628775e0" category="paragraph">NetApp AFX 架構簡化了節點的新增和移除，並實現更大的叢集規模，同時不會造成容量或效能的損失。</block>
+  <block id="b7a95c6586d57b909e3a9973bf21cccf" category="inline-link-macro">限制</block>
+  <block id="38f629ab9fe0b506cd64c3679d525d5f" category="paragraph">如需最大叢集規模的相關資訊，請參閱 <block ref="c597c96a42848ebf6c6969387954bb8c" category="inline-link-macro-rx"></block> 頁面。</block>
+  <block id="ef9bd54df79e70b96e893ceea0e91312" category="inline-link-macro">前情：Volume 移動</block>
+  <block id="275364c276ec6dee70887af6a23e8646" category="cell"><block ref="275364c276ec6dee70887af6a23e8646" category="inline-link-macro-rx"></block></block>
+  <block id="83e46be7bd44842ce98500496847f4e9" category="inline-link-macro">下一篇：根目錄 Volume 變更</block>
+  <block id="f45ea40223ebf36e876aea4789d0f6e6" category="cell"><block ref="f45ea40223ebf36e876aea4789d0f6e6" category="inline-link-macro-rx"></block></block>
+  <block id="bdf25c1c2e469d9758120a0feaa5077f" category="summary">查看在 NetApp AFX 中已變更、已移除或不支援的 ONTAP 功能。</block>
+  <block id="d44875ca8fb1c667438d95cce89a36ee" category="doc">ONTAP 功能支援變更</block>
+  <block id="b1f694e14956be77cf0eb60222e47b2e" category="paragraph">NetApp AFX 的高效能 NAS 和物件設計改變了 ONTAP 某些功能和介面的可用度。</block>
+  <block id="d9c1eb9a581bfd14111cf720df3b0bd1" category="section-title">ONTAP 已移除或 AFX 不支援的功能</block>
+  <block id="99a80b04ef8bf63bea43cd149e59adbf" category="list-text">由於採用了新的容量架構，NetApp AFX 中也不再需要基於複製的磁碟區移動。如需詳細資訊，請參閱 <block ref="67d639395579b09d4abdd20aa5044b2b" category="inline-link-macro-rx"></block>。</block>
+  <block id="d443d100383bd891012ba5ae6150e013" category="inline-link-macro">上一頁：儲存效率</block>
+  <block id="73b0e97ca39870a70df4b1b35fb121d8" category="cell"><block ref="73b0e97ca39870a70df4b1b35fb121d8" category="inline-link-macro-rx"></block></block>
+  <block id="ca3dd1aae2ac5cb886e1abbbb46ac5af" category="inline-link-macro">接下來：FlexGroup 管理改善</block>
+  <block id="da72eaace59bda00e6361751697f2b33" category="cell"><block ref="da72eaace59bda00e6361751697f2b33" category="inline-link-macro-rx"></block></block>
+  <block id="119a20db3f697b02ddf97b1bfd537d67" category="summary">了解 NetApp AFX 容量架構如何簡化 FlexGroup Volume 管理。</block>
+  <block id="3d830d7683c4e74c2b7ecd36620bcf4b" category="doc">FlexGroup 管理改善</block>
+  <block id="5e524a6da6f5836187e2e4234fb6dfdc" category="paragraph">NetApp AFX 中的單一儲存設備可用區域減少了 FlexGroup Volume 所需的基礎架構管理。</block>
+  <block id="4d578ffaea0ce093a4e0d2cec263621b" category="inline-link-macro">上一篇：ONTAP 功能支援變更</block>
+  <block id="d8b374be0f7350f520f08d920c2f1093" category="cell"><block ref="d8b374be0f7350f520f08d920c2f1093" category="inline-link-macro-rx"></block></block>
+  <block id="9a753cf01d3b3f2bb2f15562165d32e7" category="inline-link-macro">下一步：Volume 移動</block>
+  <block id="7abf5c59ca6e65fb40670023985184ea" category="cell"><block ref="7abf5c59ca6e65fb40670023985184ea" category="inline-link-macro-rx"></block></block>
+  <block id="4dc535c56d16702ba00c65f6478d0650" category="summary">了解 NetApp AFX 如何在提供線性節點效能的同時，獨立擴展運算和容量。</block>
+  <block id="053494bc00de2cfc0a58dac6f7ecd62a" category="doc">獨立線性尺度</block>
+  <block id="c0103995b715b075de77d3d88f0a7823" category="paragraph">分離式 NetApp AFX 架構使容量和運算資源能夠獨立擴展，節點效能能夠線性擴展。</block>
+  <block id="754a4d69adc2453532670dbd9ea7919b" category="inline-link-macro">前文：複製的 NVRAM 和 HA 故障轉移行為</block>
+  <block id="1233129ad521178a7ad957f65c6d3385" category="cell"><block ref="1233129ad521178a7ad957f65c6d3385" category="inline-link-macro-rx"></block></block>
+  <block id="eaf442a512c0b53f5715f821d53759c7" category="inline-link-macro">接下來：RAID 變更</block>
+  <block id="9a1dcb233d45db9b07d3f4710eab115e" category="cell"><block ref="9a1dcb233d45db9b07d3f4710eab115e" category="inline-link-macro-rx"></block></block>
+  <block id="91d6f5fb3e5146f5b7221ed5d7986852" category="summary">了解 NetApp AFX 如何讓每個儲存節點都能看見每個磁碟，並取消磁碟所有權。</block>
+  <block id="587320e7812070c931a48fb6902c7228" category="paragraph">NetApp AFX 透過將所有節點和機架連接到同一個後端網路，改變了儲存節點和磁碟之間的關係。</block>
+  <block id="318618fcbea375e247481fae79c73332" category="inline-link-macro">上一篇：架構</block>
+  <block id="cd4ad3137c754ae686247606a9bc885b" category="cell"><block ref="cd4ad3137c754ae686247606a9bc885b" category="inline-link-macro-rx"></block></block>
+  <block id="7d72a470f2b577a7f2db02929884441d" category="inline-link-macro">下一篇：單一容量資源池</block>
+  <block id="eac6ef923fde32ac1d0eb49a4c9f05c9" category="cell"><block ref="eac6ef923fde32ac1d0eb49a4c9f05c9" category="inline-link-macro-rx"></block></block>
+  <block id="2a6602ab0eee68a3164c8c540af46c04" category="summary">了解 NetApp AFX 如何透過後端網路複寫 NVRAM，以及在 HA 故障轉移期間重新平衡 Volume。</block>
+  <block id="b3c2e58648b286918bfb5b684cca6455" category="doc">複製的 NVRAM 與 HA 故障轉移行為</block>
+  <block id="bfdeb0e5f702a4920fd204738452bc06" category="paragraph">NetApp AFX 將 NVRAM 複寫移至後端叢集網路，並使用零複製 Volume 移動性在節點故障後重新平衡工作。</block>
+  <block id="6e56008c0110dbadbb126ca11335947e" category="inline-link-macro">上一頁：單一容量資源池</block>
+  <block id="96962307687d46b7df1a01d684c98a2e" category="cell"><block ref="96962307687d46b7df1a01d684c98a2e" category="inline-link-macro-rx"></block></block>
+  <block id="52bc7f01b9b93a6808e4b063730047ff" category="inline-link-macro">下一篇：獨立線性尺度</block>
+  <block id="8eb3844c69ac6c6f04a39bc94048aee5" category="cell"><block ref="8eb3844c69ac6c6f04a39bc94048aee5" category="inline-link-macro-rx"></block></block>
+  <block id="c03c9e469b184306b8aff7a4af160441" category="summary">了解 NetApp AFX 中較大的 RAID 群組如何提高可用容量並加快磁碟重新建置速度。</block>
+  <block id="5bf47d0e9a8df629d21fe0ec95cc52ff" category="doc">RAID 變更</block>
+  <block id="e2438134c785460001ab9afde2fa97fd" category="paragraph">NetApp AFX 使用更大的 RAID-TEC 群組，減少比例同位元檢查磁碟機的數量，並將磁碟重新建置工作分配到整個叢集中。</block>
+  <block id="6dcb05cff5b2040c9e618d652ac9eedc" category="inline-link-macro">前一個：獨立線性尺度</block>
+  <block id="c19d471797837b55c5a8c87550208759" category="cell"><block ref="c19d471797837b55c5a8c87550208759" category="inline-link-macro-rx"></block></block>
+  <block id="b89599897f78689775ab1f045cdf8c55" category="inline-link-macro">接下來：儲存效率</block>
+  <block id="1fee783e025135691dff26e8af6c8b77" category="cell"><block ref="1fee783e025135691dff26e8af6c8b77" category="inline-link-macro-rx"></block></block>
+  <block id="ba9f78a3da2c98ca4695295f6c157185" category="summary">了解 NetApp AFX 如何虛擬化根目錄 Volume 並將開機映像和叢集資料庫移至就職開機媒體。</block>
+  <block id="8d4bebb36186ffde1221d7b4f9c5c365" category="paragraph">NetApp AFX 移除實體根目錄彙總，並使用就職 NVMe 開機媒體作為開機映像和複寫叢集資料庫。</block>
+  <block id="7c1f1842a4939f57630fb77edbe0255c" category="inline-link-macro">上一頁：叢集規模</block>
+  <block id="34a918752a6c315d982082421b2fde1d" category="cell"><block ref="34a918752a6c315d982082421b2fde1d" category="inline-link-macro-rx"></block></block>
+  <block id="e2c8766ef4eae8d561615b7e9955e166" category="inline-link-macro">接下來：效能</block>
+  <block id="8e85322458e72e50123dc2d9aec2a6f7" category="cell"><block ref="8e85322458e72e50123dc2d9aec2a6f7" category="inline-link-macro-rx"></block></block>
+  <block id="d16fdbe48808d05fea5cacba0fee173d" category="summary">了解 NetApp AFX 重複資料刪除網域的變化，以及 ONTAP 9.19.1 如何提供全域重複資料刪除。</block>
+  <block id="fd18465573ec21a6218982055981f6b1" category="doc">儲存效率</block>
+  <block id="632d15e65f675c6a9228c8adc414c3ba" category="paragraph">NetApp AFX 變更了重複資料刪除邊界，並且從 ONTAP 9.19.1 開始，支援跨儲存可用區的全域重複資料刪除網域。</block>
+  <block id="bd7fe8049cfb5e245ef178ee07140836" category="paragraph">下表比較了不同情境下重複資料的容量行為。在統一的 ONTAP 中，由於檔案副本跨越節點和彙總（以及去重域），空間節約效益會降低。在 9.19.1 之前的 AFX 中，當副本跨越節點時也會發生相同情況。從 9.19.1 開始，全域重複資料刪除在整個 Storage Availability Zone 中套用相同的空間節約效益。</block>
+  <block id="d05de44df7f24e70badd0a4c55e8c62d" category="paragraph">*針對相同 10GB 檔案的重複資料刪除行為 – 統一的 ONTAP 和 NetApp AFX*</block>
+  <block id="fbf77664391482a8ca45a51f12160ca3" category="cell">AFX 9.18.1</block>
+  <block id="a3d5ec4aa274797fb21c40a4b87c7e15" category="cell">AFX 9.19.1</block>
+  <block id="9b800715ba731f258d6ce5f88197f4f1" category="cell">同一 10GB 檔案可存在四個副本，分別位於不同 Volume、相同彙總（統一 ONTAP）或相同節點（AFX）；已啟用跨 Volume 重複資料刪除。</block>
+  <block id="7bbb2341e1f68cb884a4a4ad8242a8f0" category="cell">同一 10GB 檔案的四個複本，分別位於 4 個不同的 Volume、4 個不同的彙總（統一 ONTAP）或 4 個不同的節點（AFX）；已啟用跨 Volume 重複資料刪除。</block>
+  <block id="ae8dfab71ce3a08ecd350daf50301a27" category="inline-link-macro">上一篇：RAID 變更</block>
+  <block id="594fde184554ada70dfbd1fb2884299e" category="cell"><block ref="594fde184554ada70dfbd1fb2884299e" category="inline-link-macro-rx"></block></block>
+  <block id="fe2fb055835b763bb3584b749af596cf" category="inline-link-macro">接下來：ONTAP 功能支援變更</block>
+  <block id="b93654fe68cc1bb2e693e7a2952ebb7e" category="cell"><block ref="b93654fe68cc1bb2e693e7a2952ebb7e" category="inline-link-macro-rx"></block></block>
+  <block id="57b706c0d0923b58e55e65858cc5cdab" category="summary">了解 NetApp AFX 如何使用零拷貝 Volume 遷移來實現自動化管理和效能平衡。</block>
+  <block id="2b8498e54f96836a89b5c416ba8bad40" category="doc">Volume 移動</block>
+  <block id="25606fd8c2368bc5e6a80aa5e10185b5" category="paragraph">NetApp AFX 可在節點之間轉移 Volume 所有權，而無需複製 Volume 資料，從而實現快速自動化和效能驅動型的負載平衡。</block>
+  <block id="47db773889e8d2ca15bd4b7ce4ac5cf4" category="section-title">儲存可用區如何改變 Volume 的行為</block>
+  <block id="2ff3d332293bba6e6af1d78768da00e1" category="paragraph">在 NetApp AFX 的儲存可用區中，所有容量都在所有節點之間共享。雖然節點仍然擁有各自的 Volume，但 ONTAP 會根據每個節點在任何指定時間的實際需求，透過借用和釋放容量來自動管理每個節點的容量使用。這意味著儲存設備管理員不再需要擔心如何最佳地平衡可用空間。這種新方法也提供了一種讓 Volume 能在節點之間更自由移動的機制。</block>
+  <block id="98509ec30ea1920baaae7ad6eb9f9bed" category="inline-link-macro">上一篇：FlexGroup 管理改善</block>
+  <block id="a42aebcd3b48a9a1305117441cb1fe8d" category="cell"><block ref="a42aebcd3b48a9a1305117441cb1fe8d" category="inline-link-macro-rx"></block></block>
+  <block id="07930f7010aa1de69598bec74b3daf77" category="inline-link-macro">下一步：叢集規模</block>
+  <block id="ec11e6004a5f7abbd80806f4c4115a4f" category="cell"><block ref="ec11e6004a5f7abbd80806f4c4115a4f" category="inline-link-macro-rx"></block></block>
+  <block id="a7c0c15a9a2c0523912a320ce0b0af0a" category="section-title">架構主題</block>
+  <block id="2346bf7ba872c3618b6862ef695ee8b1" category="list-text"><block ref="2346bf7ba872c3618b6862ef695ee8b1" category="inline-link-macro-rx"></block></block>
+  <block id="28f072f460023ec8338c485644593c04" category="list-text"><block ref="28f072f460023ec8338c485644593c04" category="inline-link-macro-rx"></block></block>
+  <block id="c5ea8c1dc56e62486c1aa4cb5b682791" category="list-text"><block ref="c5ea8c1dc56e62486c1aa4cb5b682791" category="inline-link-macro-rx"></block></block>
+  <block id="130a460851e994bcd23b6be769fe15c8" category="list-text"><block ref="130a460851e994bcd23b6be769fe15c8" category="inline-link-macro-rx"></block></block>
+  <block id="32c8ddf6b92bcc8e121c78599ec04948" category="list-text"><block ref="32c8ddf6b92bcc8e121c78599ec04948" category="inline-link-macro-rx"></block></block>
+  <block id="2dce81bf3acf389dfb7ee3ffbd5aab33" category="list-text"><block ref="2dce81bf3acf389dfb7ee3ffbd5aab33" category="inline-link-macro-rx"></block></block>
+  <block id="aea6aabdefeda8105b1398fa70bfbf04" category="list-text"><block ref="aea6aabdefeda8105b1398fa70bfbf04" category="inline-link-macro-rx"></block></block>
+  <block id="3973e59e5869bd8620f6f32b16590bcc" category="list-text"><block ref="3973e59e5869bd8620f6f32b16590bcc" category="inline-link-macro-rx"></block></block>
+  <block id="2af265af0e7f234f6363b058835ffe29" category="list-text"><block ref="2af265af0e7f234f6363b058835ffe29" category="inline-link-macro-rx"></block></block>
+  <block id="7cee51cb451ff7308783158ac1db2ef3" category="list-text"><block ref="7cee51cb451ff7308783158ac1db2ef3" category="inline-link-macro-rx"></block></block>
+  <block id="58a82ec8a761904e904facb5e64b4aee" category="list-text"><block ref="58a82ec8a761904e904facb5e64b4aee" category="inline-link-macro-rx"></block></block>
+  <block id="dd1f775e443ff3b9a89270713580a51b" category="inline-link-macro">以前的</block>
+  <block id="0404fcd632cc3442dd58b5d1c07b7d2d" category="cell"><block ref="0404fcd632cc3442dd58b5d1c07b7d2d" category="inline-link-macro-rx"></block></block>
+  <block id="69be2c2dc375e8c3d4ef57e211abb8c3" category="inline-link-macro">接下來：節點到磁碟的關係</block>
+  <block id="7060b1d86f6e9d5a96964c27019caa21" category="cell"><block ref="7060b1d86f6e9d5a96964c27019caa21" category="inline-link-macro-rx"></block></block>
+  <block id="5a5a13b2fe196be4a679b058d5c7ade4" category="list-text">後端叢集網路連接埠在 AFX 1K 平台上僅支援與叢集交換器的 100GB 連接，在 AFX 2K 平台上支援 400GB 連接。</block>
+  <block id="bf46d6b9c6a47122718c8db45552f64e" category="list-text">由於叢集交換器支援 400GB 頻寬，後端節點連接在 AFX 1K 上使用 4 條 100GB 分支線纜，以減少交換器上佔用的連接埠數量。AFX 2K 將使用 1:1 的 400GB 連線與交換器對接。</block>
+  <block id="7a3c3c12c21a09ed089a89d765c810f2" category="paragraph">如需 FlexGroup 磁碟區如何從 AFX 架構中受益的詳細資訊，請參閱<block ref="0e113d6569e7ae4c8fb5353fd9b2254b" category="inline-link-macro-rx"></block>。</block>
+  <block id="1c25a0b7f7b732ad965a5a7b1ff34e2e" category="cell"><block ref="1c25a0b7f7b732ad965a5a7b1ff34e2e" category="inline-link-macro-rx"></block></block>
+  <block id="3a87a2791dcee25eb67a005e13b677b5" category="inline-link-macro">接下來：硬體</block>
+  <block id="5b243f25b6ba73e0773a6c9b112a3628" category="cell"><block ref="5b243f25b6ba73e0773a6c9b112a3628" category="inline-link-macro-rx"></block></block>
+  <block id="b1e7b5b40850fffdf0de6d8a90d75650" category="paragraph">NetApp AFX 節點包括 AFX 1K （基於 AFF A1K）和 AFX 2K。這些節點沒有板載磁碟用於儲存設備，採用模組化設計，可根據效能要求輕鬆新增和移除節點。每個節點佔用 2U 的機架空間，且隨著節點新增至 AFX 叢集，效能呈線性提升。</block>
+  <block id="bb103e44d966373afdac269aa1c682af" category="paragraph">*NetApp AFX 2K 節點詳細資料*</block>
+  <block id="594cf2fe6e4a6d11de793e30d812248a" category="paragraph"><block ref="594cf2fe6e4a6d11de793e30d812248a" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="83ce79303db612602efbf5b6a365c745" category="paragraph">NetApp AFX 2K 節點使用下列插槽分配。</block>
+  <block id="64f41ef936eb5fed920f53aa4cf113a4" category="list-text">插槽 2 專用於叢集複寫</block>
+  <block id="25af6e8ed5efe01de53396a9f937ccdb" category="list-text">插槽 8B 和 10A 專用於儲存設備機櫃通訊</block>
+  <block id="974e7cae37d10728a5a0998fab60aca3" category="paragraph">NetApp AFX 的許多主要架構概念都大量運用了後端叢集交換器。例如，叢集介面、儲存設備介面卡、儲存機櫃和 NVRAM 卡都連接到叢集交換器。叢集交換器支援 400GB 頻寬。在 AFX 1K 平台上，後端叢集網路連接埠僅支援與叢集交換器的 100GB 連接，而在 AFX 2K 平台上則支援 400GB 連接。因此，AFX 1K 後端節點連接使用 4 條 100GB 分支纜線，以減少交換器上佔用的連接埠數量。AFX 2K 使用 1:1 的 400GB 連接至交換器，每個節點有 6 個連接埠（2 個 HA、2 個叢集、2 個儲存設備）。儲存機櫃模組仍使用 100GB 介面；例如，16 個 100GB 儲存機櫃模組連接埠僅佔用交換器上的 4 個連接埠，而 AFX 1K 節點上的 8 個連接埠總共只佔用交換器上的 2 個連接埠。</block>
+  <block id="b1852bcd6cc401fd02422858b178b7fa" category="section-title">交換器選擇指南</block>
+  <block id="d4f5bed7457dc9b068d850e8db3f6d63" category="paragraph">將每台交換器所需的 400GbE 連接埠總數相加，然後選擇滿足該總數的最小交換器型號。NetApp AFX 使用一對叢集交換器；每台交換器的容量需另外配置。每台交換器上的兩個連接埠預留給 ISL（9332：連接埠 31–32；9364：連接埠 63–64），因此 9332 剩餘 30 個可用連接埠，9364 剩餘 62 個可用連接埠。</block>
+  <block id="58a28b7aad0bcc38fea19c69aa3c2a2e" category="paragraph">每台交換器的連接埠數量：</block>
+  <block id="2adc0cf0a09cf3acc80b491a2290f5d8" category="list-text">AFX 1K：每個節點 1 個 400GbE 連接埠（4 x 100GB 分支上有四個 100GB 節點連接埠）</block>
+  <block id="9589d0606f143c001b80863253dd143e" category="list-text">AFX 2K：每個交換器每個節點 3 個 400GbE 連接埠（每個節點 6 個連接埠，1:1 400GB：2 個 HA、2 個叢集、2 個儲存設備）</block>
+  <block id="ac6ce6a07231a222e16acb28790c8ff4" category="list-text">機櫃：每個機櫃 2 個 400GbE 連接埠（每個交換器 8 個 100GB 機櫃連接埠，採用 4 x 100GB 分支連接）</block>
+  <block id="c7a931e8021e8267cb0901bcc68cd37f" category="cell">每個交換器需要 400GbE 連接埠總數</block>
+  <block id="bbc155fb2b111bf61c4f5ff892915e6b" category="cell">交換器</block>
+  <block id="58596a213f53b4b05701bb140d62d7bf" category="cell">可容納 32 個連接埠（ISL 後可用 30 個）</block>
+  <block id="42bcfd3a8dc048ea39f9d0c10ee2a96d" category="cell">Cisco Nexus 9332D-GX2B（1U，32 x 400GbE）</block>
+  <block id="e70706dbefce23e201e90ad541e55ec0" category="cell">可容納 64 個連接埠（ISL 後可用連接埠為 62 個）</block>
+  <block id="efe7a5dcfac4e1f4c2b9191de735fbc6" category="cell">Cisco Nexus 9364D-GX2A（2U，64 x 400GbE）</block>
+  <block id="1f12392c4497f9ac149fdbca42e0946e" category="cell">超過 64 個連接埠</block>
+  <block id="65a6ed729e513b4f5eaca8a428c7f976" category="cell">Cisco Nexus 9808，或如 <block ref="9c839fcdfb8699a63c787254d7b1ae03" category="inline-link-macro-rx"></block> 中所述</block>
+  <block id="2b18ac515c39f0ab341cce83909f328d" category="section-title">32 節點叢集</block>
+  <block id="35ff71f05c8983f61171e984d415a7ed" category="paragraph">一個 32 節點叢集（目前節點上限；請參閱 <block ref="8057bcb5fa3400871df7c7ff4e1295c3" category="inline-link-macro-rx"></block>）在 AFX 1K 上每個交換器消耗 32 × 400GbE 連接埠，在 AFX 2K 上每個交換器消耗 96 × 400GbE 連接埠（32 × 3），不包括機櫃。</block>
+  <block id="4c047bf01cf13b78e6f56a60670958f1" category="cell">AFX 1K（32 個節點）</block>
+  <block id="a2b391a899b70755b0d3c1ab27a5f15c" category="cell">AFX 2K（32 個節點）</block>
+  <block id="1547422835eb79b97349e89baef85f3d" category="cell">Cisco Nexus 9332D-GX2B</block>
+  <block id="3b1b01d87ddad32bc6d72e58efb62311" category="cell">不支援（32 個節點連接埠超過 30 個可用連接埠）</block>
+  <block id="aa7f77e663b832d5b0e544c5511e680c" category="cell">不支援</block>
+  <block id="0e7640c65f26c9e296a33421d0fb5c5a" category="cell">Cisco Nexus 9364D-GX2A</block>
+  <block id="9fdf6bcdac1a241a8955b169567b18c7" category="cell">32 個節點和 8–12 個機櫃（4:1 至 8:3）</block>
+  <block id="47ddab6bcde53dbdfbb588f4d0dbea23" category="cell">不支援（96 個節點連接埠超過 62 個可用連接埠）</block>
+  <block id="2082d0b73a4a04320b20b1e6d00e06cf" category="cell">Cisco Nexus 9808</block>
+  <block id="c2a28a26e08429569152ffb8f857d69b" category="section-title">每個交換器的最大節點數</block>
+  <block id="b1b0daa7dd3f9035ea61b91ae807da38" category="paragraph">節點與機櫃比率至少為 4:1，至多為 8:3（請參閱 <block ref="d566b83810a4cfd2b2f84ca67b7cd031" category="inline-link-macro-rx"></block>），節點數為偶數（HA 配對），且至少需要 2 個機櫃。以下組合列出了該範圍內每個交換器可容納的最大節點數量。</block>
+  <block id="0b5ab51d843f0ee81c7f5fe35a5f64b2" category="cell">AFX 1K（最大節點數 + 機櫃）</block>
+  <block id="d2f25cdf72eac27cad1b62c3c67ff140" category="cell">AFX 2K（最大節點數 + 機櫃）</block>
+  <block id="355fa6f69d9dafbd500585872dae9b15" category="cell">20 個節點 + 5 個機櫃（4:1；8:3 不符合剩餘連接埠）</block>
+  <block id="30d0c7c8c635a2df51c71ea2096ec53f" category="cell">8 個節點 + 2–3 個機櫃</block>
+  <block id="1a0864e3949ddbe49cb17af8623340b4" category="cell">32 個節點 + 8–12 個機櫃</block>
+  <block id="fbae992ee12090fcc55ea2e8f900e1a3" category="cell">16 個節點 + 4–6 個機櫃</block>
+  <block id="08cfb6e76db9f00c891e4c8c99638d27" category="inline-link-macro">AFX 佈線文件</block>
+  <block id="c6f00dd82fb88c73cc1affee15f11b29" category="paragraph">有關最新支援的交換器型號和限制，請參閱 <block ref="9c839fcdfb8699a63c787254d7b1ae03" category="inline-link-macro-rx"></block> 和 <block ref="3844b91710934dea50da7fd25206c584" category="inline-link-macro-rx"></block>。</block>
+  <block id="4f3d3e12873b90a45449c984a4499e18" category="paragraph">NetApp AFX 可同時運用 TLC 和 QLC 兩種快閃記憶體類型。15.3TB 的磁碟採用 TLC 機型，而容量大於 30.1TB 的磁碟則採用 QLC 機型。無論採用何種媒體類型，均可達到 NVIDIA SuperPod 認證效能標準。</block>
+  <block id="90f92537bd0c62a6de58c704e5a16424" category="cell"><block ref="90f92537bd0c62a6de58c704e5a16424" category="inline-link-macro-rx"></block></block>
+  <block id="2364ed8d509e73107b12fdf99a8b6aab" category="inline-link-macro">接下來：最大值和限制</block>
+  <block id="cb5f2c20c44d606279f07605e23d11c8" category="cell"><block ref="cb5f2c20c44d606279f07605e23d11c8" category="inline-link-macro-rx"></block></block>
+  <block id="640b166a939b1c27c7920eac1d149606" category="inline-link-macro">接下來：有什麼新內容</block>
+  <block id="b67e20cba68163a77b85e37ab2daca79" category="cell"><block ref="b67e20cba68163a77b85e37ab2daca79" category="inline-link-macro-rx"></block></block>
+  <block id="ef91aa9567a75d03c6868af1847f4cf4" category="list-text">不適用（無實體聚合）</block>
+  <block id="7bf8eae16212993845da05163b4a3fbf" category="list-text">32（9.19.1GA）</block>
+  <block id="534994cf1c4bf0fba7ccadd5e842d86a" category="list-text">32PB（9.19.1GA）</block>
+  <block id="269c9c0d3e705486f10e28e428b6080f" category="list-text">每個叢集 27 個（9.19.1GA）（無 HA 配對限制）</block>
+  <block id="bb556e89cd0b582b6e7abaaa250b8961" category="list-text">每個叢集 648 個（9.19.1GA）</block>
+  <block id="7a44285c27460153ae068ccfea0bf40f" category="list-text">60PB（FlexGroup - 9.19.1 版之前）*</block>
+  <block id="9802807ac5fc172e3d6a7b7aaefaa3d8" category="list-text">~153PB（FlexGroup - 9.19.1 及更新版本）*</block>
+  <block id="cc53de6086b5b3e6671092062bcdba16" category="cell">最大 FlexGroup 成分數量</block>
+  <block id="3c294186314ab35c0d7a513c9743e589" category="list-text">200（9.18.1 及更早版本）</block>
+  <block id="f16d7d2e9e222cbce8c5180fee54d0fe" category="list-text">512（9.19.1GA）</block>
+  <block id="e1dcf33eac0351976a8e0dcf1fd8cf14" category="list-text">1 兆（FlexGroup - 9.19.1GA 及更新版本）</block>
+  <block id="63bfcf3c1ee1a84b0d38e2c985739ae2" category="paragraph">_*FlexGroup 最大大小將限制為 32PB 實體大小。_</block>
+  <block id="2f91c35cdb90a816b70d0668ede0cd99" category="cell"><block ref="2f91c35cdb90a816b70d0668ede0cd99" category="inline-link-macro-rx"></block></block>
+  <block id="cde1ec9e62df2f2b0c4fb223c37ae19c" category="inline-link-macro">下一篇：相關訊息</block>
+  <block id="88390b84e73c339334f1a311fbe4d28e" category="cell"><block ref="88390b84e73c339334f1a311fbe4d28e" category="inline-link-macro-rx"></block></block>
+  <block id="2d73217bea28d4de29e8e928630f3f60" category="summary">了解 NetApp AFX 儲存可用區如何簡化容量管理，同時保留熟悉的 ONTAP 管理工具。</block>
+  <block id="1d19e21de0f93b11f5ceb8b535a3afc2" category="section-title">容量管理</block>
+  <block id="f45fb7f03c0353830151a48537118dcd" category="cell"><block ref="f45fb7f03c0353830151a48537118dcd" category="inline-link-macro-rx"></block></block>
+  <block id="713b4d97097e92b47726a7fa3107b349" category="inline-link-macro">接下來：功能</block>
+  <block id="12e5eb49b71ce1d7c8f1f883315e2959" category="cell"><block ref="12e5eb49b71ce1d7c8f1f883315e2959" category="inline-link-macro-rx"></block></block>
+  <block id="cec7b7e2ab4af23bbd75323c75bebcc4" category="summary">重現 NetApp AFX 效能基準測試結果的指南，包括匯出原則、Volume、裝載、用戶端和網路方面的考量。</block>
+  <block id="6ff9b18d98108ed1c5a4254ed3405e00" category="doc">效能基準測試技巧</block>
+  <block id="177918529f1c5d3552752f3eb8edbb64" category="paragraph">本頁提供組態指南，用於重現 NetApp <block ref="b2c1492c06c7c9ee371bcee573757b69" category="inline-link-macro-rx"></block> 中所述的 AFX 效能基準測試結果。這些是通用注意事項和組態指南，而不是完整的測試流程。</block>
+  <block id="7bdd095938f2004676adf47872b70a5e" category="paragraph">如需 NFS 通訊協定背景及建議做法，請參閱 <block ref="fe159189c16fecab70e72088e682cdf8" category="inline-link-macro-rx"></block> 和 <block ref="149ea492f7c2980c5c032947943ca75e" category="inline-link-macro-rx"></block>。</block>
+  <block id="5925ba0cbc49e94745f350c8780ae064" category="inline-link-macro">基準測試/ONTAP</block>
+  <block id="75307cbd9ef346491b81810e4479f088" category="paragraph">用於 Volume 建立、LIF 管理和用戶端調校的 NAS 基準測試指令碼可在 <block ref="ea4557b8c8c815e13e677664ec890a7c" category="inline-link-macro-rx"></block> 儲存庫中取得。</block>
+  <block id="3801370f7bfbe71c465f219b785fd20c" category="section-title">效能測試注意事項</block>
+  <block id="b31ba42fb3f58a5e0ac8bb461406d2b5" category="paragraph">效能測試通常旨在找出系統在特定工作負載場景下的效能極限。大多數情況下，ONTAP 的預設設定無需調整即可滿足大多數工作負載的效能要求，但在某些情況下，您可能需要調整某些組態以最佳化系統。</block>
+  <block id="3274910f8cfb095a5c3536d03b8df615" category="section-title">NFS 匯出原則組態</block>
+  <block id="5f56aa3b1ab835caa4ce8def49f87ea7" category="inline-link-macro">ONTAP 匯出原則文件</block>
+  <block id="4566712322643c725ef6313681397c0a" category="paragraph">ONTAP 中的匯出原則用於控制對 NFS 匯出的存取。每個 Volume 都需要設定匯出原則，並在原則中設定規則。如果原則中未設定任何規則，則視為「禁止存取」。如需詳細資訊，請參閱 <block ref="7b4599762d97449c645b029177af4af3" category="inline-link-macro-rx"></block> 和 <block ref="20c6f5809d863de31db3333a15db9979" category="inline-link-macro-rx"></block>。</block>
+  <block id="c73f8c5ef08e689c2b2e150defc33f61" category="paragraph">對於效能基準測試，我們可能不太關注用於測試的用戶端的權限，而是希望避免任何與權限相關的錯誤。因此，建議確保所有匯出原則規則都設定為對資料 Volume 完全開放存取，但僅限於用於存取資料集的用戶端。此外，vsroot 原則*必須*允許原則中路徑遍歷的讀取存取權限。</block>
+  <block id="6a80a4c2171b59d9740f458bd0da3947" category="paragraph">*vsroot 原則（使用「預設」原則）*</block>
+  <block id="5a4449d62b92fbf6acfd231a7ef07c87" category="paragraph">*資料 Volume 原則*</block>
+  <block id="9e8275c080542c5273f7995e41a4c9f3" category="section-title">NFS 伺服器組態</block>
+  <block id="c40f417a4b50a0e7189d7c0bd5adee6b" category="paragraph">以下 NFS 伺服器選項用於內部 AFX 效能基準測試執行。其他 NFS 伺服器選項也可以啟用（例如，NFSv4 ACL 支援），但它們超出了這些基準測試提示的範圍。有關 AFX 上 NFSv4.1、pNFS 和工作階段中繼效能的詳細資訊，請參閱 <block ref="149ea492f7c2980c5c032947943ca75e" category="inline-link-macro-rx"></block>。</block>
+  <block id="054b4f3ea543c990f6b125f41af6ebf7" category="cell">選項</block>
+  <block id="97ed5558fd729d9bf1d64d92c02eddaa" category="cell">v4.1</block>
+  <block id="00d23a76e43b46dae9ec7aa9dcbebb32" category="cell">已啟用</block>
+  <block id="c54a41b01595bd7042188e1a80fd2682" category="cell">v4-id-domain</block>
+  <block id="6c183afb93887f22f1842b4585a81ebc" category="cell">[網域名稱]*</block>
+  <block id="a116cf49a8ff6aa090241b64884e6942" category="cell">v4.1-pnfs</block>
+  <block id="50105299a2f7c1ad846c43bc3bced9c6" category="cell">v4.1-trunking</block>
+  <block id="a0c2c60367f265eacb646fc2041a4fe5" category="cell">tcp-max-transfer-size</block>
+  <block id="4a1d32eb84d870d67d7c850ddfb7beb8" category="cell">262144</block>
+  <block id="eee0c632459952d672023b9db092728a" category="cell">v3-64bit-identifiers</block>
+  <block id="56302496859aa52d9f73380e79a26f7a" category="cell">v4-64bit-identifiers</block>
+  <block id="43a03299a3c3fed3d8ce7b820f3aca81" category="cell">v3</block>
+  <block id="ce67994e6891e678798c27b16c343bd7" category="cell">v4.1-read-delegation</block>
+  <block id="5d36701ad2e987a0e9313d08124b560d" category="cell">v4.1-write-delegation</block>
+  <block id="b0348bc4253e8d0e18e59f7e3850bdfc" category="cell">rdma</block>
+  <block id="e3addd10d40b4f4228ed5b4a7ddfe0ae" category="cell">已啟用（選用）</block>
+  <block id="09333b4449856fb5771c0079b9d1c6a0" category="cell">v4.0</block>
+  <block id="476880932672ebfbc14bef388763ee31" category="cell">v3-hide-snapshot</block>
+  <block id="eb6c1a5ecd1e17d4cd46fa5c9d415816" category="cell">僅裝載根目錄</block>
+  <block id="77743dec92afc92eca95c255fd9333d7" category="cell">nfs-rootonly</block>
+  <block id="5cedb06da5dca9f183b28ed7a5a82fc6" category="paragraph">*NFSv4 ID 網域可以是任何值，前提是與 NFS 用戶端上設定的值相符。</block>
+  <block id="5b65ff668d1e0a6e3b4016e301fda5c3" category="paragraph">驗證用戶端上的 NFSv4 ID 網域：</block>
+  <block id="e3fd345c9e667112f0dfe54c7eb79a0d" category="admonition">如果這些命令無法運作，則可能是您尚未安裝運用 NFSv4.x 所需的正確 NFS 軟體套件。例如，Debian/Ubuntu 系統需要 nfs-common。</block>
+  <block id="8ff2ecac95178be729a4e7fe9f064c39" category="inline-link-macro">ONTAP/NAS/configure-nfs-server.sh</block>
+  <block id="f4a4770ca66fce1941049c5854a84c20" category="paragraph">以下 CLI 命令套用用於內部效能基準測試執行的 NFS 伺服器組態。可透過 SSH 連線至叢集並套用此組態的指令碼位於 <block ref="7c43567e166a23ca339d9fd4339ccf5c" category="inline-link-macro-rx"></block>。</block>
+  <block id="4c4156e9025146d3d82a3c20f83ac0b1" category="inline-link-macro">ONTAP NFS over RDMA 文件</block>
+  <block id="72d0a2907910de9336f247555ac20520" category="admonition">RDMA 可降低延遲並提高大多數工作負載的處理量——約 10-30%。有關 NFS over RDMA，請參閱 <block ref="50b4b0365a5cdeb0b8e0ea0dcc899ed5" category="inline-link-macro-rx"></block>。</block>
+  <block id="305160d35c5eb375133b99844c5c9c60" category="section-title">Volume 組態</block>
+  <block id="abded65ae84d33076e0d3bf6d99d9db6" category="paragraph">以下部分介紹 Volume 的建立和組態注意事項，並說明在初始建立期間應使用的選項。有關 FlexGroup Volume 在 AFX 中的運作方式，請參閱 <block ref="0e113d6569e7ae4c8fb5353fd9b2254b" category="inline-link-macro-rx"></block>、<block ref="ef53c970d92e82c57ca14cdc790a3fce" category="inline-link-macro-rx"></block> 和 <block ref="aa86589b7ac63727c91bf2f5e5311f75" category="inline-link-macro-rx"></block>。</block>
+  <block id="51ac4bf63a0c6a9cefa7ba69b4154ef1" category="cell">設定</block>
+  <block id="fc18634852d4299cd5f8c7ad55ddefbe" category="cell">磁碟區類型</block>
+  <block id="54452390cac5f65f3bcec580ba079531" category="cell">FlexGroup</block>
+  <block id="0ce32b6cab662379b54e961f5a61cdba" category="cell">建立方法</block>
+  <block id="91af5705f16502125e8b2187e64202c0" category="cell">CLI</block>
+  <block id="45dd6cd8597376faaab6161227310e91" category="paragraph">預設設定已更改：</block>
+  <block id="dbea6952136b5cb500e8bbb34857355c" category="list-text">Snapshot 原則已停用</block>
+  <block id="365c580fef8c5322a510415e8c760e48" category="list-text">Maxfiles 增加</block>
+  <block id="f508eb85e03eaf943d8b6bdc85899129" category="list-text">Maxdirsize 已增加</block>
+  <block id="a09233cbfa81d67531617b9aa1756129" category="list-text">支援大尺寸</block>
+  <block id="53f15368a8c0a123d3f24364d12c6539" category="list-text">已啟用自動調整大小</block>
+  <block id="e0199db5509b9ce286e3ecb672d95caa" category="list-text">UNIX 權限 777</block>
+  <block id="56fac638b295ff68579d34399250421c" category="list-text">檔案系統分析已停用</block>
+  <block id="834388998a2abd3e49af34aaefc25a9f" category="list-text">Snapdir 存取為 false</block>
+  <block id="bf639544d424861bec8b5a411b7f2b8c" category="section-title">特殊考量事項——FlexGroup Volume</block>
+  <block id="1e5201d5f7c70ae195e075e145d178e0" category="paragraph">如果工作負載在單一資料夾中建立了許多大檔案（&gt;1GB），請將 Volume 的工作流程修改為資料：</block>
+  <block id="9cbbfd3974d6bbe6ee952f095cb41573" category="paragraph">如果工作負載是託管在 FlexGroup Volume 上的 VMware 資料存放區，請停用<block ref="7617fb157efcfcd230d531be7d153280" prefix=" " category="inline-code"></block>選項（精細資料分佈）。AFX 上的虛擬化不支援 NFS 複本卸載的 GDD；請參閱<block ref="1825109c6e1c67edd90c86967a6829bb" category="inline-link-macro-rx"></block>。</block>
+  <block id="91ae20d4b622fdb80be8b49624bfa0af" category="section-title">為什麼快照功能停用</block>
+  <block id="f43c920585c66b5223d91100cd6e67a9" category="paragraph">通常情況下，ONTAP 中的快照不會對整體系統效能造成不利影響。有關快照和複寫在 AFX 上的工作原理，請參閱 <block ref="04b3a1d46e853e0e0c761ef86804f847" category="inline-link-macro-rx"></block>。但是，在基準測試中，我們會基於以下兩個原因停用快照：</block>
+  <block id="b970e465b23a0492ca92f811a974fc66" category="list-text">對環境進行精細控制——我們可以在需要時建立快照，以便更好地控制建立快照的情境，並更輕鬆地衡量其影響。</block>
+  <block id="ab1395a5252dadab5aa4404d0bd86880" category="list-text">資料流失——許多基準測試會建立大量資料，然後再刪除這些資料，這將迅速增加 Volume 上任何現有快照的大小。為避免空間分配問題，我們停用快照。</block>
+  <block id="85703f10d0af6259cfd165ba47b833f9" category="admonition">同時停用 Snapdir 存取，以防止對快照進行不必要的檔案系統遍歷。</block>
+  <block id="f18f8a29d3e2281d374f43c78cf8f0f1" category="section-title">掛載選項</block>
+  <block id="31a7d8e54c6d3fd9456ac4fe54ca6ae9" category="paragraph">一般來說，裝載選項會根據特定使用案例而有所不同。本節旨在展示我們在內部效能測試中使用的一般使用案例裝載選項清單。如果 NFS 伺服器已依照<block ref="3a662a12108befe526183fdf7b6968b5" category="inline-xref-macro-rx"></block>所示正確設定，則無需指定 NFS 版本或 wsize/rsize 選項。</block>
+  <block id="4ce404efd98f99e54601527d5fde56e5" category="paragraph">基本選項（適用於所有用戶端/案例）：</block>
+  <block id="cb9acbb001659e7cf40c637f6e7da1d0" category="paragraph">*會話中繼（作業系統特定）*</block>
+  <block id="6f140a77a6794d506a135fcc9f3b0681" category="paragraph">Session trunking 也列在 <block ref="b2c1492c06c7c9ee371bcee573757b69" category="inline-link-macro-rx"></block> 組態 <block ref="108fd47ee55441802d3323d3bf1c9ef4" prefix="(" category="inline-code"></block>）。如需 NFSv4.x 多重路徑 IO 內容，請參閱 <block ref="149ea492f7c2980c5c032947943ca75e" category="inline-link-macro-rx"></block>。</block>
+  <block id="82a974e7c68c25388a605465179069a5" category="paragraph">*RDMA 特定選項*</block>
+  <block id="942c3ab8c8760062adf3c6a34ccb3c29" category="paragraph">如需透過 RDMA 進行 NFS，請參閱 <block ref="50b4b0365a5cdeb0b8e0ea0dcc899ed5" category="inline-link-macro-rx"></block>。</block>
+  <block id="e1c409146df75721fd62f7e8d42fdda6" category="section-title">其他裝載選項</block>
+  <block id="5cd79824f38e8eb72335d877491592be" category="paragraph">某些工作負載在基準測試期間可能會受益於特殊的裝載選項。下表列出了一些此類選項，以及哪些使用案例可能獲得效能提升。</block>
+  <block id="3f0cedb1230534673abaed1c3643835c" category="paragraph">*其他 NFS 裝載選項及其使用案例*</block>
+  <block id="adff6803f909d46b9535860dbadb0e97" category="cell">NFS 裝載選項</block>
+  <block id="f9468c81b3d59ac0030570c4f58e95f1" category="cell">使用案例</block>
+  <block id="36b9c52aaf89a9c37a0aa321ef2c330c" category="cell"><block ref="708af9c7418504d54f0ccfcbcba3bbdb" prefix="" category="inline-code"></block></block>
+  <block id="2c0961b6f1195da74a2cdc7cdfc4073d" category="cell">停用「close-to-open」快取一致性。用戶端在開啟檔案時不會重新驗證快取的檔案屬性，而是依賴快取資料，即使這些資料可能已過時。</block>
+  <block id="c2f6b416d249fe707edad2922cd2c239" category="cell">適用於讀取密集型、單一用戶端工作負載，且檔案很少更改（例如，靜態網頁內容、軟體庫、唯讀媒體封存）。不適用於多用戶端寫入。</block>
+  <block id="b230114b7a2c7c8e6dabc3d12bbe7c7a" category="cell"><block ref="1244eff5724972713f8dc5692f7cbaf0" prefix="" category="inline-code"></block></block>
+  <block id="cf374058628fff698e4e63c733341fa2" category="cell">啟用接近開啟的快取一致性（預設）。當檔案開啟時，用戶端會向伺服器確認其快取複本是否仍然有效。這可確保在一個用戶端上關閉的檔案，在另一個用戶端上開啟時仍為最新版本。</block>
+  <block id="411409749b85ea25c4854fb0498d8412" category="cell">資料一致性至關重要的多用戶端共享存取工作負載（例如，共享的主目錄、協作開發環境）。</block>
+  <block id="de3a430a0fd8dcc7bbda50a4695448d7" category="cell"><block ref="e6691770bb764a8feb320eccb2b2da18" prefix="" category="inline-code"></block></block>
+  <block id="23005ee11714c12491ea3557b812d807" category="cell">將所有屬性快取逾時時間（acregmin、acregmax、acdirmin、acdirmax）設定為以秒為單位的單一值。控制用戶端在與伺服器重新驗證之前信任快取的檔案/目錄中繼資料的時間。</block>
+  <block id="6495dd90777a35ab7b87b43f88fe8784" category="cell">當您需要統一的快取原則時，可以簡化調校。高值有利於讀取密集型/靜態工作負載；低值（例如，actimeo=0）適合需要近乎即時一致性的快速變化資料。</block>
+  <block id="a004f3861b5b75ab66a8778c37c7ea80" category="cell"><block ref="f7a21f3d1e644dcd469b1baa6a4cacc2" prefix="" category="inline-code"></block></block>
+  <block id="faeb9fb1a76b0323b04b1b55137204a3" category="cell">設定用戶端快取常規檔案屬性的最短時間（秒），超過此時間後將重新驗證檔案屬性。預設值通常為 3 秒。</block>
+  <block id="126b837a7460a752b44b2df696a54756" category="cell">頻繁更新小檔案的工作負載，需要在新鮮度與效能之間進行微調（例如，日誌擷取、組態檔案輪詢）。</block>
+  <block id="b5d87242492700be412fb597a8a2ce76" category="cell"><block ref="3e453c5d359221659f54f6f250f9f166" prefix="" category="inline-code"></block></block>
+  <block id="c1696edb90bb999af5938b36d7f7ccf1" category="cell">設定用戶端快取普通檔案屬性的最長時間（秒）。預設值通常為 60 秒。</block>
+  <block id="bbbf238f466215fd6cc92010ab5cfe57" category="cell">大多數靜態檔案工作負載中，延伸最大值可減少中繼資料通訊（例如，大型唯讀資料集、套件儲存庫）。</block>
+  <block id="dd5392f3ec819f77484027997ed5c1cd" category="cell"><block ref="260f1f72bacbc5f2b68df950afc23958" prefix="" category="inline-code"></block></block>
+  <block id="eb4fa8388824a0d75dae15a79ddbc0fa" category="cell">設定用戶端快取目錄屬性的最短時間（秒），超過此時間後將重新驗證。預設值通常為 30 秒。</block>
+  <block id="339226bf4e598b49ad4641ca542d1d2e" category="cell">經常列出或建立目錄的工作負載（例如，建置系統、使用 Maildir 格式的郵件佇列），目錄的新鮮度至關重要。</block>
+  <block id="f1aa67152cecac975090ff3f379eda69" category="cell"><block ref="05a317baef495c46ea575a2950d5449d" prefix="" category="inline-code"></block></block>
+  <block id="3ea06b7447a6d0854099dc1cd2ad53d3" category="cell">設定用戶端快取目錄屬性的最長時間（秒）。預設值通常為 60 秒。</block>
+  <block id="53513906f278f1ee95431f5b0b10cbf6" category="cell">穩定的目錄結構很少變更——提高此值可減少 GETATTR 呼叫（例如，大型靜態目錄樹、歸檔儲存設備）。</block>
+  <block id="661b3770ca932214a3ad23e96f738c4a" category="cell"><block ref="b6844ec7fe8c0c8bbd8a647d246991b0" prefix="" category="inline-code"></block></block>
+  <block id="da892c9bfe68bc026691fd20fb48dea0" category="cell">指定要向 NFS 伺服器通告的用戶端 IP 位址，用於回呼通訊（NFSv4/v4.1+）。伺服器使用此位址發送委派召回和其他回呼。</block>
+  <block id="bfc9b5330351ad08be56ab2759e2a955" category="cell">多宿主用戶端或具有複雜連網的環境（例如，具有多個 NIC 的用戶端、VPN/覆蓋網路或 NAT），其中自動偵測到的位址可能不正確。</block>
+  <block id="713962bc493f4348d64390ec7e44d602" category="cell"><block ref="bb0fc0de24da5f7976510a315e4b7120" prefix="" category="inline-code"></block></block>
+  <block id="18cac1f212baf6258acbd5943b5bf2b7" category="cell">為單一裝載建立多個 TCP 連線（最多指定數量）到 NFS 伺服器，允許透過分隔的連線進行並行 I/O。</block>
+  <block id="620c0f065224e5334c228a0a3185a2dc" category="cell">適用於受限於單一 TCP 串流的高處理量、I/O 密集型工作負載（例如，大型檔案傳輸、HPC/科學運算、影片編輯、資料庫備份、大數據資料分析）。在大頻寬網路（10 GbE+）上尤其有利。</block>
+  <block id="b8473bf1fa830073ba48bb57003266eb" category="cell"><block ref="47ec90a7a49e890c835fb230dc011f5c" prefix="" category="inline-code"></block></block>
+  <block id="66a6a3194567ee5b50fecb72898792fb" category="inline-link-macro">TR-4616：ONTAP 中與 Active Directory 整合的 NFS Kerberos</block>
+  <block id="52200ed2b61831ddc5859fce0a6e364c" category="cell">指定裝載時使用的 Kerberos 安全性類型。需要 Kerberos 組態才能正常運作。如需詳細資訊，請參閱 <block ref="4a66ae146d32b0d4abd903b7823fcf51" category="inline-link-macro-rx"></block>。</block>
+  <block id="75c2074ac8362be3355fd04385c98d66" category="cell">保護 NFS 裝載會對效能產生負面影響。</block>
+  <block id="64af77d3bfba52235087fbfc96d55f88" category="section-title">用戶端組態</block>
+  <block id="b994442bc28a0e32cd91fe29abf10c8d" category="inline-link-macro">基準測試/用戶端</block>
+  <block id="cc3cc4afb7e859403a8ed33a4260f782" category="paragraph">用於內部基準測試的用戶端組態，包括網卡和作業系統調校指令碼，已在<block ref="2c47e3dc9a4959f8f5dac7c646cf3465" category="inline-link-macro-rx"></block>儲存庫中列出。以下內容包含一些額外的組態注意事項。此清單並非詳盡無遺，將隨時間推移進行修改，以容納更多使用案例/場景。</block>
+  <block id="6ae7bd00b98aa923c7d36cefdd80326e" category="section-title">NFS 預讀</block>
+  <block id="607b855a35212c598910666cc7dda46f" category="inline-link-macro">主動預讀</block>
+  <block id="8112d84240fa6f8e21893e9c98f49d63" category="paragraph">用戶端 NFS 預讀（如下）是 Linux 安裝點設定。它與 AFX 上的 ONTAP Volume 層級<block ref="143f27a7c12673e3fb9c144a2899dbf7" category="inline-link-macro-rx"></block>（跨檔案連續讀取）是分隔的。</block>
+  <block id="59a566ddffebf7bf94ee9bde3f24b6c5" category="inline-link-macro">適用於 Azure NetApp Files 的 Linux NFS 預讀最佳實務</block>
+  <block id="5165f88d995e916b5fe585606c70416d" category="paragraph">從：<block ref="edb70bd91039b7d0dabb722ab97705d6" category="inline-link-macro-rx"></block></block>
+  <block id="1955ed138d1ee63904dd9957d45e5dc6" category="paragraph">NFS 預讀功能會在應用程式發出 I/O 請求之前，預先從檔案讀取資料區塊。其設計旨在提高用戶端的連續讀取處理量。直到最近，所有現代 Linux 發行版都將預讀值設定為已裝載檔案系統 rsize 的 15 倍。</block>
+  <block id="d70c3dad64882584e02840745c8edc16" category="paragraph">RHEL 8.3 和 Ubuntu 18.04 引入了一些更改，可能會對用戶端連續讀取效能造成負面影響。與早期版本不同，這些發行版將預讀大小預設為 128 KiB，無論使用何種 rsize 裝載選項。從預讀大小較大的版本升級到預設預讀大小為 128 KiB 的版本後，連續讀取效能有所下降。但是，預讀大小可以動態且持續地向上調整。例如，使用 SAS GRID 進行的測試發現，15,360 KiB 的讀取大小優於 3,840 KiB、960 KiB 和 128 KiB。目前尚未執行足夠多的超過 15,360 KiB 的測試，無法確定其正面或負面影響。</block>
+  <block id="c8bf3e9d4fef57451990db6bd7613f4d" category="paragraph">NFS 預讀是在 NFS 檔案系統的安裝點定義的。若要顯示目前值，請使用 grep 指令搜尋裝載路徑<block ref="cc94ef2e56589d69ad062409591f07aa" prefix=" " category="inline-code"></block>，然後使用裝置號碼檢視<block ref="8ddc39f6c3fa20a177a45c37c2451919" prefix=" " category="inline-code"></block>：</block>
+  <block id="eaea2b38189d2221189c78f331ea0960" category="paragraph">提供了一個方便的指令碼，用於檢視或動態設定預讀，詳見 <block ref="edb70bd91039b7d0dabb722ab97705d6" category="inline-link-macro-rx"></block>。</block>
+  <block id="5dd57c2a315d3af44c2eb40eefc47111" category="section-title">網路組態</block>
+  <block id="05090df9b75fd62e9b8ef9109205f8a7" category="inline-link-macro">硬體：交換器</block>
+  <block id="a2713f1e6c4ed7347c36a84f73589a57" category="paragraph">以下部分涵蓋用戶端和儲存網路的一些通用連網指南。這些指南是根據我們進行的內部基準測試。有關 AFX 連網差異，請參閱 <block ref="812f168fd0e789e42bc1c1766dfccd86" category="inline-link-macro-rx"></block> 和 <block ref="2fee07da6587f4aea66f56bff3db83d5" category="inline-link-macro-rx"></block>。</block>
+  <block id="c3f5a4f819db48e7d17bc4a3094de169" category="section-title">儲存網路注意事項</block>
+  <block id="681d4a315977585c52b03b23fc2502fa" category="list-text">每個節點、每個 SVM 至少一個資料 IP 位址（每個節點越多越好）</block>
+  <block id="b5e41a4426e808c09884fc66c0c12ae8" category="list-text">每個節點、每個 SVM 最多可分配 16 個 IP 位址。</block>
+  <block id="50173ab29387149e795dff88a864dafb" category="list-text">所有資料介面均可路由至所有用戶端</block>
+  <block id="e4d77a44554985f77f43505af7fec244" category="list-text">使用 LACP 的每個節點綁定/組隊連接埠</block>
+  <block id="f5cf150f8aa95caf1f7a4a36c5294544" category="list-text">MTU 大小為 9000（端點對端點）</block>
+  <block id="ce666dc94bda746495b8b36176b68d52" category="list-text">使用 RDMA 時啟用優先權流程控制（PFC 優先權 3）</block>
+  <block id="6b0beef472a4e98ccc356b139a742818" category="list-text">DNS 輪詢/負載平衡設定為包含所有資料介面 IP 位址</block>
+  <block id="8aa61d2edb84cc9fe02fd951ac48714b" category="section-title">用戶端網路注意事項</block>
+  <block id="1d1c6d217cf3b287ea2c13229b1e371f" category="list-text">雙網卡綁定實作 RoCE（LACP）</block>
+  <block id="416cfacbff3a117f3ab3ec87077989fe" category="list-text">RX/TX 環形緩衝區設定為 8192</block>
+  <block id="a5e84fb8b8190202b3270c64e3496a70" category="list-text">每個網路卡配置 PFC 和 DSCP（使用 RDMA 時）</block>
+  <block id="0ef8ee337c535a29539b1ca5ed5e0042" category="list-text">使用 cma_roce_tos 設定 RoCE 流量類別（使用 RDMA 時）</block>
+  <block id="a604ab29abaa43e4991746a5fc3cc366" category="list-text">sunrpc.rdma_slot_table_entries 設定為 200</block>
+  <block id="2fd46baa6c8970ce51c49de7a941e8e0" category="section-title">ONTAP 的其他功能注意事項</block>
+  <block id="23bf40f3100c3cfd4d56f508d3d26884" category="paragraph">以下內容涵蓋了特定 ONTAP 功能組態修改，這些修改未涵蓋於 <block ref="5dc2e1ad2a883f0db54500769cfd226a" category="inline-xref-macro-rx"></block>、<block ref="f5fd2a9b3382d4184fe7ca04ef61be22" category="inline-xref-macro-rx"></block>、<block ref="a8ddbfd882ca51665186444a1d530986" category="inline-xref-macro-rx"></block>、<block ref="e0c0a42e8a03c89d49d7ac73af85b0aa" category="inline-xref-macro-rx"></block> 或 <block ref="fc1b185631f679e53d40e43d79cfb42d" category="inline-xref-macro-rx"></block> 中。</block>
+  <block id="170a02df89b5e5a117ddfedf354c7da4" category="section-title">停用儲存效率</block>
+  <block id="2c5d6ac0c1a46198480daa79e26ad517" category="paragraph">一般來說，儲存效率是生產工作負載的一大賣點，因為它們可以在各種工作負載下產生大量空間節約效益。然而，在效能基準測試中，儲存效率的價值較低（因為許多模擬工作負載要麼是不可壓縮的，要麼是零位元組工作負載，且始終進行重複資料刪除）。因此，我們建議在執行基準測試時停用所有儲存效率功能。</block>
+  <block id="65875c61e58078a0d0110c707950b5da" category="inline-link-macro">ONTAP 9.19.1 中的動態儲存效率</block>
+  <block id="4a2755c546e982dae4a309f25ba5bfa4" category="paragraph">有關 AFX 儲存效率的工作原理（包括全域重複資料刪除），請參閱 <block ref="f6a4e5f392dea02e52edfeb480e659cb" category="inline-link-macro-rx"></block>、<block ref="69ebea528f8de88780e77563f48d1438" category="inline-link-macro-rx"></block> 和 <block ref="7d95d1b44e971a8b31fa401962f874f9" category="inline-link-macro-rx"></block>。</block>
+  <block id="86a5638ccddbcd468185be2c3638f963" category="section-title">積極預讀</block>
+  <block id="af9f25116d000a48ae54c457b376b9b6" category="inline-link-macro">AFX SVM 管理中的跨檔案連續讀取</block>
+  <block id="c8757e14012ed4acc63f1cee91b0c093" category="paragraph">積極的預讀可以幫助提升特定工作負載（例如順序命名的檔案）的讀取效能。功能組態、注意事項和統計資料的相關資訊，請參閱 <block ref="29c35f24ee23fab4f98d13d58967e75a" category="inline-link-macro-rx"></block>。另請參閱 <block ref="186dbfaf66584f1d95001292c50733bd" category="inline-link-macro-rx"></block>。</block>
+  <block id="ff81e3c45a6b4b5ed961ad4c9c2ec690" category="cell"><block ref="ff81e3c45a6b4b5ed961ad4c9c2ec690" category="inline-link-macro-rx"></block></block>
+  <block id="9a26c5e63ee339ac29e0fae94b7ecb02" category="inline-link-macro">接下來：管理</block>
+  <block id="09dc531f35f47134129a1d79692f7f0d" category="cell"><block ref="09dc531f35f47134129a1d79692f7f0d" category="inline-link-macro-rx"></block></block>
+  <block id="0914c0ee63d323c745fa45db835613f4" category="paragraph">每個 NetApp AFX 儲存節點都提供特定的讀取和寫入處理量。隨著節點新增至叢集中，效能會線性增加，如 <block ref="2bc60cd5be2806e2bf4a0a14b5838c8a" category="inline-link-macro-rx"></block> 中所述。</block>
+  <block id="23b43ede4557b73e6fa354124a73ba91" category="inline-link-macro">AFX 2K</block>
+  <block id="4790820e71d568645bb04f281809cab5" category="paragraph">目前，節點類型為 <block ref="9cf787ca68118452f94875110bf7c0d8" category="inline-link-macro-rx"></block> 和 <block ref="a67c7f87cb090f0e7a2eb2e9e2ce04a7" category="inline-link-macro-rx"></block>，其讀寫處理量大致如下所示*。隨著 NetApp AFX 可用的硬體更新，這些限制可能會變更。</block>
+  <block id="7243f720b1a11790b4333cc5b0935200" category="list-text">使用 <block ref="451033c113f4cb2c96f7cf68d47e4bb7" category="inline-link-macro-rx"></block> 基準測試工具和連續讀取/寫入獲得的效能數據。</block>
+  <block id="0afd336df6e2f35fa9136b405a81257e" category="admonition">如下面的<block ref="b5e0ef07acc1f0284ac7885ebafed6e2" category="inline-link-macro-rx"></block>章節所示，使用多個用戶端讀取和寫入多個檔案可達到最佳效能。</block>
+  <block id="830183f90a7d21bc3023a5a607dc46b7" category="cell">約 17GB/s（提升 70%）</block>
+  <block id="913b914fe6c0068aa828d6146b79c0a5" category="paragraph">例如，在統一的 ONTAP 叢集中，每個節點都有自己的一組專用磁碟。因此，效能僅導向該節點所擁有的磁碟。由於一個節點只能存取一組磁碟，因此效能將僅限於它可以直接存取的磁碟。</block>
+  <block id="82f771d84cb467c143d321be8dbc7f21" category="paragraph">NetApp AFX 將所有可用磁碟匯集到一個名為儲存可用區 （SAZ） 的單一容量資源池。因此，所有節點都可以運用所有可用磁碟進行讀寫操作。由於磁碟和節點是解耦的，與統一的 ONTAP 架構相比，您不一定需要使用那麼多機櫃即可獲得相同（或更高）的處理量效能。NetApp AFX 的解耦架構最大限度地發揮了磁碟櫃的效能潛力。</block>
+  <block id="7f810f955c236680f67b2a1021577415" category="paragraph">從 ONTAP 9.19.1 開始，節點：機櫃飽和比率至少為 4:1，8:3 也是可能的。</block>
+  <block id="eb50d5ff1b733e0ea8ecd75f8f287469" category="list-text">2 個機櫃</block>
+  <block id="55e02fe01c041de2df692e61c98d3d4c" category="list-text">ONTAP 9.19.1GA</block>
+  <block id="633e06a968c3d6bf3e6bcdb2e4e5e0d8" category="admonition">請參閱 <block ref="3c132a78f1e5f9f536e14cc5956fa8f1" category="inline-link-macro-rx"></block> 相關章節，以了解如何重現這些結果。</block>
+  <block id="4c67ea22e665230775a0cac794609c81" category="inline-link-macro">RFC-3530</block>
+  <block id="5ca4a464648228916bed3e4290c12670" category="inline-link-macro">RFC-7530</block>
+  <block id="2aea8188aa09e32f688c60c4c200cf7b" category="paragraph">NFSv3 的安全性也存在一些不足之處。該協定需要開啟多個防火牆連接埠才能正常運作，且數位 ID 以明文形式有線傳輸。此外，NFS 缺乏強大的存取控制清單 （ACL） 支援，也不包含原生檔案和資料夾稽核功能。由於這些限制，NFSv4 於 2003 年透過 <block ref="137ffaad1617b26215dd671ba64c17d0" category="inline-link-macro-rx"></block>（於 2015 年由 <block ref="d04016ec9c74ac358e156447074d1dc9" category="inline-link-macro-rx"></block> 取代）建立。</block>
+  <block id="0f9e52013f33fae4ae5e41b82a7a5bae" category="paragraph">*NetApp AFX – NetApp AFX 中的 NFSv4.1 中繼資料 IO 效能*</block>
+  <block id="c85979dc9df0293013c870a3a6c3d3ea" category="inline-link-macro">上一頁：根 Volume 變更</block>
+  <block id="912d5aab8dcb1cd097adc139fa840209" category="cell"><block ref="912d5aab8dcb1cd097adc139fa840209" category="inline-link-macro-rx"></block></block>
+  <block id="84ea3e0adf726b3a2dc9267da60f6105" category="inline-link-macro">接下來：效能基準測試技巧</block>
+  <block id="50647fb6d245be71630049c337547d50" category="cell"><block ref="50647fb6d245be71630049c337547d50" category="inline-link-macro-rx"></block></block>
+  <block id="67e3534cd0feec346d52509c43cc0189" category="inline-link-macro">AFX 文件</block>
+  <block id="aac324dd49176e0372c0960e9c0fc007" category="list-text"><block ref="aac324dd49176e0372c0960e9c0fc007" category="inline-link-macro-rx"></block></block>
+  <block id="b46cafb5f9677057bdc8d99d3dac0f2d" category="inline-link-macro">ONTAP 9.19.1 為 AFX 儲存設備系統新增了哪些功能？</block>
+  <block id="3cf6740992b2105d85fd83c427cf30e4" category="list-text"><block ref="3cf6740992b2105d85fd83c427cf30e4" category="inline-link-macro-rx"></block></block>
+  <block id="d6dc68843165a684e987738e53b08c30" category="cell"><block ref="d6dc68843165a684e987738e53b08c30" category="inline-link-macro-rx"></block></block>
+  <block id="d24862edb68c4a3a6f1a12cc75785b18" category="inline-link-macro">ONTAP 9.19.1 AFX 版本說明</block>
+  <block id="fc76d3c0e9382c04e62e5d88900c3a49" category="paragraph">本部分涵蓋 NetApp AFX 的最新更新，並將隨每個新版本而更新。請定期查看此處以獲取新資訊，同時也請查看<block ref="ee1f402c892dac49546e6fbc1d5fbce2" category="inline-link-macro-rx"></block>。</block>
+  <block id="9aa1f45719bf858ed30c6b1c92007d1d" category="paragraph">ONTAP 9.19.1GA（截至 2026 年 8 月）</block>
+  <block id="c49dda61c923792fa4c954cb9d9ae5e2" category="inline-link-macro">AFX SVM 管理</block>
+  <block id="6cf1aa323e659d9411cbcb428fda6a9e" category="list-text"><block ref="a826e33851b9cd0c3eb6a6e5c38e66aa" category="inline-link-macro-rx"></block>（另見 <block ref="6817b90667db38df65a7c04862346459" category="inline-link-macro-rx"></block>）</block>
+  <block id="0d99023b8d28443eecf4e91f63c871e2" category="list-text"><block ref="0d99023b8d28443eecf4e91f63c871e2" category="inline-link-macro-rx"></block></block>
+  <block id="6cdccfce9fefe85e6a9e9af76d4741ca" category="list-text"><block ref="bf8af62a71ca6281d6ca195ace50f233" category="inline-link-macro-rx"></block>（跨檔案順序讀取；另見 <block ref="19edcd61cb92eab338aecb0e5018dfb1" category="inline-link-macro-rx"></block>）</block>
+  <block id="b33131f5b5ac21f0d5c9588497fc6515" category="list-text"><block ref="121852755e21d112047104d291a1bf20" category="inline-link-macro-rx"></block>（另見 <block ref="8057bcb5fa3400871df7c7ff4e1295c3" category="inline-link-macro-rx"></block>）</block>
+  <block id="28667deb0757cf6329fb42c1d5b62b74" category="list-text"><block ref="28667deb0757cf6329fb42c1d5b62b74" category="inline-link-macro-rx"></block></block>
+  <block id="0699502353a45b9f902c4dab6106e095" category="list-text"><block ref="0699502353a45b9f902c4dab6106e095" category="inline-link-macro-rx"></block></block>
+  <block id="e988e5fd54b0b79f1d8fa9ce06ad58d5" category="cell">版本 1.1</block>
+  <block id="63cbcbd8d90445f614dcfd8f2e998868" category="cell">2026年8月</block>
+  <block id="9c184e36c045df25198fbfca88d490f6" category="cell">本技術報告已更新至 ONTAP 9.19.1GA 版本。內容涵蓋新的 AFX 功能、32 節點和 32PB 規模、AFX 1K 和 AFX 2K 的效能和硬體、叢集交換器和機櫃規模調整、更新的平台限制、效能基準測試技巧頁面以及產品文件的其他連結。</block>
+  <block id="b12ef7cbb51744b90c455c58d40b1d46" category="cell"><block ref="b12ef7cbb51744b90c455c58d40b1d46" category="inline-link-macro-rx"></block></block>
+  <block id="ad54e6f7d665098e981d7e41732ce4c2" category="inline-link-macro">下一篇：架構</block>
+  <block id="c6c7c72c67d9841863b0652c4dedcecb" category="cell"><block ref="c6c7c72c67d9841863b0652c4dedcecb" category="inline-link-macro-rx"></block></block>
 </blocks>

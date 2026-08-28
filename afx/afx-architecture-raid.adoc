@@ -1,0 +1,69 @@
+---
+sidebar: sidebar 
+permalink: afx/afx-architecture-raid.html 
+keywords: netapp afx, raid-tec, raid groups, parity, disk rebuild 
+summary: 了解 NetApp AFX 中較大的 RAID 群組如何提高可用容量並加快磁碟重新建置速度。 
+---
+= RAID 變更
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/afx/
+
+
+[role="lead"]
+NetApp AFX 使用更大的 RAID-TEC 群組，減少比例同位元檢查磁碟機的數量，並將磁碟重新建置工作分配到整個叢集中。
+
+
+
+[[larger-raid-groups-fewer-parity-drives]]
+== 更大的 RAID 群組、更少的同位磁碟機
+
+ONTAP 透過 RAID 群組（特別是 RAID-TEC）為磁碟提供資料保護和效能的雙重保障。RAID-TEC 可在磁碟發生故障時提供三重同位元檢查保護。即使 RAID 群組中同時發生三個磁碟機故障，RAID-TEC 也能確保資料安全。在統一的 ONTAP 中，RAID 群組最多可容納 28 個磁碟，其中 3 個磁碟機用於同位元檢查，1 個磁碟機用作備用磁碟機。因此，28 個磁碟機中有 24 個用於資料操作 / RAID 條帶化。
+
+*統一的 ONTAP RAID 群組*
+
+image:image14.png["影像"]
+
+NetApp AFX 仍然採用 RAID-TEC 技術，但將 RAID 群組的大小增加到 96 個硬碟，而只需要 3 個奇偶校驗盤和 1 個備用碟。更大的 RAID 群組可帶來更高的整體效能，同時，由於 SSD 的低故障率、在更大數量的硬碟上更均勻地分配操作，以及 NetApp AFX 中從奇偶校驗盤重建資料碟的改進，硬碟故障帶來的風險也降至最低。
+
+*NetApp AFX 儲存可用區 RAID 群組*
+
+image:image15.png["影像"]
+
+下表近似表示統一 ONTAP 和 NetApp AFX 系統中 84 個磁碟在不同磁碟機容量下可用的原始容量。
+
+*大致原始容量比較，84 個硬碟 – Unified ONTAP 和 NetApp AFX*
+
+|===
+| 磁碟機大小 | 近似原始容量（統一） | 近似原始容量（AFX） 
+
+
+| 15.3 TB | ~1101.6TB | 約 1224TB (+122.4TB) 
+
+
+| 30.6 TB | 約 2203.2TB | 約 2448TB（+244.7TB） 
+
+
+| 60.1 TB | 約 4327.2TB | 約 4808TB（+480.8TB） 
+|===
+此外，ONTAP 可自動管理 RAID 群組，無需管理員幹預，即可將新新增的磁碟新增至現有或新建的 RAID 群組。ONTAP 還可跨節點管理磁碟區遷移，而無需複製資料。
+
+
+
+[[faster-disk-failure-rebuild-times]]
+== 更快的磁碟故障重建時間
+
+在統一的 ONTAP 中，每個節點擁有儲存堆疊中的一部分磁碟。這意味著該節點只能寫入這些磁碟，而且在磁碟發生故障時，磁碟重建也僅由單一節點處理。
+
+NetApp AFX 無需磁碟所有權。因此，如有需要，所有磁碟機都可以從單一節點寫入資料。這也意味著，當需要根據同位元檢查資訊重建磁碟機時，叢集中的所有節點都會參與，因此磁碟機重建速度比單一節點單獨執行要快得多。
+
+*NetApp AFX 中的磁碟重建*
+
+image:image16.png["影像"]
+
+[cols="1,1"]
+|===
+
+
+| link:afx-architecture-independent-scale.html["前一個：獨立線性尺度"] | link:afx-architecture-storage-efficiency.html["接下來：儲存效率"] 
+|===
