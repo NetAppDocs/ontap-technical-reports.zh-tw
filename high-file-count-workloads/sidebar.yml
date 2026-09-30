@@ -1,0 +1,36 @@
+---
+section: high-file-count-workloads
+title: 高檔案數 NAS 工作負載
+entries:
+- title: 總覽
+  url: "/high-file-count-workloads/high-file-count-workloads-01-overview.html"
+- title: Maxdir-size 和大型目錄
+  entries:
+  - title: 總覽
+    url: "/high-file-count-workloads/high-file-count-workloads-02-maxdirsize.html"
+  - title: 檢視 maxdir-size 和目前目錄大小
+    url: "/high-file-count-workloads/high-file-count-workloads-03-maxdirsize-view.html"
+  - title: ONTAP 中的目錄索引
+    url: "/high-file-count-workloads/high-file-count-workloads-04-maxdirsize-indexing.html"
+  - title: maxdir-size 的影響
+    url: "/high-file-count-workloads/high-file-count-workloads-05-maxdirsize-impact.html"
+  - title: Volume 考量
+    url: "/high-file-count-workloads/high-file-count-workloads-06-maxdirsize-volume-types.html"
+  - title: 功能、EMS 和監控
+    url: "/high-file-count-workloads/high-file-count-workloads-07-maxdirsize-features-ems.html"
+- title: 高檔案數量與 inode 容量
+  entries:
+  - title: 總覽
+    url: "/high-file-count-workloads/high-file-count-workloads-08-maxfiles-high-file-counts.html"
+  - title: inode 類型
+    url: "/high-file-count-workloads/high-file-count-workloads-09-maxfiles.html"
+  - title: Maxfiles 和 ONTAP inode 資訊
+    url: "/high-file-count-workloads/high-file-count-workloads-10-maxfiles-limits.html"
+  - title: 控制 maxfiles
+    url: "/high-file-count-workloads/high-file-count-workloads-11-maxfiles-controlling.html"
+  - title: 監控、EMS 和增強功能
+    url: "/high-file-count-workloads/high-file-count-workloads-12-maxfiles-monitoring.html"
+- title: 規劃方法
+  url: "/high-file-count-workloads/high-file-count-workloads-13-planning.html"
+- title: 最佳實務
+  url: "/high-file-count-workloads/high-file-count-workloads-14-best-practices.html"

@@ -1,0 +1,170 @@
+---
+sidebar: sidebar 
+permalink: high-file-count-workloads/high-file-count-workloads-09-maxfiles.html 
+keywords: ONTAP, NAS, maxfiles, files, inode, files-used, public inode, private inode 
+summary: 了解 ONTAP inode、公有和私有 inode 類型、ACL inode 和命名串流。 
+---
+= ONTAP inode 類型
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/high-file-count-workloads/
+
+
+[role="lead"]
+ONTAP 使用公用 inode 來表示存在於 FlexVol 和 FlexGroup Volume 中的檔案系統物件。每個 Volume 都有一個定義的高水位限制（請參閱 link:high-file-count-workloads-10-maxfiles-limits.html["Maxfiles 和 ONTAP inode 資訊"]），而公用 inode 會計入檔案系統中的該限制。
+
+
+
+[[what-is-an-inode]]
+== 什麼是 inode？
+
+通常來說，inode 是物件的檔案系統記錄。它儲存身分和中繼資料，例如類型、所有權、時間戳記和權限，並指向物件的資料。物件的名稱儲存在目錄中，而不是 inode 本身。
+
+在 ONTAP 中，WAFL 將這些記錄儲存在每個 FlexVol 或 FlexGroup 成員上隱藏的 Volume 層級 inode 檔案中。公用 inode 會計入 Volume `files` 設定（通常稱為 maxfiles）。建立公用物件會增加公用 inode 的使用量；私有 inode 則不會。inode 檔案的容量與增長說明於 link:high-file-count-workloads-08-maxfiles-high-file-counts.html#capacity-impact["容量影響"] 中。
+
+下圖顯示公共 inode 檔案與 `files-used`、 `inodefile-public-capacity`、 `files`上限，以及 Volume 中所使用的容量之間的關係。
+
+[link=../media/high-file-count-workloads/ontap-inode-file.png]
+image::ontap-inode-file.png[ONTAP Volume inode 檔案示意圖，顯示嵌套在 inodefile-public-capacity 中的 files-used,400,and files-maximum-possible]
+
+
+
+[[types-of-inodes-in-ontap]]
+== ONTAP 中的 inode 類型
+
+inode 的 *類型* 描述了它所代表的物件類型。ONTAP 也將每個 inode 放置在 *公用* 或 *私有* inode 空間。公用 inode 會計入 maxfiles；私有 inode 則不會。目錄索引 inode 可以位於任一空間，取決於 Volume 組態。
+
+
+
+[[public-inodes]]
+=== 公用 inode
+
+公用 inode 是從 Volume 的公用 inode 檔案中分配，並計入 `files`和 `files-used`。它們包括用戶端可見的物件和不顯示為目錄項目的公用中繼資料物件。
+
+下表顯示在 ONTAP 中找到的公用 inode 清單及其附加資訊。連結:high-file-count-workloads-02-maxdirsize.html[`maxdir-size`] 欄位指出建立該物件是否會為父目錄新增目錄項目，進而增加該父目錄檔案的大小。
+
+|===
+| 類型 | 它代表什麼 | 同時計入 link:high-file-count-workloads-02-maxdirsize.html[`maxdir-size`] 
+
+
+| 普通檔案 | 預設檔案內容和屬性 | *是的。*建立檔案會在父目錄中新增一個名稱。 
+
+
+| 目錄 | 目錄名稱和目錄本身的 inode | *是的。*建立目錄會在父中新增一個名稱。新目錄也有自己的目錄檔案，該檔案會 `maxdir-size`獨立進行限制。 
+
+
+| 符號連結 | 路徑名稱指標，而不是檔案資料 | *是的。*^{asterisk}^ 建立符號連結會在父目錄中新增名稱。 
+
+
+| 特殊檔案 | UNIX FIFO、socket 或裝置節點 | *是的。*建立特殊檔案會在父目錄中新增一個名稱。 
+
+
+| 命名串流 | 除了檔案預設內容之外的額外資料（NTFS 備用資料流） | *否。*資料流不是父使用者目錄中的名稱。 
+
+
+| 串流目錄 | 隱藏的 Container，用於保存檔案的命名串流名稱 | *否。*這不是使用者可見的目錄項目。 
+
+
+| ACL（xinode） | NTFS 安全性描述符或 NFSv4 ACL 儲存為存取控制項目（ACE）資料 | *否。*ACL 不是目錄項目。 
+
+
+| 目錄索引（公開時）^{asterisk}{asterisk}^ | Companion B+tree 用於在大型目錄中尋找名稱 | *否。*索引不是目錄項目。 
+|===
+
+NOTE: ^*^ 符號連結擁有自己的公共 inode 和目錄項目。硬連結則不同：它是現有常規檔案 inode 的另一個目錄名，而不是一種分隔的 inode 類型。建立硬連結會新增一個目錄項目並增加父目錄檔案的大小，但不會分配另一個公共 inode。
+
+
+NOTE: ^**^ 目錄索引 inode 預設為私有。它們可以如link:high-file-count-workloads-04-maxdirsize-indexing.html#about-private-and-public-index-inodes["關於私有和公共索引 inode"]所述移至公共 inode 空間。
+
+
+
+==== ACL inode
+
+當檔案或目錄具有 NTFS 安全性描述符或 NFSv4 ACL 時， ONTAP 會將該 ACL 儲存為分隔的 ACL inode （也稱為擴充 inode 或 xinode）。ACL inode 包含 ACE 。ONTAP 從公用 inode 空間分配它，因此它會計入 `files`和 `files-used`。檔案或目錄 inode 參照其 ACL inode 。
+
+
+NOTE: UNIX 模式位元儲存在檔案或目錄本身的 inode 中。它們不會分配額外的公共 inode。
+
+ACL inode 的使用並不總是與檔案或目錄一一對應：
+
+* 當 ONTAP 的 ACL 共享最佳化機制合併具有相同儲存安全性描述符的檔案或目錄時，它們可以共享一個 ACL inode。繼承通常會產生相同的描述符，這些描述符可以用於共享。
+* 當存取控制項目（ACE）、擁有者或群組資訊、控制標誌或繼承結果不同時，可能無法進行共享。即使是相同的描述元，也不能保證會被合併，例如，當它們在識別出共享之前於分隔的作業中建立或更新時。
+* 當請求不提供自己的 ACE 且父 ACL 具有繼承屬性時，建立操作可以繼承父 ACL。
+* NTFS 安全樣式 Volume 預設套用 NTFS ACL。新檔案和目錄在儲存描述符相同時可以共享一個 ACL inode，但管理員不應假定所有預設或繼承的 ACL 都共享一個 inode。
+* 僅保留模式位元的 UNIX 安全樣式物件在儲存 NFSv4 ACL 之前不會使用 ACL inode。混合安全樣式可以同時包含僅受模式位元保護的物件和受 ACL 保護的物件。
+
+
+
+
+==== 命名串流
+
+命名串流是附加到檔案的額外資料，位於使用者通常開啟的內容之外。在 ONTAP 中，它是 NTFS 替代資料流（ADS）的 WAFL 表示法。檔案的預設未命名資料位於基本檔案 inode 中。每個額外的命名串流都是一個分隔的公用 inode，並計入 `files` 和 `files-used`。
+
+命名串流會隨檔案一起持久存在。它們並非 ONTAP 僅在開啟、複本或儲存期間使用的暫時暫存區。串流會一直保持分配狀態，直到該串流或基礎檔案被刪除為止。應用程式可以建立串流並在之後將其移除，但 ONTAP 不會自行使命名串流過期。
+
+需要附註的幾點：
+
+* SMB 工作負載會建立和使用具名資料流。Windows 將它們定址為 `filename:stream_name`，例如 `report.docx:Zone.Identifier`。 `Zone.Identifier` 是 Windows 網路標記中繼資料。從網際網路下載檔案時，Windows 或瀏覽器會記錄區域 ID（通常是網際網路區域），以便 Explorer、SmartScreen 和 Office 將該檔案視為不受信任，直到使用者解除封鎖為止。該資料流會一直保留在檔案上，直到被移除為止。其他常見來源包括備份和安全性應用程式，以及將附屬資料儲存為 ADS 的應用程式。Microsoft Office `~$` 鎖定檔案和暫存檔案是一般的檔案和目錄項目，而不是具名資料流。由 OneDrive 同步的檔案不一定會收到 `Zone.Identifier`資料流；行為取決於用戶端和傳輸路徑。
+* 存取 SMB 的 macOS 用戶端可以使用命名流來取得 Finder 中繼資料和資源分支，通常表示為 `AFP_AfpInfo`和 `AFP_Resource`。
+* 一般清單會隱藏命名串流。Windows 檔案總管、macOS Finder `dir` 和 NFS `ls` / `stat` 顯示預設檔案，因此 `files-used`可能會超出可見數量。使用 `dir /r`或 PowerShell `Get-Item <file> -Stream *` 從 Windows SMB 用戶端列舉串流。ONTAP 不支援 NFSv4 命名屬性，因此 NFS 用戶端不會將 SMB 串流視為額外的名稱，但 inode 仍然存在。
+* 由 `vi`（例如 `.file.swp`或 `file~`）建立的隱藏檔案、交換檔案或備份檔案是一般的檔案與目錄項目，而非命名串流。
+* 從 ONTAP 9.12.1 開始支援的 NFSv4.2 擴充屬性（xattrs）是一項不同的功能。它們不是 ACL inode，不應計入 ACL xinode。
+
+
+
+
+==== 對 NDMP 備份和還原的影響
+
+在 NDMP 轉儲和還原處理過程中，ONTAP 會分別識別物件類別，例如一般檔案、目錄、NT 串流、串流目錄和 ACL inode，以便對每個物件的資料和中繼資料進行序列化、在轉儲統計資料中報告並正確重建。此分類不會建立分隔的 maxfiles 限制或分隔的 `volume show`計數器。 `files-used` 仍是合併的公用 inode 總數。
+
+NDMP 轉儲會遍歷命名空間並逐一序列化這些物件。還原會以相同的方式重建它們。因此，即使 Volume 的資料容量不大或可見檔案數量看起來很少，較高的公共 inode 數量也會延長轉儲和還原的時間。即使 Explorer 、 Finder  `dir` 或  `ls` 未顯示它們，命名串流和 ACL inode 也會被轉儲和還原，因此轉儲統計資料可能會報告比簡單目錄清單顯示更多的串流和 ACL 物件。
+
+這項工作通常受限於中繼資料而非吞吐量。建立、尋找和重建數百萬個 inode、ACL 和串流會消耗 CPU、記憶體容量和儲存設備 I/O，而每個物件的資料相對較少。小檔案、密集使用 ACL 以及許多命名串流都會增加這種例行成本。大型扁平目錄會在傾印期間增加列舉成本，而還原包含大量檔案的 Volume 也可能需要在物件存在後花費時間重建目錄索引。請以包含串流和 ACL 的代表性物件數量來測量傾印和還原持續時間，而不是僅根據資料大小進行估算。
+
+
+
+[[private-inodes]]
+=== 私有 inode
+
+私有 inode 是 ONTAP 內部的中繼資料記錄。它們位於分隔的私有 inode 空間中，不計入 `files`或 `files-used`，也不能用作額外的用戶端檔案。
+
+下表顯示常見的私有 inode 類型。
+
+|===
+| 類型 | 它代表什麼 | 同時計入 link:high-file-count-workloads-02-maxdirsize.html[`maxdir-size`] 
+
+
+| 目錄索引（預設）^{asterisk}^ | Companion B+tree 用於在大型目錄中尋找名稱 | *否。* 
+
+
+| 私有中繼檔案 | ONTAP 所使用的隱藏 WAFL 中繼資料 | *否。* 
+
+
+| 殭屍 | 未連結的物件會保留直到引用或非同步刪除完成 | *否。* 
+|===
+
+NOTE: ^*^ 目錄索引預設為私有。公用索引傳輸的相關說明請參閱link:high-file-count-workloads-04-maxdirsize-indexing.html#about-private-and-public-index-inodes["關於私有和公共索引 inode"]。
+
+
+NOTE: 大多數情況下，您無需監控私有 inode 的使用情況，因為私有 inode 不計入 maxfiles，除非 NetApp 支援指示您這樣做。
+
+
+
+==== 殭屍 inodes
+
+未連結的檔案並非總是能立即釋放。ONTAP 可以將其暫時保留為殭屍檔案，直到參照或非同步工作完成。因此，大型非同步刪除作業可能會在清理過程中增加私有 inode 的使用量。再次強調，私有 inode 不計入 Volume 中允許的總數 `files`。
+
+[cols="<,>"]
+|===
+
+
+| link:high-file-count-workloads-08-maxfiles-high-file-counts.html["← 上一頁：檔案數量多和 inode 容量"] | link:high-file-count-workloads-10-maxfiles-limits.html["接下來：Maxfiles 和 ONTAP inode 資訊 →"] 
+|===
+
+
+[[related-information]]
+== 相關資訊
+
+* link:https://docs.netapp.com/us-en/ontap/nfs-admin/security-styles-their-effects-concept.html["ONTAP NAS 安全樣式"^]
+* link:https://docs.netapp.com/us-en/ontap/nas-audit/audit-alternate-ntfs-data-streams-concept.html["稽核替代 NTFS 資料流"^]
+

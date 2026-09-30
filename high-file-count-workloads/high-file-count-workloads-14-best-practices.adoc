@@ -1,0 +1,340 @@
+---
+sidebar: sidebar 
+permalink: high-file-count-workloads/high-file-count-workloads-14-best-practices.html 
+keywords: ONTAP, NAS, high file count, best practices, maxfiles, maxdir-size, maxdirsize, FlexGroup, NFS, SMB 
+summary: 在 ONTAP 上規劃、部署、監控和運行高檔案數 NAS 工作負載。 
+---
+= 高檔案數 NAS 工作負載最佳實務
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/high-file-count-workloads/
+
+
+[role="lead"]
+高檔案數工作負載設計必須考量公用 inode 總數、最大目錄中的項目數、中繼資料操作速率和生命週期任務。如 link:high-file-count-workloads-13-planning.html["規劃方法"] 中所述收集這些輸入，然後使用這些建議。請勿將檔案數視為單一限制，或僅依賴資料容量。
+
+
+
+[[profile-the-namespace-before-sizing-storage]]
+== 在決定儲存設備規模之前，先對命名空間進行分析
+
+收集或估算：
+
+* 目前和峰值總檔案數、目錄數、串流數和 ACL 物件數
+* 年度或專案階段成長
+* 每秒建立和刪除的峰值檔案數
+* 一個目錄中的峰值條目
+* 檔案名稱長度經銷和字元集
+* 使用 SMB DOS 8.3 或替代 NFS 名稱
+* 讀取、寫入、查閱、屬性、列舉、重新命名與刪除速率
+* Snapshot 排程和保留
+* 備份、複寫、移轉、分析和安全性掃描頻率
+
+
+使用最高水位線值而非每日均值。建置管道、分析作業、移轉和臨時暫存工作流程通常會在短時間內建立最大的命名空間，然後將其清理，但 inode 和目錄檔案在清理後仍可能保留最高水位線標記。
+
+
+
+[[size-maxfiles-and-maxdir-size-independently]]
+== 獨立調整 maxfiles 和 maxdir-size 的大小
+
+維護兩個分隔的預測：
+
+. *Volume inode 預測：*預期在 FlexVol 或每個 FlexGroup 組成部分中的所有公用檔案系統物件。
+. *最大目錄預測：* 包含最多或最大名稱之目錄的磁碟上目錄檔案位元組數。
+
+
+*請勿從一個值推導出另一個值。*分片命名空間（檔案分割在多個目錄中）可以在不建立大型目錄的情況下耗盡 `maxfiles`。單一扁平目錄可能會達到 `maxdir-size`限制，而 Volume 仍有數百萬個可用 inode。
+
+*在 NTFS 或大量使用 ACL 的命名空間上，請勿僅根據可見的檔案數量來估算規模 `maxfiles`。*請將目錄、ACL inode、命名串流及其他公用物件納入您的預估中。在大量使用 ACL 的情況下，請使用高達預估檔案與目錄數量的兩倍作為 `files`的保守初始估算值，然後使用具代表性的資料進行驗證，因為 ACL 共用可以減少實際的使用量。
+
+* 對於高檔案數量的 Volume ，當 Volume 大小與傳輸協定限制允許時，請將 `files`設為目前的 `files-maximum-possible`。該上限不會預先配置空間；它可讓 `files-used`成長至允許的範圍，而不需要重複調高。
+* 僅在證實有單一目錄需求時才提高 `maxdir-size`，通常以約 2% 的幅度遞增。請參閱 link:high-file-count-workloads-11-maxfiles-controlling.html["控制 maxfiles"] 與 link:high-file-count-workloads-05-maxdirsize-impact.html#what-happens-when-maxdir-size-is-exceeded["當超出 maxdir-size 時會發生什麼事？"]。
+
+
+請參閱 link:high-file-count-workloads-09-maxfiles.html["ONTAP inode 類型"] 和 link:high-file-count-workloads-02-maxdirsize.html["Maxdir-size 和大型 ONTAP 目錄"]。
+
+
+
+[[prefer-a-sharded-directory-structure]]
+== 建議採用分片目錄結構
+
+常見的命名空間佈局有三種。
+
+* *扁平化：*一個或幾個目錄包含多個位於同一層級的檔案。
+* *寬：* 許多頂層目錄將檔案分割。
+* *深度：* 較少的頂層目錄會商機多個層級的子目錄。
+
+
+[link=../media/high-file-count-workloads/namespace-layouts-flat-wide-deep.png]
+image::namespace-layouts-flat-wide-deep.png[比較扁平命名空間與單一目錄中多個檔案的圖表,700,and a deep namespace with fewer top-level directories and multiple subdirectory levels]
+
+如果應用程式可以使用寬而深的層級結構，則應盡可能避免將數百萬個名稱放在一個扁平的目錄層級。扁平配置會集中記憶體容量與 CPU 工作，並可能增加大量 `GETATTR`、 `READDIR`、尋找與刪除作業期間的延遲。在 FlexGroup Volume 中，大型扁平目錄也可能產生更多遠端項目，導致其目錄檔案比在 FlexVol 中具有相同可見名稱數量的目錄更快接近 `maxdir-size`。
+
+FlexGroup Volume 通常最適合許多較小的目錄，而不是單一大型扁平目錄。小於約 2 MiB 的目錄會維持在簡單掃描路徑上。從 ONTAP 9.2 開始，較大的目錄會自動建立索引，這有助於目標尋找。建立索引並不會使非常大的目錄等同於分片階層：列舉、萬用字元掃描和單一目錄建立序列化仍然適用。ONTAP 可以將 FlexGroup 子目錄放置在遠端，同時偏好檔案與父目錄的局部性，這可降低這些檔案的遠端延遲。
+
+將檔案分佈在層級結構中意味著使用更多的目錄，每個目錄中的檔案數量更少。
+
+常見的分片鍵包括：
+
+* 雜湊前綴
+* 客戶、專案或租戶
+* 日期或時間範圍
+* 資料集、作業或工作流程階段
+* 物件類型或生命週期狀態
+
+
+選擇足夠的分片以確保目錄操作可管理的，但不要建立過多近乎空的目錄，以免目錄數量過多。確定性方案使檔案放置可預測，並允許用戶端在無需掃描每個分片的情況下找到檔案。
+
+廣泛和深入的版面配置都可以運作。請將完整路徑長度保持在 NAS 傳輸協定、用戶端作業系統和應用程式的限制範圍內。如果無法避免平面版面配置，請依照link:high-file-count-workloads-03-maxdirsize-view.html["檢視 maxdir-size 和目前目錄大小"]所述，監控最大目錄檔案的目前大小和 `maxdir-size`空餘空間，並驗證是否適合進行受控增加。
+
+
+
+[[select-the-appropriate-volume-architecture]]
+== 選擇合適的 Volume 架構
+
+
+
+[[flexvol]]
+=== FlexVol®
+
+當單一 Volume 的容量（小於 1 TB）、inode 規模（小於 20 億）和效能範圍能夠滿足工作負載（較低的擷取、較少的用戶端）時，請使用 FlexVol。對於可能需要在叢集中建立許多 Volume / 檔案系統，進而可能面臨達到總 Volume 數量風險的工作負載（例如使用 Kubernetes PVC），或是 VMware 資料存放區，也應考慮使用 FlexVol Volume。
+
+
+
+[[flexgroup]]
+=== FlexGroup
+
+當工作負載能夠受益於更大的總容量（>300TB）、檔案計數規模（>20億）以及跨組成部分和節點的並行性時，請使用 FlexGroup。
+
+規劃：
+
+* 每個成員的 inode 限制和經銷
+* NFS 64 位元檔案識別碼，當 FlexGroup 檔案數量可能超過約 20 億個時（請參閱 link:high-file-count-workloads-10-maxfiles-limits.html#nfs-64-bit-file-identifiers-and-flexgroup-file-counts["NFS 64 位元檔案識別碼和 FlexGroup 檔案計數"]）
+* 彙總和組成部分容量平衡（附註：對於 NetApp AFX，此為非必要）
+* 工作負載放置行為
+* FlexGroup 特定目錄條目表示
+* 資料保護相容性
+* 檔案分發時的應用程式行為
+
+
+一個 FlexGroup 不會自動並行化單一邏輯目錄上的操作。跨目錄分片對於效能平衡仍然十分重要。
+
+
+
+[[leave-operating-margin]]
+== 留出營業利潤
+
+請勿計畫在 *已使用* inode 或最大目錄檔案達到 100% 的情況下進行穩定狀態運作。保留利潤以因應意外成長、暫存物件、Snapshot 快照技術保留的中繼資料、ACL 與串流、移轉重疊、備份工作、FlexGroup 放置不平衡，以及會變更檔案名稱的軟體變更。
+
+將 `files`設定為目前最大值是一個上限，而不是執行直到最後一個 inode 消失的權限。應在遠低於該上限之前對 `files-used`發出警報。對於 `maxdir-size`，在 link:high-file-count-workloads-05-maxdirsize-impact.html#what-happens-when-maxdir-size-is-exceeded["當超出 maxdir-size 時會發生什麼事？"] 中大約 2% 的增加指導原則是指如何提高上限，而不是通用的運作利潤。
+
+
+
+[[account-for-metadata-capacity]]
+== 考慮中繼資料容量
+
+分別對 inode 檔案、目錄檔案、索引、Snapshot 快照技術和彙總中繼資料進行預算。每個已分配的公共 inode 使用 288 位元組作為 inode 檔案的基本估算值；請參閱 link:high-file-count-workloads-08-maxfiles-high-file-counts.html#capacity-impact["容量影響"]。提高 `files`並不會立即分配該空間。將峰值已分配的 inode 檔案容量視為持久容量。
+
+使用 `volume show-space`來檢查 inode 和中繼資料容量，而不是將每個 CLI 計數器都當作位元組值來轉換。
+
+
+
+[[use-realistic-filename-scenarios]]
+== 使用實際的檔案名稱場景
+
+至少測試：
+
+* 簡短的純 ASCII 名稱
+* 工作負載的檔案名稱長度中位數和高百分位數
+* 使用非 ASCII 字元或補充 Unicode 字元時
+* 產生 DOS 8.3 別名的 SMB 工作負載
+* 可能需要備用名稱的多協定存取
+* 代表生產的 FlexGroup 配置
+
+
+路徑長度和基本名稱長度不可互換。跨越多個目錄的長路徑會影響協定限制和 inode 計數，而每個目錄僅儲存其立即組成部分。
+
+
+
+[[test-metadata-operations-not-only-throughput]]
+== 測試中繼資料操作，而不僅僅是處理量
+
+順序頻寬測試無法預測高檔案數量下的效能表現。包括：
+
+* 建立檔案和目錄
+* 現有名稱與遺失名稱查詢
+* `stat`或屬性操作
+* 開啟和結案
+* 在目錄內和目錄間重新命名
+* 取消連結和遞迴刪除
+* 完整和部分目錄枚舉
+* 萬用字元搜尋
+* 冷快取與暖快取執行
+* 適用時可混合使用 NFS 和 SMB 存取
+
+
+測量延遲分佈、CPU、快取行為、網路負載和完成時間。如果 Snapshot 快照技術、複寫、分析、備份和安全性掃描等作業在生產環境中同時存在，則在這些作業期間重複測試。
+
+
+
+[[validate-lifecycle-operations]]
+== 驗證生命週期操作
+
+測試超出初始擷取的情況：
+
+* 擴展至預計峰值數量
+* 大量刪除和非同步刪除
+* 備份和還原
+* SnapMirror 初始化、更新、容錯移轉與重新同步
+* 複製或 Snapshot 快照技術密集型工作流程
+* Volume 移動或儲存設備容錯移轉
+* ONTAP 升級與必要時的回復檢查
+* 從 FlexVol 移轉至 FlexGroup 或在協定環境之間移轉
+
+
+目錄索引可能需要在目的地建置或傳輸。僅當避免重建能顯著改善恢復時，才啟用公用索引傳輸；它不會改善本機查閱。請參閱 link:high-file-count-workloads-04-maxdirsize-indexing.html#when-to-enable-public-directory-index-transfers["何時啟用公共目錄索引傳輸"]。
+
+
+
+[[monitor-inode-limits-and-allocation]]
+== 監控 inode 限制和分配
+
+依照 link:high-file-count-workloads-12-maxfiles-monitoring.html#monitoring-example["監控 maxfiles、EMS 事件和 ONTAP 增強功能"] 中所述、追蹤 `files-used`（相對於 `files` 和 `inodefile-public-capacity`）。在 `files-used` 達到 `files` 之前發出警示。對於 FlexGroup Volume、即使整體總量看似仍有空間、也應調查組成成員層級的事件。
+
+
+
+[[monitor-large-directories]]
+== 監控大型目錄
+
+測量目錄檔案大小並解析 EMS 檔案 ID，如 link:high-file-count-workloads-03-maxdirsize-view.html["檢視 maxdir-size 和目前目錄大小"] 所述。在已知扁平目錄或頻繁變更的目錄產生警告之前，先對其進行清點。
+
+
+
+[[respond-to-warnings-before-failures]]
+== 在故障發生前回應警告
+
+關於 inode 警告：
+
+. 檢查 `files-used`、 `files`、 `files-maximum-possible`、Volume 大小和容量。
+. 判斷成長是預期內的還是異常的。
+. 增加 `files`、擴充 Volume 或視情況移除不必要的物件。
+. 對於 FlexGroup，請檢查受影響的成分和配置平衡。
+
+
+關於目錄大小警告：
+
+. 將目錄 inode 解析為路徑。
+. 測量目前目錄檔案大小並分析檔案名稱行為。
+. 停止無限制的扁平目錄成長。
+. 盡可能將名稱分片或移轉到新目錄。
+. 只有在應用程式無法重組且已了解效能風險時，才增加 `maxdir-size`。
+
+
+請勿等待 `callhome.no.inodes`或 `wafl.dir.size.max`；此時用戶端建立作業已經失敗。
+
+
+
+[[manage-delete-behavior]]
+== 管理刪除行為
+
+刪除檔案會釋放公共 inode 以供重複使用，但不會縮小公共 inode 檔案。同樣地，從目錄中刪除名稱會使目錄插槽可重複使用，但通常不會減少目錄檔案的最高水位大小。
+
+大型刪除操作會佔用大量中繼資料，並可能暫時增加私人殭屍 inode 的數量。當用戶端側遞迴刪除 (`rm -rf`）與生產流量競爭時，應限制其速率。
+
+從 ONTAP 9.8 開始， `volume file async-delete` 會從叢集移除目錄，而不是透過 NFS 或 SMB，這可避免用戶端與網路爭用。這適用於 FlexVol 與 FlexGroup Volume。ONTAP 掃描路徑，先刪除子目錄內容，並執行平行刪除工作（預設 5,000 個並行工作；可設定為 50 到 100,000 個）。在 TR-4571 測試中，對於 24,000 個項目的樹狀結構，這比單一執行緒 `rm -rf`快約 10 倍。
+
+[listing]
+----
+volume file async-delete start -vserver <svm> -volume <volume> -path /relative/dir
+volume file async-delete show
+----
+限制條件：Volume 必須處於線上並已裝載，路徑必須是一個目錄（而不是單一檔案），並且一次只能執行一個 async-delete 作業。
+
+如果大型稀疏目錄仍然存在問題，請將剩餘項目製作複本到新目錄中。降低 `maxdir-size`並不會將其壓縮。請參閱 link:high-file-count-workloads-04-maxdirsize-indexing.html#sparse-directories-and-hole-punching["稀疏目錄和打孔"]。
+
+
+
+[[plan-node-and-ha-headroom]]
+== 規劃節點和 HA 餘裕
+
+即使資料處理量較低，高檔案數操作仍會使用 CPU、記憶體容量、快取和儲存設備 I/O。保留餘裕以供：
+
+* 中繼資料突發
+* 冷快取查詢與列舉
+* 掃描器和資料保護
+* 儲存設備容錯移轉或接管
+* FlexGroup 遠端操作
+* 共享該節點的其他 Volume
+
+
+應根據觀察到的中繼資料需求（而不僅僅是容量或處理量）來平衡工作負載。即使網路和磁碟頻寬看似可用，節點仍可能因中繼資料而受限。
+
+
+
+[[spread-client-connections-across-data-lifs-and-nodes]]
+== 跨資料 LIF 和節點分散用戶端連線
+
+高檔案數的 NAS 通常受限於中繼資料。NFS 或 SMB 裝載通常使用一個 TCP 連線連接到一個資料 LIF，而該 LIF 位於一個節點上。如果許多用戶端、掃描器或備份作業裝載同一個位址，即使叢集的其餘部分處於閒置狀態，該節點也會將 CPU 用於協定處理。FlexGroup 可以透過叢集網路重新導向檔案作業，但這並不會移除擁有用戶端連線之節點上的負載。
+
+* 在 SVM 中建立多個資料 LIF（資料網路介面），每個服務於工作負載的節點上都有多個 LIF，以便用戶端可以透過多條路徑存取每個節點。
+* 確認每個應該參與的節點在該 SVM 中至少有一個資料 LIF。
+* 在這些 LIF 和節點之間平衡裝載。按 IP 裝載時，均勻選擇位址。當用戶端按名稱裝載時，在一個 FQDN 後方提供多個 LIF 位址，並使用 DNS 負載平衡。
+* 請勿將整個工作負載綁定至單一 LIF 或單一節點。
+
+
+支援 NFS `nconnect` 或 SMB 多通道的單一用戶端可以在一個裝載上開啟額外的連線。這有利於該用戶端；但這並不能取代將許多用戶端分散在各個 LIF 和節點上的做法。
+
+
+
+[[use-current-ontap-releases]]
+== 使用目前的 ONTAP 版本
+
+ONTAP 的後續版本包括目錄索引、inode 管理改進、稀疏目錄最佳化、目錄索引傳輸以及其他針對高檔案數處理的增強功能。升級決策仍需考慮平台支援、資料保護相容性和應用程式資格判斷。
+
+請勿僅因為某項功能與高檔案數量有關而啟用它：
+
+* 僅當確有單一目錄要求時才提出 `maxdir-size`。
+* 在適當的情況下，將  `files` 設定為目前的最大值；請參閱 link:high-file-count-workloads-11-maxfiles-controlling.html["控制 maxfiles"]。
+* 僅當複寫或還原需要保留索引時才啟用目錄索引傳輸。
+* 僅當檔案系統分析的洞察結果足以證明其掃描工作的必要性時，才啟用檔案系統分析。
+* 將 `-has-dir-index-public` 和 `-has-optimized-sparse-directories` 視為狀態，而不是啟用開關。
+
+
+從 ONTAP 9.17.1 開始，在新建的 NAS SVM 中，新 Volume 可以預設啟用檔案系統分析。請檢查 `-analytics-state` 而不是假設它已停用，並在對高檔案數工作負載進行資格判斷時，將其命名空間掃描納入帳戶。
+
+
+
+[[document-assumptions-and-thresholds]]
+== 記錄假設與臨界值
+
+記錄：
+
+* 工作負載和檔案名稱假設
+* 檔案和目錄數量峰值
+* 選取的利潤
+* Volume 和組成佈局
+* 資料 LIF 和用戶端裝載佈局
+* `files` 和  `maxdir-size` 值
+* 警報閾值和回應負責人
+* 預期擷取和刪除速率
+* 恢復和移轉目標
+* ONTAP 版本和平台相依性
+
+
+當應用程式版本、檔案名稱格式、保留、協定或資料保護工作流程發生變更時，請重新審視模型。
+
+[cols="<"]
+|===
+
+
+| link:high-file-count-workloads-13-planning.html["← 上一頁：規劃方法"] 
+|===
+
+
+[[related-information]]
+== 相關資訊
+
+* link:https://docs.netapp.com/us-en/ontap/volumes/display-file-inode-usage-task.html["確定 ONTAP 磁碟區的檔案和 inode 使用情況"^]
+* link:https://docs.netapp.com/us-en/ontap/flexgroup/index.html["資料量FlexGroup"^]
+

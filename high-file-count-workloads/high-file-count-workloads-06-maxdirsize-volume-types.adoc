@@ -1,0 +1,130 @@
+---
+sidebar: sidebar 
+permalink: high-file-count-workloads/high-file-count-workloads-06-maxdirsize-volume-types.html 
+keywords: ONTAP, NAS, maxdir-size, maxdirsize, FlexVol, FlexGroup, volume language, utf8mb4, volume options 
+summary: 了解 Volume 類型、Volume 選項和 Volume 語言如何影響 ONTAP maxdir-size 的行為。 
+---
+= Volume 考量
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/high-file-count-workloads/
+
+
+[role="lead"]
+`maxdir-size` 是每個目錄的上限，但該目錄所在的 Volume 仍然很重要。Volume 類型、Volume 選項和 Volume 語言都會改變目錄檔案成長的速度以及您管理上限的方式。
+
+
+
+[[volume-type]]
+== 磁碟區類型
+
+`maxdir-size` 適用於 FlexVol 和 FlexGroup Volume 中的每個目錄。FlexGroup 目錄項目和組成配置會改變目錄檔案的成長速度。
+
+
+
+[[flexvol-volumes]]
+=== FlexVol Volume
+
+一個 FlexVol 擁有一個檔案系統和一個公用 inode 供應。 `maxdir-size` 仍然獨立適用於每個目錄。單一熱目錄在該 Volume 的所有權範圍內進行處理，並且不會僅僅因為叢集包含額外的節點而獲得平行處理能力。
+
+
+
+[[flexgroup-volumes]]
+=== 資料量FlexGroup
+
+一個 FlexGroup 呈現一個由多個 FlexVol 組成部分支援的命名空間。這改善了聚合的檔案數量與容量擴展，同時實現了跨節點和磁碟的資料經銷，但不會將單一邏輯目錄的限制 (`maxdir-size`）乘以組成部分的數量。
+
+下圖顯示目錄檔案如何保留在一個組成部分上，而該目錄命名的檔案物件可以位於其他組成部分上。
+
+[link=../media/high-file-count-workloads/flexgroup-directory-placement.png]
+image::flexgroup-directory-placement.png[位於單一構成要素上具有一個目錄 inode 和目錄檔案的 FlexGroup 示意圖,700,and remote links counting against maxdir-size]
+
+請考慮以下差異：
+
+* 目錄條目可以指向遠端成員上的檔案，並且可能需要比本機 FlexVol 條目更大的磁碟上表示形式。
+* 因此，相同的可見檔名使用目錄檔案空間的速度可能與在 FlexVol 中不同。
+* 檔案和 inode 容量是依每個成員來維護，因此經銷與成員壓力很重要。
+* `maxdir-size` 是在 FlexGroup 層級上進行修改，而不是直接修改成分。
+* 使用 FlexGroup Volume 將應用程式分片到多個目錄中，可讓 ONTAP 有更多機會來分配工作和檔案。
+
+
+結論是，在 FlexGroup 上相同的 `maxdir-size`設定通常比在 FlexVol 上容納更少的名稱，因為遠端目錄項目會佔用更多空間。這種差距有多大，取決於資料集佈局以及發生了多少遠端放置。
+
+FlexGroup Volume 遠端硬連結會增加每個目錄的數據，增加的幅度與遠端儲存條目的比例成正比。對於大型扁平目錄（約 85% 的遠端條目），請以大約 2 倍的上限進行規劃，這會將 320 MB 預設值下的實際上限降低至約 200 萬到 260 萬個link:high-file-count-workloads-02-maxdirsize.html#estimating-the-number-of-names-per-directory-file["普通名稱"]，相較之下，在 FlexVol 上則高達約 430 萬個。寬或深的目錄配置可保持較低的比率，並降低遠端硬連結的增加量。使用 `stat`、 `ls -ld` 或 XCP 針對代表性目錄進行驗證。
+
+
+
+[[volume-options]]
+== Volume 選項
+
+在規劃或疑難排解大型目錄時，最常遇到的就是以下這些 Volume 欄位。
+
+|===
+| 欄位 | 可設定和特權 | 目的 
+
+
+| `maxdir-size` | 是的，進階 | 允許每個目錄使用更大的檔案，以便每個目錄可以存放更多檔案。 
+
+
+| `is-dir-index-transfer-enabled` | 是的，admin | 將目錄索引移至公共 inode 空間，以支援複寫和還原可移植性。 
+
+
+| `has-dir-index-public` | 不，進階 | 報告公共目錄索引 inode 是否存在。 
+
+
+| `has-optimized-sparse-directories` | 不，進階 | 報告該 Volume 是否包含最佳化的打孔稀疏目錄。 
+
+
+| `language` | 受限，管理員 | 控制名稱解釋。非 ASCII 名稱和 4 位元組 UTF-8 (`utf8mb4`）字元在每個目錄中可容納的名稱較少；請參閱 <<volume-language>>。 
+
+
+| `analytics-state` | 是的，admin | 啟用檔案系統分析。其命名空間掃描可能會增加高檔案數 Volume 的工作量，但不會改變 `maxdir-size`。 
+|===
+
+
+[[volume-language]]
+== Volume 語言
+
+Volume  `-language` 設定控制 NFS 如何轉換用戶端編碼和儲存在磁碟上的 Unicode 名稱。除非您在建立時設定  `-language`，否則 Volume 會繼承 SVM 預設值。ONTAP 預設值為  `C.UTF-8`。從 ONTAP 9.5 開始， `utf8mb4` 儲存 4 位元組的 UTF-8 名稱（表情符號和其他 Unicode 補充字元），而不是將額外的位元組放在 bag-of-bits 中。
+
+語言代碼本身並不會改變目錄中可容納的 ASCII 名稱數量。 `C.UTF-8`、 `en_US.UTF-8`、 `de.UTF-8`、 `ja.UTF-8` 和  `utf8mb4` 都使用相同的 Unicode 目錄打包方式來儲存相同的字元。真正影響數量的是該語言所要儲存的名稱中的字元：非 ASCII 文字以更寬的形式儲存，而  `utf8mb4` Volume 上的 4 位元組補充字元則更寬。無法以 Volume 編碼表示名稱的 NFSv3 用戶端也可能導致 ONTAP 儲存 8 字元的 NFS 備用名稱，這會佔用更多的目錄空間。
+
+以下範例使用 32 個字元的名稱，大小為 320 MB `maxdir-size`，並包含 `.`與 `..`項目。這些是規劃數據，並非保證值。
+
+[cols="2,3,3,1,2,2"]
+|===
+| Volume 語言 | 典型用途 | 32 個字元的名稱樣式範例 | 每 4 KiB 區塊的名稱 | 一個目錄中的名稱大小為 320 MB | 與預設 ASCII 碼相比 
+
+
+| `C.UTF-8` （ONTAP 預設） | POSIX C 區域設定，UTF-8 編碼。除非設定了 `-language`，否則新的 SVM 和 Volume 將繼承此設定。 | ASCII 碼，例如 `project-alpha-run0142-input1.dat` | 53 | 4,341,758 | 基線 
+
+
+| `en_US.UTF-8` | 美國英語 UTF-8 | 相同的 ASCII 或基本拉丁名稱 | 53 | 4,341,758 | ASCII 名稱不縮減與預設值 
+
+
+| `de.UTF-8` | 德語 UTF-8 ，包括變音符號 (`ä`, `ö`, `ü`, `ß`） | 帶重音的拉丁文，例如 `Geschäftsbericht-2026-Q3-v03.docx` | 26 | 2,129,918 | 約佔預設 ASCII 數量的 49% 
+
+
+| `ja.UTF-8` | 日語 UTF-8（基本多語言平面中的 CJK） | 長度均為 32 個字元的日文名字 | 26 | 2,129,918 | 約佔預設 ASCII 數量的 49% 
+
+
+| `utf8mb4` | 4 位元組 UTF-8（ONTAP 9.5 及更新版本）。當名稱包含表情符號或其他附加字元時使用。 | 普通的德文或日文文字的排列方式仍然與上方的 UTF-8 列相同。包含補充字元（例如表情符號）的 32 個字元的名稱會排列得更寬。 | 22 | 1,802,238 | 當存在補充字元時，關於預設 ASCII 計數的 41% 
+|===
+如果名稱保持基本 ASCII 編碼，從 `C.UTF-8` 切換至 `en_US.UTF-8`、 `de.UTF-8`、 `ja.UTF-8` 或 `utf8mb4` 不會減少每個目錄的計數。混合使用 NFS 和 SMB 存取可能會在此基礎上增加 NFS 備用名稱或 SMB 8.3 別名。
+
+有關表格背後的裝箱規則，請參閱 link:high-file-count-workloads-02-maxdirsize.html#estimating-the-number-of-names-per-directory-file["估算每個目錄檔案的名稱數量"]。
+
+[cols="<,>"]
+|===
+
+
+| link:high-file-count-workloads-05-maxdirsize-impact.html["← 上一頁：maxdir-size 的影響"] | link:high-file-count-workloads-07-maxdirsize-features-ems.html["接下來：maxdir-size 的功能、EMS 與監控 →"] 
+|===
+
+
+[[related-information]]
+== 相關資訊
+
+* link:https://docs.netapp.com/us-en/ontap/smb-admin/multi-byte-file-directory-qtree-names-concept.html["SMB 多位元組檔案、目錄和 qtree 名稱"^]
+* link:https://docs.netapp.com/us-en/ontap/flexgroup/index.html["FlexGroup Volume 管理"^]
+

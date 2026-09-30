@@ -59,7 +59,7 @@ NetApp AFX 執行 ONTAP，這表示它使用與 ONTAP 相同的安全性。所�
 
 有關統一 ONTAP 已獲得的認證（以及其他安全強化資訊）、請參閱：
 
-* link:https://security.netapp.com/certifications["NetApp 產品安全"^]
+* link:https://security.netapp.com/resources/["NetApp 產品安全"^]
 * link:https://docs.netapp.com/us-en/ontap-technical-reports/ontap-security-hardening/security-hardening-overview.html["ONTAP 安全強化概述"^]
 
 

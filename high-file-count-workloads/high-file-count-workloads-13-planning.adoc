@@ -1,0 +1,133 @@
+---
+sidebar: sidebar 
+permalink: high-file-count-workloads/high-file-count-workloads-13-planning.html 
+keywords: ONTAP, NAS, high file count, planning, maxfiles, maxdir-size, maxdirsize, inodes, metadata, XCP 
+summary: 在 ONTAP 上評估高檔案數 NAS 工作負載規模之前，請收集 inode、目錄、操作速率和容量估算值。 
+---
+= 規劃方法
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/high-file-count-workloads/
+
+
+[role="lead"]
+開始進行高檔案數量的 NAS 規劃時，請使用四個分隔的估算值，而不是單一檔案數量或容量數字。
+
+. 工作負載生命週期內的檔案系統物件總數
+. 最大目錄中的峰值條目
+. 建立、尋找、列舉和刪除的峰值速率
+. 使用者資料、inode、目錄、目錄索引、Snapshot 快照技術複本和成長容量
+
+
+請使用以下方法收集這些輸入資訊：
+
+
+
+[[find-total-objects-and-inode-headroom]]
+== 尋找物件總數和 inode 餘裕
+
+將應用程式清單與 ONTAP 的公有 inode 計數器進行比較：
+
+[listing]
+----
+volume show -vserver <svm> -volume <volume> -fields files,files-used
+
+set -privilege advanced
+volume show -vserver <svm> -volume <volume> -fields files-maximum-possible,inodefile-public-capacity
+----
+對於 FlexGroup，請檢查配置的總數以及每個組成部分的使用情況：
+
+[listing]
+----
+volume show -vserver <svm> -volume-style-extended flexgroup-constituent -fields files,files-used
+----
+* 將預估的檔案、目錄、串流、ACL、公用目錄索引、暫存物件和移轉重疊部分計入總估算值。
+* 在 ACL 較常見的情況下，請將高達預估檔案和目錄數量的兩倍作為 `files`的保守起始估計值。每個 NTFS 或 NFSv4 ACL 可能會使用額外的公共 inode，但 link:high-file-count-workloads-09-maxfiles.html#acl-inodes["ACL 共用"] 可以減少實際使用量。請使用具有代表性的資料進行驗證。
+* 使用應用程式的庫存或移轉評估來預測成長。 `files-used` 是目前使用量，而不是未來的峰值。
+
+
+NetApp XCP 可以統計目前命名空間中的檔案和目錄數量。在 XCP 1.5 及更新版本中：
+
+[listing]
+----
+xcp scan -stats <host>:/<export>
+xcp scan -stats \\<server>\<share>
+----
+該  `-stats` 報告包含檔案和目錄計數。它不包含從未作為目錄項目出現的 ACL inode 或命名串流，因此請從應用程式設定檔中新增這些內容。處理檔案數量較多的資料集時，請預留一些時間；XCP 會在列印總數之前掃描目錄樹。有關 XCP 1.5 子命令附註和相關掃描，請參閱 link:high-file-count-workloads-03-maxdirsize-view.html#scan-directory-sizes-with-xcp["使用 XCP 掃描目錄大小"]。
+
+
+
+[[find-the-largest-directories]]
+== 尋找最大的目錄
+
+* 使用應用程式清單、移轉工具或受控命名空間掃描來識別最多條目的目錄。
+* 審查 `wafl.dir.size.warning`以及已接近上限之目錄的相關 EMS 事件。
+* 測量目錄物件本身，如 link:high-file-count-workloads-03-maxdirsize-view.html["檢視 maxdir-size 和目前目錄大小"] 所述。
+* 建立檔案名稱長度與替代名稱的模型，如 link:high-file-count-workloads-02-maxdirsize.html["Maxdir-size 和大型 ONTAP 目錄"] 所述。
+
+
+XCP 可以按項目數或目錄檔案大小對目錄進行排名。 `-stats` 報告將最大目錄的項目數列為  `Dirsize`。若要列出每個目錄及其中繼資料檔案大小（從大到小）：
+
+[listing]
+----
+xcp scan -match "type == d" -fmt "'{} {}'.format(used, x)" <host>:/<export> | sort -rn
+----
+若要列出條目數超過指定數量（本例為 2,000）的目錄：
+
+[listing]
+----
+xcp diag find --branch-match True -fmt "'{size} {name}'.format(size=x.digest, name=x)" <host>:/<export> 2>/dev/null | awk '{if ($1 > 2000) print $1 " " $2}'
+----
+這些掃描會尋找繁忙的目錄。它們並不能取代針對 `maxdir-size`的名稱長度與編碼建立模型。
+
+
+
+[[measure-metadata-operation-rates]]
+== 測量中繼資料操作速率
+
+* 使用應用程式遙測、用戶端工作負載工具、封包追蹤、ONTAP 效能統計資料或 Harvest 等監控工具來測量建立、尋找、開啟、結案、屬性、列舉、重新命名和刪除速率。
+* 測試具代表性的並行性以及暖快取和冷快取行為。
+* 吞吐量測量並不一定能反映中繼資料密集型工作負載的特性。操作計數器可以提供一些線索，尤其是 `other_ops`。
+
+
+
+
+[[find-metadata-and-snapshot-capacity]]
+== 尋找中繼資料和 Snapshot 快照技術容量
+
+* 使用 `volume show-space`來分隔使用者資料、檔案系統中繼資料、inode 和 Snapshot 保留。
+* 使用 `volume show-footprint`來審查 Volume 的彙總實體佔用空間。
+* 估計原始 ONTAP 9 inode 記錄數為 `peak allocated inodes × 288 bytes`，然後加上目錄檔案大小。
+* 在統一的 ONTAP 上，使用  `storage aggregate show-space` 審查彙總中繼資料。
+* 在 AFX 上，使用 `storage availability-zone show`審查儲存可用區中繼資料。
+* 為無法從主機清點的其他系統中繼資料預留約 1% 的容量。
+
+
+
+
+[[dont-conflate-maxdir-size-with-maxfiles]]
+== 不要將 maxdir-size 與 maxfiles 混淆
+
+* `files`（maxfiles）是 FlexVol 或 FlexGroup 成員的公共 inode 上限。
+* `maxdir-size` 是 Volume 中每個目錄檔案的位元組上限。能容納多少個名稱取決於名稱長度和編碼，而不是 Volume 的檔案數量。
+* 請勿從 Volume 總檔案數推導 `maxdir-size`，也不要使用 `maxfiles`來估計一個目錄中可容納多少個名稱。
+
+
+如需設計與操作建議，請參閱 link:high-file-count-workloads-14-best-practices.html["高檔案數 NAS 工作負載最佳實務"]。
+
+[cols="<,>"]
+|===
+
+
+| link:high-file-count-workloads-12-maxfiles-monitoring.html["← 上一頁：監控 maxfiles、EMS 事件和 ONTAP 增強功能"] | link:high-file-count-workloads-14-best-practices.html["接下來：高檔案數 NAS 工作負載最佳實務 →"] 
+|===
+
+
+[[related-information]]
+== 相關資訊
+
+* link:high-file-count-workloads-09-maxfiles.html["ONTAP inode 類型"]
+* link:high-file-count-workloads-03-maxdirsize-view.html["檢視 maxdir-size 和目前目錄大小"]
+* link:https://docs.netapp.com/us-en/ontap/volumes/display-file-inode-usage-task.html["確定 ONTAP 磁碟區的檔案和 inode 使用情況"^]
+* link:https://www.netapp.com/pdf.html?item=/media/12385-tr4571.pdf["TR-4571：NetApp ONTAP FlexGroup Volume"^]
+

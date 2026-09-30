@@ -1,0 +1,104 @@
+---
+sidebar: sidebar 
+permalink: high-file-count-workloads/high-file-count-workloads-04-maxdirsize-indexing.html 
+keywords: ONTAP, NAS, directory indexing, sparse directory, hole punching, SnapMirror 
+summary: 了解 ONTAP 目錄索引、公共索引 inode 與私有索引 inode 的差異以及稀疏目錄穿孔。 
+---
+= ONTAP 中的目錄索引
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/high-file-count-workloads/
+
+
+[role="lead"]
+ONTAP 會自動為大型目錄建立索引，這樣目標查找就不必一次讀取整個目錄檔案。索引與 `maxdir-size`分隔，並且不會改變最大目錄檔案容量限制。
+
+
+
+[[why-directory-indexing-exists]]
+== 為什麼需要目錄索引
+
+在運算中，索引是一種輔助結構，其作用是在不遍歷每筆記錄的情況下回答「這個在哪裡？」的問題。書籍索引就是我們熟悉的例子：您尋找某個詞彙，然後跳到對應的頁面，而無需閱讀整本書。資料庫、搜尋引擎和檔案系統都採用相同的概念，因此即使資料量不斷增長，查找成本仍然很低。索引並非資料的第二份複本。它是從鍵（例如名稱）到該項目位置的對應。
+
+目錄是名稱列表。如果沒有索引，發現一個名稱可能表示要掃描該清單的大部分內容。ONTAP 的目錄索引是該捷徑的檔案系統版本。
+
+如果沒有持久索引，發現名稱可能需要讀取大量目錄區塊並建立記憶體容量雜湊。從 ONTAP 9.2 開始，當目錄檔案成長到大約 2 MiB 時，ONTAP 會自動建立一個配套的目錄索引 inode。
+
+持久索引會對應到目錄檔案中條目的位置。因此，定向查找可以讀取所需的索引和特定的目錄區塊，而無需將整個目錄檔案載入到記憶體容量中。索引通常可以減少大型目錄上以尋找為導向之作業的 CPU、記憶體容量和 I/O，除了大型目錄的內容之外，還能為其他工作負載釋放更多節點資源。
+
+[link=../media/high-file-count-workloads/directory-file-index.png]
+image::directory-file-index.png[流程圖顯示針對小於 2 MiB 的目錄檔案執行用戶端名稱操作時，系統會進行完整掃描]
+
+啟用目錄索引無需系統管理員選項；預設已啟用。目錄只有在其目錄檔案超過約 2 MiB 的臨界值後，才有資格建立持久索引。滿足此條件後，索引建置可由使目錄增長超過臨界值的操作、索引掃描器或符合條件的前端名稱操作（例如 LOOKUP、ACCESS、基於路徑的開啟或建立、重新命名或移除）來啟動。這些掃描器和前端觸發器不會置換大小臨界值，也不會為較小的目錄建立持久索引。約 2 MiB 的點會改變提供目標尋找服務的方式。它並非目錄大小延遲臨界值。不斷增長的目錄如何顯示在用戶端和節點行為中，說明於 link:high-file-count-workloads-05-maxdirsize-impact.html#performance-impact["效能影響"]。
+
+
+
+[[what-indexing-does-not-change]]
+== 索引不會改變的項目
+
+目錄索引與目錄檔案是分隔的。即使存在目錄索引，以下結論仍然成立：
+
+* `maxdir-size` 仍然限制目錄檔案大小。
+* 伴隨索引會使用額外的中繼資料和一個 inode，但不會影響目錄大小。
+* 與完整目錄列舉相比，索引可改善目標查詢。
+* 萬用字元掃描與 `READDIR`仍然會處理整個目錄命名空間。
+* 遺失或重新建置索引不會移除目錄的名稱；ONTAP 可以從目錄檔案重建它。
+
+
+
+
+[[about-private-and-public-index-inodes]]
+== 關於私有和公共索引 inode
+
+每個已建立索引的目錄都有自己的索引；目錄索引是不共享的。因此，一個 Volume 可以為每個超過約 2 MiB 臨界值的目錄保存一個索引。低於臨界值的目錄仍保留在非持續性查詢路徑上，即使掃描器或前端作業存取它們，也不會獲得隨附的目錄索引 inode。符合條件目錄的索引是否計入 `maxfiles`，取決於它們是私有還是公有，如這裡所述。
+
+預設情況下，目錄索引通常位於私有 inode 空間。私有目錄索引 inode 會在 SnapMirror 傳輸過程中被忽略，因此 ONTAP 會在啟動或還原後隨需在目的地重新建置索引。
+
+從 ONTAP 9.17.1 開始，Volume 層級選項 `-is-dir-index-transfer-enabled true`會將目錄索引移至公用 inode 空間，以便支援的 SnapMirror 和 SnapMirror Cloud 工作流程可以傳輸它們。啟用此選項後 `true`，會在公用 inode 空間中建立新索引，掃描器會移轉現有的私有索引。這可以減少還原後的索引建置，但公用索引會使用公用 inode，因此必須將其納入 `maxfiles`規劃中。
+
+您可以使用 Volume show 選項查看是否有公用目錄索引 `-has-dir-index-public true`。此選項無法手動設定；只有在有公用目錄索引時，它才會顯示為 true。
+
+公用目錄索引會計入 `files`，並且 `files-used`每個建立索引的目錄大約會增加一個 inode。
+
+私有索引不使用公共 `files`配額。
+
+
+
+[[when-to-enable-public-directory-index-transfers]]
+=== 何時啟用公共目錄索引傳輸
+
+啟用索引傳輸可保留用於複寫或還原的索引，從而避免對檔案數量較多的目錄進行代價高昂的重新建置。停用索引傳輸時， SnapMirror 將忽略私有索引。啟動或還原後， ONTAP 可以透過索引掃描器或符合條件的前端操作重新建置符合條件目錄的缺失索引，這可能會在容錯移轉至 SnapMirror 目的地後造成效能影響。啟用索引傳輸不會提高本機查閱效能；當選項為 `false`時，本機索引即已發生。它嚴格用於屬於 SnapMirror 關係一部分的 Volume 。
+
+
+
+[[sparse-directories-and-hole-punching]]
+== 稀疏目錄和打孔
+
+目錄檔案可能會變大，然後在許多名稱被刪除後（亦即從目錄中移除檔案時）變得稀疏。目錄檔案的大小會保持在其最高水位線，因此 `READDIR`可能會花費大量的 CPU 和 I/O 來遍歷空區塊。
+
+對於已建立索引的目錄，當 4 KiB 的目錄區塊完全為空時，ONTAP 可以打出一個空洞。
+
+此索引會追蹤空洞，以便：
+
+* `READDIR` 可以跳過空區塊。
+* 實體區塊可以回收。
+* 建立的物件之後可以重複使用該邏輯位置。
+
+
+進階 `-has-optimized-sparse-directories`欄位是一個唯讀 Volume 顯示選項。值為 `true`表示該 Volume 包含以這種最佳化的打孔形式存在的目錄區塊。
+
+如果在刪除後，應用程式的目錄大小仍然有問題，將剩餘項目複製到新建立的目錄中，可產生更緊湊的目錄檔案配置。降低 `maxdir-size`並不能壓縮稀疏的目錄。
+
+[cols="<,>"]
+|===
+
+
+| link:high-file-count-workloads-03-maxdirsize-view.html["← 上一頁：查看 maxdir-size 與目前目錄大小"] | link:high-file-count-workloads-05-maxdirsize-impact.html["接下來：maxdir-size 的影響 →"] 
+|===
+
+
+[[related-information]]
+== 相關資訊
+
+* link:high-file-count-workloads-09-maxfiles.html["ONTAP inode 類型"]
+

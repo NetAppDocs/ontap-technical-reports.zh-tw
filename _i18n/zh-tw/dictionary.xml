@@ -2101,7 +2101,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="acdc6b4f6edd40f37bce01247a32ff86" category="list-text">SnapLock</block>
   <block id="99ea7fe6dea3854ba90d4c925836e232" category="paragraph">有關統一 ONTAP 已獲得的認證（以及其他安全強化資訊）、請參閱：</block>
   <block id="c97236d0432cf7fbbc8c3b120b3e6701" category="inline-link-macro">NetApp 產品安全</block>
-  <block id="9f1a69c754d3a3e49b333d12ee8f0f24" category="list-text"><block ref="9f1a69c754d3a3e49b333d12ee8f0f24" category="inline-link-macro-rx"></block></block>
   <block id="3ddcacddc2a36f511a8e26ece20945dd" category="list-text"><block ref="3ddcacddc2a36f511a8e26ece20945dd" category="inline-link-macro-rx"></block></block>
   <block id="81b6f23eeb09459b1b476aee5f8f72ee" category="section-title">快照和資料保護</block>
   <block id="b15cf320632a63bcd52340d2e192c30a" category="inline-link-macro">規則和組態</block>
@@ -2999,4 +2998,850 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="b12ef7cbb51744b90c455c58d40b1d46" category="cell"><block ref="b12ef7cbb51744b90c455c58d40b1d46" category="inline-link-macro-rx"></block></block>
   <block id="ad54e6f7d665098e981d7e41732ce4c2" category="inline-link-macro">下一篇：架構</block>
   <block id="c6c7c72c67d9841863b0652c4dedcecb" category="cell"><block ref="c6c7c72c67d9841863b0652c4dedcecb" category="inline-link-macro-rx"></block></block>
+  <block id="40da6219717973f4627532d01a44b1c7" category="list-text"><block ref="40da6219717973f4627532d01a44b1c7" category="inline-link-macro-rx"></block></block>
+  <block id="f4de8ddc885d0fc99b9cece543148ffe" category="summary">了解高檔案數 NAS 工作負載如何使用 ONTAP 中繼資料，以及 maxfiles 和 maxdir-size 如何定義不同的擴充邊界。</block>
+  <block id="229da1acb4868cbc46661f7f8b4e6783" category="doc">NetApp ONTAP 高檔案數工作負載（適用於 NAS Volume）</block>
+  <block id="dc1632b4acc0fdb523a481ff108b0720" category="paragraph">與以少量大檔案為主的工作負載相比，高檔案數 NAS 工作負載更著重於命名空間和中繼資料操作。本文件集解釋了 NetApp ONTAP 如何儲存和管理大量檔案，如何區分 <block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block> 和 <block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 限制，以及如何規劃 NAS 命名空間以實現可預測的容量和效能。</block>
+  <block id="00ad2276bd9834fba381a5c8f0b1a6c2" category="section-title">高檔案數工作負載指的是什麼？</block>
+  <block id="a2a9c7188bc6e147fa17f75782bcc81f" category="paragraph">對於工作負載本身而言，「高檔案數」這個說法有點用詞不當。並沒有一個特定的檔案數臨界值，能讓每個工作負載在達到該值時就成為高檔案數工作負載。這項判斷不僅取決於檔案總數。</block>
+  <block id="2a51df753b9adf8e5d0b1a005d75c25f" category="paragraph">例如：</block>
+  <block id="2ee4f5c379ae6ea1452a40114e14fea9" category="list-text">Volume 中存在多少個檔案和目錄</block>
+  <block id="39ca386f26ebb527784c392ed4844b91" category="list-text">單一目錄中集中了多少個名稱</block>
+  <block id="034ebeb390f67d366086c872c97a23f4" category="list-text">檔案建立、開啟、列舉、重新命名和刪除的速率</block>
+  <block id="9a076650f9fb143b899ef2b2a46cb2fc" category="list-text">檔案名稱長度、路徑長度、字元集和協定產生的備用名稱</block>
+  <block id="a9e8f747f09b268872b029e549d2f444" category="list-text">資料存取是否分佈在目錄、FlexGroup 成員與叢集節點上</block>
+  <block id="cb65d0b916981c10f5f25b2f4550d267" category="list-text">應用程式掃描或列出整個命名空間的頻率</block>
+  <block id="8500fa255698b4fb79d6e312581cf769" category="list-text">Snapshot 快照技術副本的數量和保留</block>
+  <block id="91849a2a71adc87443ae54a371888874" category="paragraph">當工作負載的預期命名空間可能對 inode 規劃、目錄檔案成長、中繼資料容量、用戶端操作延遲、備份或複寫行為或恢復時間產生實質影響時，應將其視為高檔案數工作負載。</block>
+  <block id="f40a02baea6f545763d1df9f8e6a7459" category="paragraph">但是，將數百萬個檔案分佈在多個目錄中的工作負載，其行為可能與將相同數量的檔案放在單一目錄中的工作負載截然不同。</block>
+  <block id="5b096d1fd0df41870bf237baf985f5f8" category="section-title">通常與高檔案數量相關的工作負載</block>
+  <block id="350c7e02d0ca5ee08eb90006f56e940b" category="paragraph">並非每個工作負載都會產生大量檔案的特性，但下列清單顯示了一些較常見、可視為大量檔案工作負載的工作負載。</block>
+  <block id="b67a8058b310a1e4f9d89bdcf19716a3" category="list-text">電子設計自動化（EDA）與半導體設計流程</block>
+  <block id="69897376d3aea83e701fde63cdebb08d" category="list-text">軟體來源樹、套件儲存庫和持續整合建置區域</block>
+  <block id="8e7246305ec094b637e9845ed1f778bc" category="list-text">包含圖像、標記、檢查點或其他小型物件的人工智慧和機器學習資料集</block>
+  <block id="239587caa6ec69943fe5873a3d3d0875" category="list-text">基因組學與生命科學流程</block>
+  <block id="e53136583ec31de30fe6241ac47634b9" category="list-text">媒體渲染、視覺特效與動畫影格儲存庫</block>
+  <block id="bf5864d6dff705d97b271a10e5da4db7" category="list-text">主目錄、部門共用和內容管理儲存庫</block>
+  <block id="0752d8a32798021ba10241f5d9215710" category="list-text">建立許多短生命週期檔案的分析、遙測與記錄環境</block>
+  <block id="d25b6dea33fbff35a071be9413847716" category="list-text">科學與高效能運算暫存空間</block>
+  <block id="244206cbff65bb71fdf8bef60391c478" category="paragraph">檔案大小並不能決定工作負載是否屬於高檔案數工作負載，但高檔案數工作負載通常由許多較小的檔案組成，其中資料集的容量使用率可能不高，但單一 Volume 中會使用許多 inode。</block>
+  <block id="3b2e93cfec0555e229bc5b2f7feae7c6" category="section-title">高檔案數量挑戰</block>
+  <block id="4ed52761600ce2b6a804bd51e0147bff" category="paragraph">檔案數量多的工作負載會帶來一些獨特且難以解決的挑戰，而這些挑戰在檔案數量較少或以處理量為導向的工作負載中並不總是會出現。</block>
+  <block id="bcb598846f52a45771f7b5eb195ffa58" category="section-title">元資料操作</block>
+  <block id="6e1238080e6e7cfba6f181f1775db7d8" category="paragraph">每個檔案或目錄都需要一個 inode，而物件的名稱是存在於目錄中，而非 inode 本身。即使資料處理量很低，常見的中繼資料操作（例如檔案建立、尋找、屬性擷取、重新命名、列舉和刪除）也可能在檔案數量龐大的工作負載中佔據主導地位。在這些情況下，CPU 使用率、操作的序列處理以及網路 RTT 都可能成為效能的瓶頸。傳輸協定行為也很重要：NFS 和 SMB 用戶端可以發出不同的尋找、開啟、結案、屬性及目錄讀取操作組合，這些操作通常取決於傳輸協定版本。因此，對於類似的大量檔案工作流程，根據所使用的傳輸協定和傳輸協定版本，可能會出現不同的結果。</block>
+  <block id="3b8f7696879f77dfc8c74aa8df8db24b" category="section-title">容量</block>
+  <block id="69a7a942d8e79435e3c7635d56ce699d" category="paragraph">ONTAP 將公用 inode 儲存在隱藏、系統管理的 Volume 層級 inode 檔案中。每個 ONTAP 9 inode 使用 288 位元組，因此 inode 檔案本身會使用 Volume 中的可用容量。一百萬個已配置的公用 inode 大約使用 288 MB。刪除物件會釋放 inode 以供重複使用，但 inode 檔案不會縮小。</block>
+  <block id="b971751bcf30482bae3ef3a7829ae9a4" category="paragraph">此外，當大量名稱儲存在同一個目錄中時，目錄檔案會使用容量。這些目錄檔案不屬於 inode 檔案。它們儲存名稱以及對應至 inode 編號的對應關係，而且<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 會獨立限制每一個目錄檔案。320 MB 的預設設定是一個上限，而不是預留；如果一個目錄檔案成長到 320 MB 的目錄檔案區塊，這些區塊將使用 320 MB 的實際 Volume 容量。</block>
+  <block id="8a65255b781230833e38cebf686524db" category="paragraph">這兩種結構加起來會佔用大量空間。在分配的 inode 數量較高的情況下，僅 inode 檔案本身可能達到數 GB，而一個或多個大型目錄檔案也會在此基礎上增加數百 MB。一個 Volume 也可能包含一個很大的 inode 檔案，但每個目錄的大小仍然很小；或者一個很大的目錄，但其 inode 檔案卻很小。這些中繼資料會使用已使用的 Volume 容量，如果您只查看用戶端側的使用者資料檔案清單，很容易忽略這一點。inode 檔案不是使用者可見的檔案；目錄檔案的大小在目錄物件本身上是可見的。</block>
+  <block id="01ea62a8ece9da7e13e3839b0cec2b58" category="section-title">目錄列舉</block>
+  <block id="4db91f9a95f38ccbb1235dd60cc0e21c" category="inline-link-macro">maxdir-size 上限的行為方式</block>
+  <block id="13c217a58ec9672f43d5b99347532cee" category="inline-link-macro">稀疏目錄和打孔</block>
+  <block id="e9a2ce9676cefd6a2aa39d79562494ea" category="paragraph">列舉大型目錄所需的時間比小型目錄更長，而且刪除了許多檔案的目錄，掃描成本仍然可能很高。即使刪除了名稱，報告的目錄檔案大小仍然保持在其高水位標記。對已索引目錄進行打洞可以回收空的實體區塊，並在 <block ref="1e36542efa12c0d5b70478c43512c5cf" prefix=" " category="inline-code"></block> 期間跳過它們，但這通常不會縮小報告的大小；請參閱 <block ref="641c8ac33fa4c945e7b9ba33e11449a5" category="inline-link-macro-rx"></block> 和 <block ref="63c6d23f7ae00c851617cae48ae139d9" category="inline-link-macro-rx"></block>。</block>
+  <block id="a35ab908fce1565a02a0a7f09c696833" category="section-title">故障網域集中</block>
+  <block id="c10064fd3bd7a92de732d2731e8241e4" category="paragraph">將數百萬個條目集中在一個目錄中會造成單一目錄擴充和序列化點，這不僅會影響目錄本身的效能，還會影響擁有該目錄的節點（或 Volume）的效能。將檔案分佈在多目錄階層中可以提高並行性，減少目錄掃描範圍，並簡化操作任務。</block>
+  <block id="039326759dfb7d9450adffb38a871c9b" category="section-title">資料保護和恢復</block>
+  <block id="a047b87db49e9d9c4705516bf5c6473d" category="paragraph">物件數量過多會延長命名空間掃描、備份編目、複寫、還原處理以及還原後目錄索引建置的時間。例如，NetApp SnapMirror 會複寫變更的中繼資料以及檔案資料，因此，即使檔案和容量佔用空間很小，包含大量建立、刪除或重新命名操作的基線或更新也可能會耗費大量資源。這些挑戰也可能延伸至架構於 NDMP 的備份。</block>
+  <block id="bbc0b94efae57eab598c02b8fffb0789" category="inline-link-macro">ONTAP 中的目錄索引</block>
+  <block id="6280c5ce598335346a878cf1d180e4a3" category="paragraph">如需使用 SnapMirror 進行目錄索引傳輸的相關資訊，請參閱 <block ref="60a8cb3ef3340b9d5df8a57636fa5d59" category="inline-link-macro-rx"></block>。</block>
+  <block id="65a4ce797da4c38811f0aff5886ea0e2" category="section-title">Maxfiles 與 maxdir-size 比較</block>
+  <block id="d95568346be55bdf41f322e4173d5193" category="paragraph"><block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block> 和 <block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 的概念在 ONTAP 中保護不同的資源。兩者無法互相取代，但經常造成混淆。本節旨在闡明這些概念。</block>
+  <block id="4fd87fe081c717a3844cc0b0aabe03b6" category="paragraph">Volume 可能有充足的可用 inode，但仍會在單一目錄中達到<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>。此外，資料集可能避免了龐大的目錄大小，但仍會耗盡 Volume 中的公用 inode 供應量。用戶端的症狀起初看起來很相似：NFS 通常會傳回<block ref="e654d1196cfba5f5e0c0a869185f35cf" prefix=" " category="inline-code"></block>，而 SMB 通常會傳回<block ref="844f00cf5b8d9136a1bae0413d46f4ae" prefix=" " category="inline-code"></block>。即使 Volume 仍有可用的 inode 和資料容量，已滿的目錄也可能傳回<block ref="07be006d9d1b96a6c8e1574ecf8d03b9" prefix=" " category="inline-code"></block>。</block>
+  <block id="d2fa7510fb0f926dea1444c15196542a" category="inline-link-macro">Maxfiles 和 ONTAP inode 資訊</block>
+  <block id="ffe64056b6da03b2f855081434941773" category="inline-link-macro">Maxdir-size 和大型 ONTAP 目錄</block>
+  <block id="97fdb7b2bc812c5e3e8785d210a36654" category="paragraph">下表顯示 ONTAP 允許的常用預設值以及最小值和最大值。FlexVol<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block> 最大值仍然取決於 Volume 大小，因此在將絕對上限視為可設定之前，請先查詢<block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block>。詳細資訊請參閱 <block ref="2ae44a68f4b4d01216f8f81ea0603975" category="inline-link-macro-rx"></block> 和 <block ref="e0e2503a3085feee61226f9dc6c1bb33" category="inline-link-macro-rx"></block>。</block>
+  <block id="f5ccadfc7734d3a5818e229f8fd28f0d" category="cell">適用於</block>
+  <block id="a1d0ec6d56f8833a078b5a7ac4caf2d4" category="cell">最低限度</block>
+  <block id="8321e79c278ec510f63675c040594892" category="cell">最大值</block>
+  <block id="34604e8bd44c9555ad794509a8a7e7d0" category="cell"><block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix="" category="inline-code"></block> <block ref="248d9da2c0d74a21dcc355578c72ff8d" prefix="(" category="inline-code"></block>）</block>
+  <block id="84b9523e45d813a33b6812a09967996f" category="cell">FlexVol®</block>
+  <block id="4cd5f6f3f31e8ff64a1975948dee868f" category="cell">大約每 32 KiB 的 Volume 大小對應一個公共 inode</block>
+  <block id="b3fb323aa9f87876953333d2cbf2d86e" category="cell">沒有固定的最低產品數量。<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>不能低於<block ref="e88c75146b28c1c27220224aa52da2fc" prefix=" " category="inline-code"></block>。</block>
+  <block id="63337feed5360ad6b97c039bb831dcf3" category="cell">2,040,109,451 個公用 inode。較小的 Volume 具有較低的<block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block>，大約每 4 KiB 的 Volume 大小對應一個 inode。Volume 必須大約為 7.8 TB 或更大，才能設定 2,040,109,451。</block>
+  <block id="5b1f646e5162ada424447d113a3084fc" category="cell">相同的每個成員密度，報告為 FlexGroup 範圍的總計</block>
+  <block id="bf1b4cc4b1a51fb386832c1d3af851ac" category="cell">每個成員的最低限額相同。在 FlexGroup 上設定總額，而不是在單一成員上。</block>
+  <block id="a9ccfa0a41004ad46aa7b3dd4046b253" category="cell">統一的 ONTAP 最多可支援 4000 億個公共 inode，而運行 ONTAP 9.19.1 及更高版本的 AFX 最多可支援 1 兆個公共 inode。每個組成部分的 inode 數量上限仍為 2,040,109,451 個。</block>
+  <block id="504ecde76c817ced842a451fd5d1fe58" category="cell"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block></block>
+  <block id="84178a48ba5916fad5b726c2d9340f98" category="cell">FlexVol 和 FlexGroup</block>
+  <block id="1bcc39daae50092f6f41ff13f187855c" category="cell">320 MB</block>
+  <block id="b451357f6f0b531a24c843667110b879" category="cell">4 KiB</block>
+  <block id="974c2262615af73433567515efbb80e9" category="cell">4 GB</block>
+  <block id="7d465796a1393689b73213da46fb3016" category="inline-link-macro">maxdir-size 的功能、EMS 和監控</block>
+  <block id="35210a50894d01d0fc724a54def8cf1a" category="paragraph"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block> 在 FlexVol 和 FlexGroup 上的上限是相同的。FlexGroup 不會將該上限乘以組成元素的數量。在提高上限之前，請確認 ONTAP 版本和平台所支援的<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>最大值。請參閱 <block ref="0d57fd843d9429e5c147709b28774c7d" category="inline-link-macro-rx"></block>。</block>
+  <block id="4f3cce61fb4fed7b4110dca0b72e69b9" category="section-title">maxdir-size 是什麼？</block>
+  <block id="4a7ca009f970380ae99a2aaf35e83988" category="paragraph"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block> 是每個 Volume 中單一目錄檔案可以增長的最大大小。它以容量值的形式呈現，而不是固定的條目數，儘管單一目錄中的名稱數量是影響目錄大小的因素之一。檔案名稱長度、Unicode 字元表示、SMB 8.3 別名、NFS 備用名稱和 FlexGroup 遠端條目表示都會影響目錄大小。當您增加 Volume 的 <block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 值時，該設定允許按目錄增長，而不是預先分配空間。</block>
+  <block id="98927b3f41022782976c35ab85a63a69" category="list-text">如需 maxdir-size 計算的詳細資訊，請參閱 <block ref="e0e2503a3085feee61226f9dc6c1bb33" category="inline-link-macro-rx"></block>。</block>
+  <block id="f6e1bcf54dca58e6f102a6b37a28229d" category="list-text">如需目錄索引資訊，請參閱 <block ref="60a8cb3ef3340b9d5df8a57636fa5d59" category="inline-link-macro-rx"></block>。</block>
+  <block id="0b5c418c44941d37ad6eb9ea7d3af31b" category="inline-link-macro">maxdir-size 的影響</block>
+  <block id="12154019e8e4b0bc55f2ab60a5dc0bfe" category="list-text">有關容量、效能和超出限制行為，請參閱<block ref="29dcc7199d168adbbb46b5925138a4cb" category="inline-link-macro-rx"></block>。</block>
+  <block id="79c21c333a7653784a457c3223bf6ba9" category="inline-link-macro">Volume 考量</block>
+  <block id="1f4e2173cc1c2f834cebbe70821fb663" category="list-text">有關 FlexVol 和 FlexGroup 的注意事項，請參閱 <block ref="e84d886af3e6b3d2dcb999a6c9370ef5" category="inline-link-macro-rx"></block>。</block>
+  <block id="ae4b24bd318bd1024669aaadf19edf33" category="list-text">有關版本增強功能與 EMS 事件，請參閱<block ref="0d57fd843d9429e5c147709b28774c7d" category="inline-link-macro-rx"></block>。</block>
+  <block id="3e8700177f2866efb90cd1156e5b64b5" category="section-title">maxfiles 是什麼？</block>
+  <block id="9df7ad6820416e188f45204b94014da2" category="paragraph"><block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix="" category="inline-code"></block>（設定為 Volume 層級選項<block ref="248d9da2c0d74a21dcc355578c72ff8d" prefix=" " category="inline-code"></block>）是單一 Volume 中可用公用 inode 數量的可設定上限。該計數不僅包括檔案和目錄，還包括命名串流、 ACL 和其他公用物件——有時甚至是常規目錄清單中看不到的物件。Volume 包含一個隱藏的 inode 檔案來保存這些記錄。當需要新的公用 inode 且沒有剩餘的可用記錄時， ONTAP 會擴展 inode 檔案，直到達到<block ref="248d9da2c0d74a21dcc355578c72ff8d" prefix=" " category="inline-code"></block>設定與 Volume 總大小。<block ref="248d9da2c0d74a21dcc355578c72ff8d" prefix=" " category="inline-code"></block>的可設定最大值取決於 Volume 大小與 ONTAP 限制。</block>
+  <block id="717a768c92deff75bbd0135f081dcb6c" category="inline-link-macro">高檔案數量與 inode 容量</block>
+  <block id="d532ca60480e4f4eaa3a99d748a670dd" category="list-text">有關 inode 計數器和容量，請參閱 <block ref="e69384c54586986ef3e23ab69e8bc2d5" category="inline-link-macro-rx"></block>。</block>
+  <block id="cc01847d453fbbc05114e43a6de428b0" category="inline-link-macro">ONTAP inode 類型</block>
+  <block id="8937f82cc0e54c23127a15feeafa6026" category="list-text">有關公共和私有 inode 類型，請參閱<block ref="b380ffd86e368ce2eca63e3ab71be44f" category="inline-link-macro-rx"></block>。</block>
+  <block id="d584db2b29027186522f0f61e4b6ff4d" category="list-text">有關 Volume 大小限制、NFS 檔案 ID 和耗盡行為，請參閱<block ref="2ae44a68f4b4d01216f8f81ea0603975" category="inline-link-macro-rx"></block>。</block>
+  <block id="cd25b77e72c1a989ab5e02ae43f8f4bc" category="inline-link-macro">控制 maxfiles</block>
+  <block id="f4b8063d2677d5f91ce721ad10696c33" category="list-text">有關如何設定<block ref="248d9da2c0d74a21dcc355578c72ff8d" prefix=" " category="inline-code"></block>，請參閱<block ref="5fc88fb8d7c0a48e0cdaec0da30885fc" category="inline-link-macro-rx"></block>。</block>
+  <block id="8e9f32eafcbccd0be4908214bf4f84db" category="inline-link-macro">監控 maxfiles、EMS 事件和 ONTAP 增強功能</block>
+  <block id="04a1318e5cd728901b371ab184c31b6c" category="list-text">如需 EMS 事件與監控，請參閱<block ref="fa7252d30fd8a1bdbff7bf3f1d1774ce" category="inline-link-macro-rx"></block>。</block>
+  <block id="ba86233aabb388391c862f25c11169a1" category="inline-link-macro">規劃方法</block>
+  <block id="49aa6d9dbc3ee3d187ef4522e762deb7" category="list-text">有關如何收集 inode、目錄、操作速率和容量估算值，請參閱<block ref="c4cc53e575d976b43bd48c2b31604253" category="inline-link-macro-rx"></block>。</block>
+  <block id="6bb5a900e591856ee7bfa29a69e68ba0" category="inline-link-macro">高檔案數 NAS 工作負載最佳實務</block>
+  <block id="ef7e8af064787924afaa32aae4861ea8" category="list-text">如需設計與操作建議，請參閱 <block ref="d5dcdda42a9208c03ec5055ea1119b7f" category="inline-link-macro-rx"></block>。</block>
+  <block id="17333907f7b9af94536d9ec9fe5c1c61" category="inline-link-macro">接下來：Maxdir-size 和大型 ONTAP 目錄 →</block>
+  <block id="193de3b87351e9539471c9d2a424f6f3" category="cell"><block ref="193de3b87351e9539471c9d2a424f6f3" category="inline-link-macro-rx"></block></block>
+  <block id="e69384c54586986ef3e23ab69e8bc2d5" category="list-text"><block ref="e69384c54586986ef3e23ab69e8bc2d5" category="inline-link-macro-rx"></block></block>
+  <block id="fc823a943f048e174186dd77721e3bb3" category="inline-link-macro">確定 ONTAP 磁碟區的檔案和 inode 使用情況</block>
+  <block id="7a538b882ea2f3238cd79d4a79020011" category="list-text"><block ref="7a538b882ea2f3238cd79d4a79020011" category="inline-link-macro-rx"></block></block>
+  <block id="d57255c0688fac591849362fc79bedb4" category="inline-link-macro">FlexVol Volume 的最大目錄大小</block>
+  <block id="d5e9d156436247677e5f39c065b7887e" category="list-text"><block ref="d5e9d156436247677e5f39c065b7887e" category="inline-link-macro-rx"></block></block>
+  <block id="3248c070e99ebaba111415026ee3d5e5" category="inline-link-macro">FlexGroup Volume 管理</block>
+  <block id="bb9c6ceff8da9c8ecb1bffaeee599083" category="list-text"><block ref="bb9c6ceff8da9c8ecb1bffaeee599083" category="inline-link-macro-rx"></block></block>
+  <block id="e88d5bf022941f3198b1bc799070f090" category="summary">了解 ONTAP maxdir-size 測量的內容，以及目錄檔案大小的計算方式。</block>
+  <block id="a005852705770e068b16506d89458b12" category="inline-link-macro">估算每個目錄檔案的名稱數量</block>
+  <block id="c4ceb069c94fb2ff812fadf99e728849" category="paragraph"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block> 透過限制可分配給該目錄中名稱的容量，來限制 ONTAP Volume 中每個目錄檔案的大小。它與 Volume 的<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block> inode 限制無關，且單一目錄中的名稱數量沒有靜態可定義的限制，因為該值是可變的，並且基於許多因素，例如名稱長度、字元類型等。如需詳細資訊，請參閱 <block ref="641d8e688b09b8b149bf7a7641f804bc" category="inline-link-macro-rx"></block>。</block>
+  <block id="584dfab436a938c80c72bb7b927e3602" category="section-title">ONTAP 中的目錄是什麼？</block>
+  <block id="69372c686e10c33887f59556c45e5f9d" category="paragraph">WAFL 目錄是一個中繼資料檔案，用於將名稱對應至 inode 編號。它的大小並非該目錄下儲存於檔案中的資料總和，而是取決於目錄包含的名稱數量，以及每個名稱所需的目錄空間大小。新建立的目錄初始大小為 4 KiB，並隨著項目的新增，以 4 KiB 目錄區塊為單位增長。</block>
+  <block id="2c20c99b1299efd157d1d9e7a02aafbd" category="paragraph">目錄使用一個 inode，其記錄儲存在 Volume 級 inode 檔案中（在概念和功能上是分隔的）。目錄的名稱儲存在該目錄本身的資料區塊中。增加更多名稱會增加個別目錄檔案的大小，並可能接近<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>上限，而建立更多檔案系統物件（例如檔案、目錄、ACL 和命名串流）會配置更多 inode 記錄，並可能使 Volume 級 inode 檔案接近<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block>上限。單一 4KiB 目錄區塊中的名稱項目數量取決於每個名稱的儲存方式，這取決於其長度和字元編碼。</block>
+  <block id="98eddd0fb8633307eafbbfbc41fe7029" category="section-title">目錄區塊佈局</block>
+  <block id="bc2526adf5b2cde5d93e1aaa67274bbf" category="paragraph">ONTAP 目錄檔案以 4 KiB 區塊為單位成長，每個區塊包含的條目記錄和名稱區塊數量不固定，具體數量取決於各自的大小。在 ONTAP 中，名稱區塊是一個 16 位元組的插槽，用於儲存檔案名稱的一部分；每個名稱佔用一個條目記錄，外加其編碼長度所需的 16 位元組區塊數量。</block>
+  <block id="9e725f0c9c7fd414f61a46ae700e3d1e" category="paragraph">以下範例展示如何在 48 位元組的名稱中配置名稱區塊：</block>
+  <block id="eb1ebe238580ee3565bf712c5b7b5728" category="image-alt">圖示：一個 48 位元組的檔案名稱儲存為三個 16 位元組的名稱區塊和一個 16 位元組的 Unicode 短格式例行成本區塊</block>
+  <block id="88405dd2f807ed13bd0db43d70fe0857" category="section-title">目錄區塊的最大數量和名稱的最大數量</block>
+  <block id="51bf44cc90a81cea0f77bc324b55ea82" category="paragraph">允許的最大目錄區塊數量由 <block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 值決定。</block>
+  <block id="1af63039bd0f6115bd4700f76efa1e04" category="paragraph">目錄大小為 320 MB 時，最多可以分配 81,920 個目錄區塊（320 MB / 4 KiB，其中 320 MB 等於 335,544,320 位元組，因為 ONTAP 以二進位單位報告這些值）。因此，目錄檔案中允許的名稱總數取決於每個目錄區塊允許的條目數。</block>
+  <block id="18ff32e480e127c1e8b0a70171bed022" category="section-title">目錄區塊的建構方式</block>
+  <block id="ed9c91ece844c94704987812c771d1f9" category="paragraph">每 4 KiB 的目錄區塊都以相同的方式劃分：</block>
+  <block id="a799c650994bc951f29c95736e46cc31" category="list-text">最多 128 筆條目記錄，每筆 12 位元組（1536 位元組）</block>
+  <block id="ff69e61f2d1cf94f49450201d7c893fe" category="list-text">一個共享的資源池，包含 160 個名稱區塊，每個名稱區塊 16 位元組（共 2560 位元組）</block>
+  <block id="5bba17794d9e1bd66bd596061ecc56cd" category="paragraph">這些共佔用一個 4 KiB 區塊。每個儲存的名稱都需要一個條目記錄和一個或多個名稱區塊，無論哪個資源池先耗盡（128 個條目記錄或 160 個名稱區塊），都將決定該區塊能容納多少個名稱。對於 ASCII 名稱，名稱區塊會先耗盡。因此，<block ref="19f94aba38a69bc317a4e6a5bdcdbdbd" prefix=" " category="inline-code"></block> 和固定的每兆位元組檔案比率都不是精確的。</block>
+  <block id="ffe006229075bfa47ac9eccad8b995b6" category="paragraph">在下圖中，我們可以看到前一個範例中的 48 位元組名稱。該名稱使用單一 12 位元組的項目記錄，加上先前顯示的四個 16 位元組名稱區塊（64 位元組）。</block>
+  <block id="9ca04ae75f544a0d2a2003618cc612d4" category="image-alt">4 KiB 目錄區塊示意圖，展示了使用一個 12 位元組條目記錄和四個 16 位元組名稱區塊表示的 48 位元組 Unicode 短名稱</block>
+  <block id="24a1e84f171f7624a56edc931ebd942f" category="paragraph">{nbsp}</block>
+  <block id="f2054987e1bcc96cc1e49e9a76cc422d" category="paragraph">160 個資料塊的資源池會在條目記錄被使用之前耗盡區塊中的空間。總共 160 個資料塊 / 4 個資料塊，每個區塊可提供 40 個此類名稱。或者，128 個條目記錄中有 88 個未被使用。較短的日常名稱只需要三個資料塊，因此相同的 4 KiB 目錄區塊可以容納大約 53 個此類名稱。這說明了名稱的大小如何直接影響單一目錄中允許的名稱數量。</block>
+  <block id="7c38f3cfcbde4dbb6f83468bfd261771" category="paragraph">要粗略估算目錄中可以容納多少個名稱，先計算單一 4 KiB 的區塊可以容納多少個名稱，然後乘以容量上限允許的區塊數。（記住，在 320 MB 的容量上限下，即為 81,920 個區塊。）</block>
+  <block id="78065e8c836777b2d8a9e543cff01f16" category="paragraph">一個區塊中能容納多少個名稱取決於每個名稱佔用的區塊空間大小。較短、較簡單的名稱佔用空間較小，因此可以容納更多；較長的名稱，或者 ONTAP 需要以較寬格式儲存的名稱，佔用空間較大，因此可容納的名稱數量較少：</block>
+  <block id="797271d9454fae9be9a185ce336348b3" category="list-text">長度不超過 32 個字元的日常名稱（例如<block ref="d9a6fc7b698d02a5cdce5ddf21075753" prefix=" " category="inline-code"></block>）都以相同的方式打包，大約 53 個可以裝入一個區塊。</block>
+  <block id="fb589e6f21531690c8fb86c75d8283ac" category="list-text">較長的名稱可容納的數量較少 —— 例如，48 個字元的名稱每個區塊大約可容納 40 個。</block>
+  <block id="cd7d7e500f1764fd3fb65633ae2c9687" category="list-text">必須以更寬的形式儲存的名稱大約佔用兩倍的空間，因此可容納的數量會減少。這適用於包含非 ASCII 字元（例如帶有重音符號的文字或東亞文字）的名稱、同時包含 NFS 替代名稱的名稱，以及 FlexGroup 遠端項目。由於特殊字元所需的空間，此類 32 個字元的名稱每個區塊大約可容納 26 個。如果 SMB 在長名稱旁邊也產生一個短的「8.3」別名，則該別名也會佔用額外的空間。</block>
+  <block id="22adc3e36a38fb567d4558000a58e089" category="paragraph">儲存舊式 DOS 風格「8.3」名稱的舊 Volume，由於名稱非常小（位元組數較少），每個區塊最多可容納 128 個條目。但是，在採用普通名稱的現代 Volume 上，您不會看到這種現象。這是因為目前的 ONTAP Volume 以 Unicode 格式（預設為 C.UTF-8）儲存名稱，因此它們可以支援跨 NFS 和 SMB 的長檔案名稱和國際字元，而不是像舊系統那樣依賴八個字元的 DOS 風格名稱。有關 Volume 語言的更多詳細資訊，請參閱 &lt;insert link here&gt;。</block>
+  <block id="93e7159b2cd36f4c48b0e6b2d3a3d927" category="paragraph">由於名稱差異很大，目錄中允許的檔案數量並沒有單一的固定數值。一個有用的規劃數值是，在 320 MB 的設定下，一個 FlexVol Volume 最多可容納約 430 萬個普通名稱。這裡的普通名稱指的是最多約 32 個 ASCII 字元。這只是一個粗略的範例，並非保證，而且不要求名稱必須是任何特定長度。下表顯示了一些常見情況，以及在 320 MB 的設定下，單一目錄中每個情況允許的近似名稱數量。</block>
+  <block id="0fb9a3aacd63c84f1ae85f8b9e89c91f" category="cell">名稱設定檔</block>
+  <block id="63c51d7ff7e26cff28ce5bee89809dab" category="cell">範例檔案名稱</block>
+  <block id="53dfa44b443fd17261265d4ca8beb362" category="cell">每 4 KiB 區塊的名稱</block>
+  <block id="29e10ed6b9ebe22a1b0285e1cf04efe9" category="cell">一個目錄中的名稱大小為 320 MB</block>
+  <block id="3744483a2dc4b209e522d955989702be" category="cell">簡短、日常用語的名字（8 個字元）</block>
+  <block id="ebced5b6aac81313d9f82a408bc5419a" category="cell"><block ref="546f4179751e71e52ddbe0b3df2b013a" prefix="" category="inline-code"></block></block>
+  <block id="d82c8d1619ad8176d665453cfb2e55f0" category="cell">53</block>
+  <block id="dc890c7ebb2ed7839c318874d0a17e0a" category="cell">4,341,758</block>
+  <block id="9c51e46718eeef7f9df0c028ae0af439" category="cell">日常名稱（32 個字元）</block>
+  <block id="cf6a09608b309c99057734ede2fc9c77" category="cell"><block ref="08e0d6d1334bdf2478002785281fde99" prefix="" category="inline-code"></block></block>
+  <block id="092c92b2388cc4921f7b07fdbc0bb7d9" category="cell">較長的名稱（48 個字元）</block>
+  <block id="31a3cd52d56f34b8f1fed20e04bf9ca2" category="cell"><block ref="0bef88b853cce2aef5d3da471fb378f0" prefix="" category="inline-code"></block></block>
+  <block id="d645920e395fedad7bbbed0eca3fe2e0" category="cell">40</block>
+  <block id="710ccd1b43c2593852db2409930f9b03" category="cell">3,276,798</block>
+  <block id="fc3c2d2c2f8b469b79316551b72a8d8d" category="cell">包含非 ASCII 字元的名稱，或 FlexGroup 項目（32 個字元）</block>
+  <block id="2e66b0bcf43d646ebef814ed0eae882f" category="cell"><block ref="c7ab0c41bfb7fc32be5d752eb822dbbf" prefix="" category="inline-code"></block></block>
+  <block id="4e732ced3463d06de0ca9a15b6153677" category="cell">26</block>
+  <block id="6d97a051e15746cfc1e8011aaa99c18b" category="cell">2,129,918</block>
+  <block id="4184e6388e0067948f4776ee215959eb" category="cell">同時包含 NFS 備用名稱的名稱（32 個字元）</block>
+  <block id="de631889dfb819407885e392966a5acb" category="cell"><block ref="bb3f9e668eb37a473824627ea033a11c" prefix="" category="inline-code"></block>備選方案<block ref="e5089162c74be9696656b992c76abb74" prefix=" " category="inline-code"></block></block>
+  <block id="b6d767d2f8ed5d21a44b0e5886680cb9" category="cell">22</block>
+  <block id="bd4a1f51468f592c728bcee2119531d4" category="cell">1,802,238</block>
+  <block id="c3246fbde843d87ddab98cc4694ed427" category="paragraph">*注意：* 計數假設 <block ref="5058f1af8388633f609cadb75a75dc9d" prefix=" " category="inline-code"></block> 和 <block ref="58b9e70b65a77700ba66e9c64d6b9f89" prefix=" " category="inline-code"></block> 條目存在，因此每個值都略小於計算結果。</block>
+  <block id="899d2ccd6b87fa9c7279177a8e76fc1a" category="paragraph">總結來說，同樣的 320 MB 上限可容納約 430 萬個簡短的日常名稱，但如果名稱以較寬的形式儲存，則數量不到一半。如果每個名稱都達到協定最大值 255 個字元，則只允許約 737,000 個名稱。</block>
+  <block id="2267e3edc6f3b9e8f6c66b84a6909870" category="section-title">檔案名稱長度與路徑長度的比較</block>
+  <block id="68c165547a408aa850ffbc3924ea2b6f" category="paragraph"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block> 記錄儲存在特定父目錄中的基本名稱。它不會在每個條目中儲存完整的絕對路徑。每個路徑名稱組成部分都是其自身父目錄中的一個條目。因此，更深的目錄結構並不會增加 <block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 使用量。</block>
+  <block id="2aa27b11c87cca483639881652be5f98" category="paragraph">更深的層級結構會在 Volume 中增加目錄和公共 inode，但會減少每個目錄中儲存的名稱數量。這種權衡通常可以提高擴充性和整體效能。</block>
+  <block id="c8354b3f5f62964e41038be7b936b7ca" category="paragraph">*注意：*協定和用戶端路徑長度限制仍然獨立適用。</block>
+  <block id="d7ddf904dc4efb8ca8d1356eac40e09b" category="paragraph">此上限獨立適用於 Volume 中的每個目錄，且它是一種限制而非保留。設定 320 MB 並不會立即保留 320 MB 的 Volume 容量；它只是允許任何一個目錄增長到該大小。</block>
+  <block id="1eff408264ee0107c4bd1a97fe1943cd" category="paragraph">以下列出一些需要考慮的因素：</block>
+  <block id="89ffa13bb76285e21de3ab358c478fc3" category="list-text">如果一個目錄檔案成長到 320 MB 的區塊，那麼這些區塊將佔用 320 MB 的實際 Volume 容量。</block>
+  <block id="248bf42c6e93338b95d18dcf6f7d41bc" category="list-text">一旦目錄檔案成長，即使之後刪除了條目，其大小也會保持在最高值。</block>
+  <block id="477fe086b72f0150ad874844e1b1e3bc" category="list-text">刪除檔案或目錄會使這些條目插槽可重複使用，但不會壓縮目錄檔案。</block>
+  <block id="bb3655c073073c1e42b6c8f500e07648" category="list-text">索引目錄可以對完全空白的 4 KiB 區塊進行打洞（ONTAP 9.5 及更高版本提供），並回收磁碟上的這些實體區塊，但報告的目錄檔案大小通常不會縮小。</block>
+  <block id="963783cbc7c685a68637412fa1f0cdb6" category="paragraph">*注意：* ONTAP 為大型目錄建立的伴隨目錄索引會使用自身的中繼資料容量和一個 inode，但它不屬於目錄檔案的一部分，且從不計入<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>。如果索引設定為佔用公共 inode 空間以用於 SnapMirror 複寫目的，則它會改為計入<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block>（公共 inode 限制）。</block>
+  <block id="1ca4a2c46af767a14ff3bf32f52fa80a" category="paragraph">如需詳細資訊，請參閱 <block ref="60a8cb3ef3340b9d5df8a57636fa5d59" category="inline-link-macro-rx"></block>。</block>
+  <block id="bc22de74feeee3243554246b3ce12768" category="section-title">提高 maxdir-size 值</block>
+  <block id="7229bd4b6d14ee15b53558d74f3667a3" category="list-text">適用於 Volume 中的所有目錄</block>
+  <block id="33256a1c40d644feab69aac99ae3abe4" category="list-text">允許目錄檔案超出先前的上限</block>
+  <block id="d66d83dff66e4b9532524ed3aae5ca1c" category="list-text">不預先分配或保留新的最大值</block>
+  <block id="085ef83dc3d0420d71fd46f80bc2b8d0" category="list-text">不會新增公用 inode 或變更<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block></block>
+  <block id="d1108d7f60fe374db0c7d1aef9e3497f" category="list-text">不會使現有目錄立即使用空間</block>
+  <block id="49aa6da6ee3949280e055c8bdfa8425f" category="inline-link-macro">檢視 maxdir-size 和目前目錄大小</block>
+  <block id="db3fd014301bde25147528cd989cca35" category="paragraph">有關如何檢查設定的上限與目錄的目前大小，請參閱 <block ref="309f0393f6b9933e0b779d252fb16f5f" category="inline-link-macro-rx"></block>。</block>
+  <block id="5ea19e7a0e1b289edd587b21fa3bf42b" category="section-title">FlexGroup Volume 是否可以繞過 maxdir-size 限制？</block>
+  <block id="b9c438153a3879f94d1d92f729c30fa3" category="paragraph">不。一個 FlexGroup 不會將一個目錄的<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>乘以成員數。目錄檔案仍然存在於單一成員上，而且遠端項目會使該檔案的成長速度比在 FlexVol 上的相同名稱更快。如需放置、遠端項目膨脹及規劃數據的相關資訊，請參閱 <block ref="347f065a571cb7b3b11e9c32c58c81ff" category="inline-link-macro-rx"></block>。</block>
+  <block id="6047a94a6a82e02d518fe8eab128f40d" category="inline-link-macro">← 上一頁： NetApp ONTAP NAS Volume 的高檔案數工作負載</block>
+  <block id="b1e726cf7c884d5d079fa979d1739e2b" category="cell"><block ref="b1e726cf7c884d5d079fa979d1739e2b" category="inline-link-macro-rx"></block></block>
+  <block id="3669e19aed8275a2a36673a279aa7a57" category="inline-link-macro">接下來：查看 maxdir-size 和目前目錄大小 →</block>
+  <block id="8c1bc90b792d86daaff3001d61628621" category="cell"><block ref="8c1bc90b792d86daaff3001d61628621" category="inline-link-macro-rx"></block></block>
+  <block id="e84d886af3e6b3d2dcb999a6c9370ef5" category="list-text"><block ref="e84d886af3e6b3d2dcb999a6c9370ef5" category="inline-link-macro-rx"></block></block>
+  <block id="c1ae4fd21ac963dda06f98d23a4009f9" category="summary">檢視 ONTAP maxdir-size 限制，測量來自 NFS、SMB 或 XCP 的目錄檔案，並將 EMS 檔案 ID 解析為路徑。</block>
+  <block id="e61add5765edb70d2061b170a887a24e" category="paragraph">Volume<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 欄位是 Volume 中每個目錄的授權容量上限。測量個別目錄需要檢查該目錄物件，而不是 Volume 所使用的資料。</block>
+  <block id="1b64a709b727a8631e339ee3e6703ec8" category="section-title">查看設定的上限</block>
+  <block id="60894a8d46b1f0ed396f418895328f7a" category="paragraph">這報告的是每個目錄的上限，而不是特定目錄的大小。</block>
+  <block id="78ef83c397194c62451a3aed8e7a0ff8" category="section-title">從 NFS 用戶端查看目錄檔案</block>
+  <block id="4c7163c8e2ba5db2a0bff997048d6611" category="paragraph">ONTAP 沒有直接報告單一目錄大小的命令，因此必須透過用戶端查詢或使用隨裝即用工具來取得該值。如果需要精確的目錄物件大小，NFS 用戶端是首選的用戶端側方法。</block>
+  <block id="7ea839d9e82e3a5e51660b7bc5e5f355" category="paragraph">在來自 GNU/Linux 用戶端的已裝載 NFS 路徑上，使用<block ref="77ddcb5f19832f4145345889013ab3a4" prefix=" " category="inline-code"></block>或對目錄物件本身進行長目錄清單：</block>
+  <block id="857b891bc26faf7c65def81a54d99b8d" category="paragraph">請勿將<block ref="13a014cb9de9f7cad88d5dafb70ecb41" prefix=" " category="inline-code"></block>用於此目的。<block ref="13a014cb9de9f7cad88d5dafb70ecb41" prefix=" " category="inline-code"></block> 報告目錄下方可存取的資料，而<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>則適用於目錄中繼資料檔案本身。</block>
+  <block id="d153575b3245e44f72dfd57704517ab3" category="paragraph">若要尋找安裝點下最大的目錄，請執行<block ref="ea170e2cafb1337755c8b3d5ae4437f4" prefix=" " category="inline-code"></block>，以按大小列出葉目錄並剔除 Snapshot 快照技術複本。以下傳回最大的 10 個目錄：</block>
+  <block id="7ad499864015aa8a91a360f8d67b6cec" category="paragraph">第七列顯示的是目錄檔案大小（以位元組為單位）；預設值為 320 MB 的目錄顯示為 335,544,320 位元組。即使對於包含數百萬個檔案的目錄，此方法也能快速運作。</block>
+  <block id="45f36f4593263ea6e1906bddf7fda306" category="section-title">從 SMB 用戶端查看目錄大小</block>
+  <block id="298ebc28f3eb4be1e46cc4587acfe07d" category="paragraph">Windows 和 SMB 用戶端不會公開目錄本身的中繼資料大小，因此沒有直接等同於<block ref="77ddcb5f19832f4145345889013ab3a4" prefix=" " category="inline-code"></block>或<block ref="a96df544e36b059028e4c15d439f9a2e" prefix=" " category="inline-code"></block>的 SMB 對應項目用於<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>：</block>
+  <block id="5c54c7f59bd55b2ebdd1bdc4e8c224dc" category="list-text"><block ref="736007832d2167baaae763fd3a3f3cf1" prefix="" category="inline-code"></block> 將目錄列為 <block ref="22a3afa6929a2c87025fe3045a234971" prefix=" " category="inline-code"></block>，沒有自身大小。</block>
+  <block id="92816f66972285f6eddbd2f00ccf6116" category="list-text">檔案總管中資料夾的 *內容* 對話方塊報告的是資料夾下包含的資料總大小（相當於<block ref="13a014cb9de9f7cad88d5dafb70ecb41" prefix=" " category="inline-code"></block>），而不是目錄中繼資料檔案。</block>
+  <block id="9a9cbf6c49b21b94cad698c98470108d" category="paragraph">若要測量 SMB 服務資料集的目錄大小，請改用以下方法之一：</block>
+  <block id="5bd30821767ed20e0e4025479da8f723" category="list-text">如果該 Volume 也支援 NFS，請將其裝載並使用上述的 <block ref="77ddcb5f19832f4145345889013ab3a4" prefix=" " category="inline-code"></block>、<block ref="a96df544e36b059028e4c15d439f9a2e" prefix=" " category="inline-code"></block> 或 <block ref="ea170e2cafb1337755c8b3d5ae4437f4" prefix=" " category="inline-code"></block> 方法。</block>
+  <block id="5092b5b55d9d197b1e937276a2ed6f53" category="list-text">使用 NetApp XCP，它可以直接掃描 SMB 共享（請參閱以下部分）。</block>
+  <block id="dc6e0127498d0179e62e60b5c27b4967" category="section-title">使用 XCP 掃描目錄大小</block>
+  <block id="288588426582ddfa054fc2609bb779cd" category="paragraph">NetApp XCP 並行掃描檔案系統並報告目錄大小和數量，這對於大型或 FlexGroup 資料集非常有用。它同時支援 NFS 匯出和 SMB 共享。XCP 會掃描整個檔案系統後才傳回符合結果，因此對於檔案數量龐大的資料集，請預留足夠的時間。</block>
+  <block id="62e5a74d1f68d55e05a7b7150c38e4e6" category="admonition">XCP 1.5 將該工具重組為子命令，例如<block ref="53aefec08170b2ebed981a0a86d0dbe0" prefix=" " category="inline-code"></block>和<block ref="776e6c3d14fd9df9fc13e130d598c448" prefix=" " category="inline-code"></block>。在 XCP 1.5 及更新版本中，請使用<block ref="79b37c0e9765296c2ba8efc16a70d15f" prefix=" " category="inline-code"></block>形式。在較早的版本中，請直接執行相同的<block ref="af7e4e4bdf56fd6022afd2b0cf443794" prefix=" " category="inline-code"></block>和<block ref="3c8468c40f21d7ea04242771207b5d3e" prefix=" " category="inline-code"></block>選項，而不需要<block ref="53aefec08170b2ebed981a0a86d0dbe0" prefix=" " category="inline-code"></block>動詞，例如<block ref="1c693ed4ffafafccc21bf397c1844898" prefix=" " category="inline-code"></block>。</block>
+  <block id="cee8f6b02a4fd48c05899e3f01446a51" category="paragraph">列印一份樹狀結構統計報告，其中包括最大目錄的條目數（顯示為<block ref="9a19e4962658ae45e6a1aea119360fe4" prefix=" " category="inline-code"></block>）以及檔案和目錄的計數：</block>
+  <block id="6cbd453e804fff64a0e5100665d4af25" category="paragraph">列出每個目錄及其目錄檔案大小（以位元組為單位），從大到小排列。對於目錄物件，該 <block ref="1aec9c5d0644e11fd9dd0f9fb36009fb" prefix=" " category="inline-code"></block> 值是 <block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 所限制的目錄中繼資料大小：</block>
+  <block id="9f383f9d3d8cc2b8bace04b1769f0c56" category="paragraph">新增 <block ref="e36751ffcb15beae9c1bdef00c6041fd" prefix=" " category="inline-code"></block> 或 <block ref="a04601c5ed04826cdcefa49dea445044" prefix=" " category="inline-code"></block> 以儲存精確值報告，而不是簡短的控制台總計。</block>
+  <block id="fa60c8b6be00f3b465d58255b81177d8" category="inline-link-macro">TR-4571：NetApp ONTAP FlexGroup Volume</block>
+  <block id="7bcb965c7fbbba8f8c9667bd27694699" category="paragraph">若要將掃描範圍限制在條目數超過指定值的目錄，請使用 <block ref="3ea70755a2fc175617414017dae734ee" prefix=" " category="inline-code"></block>。下列範例列出條目數超過 2,000 的目錄（改編自 <block ref="fad2d810978652bf5a12211d515b051a" category="inline-link-macro-rx"></block>）：</block>
+  <block id="beeca4807ac49c10ffce7ba004188072" category="section-title">尋找 EMS 報告的目錄</block>
+  <block id="fb2e5f34edda6bcd07301aa4ee0f309d" category="paragraph">maxdir-size EMS 事件包含 Volume 和檔案 ID。使用以下方式將該 inode 解析為路徑：</block>
+  <block id="57cb86aa81e9d8e7778c8d576e6e4666" category="paragraph">報告的檔案 ID 屬於達到或接近限制的目錄，而不是建立失敗的檔案。</block>
+  <block id="972746386f212dca96d325df4b5e120c" category="admonition">對於 FlexGroup，<block ref="6512b22ca4ccbb5e6ed551c8d865b2fb" prefix=" " category="inline-code"></block> 運作於組成成員，而非 FlexGroup 名稱。使用 EMS 事件所命名的組成成員，例如 <block ref="d9e5bd0c57301c8671f78b5bd348953b" prefix=" " category="inline-code"></block>。</block>
+  <block id="83ec8963307b91690195b1cc99f5328c" category="inline-link-macro">← 上一頁：Maxdir-size 與大型 ONTAP 目錄</block>
+  <block id="c65ffd9f0f454584e6fdf332e5facdda" category="cell"><block ref="c65ffd9f0f454584e6fdf332e5facdda" category="inline-link-macro-rx"></block></block>
+  <block id="a4bf80c1f243d5d52eeaaf5c8f6336f6" category="inline-link-macro">接下來：ONTAP 中的目錄索引 →</block>
+  <block id="16d1ebd22028d9f75783990bd778cb59" category="cell"><block ref="16d1ebd22028d9f75783990bd778cb59" category="inline-link-macro-rx"></block></block>
+  <block id="0d57fd843d9429e5c147709b28774c7d" category="list-text"><block ref="0d57fd843d9429e5c147709b28774c7d" category="inline-link-macro-rx"></block></block>
+  <block id="3aee1d563b354432eaaae5c8316c622f" category="list-text">link:https://docs.netapp.com/us-en/ontap-cli/volume-file-show-inode.html<block ref="6512b22ca4ccbb5e6ed551c8d865b2fb" prefix="[" category="inline-code"></block> 命令參考^]</block>
+  <block id="3d0f0ebec6c1d1d28a03ae93ed68e9e9" category="summary">了解 ONTAP 目錄索引、公共索引 inode 與私有索引 inode 的差異以及稀疏目錄穿孔。</block>
+  <block id="00dfea70e4f418f925ba3e633ff9b361" category="paragraph">ONTAP 會自動為大型目錄建立索引，這樣目標查找就不必一次讀取整個目錄檔案。索引與<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>分隔，並且不會改變最大目錄檔案容量限制。</block>
+  <block id="444fac9d27ede0588c1394fed2f67822" category="section-title">為什麼需要目錄索引</block>
+  <block id="8d0a1166f1e96ebc2e966ff66c7f0ab2" category="paragraph">在運算中，索引是一種輔助結構，其作用是在不遍歷每筆記錄的情況下回答「這個在哪裡？」的問題。書籍索引就是我們熟悉的例子：您尋找某個詞彙，然後跳到對應的頁面，而無需閱讀整本書。資料庫、搜尋引擎和檔案系統都採用相同的概念，因此即使資料量不斷增長，查找成本仍然很低。索引並非資料的第二份複本。它是從鍵（例如名稱）到該項目位置的對應。</block>
+  <block id="b682f3b96546fdd08617fd0a80b5d7a3" category="paragraph">目錄是名稱列表。如果沒有索引，發現一個名稱可能表示要掃描該清單的大部分內容。ONTAP 的目錄索引是該捷徑的檔案系統版本。</block>
+  <block id="9ec4f55ec76691181848c983c06cbe57" category="paragraph">如果沒有持久索引，發現名稱可能需要讀取大量目錄區塊並建立記憶體容量雜湊。從 ONTAP 9.2 開始，當目錄檔案成長到大約 2 MiB 時，ONTAP 會自動建立一個配套的目錄索引 inode。</block>
+  <block id="03bb02d679378028320b2ed4a7512846" category="paragraph">持久索引會對應到目錄檔案中條目的位置。因此，定向查找可以讀取所需的索引和特定的目錄區塊，而無需將整個目錄檔案載入到記憶體容量中。索引通常可以減少大型目錄上以尋找為導向之作業的 CPU、記憶體容量和 I/O，除了大型目錄的內容之外，還能為其他工作負載釋放更多節點資源。</block>
+  <block id="29401b0a903cb32a3e21e806d14a842f" category="image-alt">流程圖顯示針對小於 2 MiB 的目錄檔案執行用戶端名稱操作時，系統會進行完整掃描</block>
+  <block id="0b8f5f8864b35a332859fe49482100a4" category="inline-link-macro">效能影響</block>
+  <block id="03beb838c51259165a802953f9d9fb22" category="paragraph">啟用目錄索引無需系統管理員選項；預設已啟用。目錄只有在其目錄檔案超過約 2 MiB 的臨界值後，才有資格建立持久索引。滿足此條件後，索引建置可由使目錄增長超過臨界值的操作、索引掃描器或符合條件的前端名稱操作（例如 LOOKUP、ACCESS、基於路徑的開啟或建立、重新命名或移除）來啟動。這些掃描器和前端觸發器不會置換大小臨界值，也不會為較小的目錄建立持久索引。約 2 MiB 的點會改變提供目標尋找服務的方式。它並非目錄大小延遲臨界值。不斷增長的目錄如何顯示在用戶端和節點行為中，說明於 <block ref="abcfbd44bfb6727d375bc3fac8efbf5a" category="inline-link-macro-rx"></block>。</block>
+  <block id="4d81f9a112ffc9052e6f3cbe8590a646" category="section-title">索引不會改變的項目</block>
+  <block id="f8d43549b840814456a4022181b4c66a" category="paragraph">目錄索引與目錄檔案是分隔的。即使存在目錄索引，以下結論仍然成立：</block>
+  <block id="e4724c6f156782b17472d4ac1de72e36" category="list-text"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block> 仍然限制目錄檔案大小。</block>
+  <block id="f394d737c77e651f43c10dc0bc79f618" category="list-text">伴隨索引會使用額外的中繼資料和一個 inode，但不會影響目錄大小。</block>
+  <block id="b750c16eca192d6af798e0385d17fe52" category="list-text">與完整目錄列舉相比，索引可改善目標查詢。</block>
+  <block id="2eac6d683f49a0291c8e790db54b621d" category="list-text">萬用字元掃描與<block ref="1e36542efa12c0d5b70478c43512c5cf" prefix=" " category="inline-code"></block>仍然會處理整個目錄命名空間。</block>
+  <block id="5f3a76e85daf3bb63914f72cb63e8d40" category="list-text">遺失或重新建置索引不會移除目錄的名稱；ONTAP 可以從目錄檔案重建它。</block>
+  <block id="c52fd100bbf573e794ecb11569b7c681" category="section-title">關於私有和公共索引 inode</block>
+  <block id="4ef0f74dc2d623f7fd1d73fd5f0910f4" category="paragraph">每個已建立索引的目錄都有自己的索引；目錄索引是不共享的。因此，一個 Volume 可以為每個超過約 2 MiB 臨界值的目錄保存一個索引。低於臨界值的目錄仍保留在非持續性查詢路徑上，即使掃描器或前端作業存取它們，也不會獲得隨附的目錄索引 inode。符合條件目錄的索引是否計入<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block>，取決於它們是私有還是公有，如這裡所述。</block>
+  <block id="4d9a6825bc6255757ca727d3591c454b" category="paragraph">預設情況下，目錄索引通常位於私有 inode 空間。私有目錄索引 inode 會在 SnapMirror 傳輸過程中被忽略，因此 ONTAP 會在啟動或還原後隨需在目的地重新建置索引。</block>
+  <block id="8ad5682c9d7bfd706c2c80c12fb239fc" category="paragraph">從 ONTAP 9.17.1 開始，Volume 層級選項<block ref="e1d44dc23fa161b7efafebc7ef17c1da" prefix=" " category="inline-code"></block>會將目錄索引移至公用 inode 空間，以便支援的 SnapMirror 和 SnapMirror Cloud 工作流程可以傳輸它們。啟用此選項後<block ref="b326b5062b2f0e69046810717534cb09" prefix=" " category="inline-code"></block>，會在公用 inode 空間中建立新索引，掃描器會移轉現有的私有索引。這可以減少還原後的索引建置，但公用索引會使用公用 inode，因此必須將其納入<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block>規劃中。</block>
+  <block id="cc3086a3bba87be27480dedba3cf6b47" category="paragraph">您可以使用 Volume show 選項查看是否有公用目錄索引<block ref="7af26439b9362be6f801d444714c859d" prefix=" " category="inline-code"></block>。此選項無法手動設定；只有在有公用目錄索引時，它才會顯示為 true。</block>
+  <block id="7130bc5684566d7f796e3d50724ddafd" category="paragraph">公用目錄索引會計入<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>，並且<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>每個建立索引的目錄大約會增加一個 inode。</block>
+  <block id="843811da49d8820c85b40f2d8b623e60" category="paragraph">私有索引不使用公共<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>配額。</block>
+  <block id="8c25aa44339e5153dad559d4075906f6" category="section-title">何時啟用公共目錄索引傳輸</block>
+  <block id="a6917e716e12360c452b5cc421143551" category="paragraph">啟用索引傳輸可保留用於複寫或還原的索引，從而避免對檔案數量較多的目錄進行代價高昂的重新建置。停用索引傳輸時， SnapMirror 將忽略私有索引。啟動或還原後， ONTAP 可以透過索引掃描器或符合條件的前端操作重新建置符合條件目錄的缺失索引，這可能會在容錯移轉至 SnapMirror 目的地後造成效能影響。啟用索引傳輸不會提高本機查閱效能；當選項為<block ref="68934a3e9455fa72420237eb05902327" prefix=" " category="inline-code"></block>時，本機索引即已發生。它嚴格用於屬於 SnapMirror 關係一部分的 Volume 。</block>
+  <block id="b67f3ed78555cd0fa4f0c125cb7123d3" category="paragraph">目錄檔案可能會變大，然後在許多名稱被刪除後（亦即從目錄中移除檔案時）變得稀疏。目錄檔案的大小會保持在其最高水位線，因此<block ref="1e36542efa12c0d5b70478c43512c5cf" prefix=" " category="inline-code"></block>可能會花費大量的 CPU 和 I/O 來遍歷空區塊。</block>
+  <block id="af3d704a9976590fd40bb7b4fcf66092" category="paragraph">對於已建立索引的目錄，當 4 KiB 的目錄區塊完全為空時，ONTAP 可以打出一個空洞。</block>
+  <block id="f70ab4eae7ea22c57243b63b716490e0" category="paragraph">此索引會追蹤空洞，以便：</block>
+  <block id="90f59c0bc8b1d427a3ec249869e48230" category="list-text"><block ref="1e36542efa12c0d5b70478c43512c5cf" prefix="" category="inline-code"></block> 可以跳過空區塊。</block>
+  <block id="edeb33a78acb089f1d2ee3549830f33d" category="list-text">實體區塊可以回收。</block>
+  <block id="0d6d871171ec38532138bdd16b5dfbcd" category="list-text">建立的物件之後可以重複使用該邏輯位置。</block>
+  <block id="71c14d24752ed55edf023c632927c5df" category="paragraph">進階<block ref="7e464cb367dc4f9c8a3200495bed4def" prefix=" " category="inline-code"></block>欄位是一個唯讀 Volume 顯示選項。值為<block ref="b326b5062b2f0e69046810717534cb09" prefix=" " category="inline-code"></block>表示該 Volume 包含以這種最佳化的打孔形式存在的目錄區塊。</block>
+  <block id="143bfeb8e4c2fba388b0a88cf4302e41" category="paragraph">如果在刪除後，應用程式的目錄大小仍然有問題，將剩餘項目複製到新建立的目錄中，可產生更緊湊的目錄檔案配置。降低<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>並不能壓縮稀疏的目錄。</block>
+  <block id="05f355eaaa5c9b8bf9aaee8c770a43f4" category="inline-link-macro">← 上一頁：查看 maxdir-size 與目前目錄大小</block>
+  <block id="197f4242236b795192d7a3c594c409d4" category="cell"><block ref="197f4242236b795192d7a3c594c409d4" category="inline-link-macro-rx"></block></block>
+  <block id="cfadd6a3838289060e3af501042a0e7a" category="inline-link-macro">接下來：maxdir-size 的影響 →</block>
+  <block id="21b2134a01957d164ef55839595d9dc3" category="cell"><block ref="21b2134a01957d164ef55839595d9dc3" category="inline-link-macro-rx"></block></block>
+  <block id="b380ffd86e368ce2eca63e3ab71be44f" category="list-text"><block ref="b380ffd86e368ce2eca63e3ab71be44f" category="inline-link-macro-rx"></block></block>
+  <block id="1108b1d53a251696e175ef9d2a27bb6c" category="summary">了解大型 ONTAP 目錄的容量和效能影響，以及超過 maxdir-size 時會發生什麼情況。</block>
+  <block id="987e4a85175b88d3e34acd2b78c558ef" category="paragraph">提高<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>限制允許目錄檔案增長。只有當目錄檔案實際變大時，才會出現容量和效能成本，而當達到上限時，建立和重新命名作業將會失敗。</block>
+  <block id="cfc1f4735af262fa57ab4b1c7e2bd080" category="section-title">容量影響</block>
+  <block id="98f723e54c3f6c0e908845c88760110e" category="paragraph">更改<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>設定本身不會使用任何容量。目錄項目的成長才會使用容量。目錄檔案在新增名稱時分配 4 KiB 的區塊；配對索引和 Snapshot 快照技術保留的目錄區塊會增加更多。設定上限並不會保留該空間。刪除後的最高水位大小描述於 <block ref="641c8ac33fa4c945e7b9ba33e11449a5" category="inline-link-macro-rx"></block>。</block>
+  <block id="172a3fa9f7c12cf4a9d263a868fcffee" category="paragraph">估算<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>值時，無需包含目錄下檔案中儲存的資料。只需考慮單一目錄中的項目即可。雖然此選項是在 Volume 層級設定的，但它是按目錄套用的。</block>
+  <block id="6bcf43889baf6a726a6a4641d1bc9138" category="paragraph">在規劃包含大量檔案目錄的容量使用時，您需要包含目錄和索引的例行成本。舉執行個體為例，一個包含 100 個目錄的 Volume ，每個目錄都成長到 320 MB 的上限，大約包含 32 GB 的目錄檔案中繼資料，這將計入已使用的 Volume 容量。如果這些目錄已建立索引且為公用，請在 maxfiles 預算中增加約 100 個 inode 。在目錄中繼資料頻繁變動的情況下，請考慮額外的 Snapshot 快照技術容量，因為 Snapshot 快照技術複本會保留被取代的目錄和索引區塊。</block>
+  <block id="d4d75666ac34aca979e0893d3aeb2679" category="paragraph">ONTAP 系統中的大型目錄可能會產生以下影響：</block>
+  <block id="dc4bbb33598973549fcf59f439cc5877" category="list-text">名稱查詢、建立、取消連結和重新命名路徑長度</block>
+  <block id="8e3bd39eff0227effbfedc2e0ccc4705" category="list-text">完整目錄列舉與萬用字元搜尋</block>
+  <block id="6466769ce8aeedf810068998f769fd54" category="list-text">用於命名空間處理的 CPU 和記憶體容量</block>
+  <block id="33df7146759ee48d2cd1957443fa1fec" category="list-text">載入索引和目錄區塊需要冷快取 I/O</block>
+  <block id="4ff2591da2f6193f11d3105abc1fbf1e" category="list-text">長時間操作期間的傳輸協定延遲和用戶端逾時</block>
+  <block id="4afa4c92bb944275107bf40cd626a138" category="list-text">由分析、備份、複寫或安全功能執行的命名空間掃描</block>
+  <block id="dab9a4b72d4fcec15ade86ce9b557fd9" category="paragraph">目錄索引可以降低目標查找的成本，但並不能使非常大的扁平目錄等效於分片層次結構。即使周圍的 Volume 或叢集有未使用的資源，對單一目錄的操作仍然會遇到序列化和親和性限制。索引有助於執行諸如查找、開啟、建立、重新命名和移除等目標名稱操作。全目錄掃描和萬用字元搜尋仍然會遍歷目錄命名空間；它們不會使用索引作為名稱到區塊的捷徑。對於已打孔的目錄，索引可以在<block ref="1e36542efa12c0d5b70478c43512c5cf" prefix=" " category="inline-code"></block>期間跳過空區塊，但這並不能取代分片佈局。</block>
+  <block id="57933fa997846b2ff159a6ce95668645" category="paragraph">ONTAP 沒有宣告效能故障的分隔目錄檔案大小。在 <block ref="4cbfcbcec4de4349b3a0d749ca877c43" category="inline-link-macro-rx"></block> 中說明的大約 2 MiB 索引臨界值，會改變提供目標查閱的方式。低於該大小時，發現名稱可以掃描目錄區塊並建立暫時的記憶體容量內雜湊，因此成本會隨著目錄而增加，但 ONTAP 不會建立持續的索引。高於該大小時，目標名稱作業會使用索引。隨著一個目錄的成長，持續變得更昂貴的是完整列舉和萬用字元搜尋、目錄和索引區塊的冷快取載入，以及針對該目錄的作業序列化。</block>
+  <block id="da76589d3f0437d24e2d3f7784b4e716" category="paragraph">用戶端可能會在這些操作期間，遇到較長的目錄清單、萬用字元搜尋與應用程式掃描，以及較高的傳輸協定延遲與逾時。擁有該目錄的節點可能會將 CPU 和記憶體容量耗費在中繼資料上，而資料處理量則保持在低點。影響取決於操作速率、並行、快取狀態，以及該目錄中集中了多少名稱。<block ref="b3858595805a9c8bfdd9eb4d86966268" prefix=" " category="inline-code"></block>（通常約為<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>的 90%）會警告目錄即將達到其大小上限。它並未標記測量到的延遲臨界值。</block>
+  <block id="49d39299a9bd0891a40ad59f6d521007" category="paragraph">例如，開啟該目錄中的一個已知檔案仍然可以快速傳回，因為索引用於名稱尋找。使用<block ref="44ba5ca65651b4f36f1927576dd35436" prefix=" " category="inline-code"></block>列出相同目錄、使用<block ref="ea170e2cafb1337755c8b3d5ae4437f4" prefix=" " category="inline-code"></block>遍歷該目錄，或執行讀取每個名稱的應用程式、備份或安全性掃描，可能會執行很長時間、看似停滯，或遇到用戶端或應用程式逾時。在此期間，用戶端傳輸的檔案資料很少。讀取或寫入已開啟的檔案通常不受影響。</block>
+  <block id="3b44cfaf2e4613fd0be1df05a8d2dd27" category="paragraph">僅當工作負載需要更大的單一目錄且重構不切實際時，才提升<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>。如果應用程式允許，則優先選擇寬或深的階層。</block>
+  <block id="655c059f8f77e5fbf012e668f55b5868" category="section-title">當超出 maxdir-size 時會發生什麼事？</block>
+  <block id="37893addbdd3b6d417e15531e9942dda" category="paragraph">當目錄檔案達到上限時：</block>
+  <block id="a7fee3a94d803cfce8528eeeccd14991" category="list-text">ONTAP 拒絕需要在該目錄中新增另一個名稱的操作（例如建立或重新命名）。</block>
+  <block id="4bd1e614959e93fc3f8112d4fd384574" category="list-text">用戶端可以報告 ENOSPC、「檔案太大」、NFS 錯誤 27<block ref="07be006d9d1b96a6c8e1574ecf8d03b9" prefix=" " category="inline-code"></block>，或其他應用程式特定的建立或重新命名故障。</block>
+  <block id="baf2dffe748614fd87d1d72323a2cf4f" category="list-text">如果其他目錄有容量和 inode，則可以繼續接受條目。</block>
+  <block id="c3b3a177fbf8c62f1658a52ead1bb743" category="list-text">該 Volume 仍可擁有可用資料容量和公用 inode。</block>
+  <block id="b8a4f83d326ecc14871cbe19755502db" category="list-text">讀取現有檔案並不等於新增另一個目錄項，通常不會受到影響。</block>
+  <block id="af0497d871bb7afa16809ae6297b2ac8" category="paragraph">超出限制<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block>或<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>看起來像是容量問題。檢查 EMS 訊息；用戶端錯誤與 inode 耗盡的情況重疊。請參閱 <block ref="f028b2bdc233e1bb6571b4079dd2c26d" category="inline-link-macro-rx"></block>。</block>
+  <block id="6341bbbdcd71e02e2bfaa4421839ca60" category="paragraph">如果扁平命名空間無法更改，請評估受控的<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>增加：</block>
+  <block id="266a1be9ee43fdbbfb124206c6b0b269" category="paragraph">對於平均成長，將目前上限以約 2% 的增量遞增。對於具有已知測量要求的移轉，將上限設定為比該要求高約 2%。此變更是立即且不中斷營運的。</block>
+  <block id="a85df5e776877d8ff9b9a2f284d2ff23" category="paragraph">您可以稍後降低上限，但不能低於現有最大目錄檔案的高水位線；降低上限不會壓縮現有目錄。請驗證 ONTAP 版本和平台支援的值，並在變更後監控效能。</block>
+  <block id="a8b0c839df47847d66842244c9433323" category="inline-link-macro">← 上一頁： ONTAP 中的目錄索引</block>
+  <block id="a2b76cc9c6239075921caaefb957957c" category="cell"><block ref="a2b76cc9c6239075921caaefb957957c" category="inline-link-macro-rx"></block></block>
+  <block id="0229af845cd3380416ccc19bf387cb8f" category="inline-link-macro">接下來：Volume 考量 →</block>
+  <block id="1e54f65fdd0f5eddbe01a804a618f8fa" category="cell"><block ref="1e54f65fdd0f5eddbe01a804a618f8fa" category="inline-link-macro-rx"></block></block>
+  <block id="d5dcdda42a9208c03ec5055ea1119b7f" category="list-text"><block ref="d5dcdda42a9208c03ec5055ea1119b7f" category="inline-link-macro-rx"></block></block>
+  <block id="13d2fdb3d05ca4dec274c2efb6ecfe53" category="summary">了解 Volume 類型、Volume 選項和 Volume 語言如何影響 ONTAP maxdir-size 的行為。</block>
+  <block id="1fec920728d55a34b57c2cf90285c1bd" category="paragraph"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block> 是每個目錄的上限，但該目錄所在的 Volume 仍然很重要。Volume 類型、Volume 選項和 Volume 語言都會改變目錄檔案成長的速度以及您管理上限的方式。</block>
+  <block id="49d3b88c61e27530e95806100473a086" category="paragraph"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block> 適用於 FlexVol 和 FlexGroup Volume 中的每個目錄。FlexGroup 目錄項目和組成配置會改變目錄檔案的成長速度。</block>
+  <block id="7d98517078b732298ebd050c16b0fdc2" category="section-title">FlexVol Volume</block>
+  <block id="b9576e56d9bb4a7a0058a92233082b81" category="paragraph">一個 FlexVol 擁有一個檔案系統和一個公用 inode 供應。<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 仍然獨立適用於每個目錄。單一熱目錄在該 Volume 的所有權範圍內進行處理，並且不會僅僅因為叢集包含額外的節點而獲得平行處理能力。</block>
+  <block id="39f698e46a98421aa2d38832de61df76" category="paragraph">一個 FlexGroup 呈現一個由多個 FlexVol 組成部分支援的命名空間。這改善了聚合的檔案數量與容量擴展，同時實現了跨節點和磁碟的資料經銷，但不會將單一邏輯目錄的限制 <block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="(" category="inline-code"></block>）乘以組成部分的數量。</block>
+  <block id="2aa8e80d3aaf3293ed8266f246618a29" category="paragraph">下圖顯示目錄檔案如何保留在一個組成部分上，而該目錄命名的檔案物件可以位於其他組成部分上。</block>
+  <block id="45a886b5bd028b8a7d5b50afa3acd2ad" category="image-alt">位於單一構成要素上具有一個目錄 inode 和目錄檔案的 FlexGroup 示意圖</block>
+  <block id="698f1eec7165ca39c1e7535f480d82d5" category="paragraph">請考慮以下差異：</block>
+  <block id="62cf3a6760700ed83ee0b896e3ea3fe3" category="list-text">目錄條目可以指向遠端成員上的檔案，並且可能需要比本機 FlexVol 條目更大的磁碟上表示形式。</block>
+  <block id="a8ec0db390724e3ee01e27cf3e413ded" category="list-text">因此，相同的可見檔名使用目錄檔案空間的速度可能與在 FlexVol 中不同。</block>
+  <block id="96f9a2ff0abc82e57e33923291e0f347" category="list-text">檔案和 inode 容量是依每個成員來維護，因此經銷與成員壓力很重要。</block>
+  <block id="bb552c15c64ec7566298bf7e9600511c" category="list-text"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block> 是在 FlexGroup 層級上進行修改，而不是直接修改成分。</block>
+  <block id="39755a4213b422d643944d0e79a61241" category="list-text">使用 FlexGroup Volume 將應用程式分片到多個目錄中，可讓 ONTAP 有更多機會來分配工作和檔案。</block>
+  <block id="3d89cf9b74e63b48c6ea1f39f4e42eb8" category="paragraph">結論是，在 FlexGroup 上相同的<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>設定通常比在 FlexVol 上容納更少的名稱，因為遠端目錄項目會佔用更多空間。這種差距有多大，取決於資料集佈局以及發生了多少遠端放置。</block>
+  <block id="04abb5a87d839ca3712d2480d4195b60" category="inline-link-macro">普通名稱</block>
+  <block id="20132e950c3b9a7d16cab0c946805cc7" category="paragraph">FlexGroup Volume 遠端硬連結會增加每個目錄的數據，增加的幅度與遠端儲存條目的比例成正比。對於大型扁平目錄（約 85% 的遠端條目），請以大約 2 倍的上限進行規劃，這會將 320 MB 預設值下的實際上限降低至約 200 萬到 260 萬個<block ref="df7b5e22f24d65e2f48ea9fd959a9fc7" category="inline-link-macro-rx"></block>，相較之下，在 FlexVol 上則高達約 430 萬個。寬或深的目錄配置可保持較低的比率，並降低遠端硬連結的增加量。使用<block ref="77ddcb5f19832f4145345889013ab3a4" prefix=" " category="inline-code"></block>、<block ref="a96df544e36b059028e4c15d439f9a2e" prefix=" " category="inline-code"></block> 或 XCP 針對代表性目錄進行驗證。</block>
+  <block id="66cbf41a87a685e6ad37ed18e6f61f06" category="section-title">Volume 選項</block>
+  <block id="71b1756d911f82060ac78619ad694c86" category="paragraph">在規劃或疑難排解大型目錄時，最常遇到的就是以下這些 Volume 欄位。</block>
+  <block id="6f16a5f8ff5d75ab84c018adacdfcbb7" category="cell">欄位</block>
+  <block id="4ada223039411afb579ac3fe87d5c70c" category="cell">可設定和特權</block>
+  <block id="261addf78c7b2c961032b3dd08ba0b1f" category="cell">目的</block>
+  <block id="eaec4c717b3eb151de6fc6bf46f50960" category="cell">是的，進階</block>
+  <block id="b380019a397ac7747489a783812da2cb" category="cell">允許每個目錄使用更大的檔案，以便每個目錄可以存放更多檔案。</block>
+  <block id="c0fd863d5a9b1fdb88a261d148882a48" category="cell"><block ref="f24ba6971ba5e1b4ac8a13498a3c871f" prefix="" category="inline-code"></block></block>
+  <block id="0d26a90b48bc95ef2f5d20d662ae578c" category="cell">是的，admin</block>
+  <block id="9f06002a7dbf649d2c740be46c68c27d" category="cell">將目錄索引移至公共 inode 空間，以支援複寫和還原可移植性。</block>
+  <block id="fd1a5d9dc9ecb5f64dc430854f6a9387" category="cell"><block ref="72282239ba49ec548ea8f906c44d48f6" prefix="" category="inline-code"></block></block>
+  <block id="e453d9ad332d3909374c45d99c1a9dc7" category="cell">不，進階</block>
+  <block id="66b063093f18ef8cf197ca6c61f7ec27" category="cell">報告公共目錄索引 inode 是否存在。</block>
+  <block id="9f1b892084e7200f935582e3a8f8b09f" category="cell"><block ref="0720849131310db175fa5c1a73edd94f" prefix="" category="inline-code"></block></block>
+  <block id="be6ff02cb1cc624948f2ba2f60214065" category="cell">報告該 Volume 是否包含最佳化的打孔稀疏目錄。</block>
+  <block id="600f831989a08b27c943912bd409b7a9" category="cell"><block ref="8512ae7d57b1396273f76fe6ed341a23" prefix="" category="inline-code"></block></block>
+  <block id="49d12e3510dba2acf8fec929611ed5f7" category="cell">受限，管理員</block>
+  <block id="2e57cf9e6991a1baf784fe250b2d78cb" category="cell">控制名稱解釋。非 ASCII 名稱和 4 位元組 UTF-8 <block ref="a45e9a54ad98779d8ad2cc5d230b186c" prefix="(" category="inline-code"></block>）字元在每個目錄中可容納的名稱較少；請參閱 <block ref="fa44aa5811e5b45948ee7730ba759cc4" category="inline-xref-macro-rx"></block>。</block>
+  <block id="72c36bbcb899a758965b592d07710198" category="cell"><block ref="ca7efa87c2332fe7ee734351674695cc" prefix="" category="inline-code"></block></block>
+  <block id="b60a82d043ff8ff746703eff1b1216f5" category="cell">啟用檔案系統分析。其命名空間掃描可能會增加高檔案數 Volume 的工作量，但不會改變<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>。</block>
+  <block id="e32c0e4d28f73d647c0fa5cbee123293" category="section-title">Volume 語言</block>
+  <block id="adddb01ce8cd0433ab43d2e0efd1bd1b" category="paragraph">Volume <block ref="125f441bc9cbc0508cd433b4e293f279" prefix=" " category="inline-code"></block> 設定控制 NFS 如何轉換用戶端編碼和儲存在磁碟上的 Unicode 名稱。除非您在建立時設定 <block ref="125f441bc9cbc0508cd433b4e293f279" prefix=" " category="inline-code"></block>，否則 Volume 會繼承 SVM 預設值。ONTAP 預設值為 <block ref="75b7d8d431c0a1daf597a17e359442e0" prefix=" " category="inline-code"></block>。從 ONTAP 9.5 開始，<block ref="a45e9a54ad98779d8ad2cc5d230b186c" prefix=" " category="inline-code"></block> 儲存 4 位元組的 UTF-8 名稱（表情符號和其他 Unicode 補充字元），而不是將額外的位元組放在 bag-of-bits 中。</block>
+  <block id="c27993aee706b0a13d388352ae88ab65" category="paragraph">語言代碼本身並不會改變目錄中可容納的 ASCII 名稱數量。<block ref="75b7d8d431c0a1daf597a17e359442e0" prefix=" " category="inline-code"></block>、<block ref="95a7bb7a8d0ee402edde95bb78ef95c7" prefix=" " category="inline-code"></block>、<block ref="fdf101480f27348897c4d400d18617de" prefix=" " category="inline-code"></block>、<block ref="cfaf87dbee404bb459b7f68f1e26dc47" prefix=" " category="inline-code"></block> 和 <block ref="a45e9a54ad98779d8ad2cc5d230b186c" prefix=" " category="inline-code"></block> 都使用相同的 Unicode 目錄打包方式來儲存相同的字元。真正影響數量的是該語言所要儲存的名稱中的字元：非 ASCII 文字以更寬的形式儲存，而 <block ref="a45e9a54ad98779d8ad2cc5d230b186c" prefix=" " category="inline-code"></block> Volume 上的 4 位元組補充字元則更寬。無法以 Volume 編碼表示名稱的 NFSv3 用戶端也可能導致 ONTAP 儲存 8 字元的 NFS 備用名稱，這會佔用更多的目錄空間。</block>
+  <block id="154c5f29504cd1804747db057c31c294" category="paragraph">以下範例使用 32 個字元的名稱，大小為 320 MB<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>，並包含<block ref="5058f1af8388633f609cadb75a75dc9d" prefix=" " category="inline-code"></block>與<block ref="58b9e70b65a77700ba66e9c64d6b9f89" prefix=" " category="inline-code"></block>項目。這些是規劃數據，並非保證值。</block>
+  <block id="51ca06967ad75f3e56e837398ac1adb7" category="cell">典型用途</block>
+  <block id="1ed04bb9b78adc26256db18487c7c242" category="cell">32 個字元的名稱樣式範例</block>
+  <block id="7dcd9451e1a72253797b6b452b3ddcc4" category="cell">與預設 ASCII 碼相比</block>
+  <block id="fe7ac79ef01a8073842460a2f37fd208" category="cell"><block ref="75b7d8d431c0a1daf597a17e359442e0" prefix="" category="inline-code"></block> （ONTAP 預設）</block>
+  <block id="e9804d05aa44dc7fa48535451a1898d4" category="cell">POSIX C 區域設定，UTF-8 編碼。除非設定了<block ref="125f441bc9cbc0508cd433b4e293f279" prefix=" " category="inline-code"></block>，否則新的 SVM 和 Volume 將繼承此設定。</block>
+  <block id="1b2fd320ebdca0835125bdcbf92fcfa7" category="cell">ASCII 碼，例如<block ref="08e0d6d1334bdf2478002785281fde99" prefix=" " category="inline-code"></block></block>
+  <block id="a4a32c4764653e50488bff6ce2eb815b" category="cell">基線</block>
+  <block id="581f1ace440271cc28becc57d6df1301" category="cell"><block ref="95a7bb7a8d0ee402edde95bb78ef95c7" prefix="" category="inline-code"></block></block>
+  <block id="f109fa3e616d94165bcc94c68a3e7722" category="cell">美國英語 UTF-8</block>
+  <block id="1d57bd6ee1811c1e1105ce9dce2f8701" category="cell">相同的 ASCII 或基本拉丁名稱</block>
+  <block id="f9ea16df518e760c4585c37133c20464" category="cell">ASCII 名稱不縮減與預設值</block>
+  <block id="01122e6ae115252acd1db2e0f98920a3" category="cell"><block ref="fdf101480f27348897c4d400d18617de" prefix="" category="inline-code"></block></block>
+  <block id="e6c1c0ac2b9e58537754069a30103551" category="cell">德語 UTF-8 ，包括變音符號 <block ref="8419b71c87a225a2c70b50486fbee545" prefix="(" category="inline-code"></block>,<block ref="a172480f4e21d0a124bac19c89569c59" prefix=" " category="inline-code"></block>,<block ref="c03410a5204b21cd8229ff754688d743" prefix=" " category="inline-code"></block>,<block ref="e11ce22edb052b40813b1e145b704775" prefix=" " category="inline-code"></block>）</block>
+  <block id="674167fc282994c0681d8a5eb3d75d60" category="cell">帶重音的拉丁文，例如<block ref="051a9f655364a06ac6776997096ee46f" prefix=" " category="inline-code"></block></block>
+  <block id="47322f4f13c85268734fa6adf806f695" category="cell">約佔預設 ASCII 數量的 49%</block>
+  <block id="0b8fcd28c26325bc27752d64ea810d6b" category="cell"><block ref="cfaf87dbee404bb459b7f68f1e26dc47" prefix="" category="inline-code"></block></block>
+  <block id="82bea84e97bcd03721471a0996086d08" category="cell">日語 UTF-8（基本多語言平面中的 CJK）</block>
+  <block id="b5c39a3ddc184510f9dacf6dde3c93c3" category="cell">長度均為 32 個字元的日文名字</block>
+  <block id="3c5a20374dfa414f2539014b60bbfaf4" category="cell"><block ref="a45e9a54ad98779d8ad2cc5d230b186c" prefix="" category="inline-code"></block></block>
+  <block id="19b7dfb4a618720d24aa384ebbee0700" category="cell">4 位元組 UTF-8（ONTAP 9.5 及更新版本）。當名稱包含表情符號或其他附加字元時使用。</block>
+  <block id="effc3f40c1d145f932da22dd66162d29" category="cell">普通的德文或日文文字的排列方式仍然與上方的 UTF-8 列相同。包含補充字元（例如表情符號）的 32 個字元的名稱會排列得更寬。</block>
+  <block id="d6d4bc8334f84e3348e0a559f1b229e2" category="cell">當存在補充字元時，關於預設 ASCII 計數的 41%</block>
+  <block id="8309a14c025dc3f3950e8a58e92b6b0c" category="paragraph">如果名稱保持基本 ASCII 編碼，從<block ref="75b7d8d431c0a1daf597a17e359442e0" prefix=" " category="inline-code"></block> 切換至<block ref="95a7bb7a8d0ee402edde95bb78ef95c7" prefix=" " category="inline-code"></block>、<block ref="fdf101480f27348897c4d400d18617de" prefix=" " category="inline-code"></block>、<block ref="cfaf87dbee404bb459b7f68f1e26dc47" prefix=" " category="inline-code"></block> 或<block ref="a45e9a54ad98779d8ad2cc5d230b186c" prefix=" " category="inline-code"></block> 不會減少每個目錄的計數。混合使用 NFS 和 SMB 存取可能會在此基礎上增加 NFS 備用名稱或 SMB 8.3 別名。</block>
+  <block id="953b567435ab2bcfe100f453798ea51b" category="paragraph">有關表格背後的裝箱規則，請參閱 <block ref="641d8e688b09b8b149bf7a7641f804bc" category="inline-link-macro-rx"></block>。</block>
+  <block id="f1693e5c76ff79f49d3feaa9451bf0fd" category="inline-link-macro">← 上一頁：maxdir-size 的影響</block>
+  <block id="64014312f95c1d2dc88bd35dfb2cd55d" category="cell"><block ref="64014312f95c1d2dc88bd35dfb2cd55d" category="inline-link-macro-rx"></block></block>
+  <block id="645d0424d7dc05ad9ed38e26a87ab142" category="inline-link-macro">接下來：maxdir-size 的功能、EMS 與監控 →</block>
+  <block id="d935b1e447c5ac947e3f4472ab22b81f" category="cell"><block ref="d935b1e447c5ac947e3f4472ab22b81f" category="inline-link-macro-rx"></block></block>
+  <block id="a35775001cd4bf1d7af10b6026a0e765" category="inline-link-macro">SMB 多位元組檔案、目錄和 qtree 名稱</block>
+  <block id="97d6197e87f8f12e321dd92b7aacc751" category="list-text"><block ref="97d6197e87f8f12e321dd92b7aacc751" category="inline-link-macro-rx"></block></block>
+  <block id="c1f1980b7c7e45a55ec1112b20ba2965" category="summary">檢閱 ONTAP maxdir-size 版本增強功能、EMS 事件以及大型目錄的監控指南。</block>
+  <block id="b36a3a8750fa7b08315b4ded5282980a" category="paragraph">使用 ONTAP 版本功能、EMS 事件和目錄大小測量，在建立失敗之前偵測大型目錄成長。</block>
+  <block id="f1daad01ea43c9f49b00e1ce30a01ac5" category="paragraph">有關如何檢視<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>與目錄物件的目前大小，請參閱<block ref="309f0393f6b9933e0b779d252fb16f5f" category="inline-link-macro-rx"></block>。</block>
+  <block id="d1d66f8aea5faaee0ad667883a8b166d" category="section-title">與 maxdir-size 相關的 ONTAP 功能與增強功能</block>
+  <block id="6f5d65265f83dc677b44095a40b11f53" category="cell">ONTAP 版本</block>
+  <block id="e7e0038bb30579a3120d266861982881" category="cell">功能</block>
+  <block id="2d516701e0d06f054e2784c2106d7aa2" category="cell">ONTAP 9.2</block>
+  <block id="06d39fa10ac6b8b99d498b31732793cd" category="cell">持續目錄索引大約佔用 2 MiB。請參閱 <block ref="4cbfcbcec4de4349b3a0d749ca877c43" category="inline-link-macro-rx"></block>。</block>
+  <block id="0f530163a3caf24c94571048a364e3a8" category="cell">ONTAP 9.5（已記錄）</block>
+  <block id="6c5aced248a3c6c9c25798356a0e4fc9" category="cell">最佳化的稀疏目錄 <block ref="7e464cb367dc4f9c8a3200495bed4def" prefix="(" category="inline-code"></block>）：在索引目錄中對空區塊進行打孔。公開文件並未證實先前已引入此功能。請參閱 <block ref="63c6d23f7ae00c851617cae48ae139d9" category="inline-link-macro-rx"></block>。</block>
+  <block id="8020ad245e7cbc2ac49c84b7f4ace684" category="cell">ONTAP 9.14.1</block>
+  <block id="2ec4cd445a752b94ea85eaf7e8cd74eb" category="cell">預設為 320 MB<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>。若要增加，請確認版本和平台支援的最大值。請參閱 <block ref="641c8ac33fa4c945e7b9ba33e11449a5" category="inline-link-macro-rx"></block> 和 <block ref="4b66c5aefb698bbc8955a45cd4aaeff1" category="inline-link-macro-rx"></block>。</block>
+  <block id="ea1ad38d91c2e87ef2e9571bd55654fd" category="cell">ONTAP 9.17.1</block>
+  <block id="c20ce9d4d92b84da048b43d474ec7066" category="cell"><block ref="37c239a2b18b707cc085f3d2e9bc244b" prefix="" category="inline-code"></block> 以及支援 SnapMirror 傳輸的公用目錄索引 inode。請參閱 <block ref="4146811f913e7364532462424a065508" category="inline-link-macro-rx"></block>。</block>
+  <block id="3c64285bfea487b7f27647af13e80463" category="section-title">與 maxdir-size 相關的 EMS 訊息</block>
+  <block id="8f195f96437d9d26096e4e62b6ab97f1" category="section-title"><block ref="209419a97bf9bc94c34b7d7bdc1eefac" prefix="" category="inline-code"></block></block>
+  <block id="00525afb520b4f25dd7797c9668a1f69" category="paragraph">已佔用的目錄項目數量已超過設定的警告百分比。請使用 Volume 和檔案 ID 來尋找目錄，然後評估其項目數量、目前的目錄檔案大小和成長模式。</block>
+  <block id="f9918740302eff7c15a58ec1f54faf39" category="section-title"><block ref="b3858595805a9c8bfdd9eb4d86966268" prefix="" category="inline-code"></block></block>
+  <block id="d8f98c12148162fe227fc0d6ef26f09c" category="paragraph">目錄已達到其<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>限制的設定警告百分比（通常為 90%）。請使用事件中的 Volume 和檔案 ID 來解析目錄路徑。請在達到上限之前重新建構命名空間或規劃增加容量。</block>
+  <block id="a688c4132d4feddc7eb83c45927c68bf" category="section-title"><block ref="a93cc355e985a40fb5a0dc5af652b716" prefix="" category="inline-code"></block></block>
+  <block id="84779849dcc6c69c39096697bb0b9525" category="paragraph">目錄已達到或超過設定的警告百分比（通常為 90%），而 Volume 的目前<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>低於版本定義的預設值（EMS 參考將該預設值描述為系統記憶體容量的 1%）。這與正常<block ref="b3858595805a9c8bfdd9eb4d86966268" prefix=" " category="inline-code"></block>情況不同。在決定是否還原預設值、重構目錄或選擇其他支援的值之前，請先判斷設定的上限低於預設值的原因。</block>
+  <block id="bc388e4620dcb0472eed4ddc4cbaf921" category="section-title"><block ref="07d7a78c0706069f9b9b8c5286480955" prefix="" category="inline-code"></block></block>
+  <block id="6ba87365b2de68c800dd4872d5daeff6" category="paragraph">目錄已達到<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>。新增名稱的操作會失敗，直到插槽可重複使用、命名空間重組或限制提高為止。</block>
+  <block id="e730b1c2da806045cca48d040e7507c6" category="section-title"><block ref="ac4b41a0a1a8b26be2adb83d19c9ed53" prefix="" category="inline-code"></block></block>
+  <block id="f6ec79cdb9990bbbc8aec5e153a626fb" category="paragraph">開機時，ONTAP 會針對設定值高於預設值的 Volume 發出此通知。它提醒系統管理員，對非常大的目錄進行操作可能會降低效能。</block>
+  <block id="be27160db316252ff228898a9da6f576" category="section-title">稀疏<block ref="1e36542efa12c0d5b70478c43512c5cf" prefix=" " category="inline-code"></block>事件</block>
+  <block id="4bcb5f606b0dc5a63fea130327f4fd56" category="paragraph"><block ref="1e05e4185307973284a525fff6f0e349" prefix="" category="inline-code"></block> 和 <block ref="f88fb72e412b68d07a884e022b7339e5" prefix=" " category="inline-code"></block> 辨識出對大型稀疏目錄進行代價高昂的列舉。它們與目錄佈局和高水位行為有關，但這並不意味著 <block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 本身已達到。</block>
+  <block id="f7572bed4a4625e63bfa9cbd17115b40" category="inline-link-macro">← 上一頁：Volume 考量</block>
+  <block id="8193c6e8bfefb121baa52d3cd072d6ab" category="cell"><block ref="8193c6e8bfefb121baa52d3cd072d6ab" category="inline-link-macro-rx"></block></block>
+  <block id="40ebfea0ae8e9f8bb5e25c1e6e72bdc5" category="inline-link-macro">接下來：高檔案數量與 inode 容量 →</block>
+  <block id="0dab0dfcee1fb702ea32dcc56afb7de6" category="cell"><block ref="0dab0dfcee1fb702ea32dcc56afb7de6" category="inline-link-macro-rx"></block></block>
+  <block id="35c3f73ea40769affdcc2b66e8773dd6" category="inline-link-macro">WAFL 目錄 EMS 事件</block>
+  <block id="9d8cd8e83eaf3f571cda8366536eda5f" category="list-text"><block ref="9d8cd8e83eaf3f571cda8366536eda5f" category="inline-link-macro-rx"></block></block>
+  <block id="5c8153e9dbb14f4bf5ca034a89dc8137" category="list-text">連結:https://docs.netapp.com/us-en/ontap-ems/wafl-maxdirsize-events.html<block ref="55e4a9f40d4324dde2d741b8c6ef7833" prefix="[" category="inline-code"></block> EMS 事件^]</block>
+  <block id="cd3d80d5b6a93554cc5a15deefa0304d" category="summary">了解 ONTAP inode 計數器如何變化以及高檔案數如何影響容量和 NAS 工作負載。</block>
+  <block id="df0bc5daa918aaa12a572a226f6a4efa" category="doc">ONTAP 中的高檔案數量和 inode 容量</block>
+  <block id="fa62e2b12eed1d92c472bebf6250e34c" category="paragraph">ONTAP 將配置的公共 inode 限制、目前公共 inode 使用情況以及已分配公共 inode 檔案的高水位容量作為分隔的值進行報告。</block>
+  <block id="32dc9a8b96e8cc17c92a07d447f756dd" category="section-title">ONTAP 中的高檔案數量</block>
+  <block id="8c8046da88cdddd2acd08cca9a502008" category="paragraph">ONTAP 使用 inode 來追蹤檔案系統物件。您可以透過 CLI、REST API 或 System Manager 中的下列 Volume 值監控公用 inode 的使用情況：</block>
+  <block id="3d314dffe03eaf1266151ed2a32e422d" category="list-text"><block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix="" category="inline-code"></block> 是設定的公用 inode 上限。</block>
+  <block id="010fafa16e0064796ac87b517ca30b22" category="list-text"><block ref="d92450c6cbe85c59736df0f89d654a4d" prefix="" category="inline-code"></block> 是目前正在使用的公共 inode 數量。</block>
+  <block id="16c9f7072a581fc8ce87be837c38e255" category="paragraph">此<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>選項控制公共 inode 檔案中可分配的公共 inode 條目數量。增加此<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>限制不會立即為作用中檔案系統分配 inode 或 inode 檔案空間。相反地，它會設定 Volume 允許的上限。</block>
+  <block id="d0539318824b307310737a8fc38a04d6" category="paragraph">建立檔案、目錄、ACL、命名流或公共目錄索引會增加公共 inode 檔案的大小。刪除物件會減少<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>公共 inode 並使其可供重複使用，但不會縮小公共 inode 檔案的大小。</block>
+  <block id="6cd60d6d844d8d179219b3850d0b1345" category="inline-link-macro">監控範例</block>
+  <block id="a7f7eea89f3ff531adf3cd3ac92fac33" category="paragraph">如需如何檢視檔案計數使用量詳細資料的範例，請參閱 <block ref="fb6fe807c77b0140379407b7696e6a6c" category="inline-link-macro-rx"></block>。如需規模指引，請參閱 <block ref="d5dcdda42a9208c03ec5055ea1119b7f" category="inline-link-macro-rx"></block>。</block>
+  <block id="912f61d96b2bda4885c7780de239a78b" category="section-title">inode 計數如何遞增</block>
+  <block id="c119210404c1ff991811c9a196b484f4" category="inline-link-macro">私有 inode</block>
+  <block id="9347bd8eaae816e5fbe0a721e9890225" category="inline-link-macro">公用 inode</block>
+  <block id="a0f5b5781bfd8b8daf85290a0fdac429" category="paragraph">並非所有 inode 都計入公用 inode 限制。<block ref="b9a04f505d018df26e5d0eb02c84a40e" category="inline-link-macro-rx"></block> 則不計入。<block ref="8d60fb74a1ab87f3f19b7b85ce0b8d09" category="inline-link-macro-rx"></block> 例如檔案、目錄、ACL、命名串流和公用目錄索引則會計入。</block>
+  <block id="3707587b616e410ca9f19f1d45363c5d" category="paragraph">每當使用公共 inode 時，<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix="" category="inline-code"></block> 就會增加。如果在已分配的 inode 檔案中已存在空閒的公共 inode，<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block> 仍然會增加，但 <block ref="e88c75146b28c1c27220224aa52da2fc" prefix=" " category="inline-code"></block> 不會。如果沒有剩餘空閒的公共 inode，ONTAP 會將公共 inode 檔案擴展至 <block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>，且兩個值都會增加。</block>
+  <block id="8cba1f29fa8b4c19ede29ffe17ca4913" category="paragraph">典型操作包括：</block>
+  <block id="3e710f5b48fc6a14f8a94af2f3fdd275" category="list-text">建立檔案、目錄、符號連結或特殊檔案：+1 公共 inode 和父目錄中的新名稱。</block>
+  <block id="304317820adb83ca285f285f3f86106c" category="list-text">建立硬連結：父目錄中 +0 個公共 inode 和 +1 個名稱。</block>
+  <block id="0653c683f701f71c65303040660c5739" category="list-text">在原本沒有 ACL inode 的物件上儲存 NTFS 或 NFSv4 ACL：最多 +1 個公用 inode，受 ACL 共用主旨限制。</block>
+  <block id="a7151103f77184aa8cd819737b5c18e7" category="list-text">建立命名串流：為此串流新增 1 個公用 inode，如果需要，也會新增一個串流目錄 inode。兩者都不會新增名稱至父使用者目錄。</block>
+  <block id="0230fae687a8e8d40050a3f64b90eca8" category="list-text">將目錄索引移入公共空間：每個索引目錄約 +1 個公共 inode。</block>
+  <block id="64d506c9b6befee31a4d4d34e34171f4" category="paragraph">這些物件類型、ACL 共用以及諸如<block ref="c7e76b952bc9fbc4a8f489df983e7bca" prefix=" " category="inline-code"></block>之類的串流如何影響可見檔案計數，在<block ref="b380ffd86e368ce2eca63e3ab71be44f" category="inline-link-macro-rx"></block>中有說明。</block>
+  <block id="a7526b594c241f9b738e1d0bbb5fb510" category="paragraph"><block ref="d92450c6cbe85c59736df0f89d654a4d" prefix="" category="inline-code"></block> 會在公用 inode 釋放時減少，例如在刪除完成且物件不再保留為殭屍物件之後。<block ref="e88c75146b28c1c27220224aa52da2fc" prefix=" " category="inline-code"></block> 會保持在最高值，且 inode 檔案大小永遠不會減少。</block>
+  <block id="d740944a50f09961bc206925911c5f55" category="paragraph">新建作業會重複使用可用記錄，直到分配的 inode 檔案已滿為止，之後如果<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>和 Volume 容量允許，ONTAP 會將其擴充。</block>
+  <block id="41b41e1faade50dcf6cf2ec0bc61fbb6" category="section-title">高檔案數量如何影響 NAS 工作負載</block>
+  <block id="68a09bf627ba102abfaa332e419aeaf0" category="paragraph">檔案數量過多會增加中繼資料處理相對於資料傳輸的比例。常見操作包括：</block>
+  <block id="c75b4cb5248fbc92d447377a6a284902" category="list-text">分配和釋放 inode</block>
+  <block id="fb271eac7e8d09ef23f6edd653a4574a" category="list-text">查詢目錄名稱與檔案控制代碼</block>
+  <block id="afff347d012af405289b9ed702b8fc39" category="list-text">讀取與更新屬性、權限及時間戳記</block>
+  <block id="b5623918244e2c26217c76be248a2465" category="list-text">開啟、關閉、重新命名、連結和刪除檔案</block>
+  <block id="9f1ff9e39c1a5ae04d4df9f9614cc106" category="list-text">列舉目錄並遍歷目錄樹</block>
+  <block id="910303e450130fb30d245ec4888eca34" category="list-text">掃描命名空間以進行分析、備份、複寫或安全功能</block>
+  <block id="f018ae575f770833970d37391a68b2fd" category="paragraph">效能影響取決於操作速率、並發性、協定行為、命名空間佈局、快取狀態和節點資源。僅憑檔案總數無法預測效能。分散在多個作用中目錄中的數百萬個檔案比集中在單一目錄空間中的相同數量檔案更能發揮平行處理能力。</block>
+  <block id="bc60294d1aed1b624d03fd470ed56c94" category="paragraph">每個 ONTAP 9 inode 在 inode 檔案中佔用 288 位元組。規劃近似值為：</block>
+  <block id="6edea3dbfd81f94728242709326f04a0" category="cell">inode</block>
+  <block id="b0b29e273bd1a651beb24f61f8763324" category="cell">大約原始 inode 位元組數</block>
+  <block id="4fa3e15c51e9387823150c8e637b2bb1" category="cell">近似二進位容量</block>
+  <block id="2db45ec60dc8fbc6790cd1635c3631c8" category="cell">100 萬</block>
+  <block id="2e17a6d1f559aa98d7e2cab3f04c6e32" category="cell">288,000,000</block>
+  <block id="a8c613128e42722ff33cd177a4693c25" category="cell">274.7 MiB</block>
+  <block id="73468e79f84f938f44c7638d1b35eeee" category="cell">1 億</block>
+  <block id="6f437a4caca3752bad15f71a4ba7e84b" category="cell">28,800,000,000</block>
+  <block id="98d8b96441f1ab107c5b5c02c11ed10b" category="cell">26.8 GiB</block>
+  <block id="8452946a913c5da5d0753b575bc8e7b6" category="cell">10 億</block>
+  <block id="ad033e0c155b9d4b7a5d0c4d79fdfd2d" category="cell">288,000,000,000</block>
+  <block id="1021f597bce7c2e1154389203e042626" category="cell">268.2 GiB</block>
+  <block id="8cace8707741eeec50cbd011567060fa" category="paragraph">這些數據描述的是 inode 記錄。觀察到的實體使用情況也可能包含 inode 檔案結構、區塊捨入、Snapshot 快照技術保留及其他中繼資料。</block>
+  <block id="3df8c3f1376c8cdb3a07342970879075" category="paragraph">提高<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>會變更允許的上限；此操作不會立即分配所有對應的 inode 檔案空間。隨著 inode 檔案的增長，容量便會被使用。如果日後包含一百萬個公用 inode，原始 inode 記錄將使用 288 MB （約 274.7 MiB）的實際 Volume 容量。inode 檔案不會縮減，因此容量規劃必須考量其歷史高水位分配。您可以稍後降低<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>，但不得低於<block ref="e88c75146b28c1c27220224aa52da2fc" prefix=" " category="inline-code"></block>。該欄位是已分配的 inode 檔案高水位標記，而非<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>的峰值，也不是先前的<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>設定。例如，如果 inode 檔案已增長至一百萬筆記錄，即使目前的<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>遠低於此數值，<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>也無法設定為低於一百萬。如果您已提高<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>，但 inode 檔案尚未增長至該程度，則可以將其降低至目前容量。</block>
+  <block id="9e565f9944243bd237641016ddfd57af" category="paragraph">inode 檔案的已使用實體容量與<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>已使用容量是分隔的。<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>限制了每個目錄名稱對應檔案的位元組大小。一個 320 MB 的目錄檔案會使用該目錄中 320 MB 的目錄檔案區塊；類似大小的 inode 檔案代表整個 Volume 的 inode 數量，且不受<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>限制。</block>
+  <block id="f477ca7a4fca7ce4341bfb346b717a91" category="paragraph">有關如何以容量單位檢查 inode 檔案空間，以及如何將<block ref="e88c75146b28c1c27220224aa52da2fc" prefix=" " category="inline-code"></block>讀取為 inode 計數，請參閱<block ref="2dff3dea147415edcfacac4b9f62a123" category="inline-link-macro-rx"></block>。</block>
+  <block id="846ea40bcb01d0cfae334c9e38dc1e62" category="inline-link-macro">← 上一頁：maxdir-size 的功能、EMS 與監控</block>
+  <block id="fd61e393d1adb9cc2692b2b10885c4db" category="cell"><block ref="fd61e393d1adb9cc2692b2b10885c4db" category="inline-link-macro-rx"></block></block>
+  <block id="d8ef0f52ff44654c59bd5c70d3b97007" category="inline-link-macro">接下來：ONTAP inode 類型 →</block>
+  <block id="06c54e0a14ad8cf0e6ee2f0bf3aadbfe" category="cell"><block ref="06c54e0a14ad8cf0e6ee2f0bf3aadbfe" category="inline-link-macro-rx"></block></block>
+  <block id="2ae44a68f4b4d01216f8f81ea0603975" category="list-text"><block ref="2ae44a68f4b4d01216f8f81ea0603975" category="inline-link-macro-rx"></block></block>
+  <block id="5fc88fb8d7c0a48e0cdaec0da30885fc" category="list-text"><block ref="5fc88fb8d7c0a48e0cdaec0da30885fc" category="inline-link-macro-rx"></block></block>
+  <block id="3aa974be5bd8e2d0a5d6b755a3a91869" category="summary">了解 ONTAP inode、公有和私有 inode 類型、ACL inode 和命名串流。</block>
+  <block id="532bda85ba7e2c90b2885fb8565ad5d2" category="paragraph">ONTAP 使用公用 inode 來表示存在於 FlexVol 和 FlexGroup Volume 中的檔案系統物件。每個 Volume 都有一個定義的高水位限制（請參閱 <block ref="2ae44a68f4b4d01216f8f81ea0603975" category="inline-link-macro-rx"></block>），而公用 inode 會計入檔案系統中的該限制。</block>
+  <block id="9ee87b81cee516ac1b6fabd88e995929" category="section-title">什麼是 inode？</block>
+  <block id="f01c2fde72a00fb484cb5935a127d5ce" category="paragraph">通常來說，inode 是物件的檔案系統記錄。它儲存身分和中繼資料，例如類型、所有權、時間戳記和權限，並指向物件的資料。物件的名稱儲存在目錄中，而不是 inode 本身。</block>
+  <block id="6faa04e4046f2d210af007bf4192aa47" category="paragraph">在 ONTAP 中，WAFL 將這些記錄儲存在每個 FlexVol 或 FlexGroup 成員上隱藏的 Volume 層級 inode 檔案中。公用 inode 會計入 Volume<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block> 設定（通常稱為 maxfiles）。建立公用物件會增加公用 inode 的使用量；私有 inode 則不會。inode 檔案的容量與增長說明於 <block ref="bd5854be14b52897f2541532f3aba6e2" category="inline-link-macro-rx"></block> 中。</block>
+  <block id="b0152bca3cd3e12b12653639e648d02d" category="paragraph">下圖顯示公共 inode 檔案與<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>、<block ref="e88c75146b28c1c27220224aa52da2fc" prefix=" " category="inline-code"></block>、<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>上限，以及 Volume 中所使用的容量之間的關係。</block>
+  <block id="4e3d6b60b04f00636be47c42bddea3df" category="image-alt">ONTAP Volume inode 檔案示意圖，顯示嵌套在 inodefile-public-capacity 中的 files-used</block>
+  <block id="c053bb8ceb267113725ce995743cd576" category="section-title">ONTAP 中的 inode 類型</block>
+  <block id="bbe0e96660867244bd4810ae228b7196" category="paragraph">inode 的 *類型* 描述了它所代表的物件類型。ONTAP 也將每個 inode 放置在 *公用* 或 *私有* inode 空間。公用 inode 會計入 maxfiles；私有 inode 則不會。目錄索引 inode 可以位於任一空間，取決於 Volume 組態。</block>
+  <block id="fdbbd211c70d7de2025f2e4795ed54da" category="paragraph">公用 inode 是從 Volume 的公用 inode 檔案中分配，並計入<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>和<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>。它們包括用戶端可見的物件和不顯示為目錄項目的公用中繼資料物件。</block>
+  <block id="4474f0ba254c55b98ac71c2477b3e222" category="paragraph">下表顯示在 ONTAP 中找到的公用 inode 清單及其附加資訊。連結:high-file-count-workloads-02-maxdirsize.html<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="[" category="inline-code"></block>] 欄位指出建立該物件是否會為父目錄新增目錄項目，進而增加該父目錄檔案的大小。</block>
+  <block id="5638367ba3b072047e123d532bd6dfc7" category="cell">它代表什麼</block>
+  <block id="589ee08049edb688644f0f52a83ad2c1" category="cell">同時計入 link:high-file-count-workloads-02-maxdirsize.html<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="[" category="inline-code"></block>]</block>
+  <block id="0b3f7771068243a31926076a7160b512" category="cell">普通檔案</block>
+  <block id="38a7dedb51489346cccca11e779bddf8" category="cell">預設檔案內容和屬性</block>
+  <block id="8b971932a0809e0ab56678a49d30e086" category="cell">*是的。*建立檔案會在父目錄中新增一個名稱。</block>
+  <block id="38d4327360a8eb3180467b849f903316" category="cell">目錄名稱和目錄本身的 inode</block>
+  <block id="a19896c5ecb4a0116b1ebeab5b9b6eaf" category="cell">*是的。*建立目錄會在父中新增一個名稱。新目錄也有自己的目錄檔案，該檔案會<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>獨立進行限制。</block>
+  <block id="de9745068ffb9b30ccf6e2671c4c1415" category="cell">符號連結</block>
+  <block id="4aef5956805ae4de2f9e5c32ceedc0bd" category="cell">路徑名稱指標，而不是檔案資料</block>
+  <block id="fa973a3c5ecc951758ac607044ecc6c2" category="cell">*是的。*^{asterisk}^ 建立符號連結會在父目錄中新增名稱。</block>
+  <block id="ca4804e0390550cfebdf8e8d304df719" category="cell">特殊檔案</block>
+  <block id="c56fd7abddf3ccaaa72f8a34148fad06" category="cell">UNIX FIFO、socket 或裝置節點</block>
+  <block id="477bac1d6ff8863c39f2cb1c51c5c3a9" category="cell">*是的。*建立特殊檔案會在父目錄中新增一個名稱。</block>
+  <block id="527a24318df825d8c4d39ea25c55a497" category="cell">命名串流</block>
+  <block id="179a157f5d7b6b2f4ba57a163008f5b5" category="cell">除了檔案預設內容之外的額外資料（NTFS 備用資料流）</block>
+  <block id="009fcd5dec7049dc2d26607cf2008299" category="cell">*否。*資料流不是父使用者目錄中的名稱。</block>
+  <block id="8c78f45031a0a093ee91e897130edde4" category="cell">串流目錄</block>
+  <block id="368209baf47a3a58a4851ba6d3c93f9f" category="cell">隱藏的 Container，用於保存檔案的命名串流名稱</block>
+  <block id="b972271d813a0bf3061d08d7fe6b06ee" category="cell">*否。*這不是使用者可見的目錄項目。</block>
+  <block id="fb57230391c977e5fd3e23195a01716e" category="cell">ACL（xinode）</block>
+  <block id="85bb1cb91dfcdd8f18e565e6816eb861" category="cell">NTFS 安全性描述符或 NFSv4 ACL 儲存為存取控制項目（ACE）資料</block>
+  <block id="c5855d255e9308c285c4d934228a87ec" category="cell">*否。*ACL 不是目錄項目。</block>
+  <block id="0b72cd2f63511fd7a4389ae89320de25" category="cell">目錄索引（公開時）^{asterisk}{asterisk}^</block>
+  <block id="1c3333fbc51511161e41741754f816de" category="cell">Companion B+tree 用於在大型目錄中尋找名稱</block>
+  <block id="c111b1d2705a9233b6b74230a0201075" category="cell">*否。*索引不是目錄項目。</block>
+  <block id="4b2473a7ebf9cd81e14dc1850979f99b" category="admonition">^*^ 符號連結擁有自己的公共 inode 和目錄項目。硬連結則不同：它是現有常規檔案 inode 的另一個目錄名，而不是一種分隔的 inode 類型。建立硬連結會新增一個目錄項目並增加父目錄檔案的大小，但不會分配另一個公共 inode。</block>
+  <block id="298e3d92e4c59730224b083dccd9c5b4" category="admonition">^**^ 目錄索引 inode 預設為私有。它們可以如<block ref="4146811f913e7364532462424a065508" category="inline-link-macro-rx"></block>所述移至公共 inode 空間。</block>
+  <block id="cf09e0d4f574335e36aa2a3bcc29a9ff" category="section-title">ACL inode</block>
+  <block id="19d1f4c4053252b97bfd1b00f8d702cd" category="paragraph">當檔案或目錄具有 NTFS 安全性描述符或 NFSv4 ACL 時， ONTAP 會將該 ACL 儲存為分隔的 ACL inode （也稱為擴充 inode 或 xinode）。ACL inode 包含 ACE 。ONTAP 從公用 inode 空間分配它，因此它會計入<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>和<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>。檔案或目錄 inode 參照其 ACL inode 。</block>
+  <block id="6af667043d49c1cf1683190ae50e73c6" category="admonition">UNIX 模式位元儲存在檔案或目錄本身的 inode 中。它們不會分配額外的公共 inode。</block>
+  <block id="3d8501bd419147f55e577427536462b5" category="paragraph">ACL inode 的使用並不總是與檔案或目錄一一對應：</block>
+  <block id="19313d5efafdecc3862c203a4b991c38" category="list-text">當 ONTAP 的 ACL 共享最佳化機制合併具有相同儲存安全性描述符的檔案或目錄時，它們可以共享一個 ACL inode。繼承通常會產生相同的描述符，這些描述符可以用於共享。</block>
+  <block id="12a2d1ec4bc9aaa999320750742c5a22" category="list-text">當存取控制項目（ACE）、擁有者或群組資訊、控制標誌或繼承結果不同時，可能無法進行共享。即使是相同的描述元，也不能保證會被合併，例如，當它們在識別出共享之前於分隔的作業中建立或更新時。</block>
+  <block id="8b2ca0acd84e67571efd69905e4cf98e" category="list-text">當請求不提供自己的 ACE 且父 ACL 具有繼承屬性時，建立操作可以繼承父 ACL。</block>
+  <block id="afef2096e0a43f84a317b232c54372f5" category="list-text">NTFS 安全樣式 Volume 預設套用 NTFS ACL。新檔案和目錄在儲存描述符相同時可以共享一個 ACL inode，但管理員不應假定所有預設或繼承的 ACL 都共享一個 inode。</block>
+  <block id="8955f03e86d729f06a5e721f7928711c" category="list-text">僅保留模式位元的 UNIX 安全樣式物件在儲存 NFSv4 ACL 之前不會使用 ACL inode。混合安全樣式可以同時包含僅受模式位元保護的物件和受 ACL 保護的物件。</block>
+  <block id="1ed356489f002b85ac30cc8d224931dc" category="section-title">命名串流</block>
+  <block id="dd9d894e6deb249fff53c5119873ac5b" category="paragraph">命名串流是附加到檔案的額外資料，位於使用者通常開啟的內容之外。在 ONTAP 中，它是 NTFS 替代資料流（ADS）的 WAFL 表示法。檔案的預設未命名資料位於基本檔案 inode 中。每個額外的命名串流都是一個分隔的公用 inode，並計入<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block> 和<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>。</block>
+  <block id="c2bf99496eccacebe4b526aabbf3042c" category="paragraph">命名串流會隨檔案一起持久存在。它們並非 ONTAP 僅在開啟、複本或儲存期間使用的暫時暫存區。串流會一直保持分配狀態，直到該串流或基礎檔案被刪除為止。應用程式可以建立串流並在之後將其移除，但 ONTAP 不會自行使命名串流過期。</block>
+  <block id="3d8f2189cd42a3449c1315de72749cd4" category="paragraph">需要附註的幾點：</block>
+  <block id="f85f27f6339ca8522204cd1e9a3796c3" category="list-text">SMB 工作負載會建立和使用具名資料流。Windows 將它們定址為<block ref="3101b8fae58d9e45d5fbc79787ac0f76" prefix=" " category="inline-code"></block>，例如<block ref="32a59ed60728c06b488b7960be870313" prefix=" " category="inline-code"></block>。<block ref="c7e76b952bc9fbc4a8f489df983e7bca" prefix=" " category="inline-code"></block> 是 Windows 網路標記中繼資料。從網際網路下載檔案時，Windows 或瀏覽器會記錄區域 ID（通常是網際網路區域），以便 Explorer、SmartScreen 和 Office 將該檔案視為不受信任，直到使用者解除封鎖為止。該資料流會一直保留在檔案上，直到被移除為止。其他常見來源包括備份和安全性應用程式，以及將附屬資料儲存為 ADS 的應用程式。Microsoft Office<block ref="f0218a02bf293d5f5197a9fb5c5de2ec" prefix=" " category="inline-code"></block> 鎖定檔案和暫存檔案是一般的檔案和目錄項目，而不是具名資料流。由 OneDrive 同步的檔案不一定會收到<block ref="c7e76b952bc9fbc4a8f489df983e7bca" prefix=" " category="inline-code"></block>資料流；行為取決於用戶端和傳輸路徑。</block>
+  <block id="aa3c887020a350b6daa52be228a341a2" category="list-text">存取 SMB 的 macOS 用戶端可以使用命名流來取得 Finder 中繼資料和資源分支，通常表示為<block ref="ce8c96ebed06bb41efa67f8c30492ea9" prefix=" " category="inline-code"></block>和<block ref="93f09792d8a61fc881cd1e2eabeff70d" prefix=" " category="inline-code"></block>。</block>
+  <block id="0eb4141275f6f2d41e80e9293a3a4d4b" category="list-text">一般清單會隱藏命名串流。Windows 檔案總管、macOS Finder<block ref="736007832d2167baaae763fd3a3f3cf1" prefix=" " category="inline-code"></block> 和 NFS<block ref="44ba5ca65651b4f36f1927576dd35436" prefix=" " category="inline-code"></block> /<block ref="77ddcb5f19832f4145345889013ab3a4" prefix=" " category="inline-code"></block> 顯示預設檔案，因此<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>可能會超出可見數量。使用<block ref="3d4187e4706d99c3b2b5f97ab1f94064" prefix=" " category="inline-code"></block>或 PowerShell<block ref="cb4a7a6b8dd13822df02ff186d04dc05" prefix=" " category="inline-code"></block> 從 Windows SMB 用戶端列舉串流。ONTAP 不支援 NFSv4 命名屬性，因此 NFS 用戶端不會將 SMB 串流視為額外的名稱，但 inode 仍然存在。</block>
+  <block id="a76509be7d3e6c69b919b0eea61f15fe" category="list-text">由<block ref="35b36b28916d38b34abddf832e286126" prefix=" " category="inline-code"></block>（例如<block ref="b480a21efc466b3fcae08add48e9dd7d" prefix=" " category="inline-code"></block>或<block ref="c8d740ebde3dc2fc6922ffc1f702d7c9" prefix=" " category="inline-code"></block>）建立的隱藏檔案、交換檔案或備份檔案是一般的檔案與目錄項目，而非命名串流。</block>
+  <block id="90edf8f06148e63fa63a034a598fdffb" category="list-text">從 ONTAP 9.12.1 開始支援的 NFSv4.2 擴充屬性（xattrs）是一項不同的功能。它們不是 ACL inode，不應計入 ACL xinode。</block>
+  <block id="4478b5e4b7289e9727a324c25d4b1ee9" category="section-title">對 NDMP 備份和還原的影響</block>
+  <block id="5c70ac5b3d99ab0b17377425a14389b3" category="paragraph">在 NDMP 轉儲和還原處理過程中，ONTAP 會分別識別物件類別，例如一般檔案、目錄、NT 串流、串流目錄和 ACL inode，以便對每個物件的資料和中繼資料進行序列化、在轉儲統計資料中報告並正確重建。此分類不會建立分隔的 maxfiles 限制或分隔的<block ref="0c5606ed319753bb2d86a485f23c8f6d" prefix=" " category="inline-code"></block>計數器。<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block> 仍是合併的公用 inode 總數。</block>
+  <block id="054cff3773ab9d58f2b38458ae0b5ab4" category="paragraph">NDMP 轉儲會遍歷命名空間並逐一序列化這些物件。還原會以相同的方式重建它們。因此，即使 Volume 的資料容量不大或可見檔案數量看起來很少，較高的公共 inode 數量也會延長轉儲和還原的時間。即使 Explorer 、 Finder <block ref="736007832d2167baaae763fd3a3f3cf1" prefix=" " category="inline-code"></block> 或 <block ref="44ba5ca65651b4f36f1927576dd35436" prefix=" " category="inline-code"></block> 未顯示它們，命名串流和 ACL inode 也會被轉儲和還原，因此轉儲統計資料可能會報告比簡單目錄清單顯示更多的串流和 ACL 物件。</block>
+  <block id="6b58b77c26f8c3c0b6d21163c54fc2c5" category="paragraph">這項工作通常受限於中繼資料而非吞吐量。建立、尋找和重建數百萬個 inode、ACL 和串流會消耗 CPU、記憶體容量和儲存設備 I/O，而每個物件的資料相對較少。小檔案、密集使用 ACL 以及許多命名串流都會增加這種例行成本。大型扁平目錄會在傾印期間增加列舉成本，而還原包含大量檔案的 Volume 也可能需要在物件存在後花費時間重建目錄索引。請以包含串流和 ACL 的代表性物件數量來測量傾印和還原持續時間，而不是僅根據資料大小進行估算。</block>
+  <block id="d1f978e862d48fc5fa06cc6aa486d01f" category="paragraph">私有 inode 是 ONTAP 內部的中繼資料記錄。它們位於分隔的私有 inode 空間中，不計入<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>或<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>，也不能用作額外的用戶端檔案。</block>
+  <block id="902882048c40ce5949bdf6f3a68c7be1" category="paragraph">下表顯示常見的私有 inode 類型。</block>
+  <block id="e19e337a51f0b106e825bc553acc623d" category="cell">目錄索引（預設）^{asterisk}^</block>
+  <block id="4d72187a5e558f525b27414a0fe344c3" category="cell">*否。*</block>
+  <block id="41bac08516650e1cf5af34e7ae39c2f6" category="cell">私有中繼檔案</block>
+  <block id="b9fecd6e84655e7ef5149ec182a65de5" category="cell">ONTAP 所使用的隱藏 WAFL 中繼資料</block>
+  <block id="7c3d115a77fd8d39fbbc0bb2bf54cfc7" category="cell">殭屍</block>
+  <block id="7c22316338256c9e89880af4de45b140" category="cell">未連結的物件會保留直到引用或非同步刪除完成</block>
+  <block id="e85ab464853fc26a5014a7a83a16721a" category="admonition">^*^ 目錄索引預設為私有。公用索引傳輸的相關說明請參閱<block ref="4146811f913e7364532462424a065508" category="inline-link-macro-rx"></block>。</block>
+  <block id="231dd35fcaea9ff356e46e83be06b466" category="admonition">大多數情況下，您無需監控私有 inode 的使用情況，因為私有 inode 不計入 maxfiles，除非 NetApp 支援指示您這樣做。</block>
+  <block id="cd336d7c71850ac788fdfe903c99bc30" category="section-title">殭屍 inodes</block>
+  <block id="172a201fd0d749b70e31ebbdfab411c4" category="paragraph">未連結的檔案並非總是能立即釋放。ONTAP 可以將其暫時保留為殭屍檔案，直到參照或非同步工作完成。因此，大型非同步刪除作業可能會在清理過程中增加私有 inode 的使用量。再次強調，私有 inode 不計入 Volume 中允許的總數<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>。</block>
+  <block id="12f518fddafcc74b18f31da64ace3e00" category="inline-link-macro">← 上一頁：檔案數量多和 inode 容量</block>
+  <block id="b6245e0d28849923953bf5f0d443760c" category="cell"><block ref="b6245e0d28849923953bf5f0d443760c" category="inline-link-macro-rx"></block></block>
+  <block id="4ec3ee4ef2dc9caa6fdd2953713d3cc3" category="inline-link-macro">接下來：Maxfiles 和 ONTAP inode 資訊 →</block>
+  <block id="6c0b97f9f9bfa61ce2cdda3e039a95e3" category="cell"><block ref="6c0b97f9f9bfa61ce2cdda3e039a95e3" category="inline-link-macro-rx"></block></block>
+  <block id="4955c3127e3d32c88cc24ce982b54871" category="inline-link-macro">ONTAP NAS 安全樣式</block>
+  <block id="e93d7f5a3379dc7412d7301fa0db300b" category="list-text"><block ref="e93d7f5a3379dc7412d7301fa0db300b" category="inline-link-macro-rx"></block></block>
+  <block id="07ef80ad3520d57db3d2bccfb34eab51" category="inline-link-macro">稽核替代 NTFS 資料流</block>
+  <block id="c20b49fb8e8905ca39756d4b27b7fec1" category="list-text"><block ref="c20b49fb8e8905ca39756d4b27b7fec1" category="inline-link-macro-rx"></block></block>
+  <block id="4d72c28f5ae794129f3182400591075b" category="summary">了解 ONTAP maxfiles 限制、NFS 檔案識別碼以及 inode 耗盡時的行為。</block>
+  <block id="43f4e650493543c3b2273acaed62dc49" category="paragraph">ONTAP Volume 可用的公用 inode 最大數量受 Volume 大小、設定的<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>值、版本行為和絕對的 FlexVol 限制所約束。</block>
+  <block id="7dd2ee20c344d5b014f0d56f0418c9ad" category="section-title">Maxfiles 限制</block>
+  <block id="254632a42a9a77a7c85ef9054dbc4980" category="list-text">正常預設值是根據 Volume 大小得出的，大約每 32 KiB 的 Volume 容量對應一個 inode，受 ONTAP 的可用容量係數與版本行為限制。</block>
+  <block id="d9bb9fc25e29fa71b9f2d17c357a9ba5" category="list-text"><block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix="" category="inline-code"></block> 是基於每 4 KiB Volume 容量對應約一個 inode，並在套用絕對上限之前，考量 ONTAP 的可用容量調整。請查詢該欄位，而不是將此比率視為精確的公式。</block>
+  <block id="a7e9691037ecfd2d054388d570d7cfa0" category="list-text">一個 FlexVol Volume 最多可以有 2,040,109,451 個公用 inode。由於 ONTAP 允許每 4 KiB 的 Volume 大小最多大約有一個 inode，因此，FlexVol 或 FlexGroup 組成部分必須大約為 7.8 TB 或更大，才能設定該絕對值。較小的 Volume 具有較低的<block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block>。請務必查詢該欄位；可用容量調整意味著大小並非精確的 4 KiB 公式。</block>
+  <block id="a7c68b2de719fa78b3c256e8bde80645" category="list-text">一個 FlexGroup 由多個組成部分構成，每個組成部分都有自己的 inode 檔案和強制限制。在 FlexGroup 上設定<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>。ONTAP 將 FlexGroup 總量平均分配給其組成部分，主旨為捨入和現有的分配限制。如果組成部分必須能夠容納 2,040,109,451 個公共 inode ，則同樣適用約 7.8 TB 的組成部分大小。</block>
+  <block id="fc71d7d7a5a627efce5437cc25f280ec" category="list-text">FlexGroup 全域總數並非唯一的運行邊界。分佈不均可能導致某個組件的 inode 數量接近或耗盡，而其他組件仍有剩餘空間。</block>
+  <block id="3a1348412f8c3f1b17fbaa5d736a793e" category="list-text">對於 NFS，FlexGroup 超過約 20 億個唯一檔案 ID 的檔案數量也依賴 64 位元檔案識別碼。請參閱 <block ref="5a2fc4b4821e7568aad26c4bb9d042e6" category="inline-xref-macro-rx"></block>。</block>
+  <block id="d75dcaad75a2177eeb5631f5d18b926c" category="paragraph">始終查詢目標系統，而不是假設特定 Volume 上可以設定理論最大值：</block>
+  <block id="1407d019cee2eb6c0984f83c6ecd6efb" category="section-title">NFS 64 位元檔案識別碼和 FlexGroup 檔案計數</block>
+  <block id="0847a33c86de97e4d9d21f9cf670a61c" category="paragraph"><block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix="" category="inline-code"></block> 和 <block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block> 是 inode 限制。NFS 用戶端也會看到一個 *檔案 ID* （由 <block ref="77ddcb5f19832f4145345889013ab3a4" prefix=" " category="inline-code"></block> 或 <block ref="ee37455102ba7b90e3c00db389141603" prefix=" " category="inline-code"></block> 報告的 inode 號碼）。預設情況下，ONTAP NFS 使用 32 位元檔案 ID。該協定識別碼獨立於 SMB，而 SMB 不使用相同的檔案 ID 結構。</block>
+  <block id="e4f28262a904971ed0a31f737b158ba6" category="paragraph">一個 FlexVol（以及每個 FlexGroup 組成部分）的公共 inode 數量上限為 2,040,109,451 個，略低於 32 位元有符號整數的最大值 2,147,483,647。一個 FlexGroup 命名空間由許多組成部分構成，因此其 *彙總* 檔案數量可以超過 20 億（在統一的 ONTAP 中最高可達 4000 億，在執行 ONTAP 9.19.1 及更新版本的 AFX 中最高可達 1 兆）。使用 32 位元 NFS 檔案 ID：</block>
+  <block id="755073b19b5240134ab47b4c51513a60" category="list-text">當唯一 ID 數量為 2,147,483,647 或更低時，碰撞在數學上是不可能的。</block>
+  <block id="bd58cda5d6377b4ff39982e54dfb5199" category="list-text">ONTAP 仍可指派高達 32 位元無符號最大值 4,294,967,295 的 ID。隨著計數在該範圍內移動，衝突的可能性會增加，並且在該無符號上限處必然會發生衝突。</block>
+  <block id="141dbccc7e09b42e29c8c1dcbf82c3ac" category="list-text">在 FlexGroup 上提高<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>並不能阻止 NFS 繞回 32 位元 ID。ONTAP 不會僅因為使用 32 位元 ID，就在達到 20 億時停止建立。</block>
+  <block id="ab059192dc87122eb643b33f0c9e8e3e" category="paragraph">衝突可能表現為兩個不同的物件共用一個 inode 編號。用戶端隨後可能會報告過期的檔案控制代碼、在<block ref="ea170e2cafb1337755c8b3d5ae4437f4" prefix=" " category="inline-code"></block>或<block ref="d67f249b90615ca158b1258712c3a9fc" prefix=" " category="inline-code"></block>期間發生循環目錄結構錯誤、清單失敗或應用程式失敗。</block>
+  <block id="11ac251f734d96f53c684a844680c8e2" category="paragraph">為了在 NFS 上安全地超過 20 億個檔案，請在 SVM 的 NFS 伺服器上啟用 64 位元檔案 ID（預設為相容舊版 32 位元應用程式而停用）。從 ONTAP 9.7 開始，NFSv3 和 NFSv4.x 具有分隔的選項；如果同時使用這兩種協定，則需要同時設定這兩個選項。否則，一個協定可能會持續建立檔案，而另一個協定則會因衝突而發生錯誤。</block>
+  <block id="47ea8e13a297e4b5eb183cc3ba89ee56" category="paragraph">啟用或停用該選項後，重新掛載 NFS 用戶端。檔案系統 ID 會發生變化，現有裝載可能會傳回過時的檔案控制代碼，直到重新掛載為止。請先在分隔的 SVM 上測試應用程式和作業系統支援。大多數現代 NFS 用戶端都接受 64 位元 ID。</block>
+  <block id="cf5d6410d09622afc7704a91cc240c11" category="paragraph">如果必須關閉 64 位元 ID，請將 FlexGroup 範圍內 NFS 可見的計數保持在 2,147,483,647 或以下。如果只有某些 Volume 需要超過 20 億個檔案，請將 32 位元和高檔案數 NFS 工作負載分割到不同的 SVM 上。</block>
+  <block id="3a1379b9535f51ada2f2d659f723aa99" category="section-title">32 位元 NFS 檔案 ID 的配額安全機制</block>
+  <block id="c301f10ebb48c07fbdea1279d97c18d1" category="paragraph">從 ONTAP 9.5 開始，配額 *檔案* 限制可以在 NFS 繞回 32 位元 ID 之前阻止建立。樹狀配額不會對在 Volume 根目錄建立的檔案強制執行，僅在 qtree 中執行，因此：</block>
+  <block id="ce8001fef99679463c8938298b512bdd" category="list-text">建立一個用於儲存資料集的 qtree。</block>
+  <block id="c4487178a3f760cfcac2328879f1e184" category="list-text">建立樹狀配額規則，檔案限制為 2,000,000,000（或 2,147,483,647）。</block>
+  <block id="771474a994a3ccf13db1012a77ffd4df" category="list-text">啟用配額並調整大小。</block>
+  <block id="2392ebc6727f77eb08dc0b5334a50e36" category="list-text">匯出、共享和裝載 *qtree*，而不是 Volume 根目錄，並使用權限或匯出原則，以便用戶端無法在 Volume 層級建立。</block>
+  <block id="8683c4cdd30eec19cc2588d41a0505f7" category="paragraph">當建立者的身分已知時，使用者或群組檔案限制規則是一種替代方案。這是一種針對 32 位元 NFS ID 的安全機制，但不能取代在命名空間預計會成長到超過 20 億個檔案時啟用 64 位元識別碼。</block>
+  <block id="9fecd2d4fb4dd0fb6ddbf890eb6d9453" category="section-title">NFS FSID 更改</block>
+  <block id="9faa6d51fa3cea5559306c890eeab85e" category="paragraph">NFS 使用檔案系統 ID （FSID） 以便用戶端區分不同的檔案系統。在 ONTAP 中，連接的 Volume 可以呈現不同的 FSID。一些較舊的 Linux 用戶端在執行諸如<block ref="4de53f769603f8e4542ee3267c08dd50" prefix=" " category="inline-code"></block>和<block ref="417e248f80c35ca0d471575a5fb951f5" prefix=" " category="inline-code"></block>等作業時，無法正確處理 FSID 變更。</block>
+  <block id="b950e1379c69b4031a5f4952dd7f13b3" category="paragraph">SVM NFS 選項 <block ref="aec1d0515e83aefc73433785a8226ac7" prefix=" " category="inline-code"></block> 和 <block ref="e27b275a0d5e07ce544f3aa14d77ded4" prefix=" " category="inline-code"></block>（後者適用於 ONTAP 9.7 起採用 NFSv4.x 的 FlexGroup）控制該行為。對於 FlexGroup 及其他高檔案數量的 SVM，請保持啟用狀態。啟用 FSID 變更後，每個 Volume 都有自己的檔案 ID 資源池，因此十個 Volume（每個 Volume 包含十億個檔案）不會共享同一個 32 位元 ID 空間。停用此功能後，32 位元或 64 位元檔案 ID 都適用於 *SVM*：每個 Volume 共享一個資源池，衝突會更快出現。</block>
+  <block id="2ac7027e1b8c3f2509a65ac7b19fe208" category="paragraph">如果必須為舊版用戶端停用 FSID 變更，請先在該 SVM 上啟用 64 位元檔案 ID，並在分隔的 SVM 上進行測試。停用 FSID 變更並不會使 NFSv3 中的 Snapshot 快照技術 FSID 完全相同；Snapshot 快照技術副本仍然具有不同的 FSID。</block>
+  <block id="6f80af6f0c49544c1097584f8797133c" category="section-title">當超過 maxfiles 時會發生什麼事？</block>
+  <block id="3802f1e28a5a4f6c6873f1ac29b6e7c0" category="paragraph">當沒有可用的公共 inode 時：</block>
+  <block id="432f32995a2e17872eff7a458156df0b" category="list-text">無法建立需要公用 inode 的新檔案、目錄和其他物件。</block>
+  <block id="7beb37d6757d45a726a8c944e85a4ee5" category="list-text">即使資料容量仍然可用，用戶端也可能收到空間不足或檔案建立錯誤。</block>
+  <block id="b46d83303bdd94622001bc98424ee755" category="list-text">現有物件和讀取操作通常不受影響。</block>
+  <block id="6b43dfffd3142fadfdcc3a3dc9796539" category="list-text">刪除物件可以使公用 inode 可供重複使用，儘管 inode 檔案容量仍然被分配。</block>
+  <block id="a7676a37feac5ca366c699e150c8af24" category="list-text">當 Volume 大小和 ONTAP 限制允許時，提高<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>可恢復空間以容納額外物件。請參閱 <block ref="5fc88fb8d7c0a48e0cdaec0da30885fc" category="inline-link-macro-rx"></block>。</block>
+  <block id="b139c3d2ddc007cba6e710f1a4330ab9" category="inline-link-macro">FlexGroup 組成事件</block>
+  <block id="3296da7ee08af87aaa8308d044fd27ce" category="paragraph">在 FlexGroup Volume 中，某個組成部分的 inode 供應量可能比其他組成部分更早接近或耗盡。ONTAP 會減少放置到幾乎已滿的組成部分，這可能會造成不平衡，並將更多工作路由到具有可用 inode 的組成部分。檢查組成部分<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>和<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>，而不僅僅是 FlexGroup 總數，並在 FlexGroup 上增加<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>，而不是在單一組成部分上。請參閱 <block ref="e0b4a0e538b2d514c9a21581f0fc0cbe" category="inline-link-macro-rx"></block>。</block>
+  <block id="572dcff249d6d10048147b7eb9196462" category="section-title">FlexGroup 成分空間不足</block>
+  <block id="a237ca28e0b759d8cb9b2542f27ed7f2" category="paragraph">當一個組成成員已滿時，FlexGroup 的其他成員中可能仍有可用容量和 inode。用戶端通常仍會看到<block ref="e654d1196cfba5f5e0c0a869185f35cf" prefix=" " category="inline-code"></block>（或類似的「磁碟已滿」錯誤），因為：</block>
+  <block id="efed223fd63557565cae6fae56803186" category="list-text">落在該組成部分上，或無法從該組成部分重新導向的建立作業將會失敗。</block>
+  <block id="1266a7fe61cf14042c1b9db6b401b656" category="list-text">如果某個成員的 *資料* 容量不足，則 FlexGroup 整體可能會報告空間不足。</block>
+  <block id="400d62189586376b13ab5897aba13f70" category="list-text">甚至<block ref="44ba5ca65651b4f36f1927576dd35436" prefix=" " category="inline-code"></block>和其他讀取也可能失敗。FlexGroup 需要少量可寫入的空間（內部 RAL 保留）做為中繼資料快取；當成員 100% 滿時，Snapshot 快照技術覆寫和其他優先順序較高的使用者可以佔用該保留。</block>
+  <block id="fdee81343b7b52b1dc4408bb5b32610c" category="paragraph">使用<block ref="02c37fe0473ebb5d08be11d7852bb5ac" prefix=" " category="inline-code"></block>和<block ref="eff7d5dba32b4da32d9a67a519434d3f" prefix=" " category="inline-code"></block>（或<block ref="52826eecae82da9c3238e354bbfc2a4e" prefix=" " category="inline-code"></block>）檢查成員，而不是僅信任 FlexGroup 層級的已使用百分比。釋放已滿成員上的空間或 inode，或增加容量，而不是提高<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>或假設命名空間已全域滿。</block>
+  <block id="b057ff4cb74f0b84644d61b2603936a2" category="inline-link-macro">← 上一頁：ONTAP inode 類型</block>
+  <block id="ecacb02484e985e697906c1e5999e7b9" category="cell"><block ref="ecacb02484e985e697906c1e5999e7b9" category="inline-link-macro-rx"></block></block>
+  <block id="5dbdd4515a37d88385fa0e18a6990ec8" category="inline-link-macro">接下來：控制 maxfiles →</block>
+  <block id="012b6b30685a9ae6ec2d1a0a81ce74d9" category="cell"><block ref="012b6b30685a9ae6ec2d1a0a81ce74d9" category="inline-link-macro-rx"></block></block>
+  <block id="1016955645cbf218a2f238a9df75720d" category="inline-link-macro">FlexVol Volume 允許的預設和最大檔案數</block>
+  <block id="d40d9a4b33c7652877b7a4e51af11e20" category="list-text"><block ref="d40d9a4b33c7652877b7a4e51af11e20" category="inline-link-macro-rx"></block></block>
+  <block id="fad2d810978652bf5a12211d515b051a" category="list-text"><block ref="fad2d810978652bf5a12211d515b051a" category="inline-link-macro-rx"></block></block>
+  <block id="56e376fe2535791cd44e0d4c1f69b1b9" category="summary">將 ONTAP Volume 檔案上限設為特定值或目前最大值，並了解提前提高上限的影響。</block>
+  <block id="0ccf5b8a574317be876aaaef1f7de659" category="paragraph">Volume <block ref="248d9da2c0d74a21dcc355578c72ff8d" prefix=" " category="inline-code"></block> 選項是公共 inode 上限。在工作負載耗盡 inode 之前，將其提高至規劃值或目前的 <block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block>。有關限制、NFS 檔案 ID 行為和耗盡症狀的描述，請參閱 <block ref="2ae44a68f4b4d01216f8f81ea0603975" category="inline-link-macro-rx"></block>。</block>
+  <block id="4309a4bf633f64f1d25b68d54f6a1937" category="section-title">設定特定上限</block>
+  <block id="4035770cc79f51e45f934a5c5c7aac76" category="paragraph">當容量規劃需要特定值時使用<block ref="3e0c140cbd902038eee89a794a71d572" prefix=" " category="inline-code"></block>：</block>
+  <block id="556f0b4fbd1f65049cf5063a0d0ebfa2" category="paragraph">ONTAP 會根據 Volume 大小、最大可能值和已分配的 inode 檔案容量來驗證要求的值。設定的上限不能低於已達到的 inode 檔案容量。</block>
+  <block id="5b225116a0acda3fb5731b2c7835290c" category="paragraph">對於 FlexGroup，請指定 FlexGroup 名稱和所需的 FlexGroup 範圍總數。請勿在成員上獨立設定<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>。ONTAP 會將要求的總數平均分配給目前的成員，且每個成員都會強制執行其部分：</block>
+  <block id="1e5dab226c262bb1c8b3288e59ced267" category="paragraph">變更值之後，請檢查組成成員層級的<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>與<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>，因為使用情況不一定會像設定的限制那樣平均分佈：</block>
+  <block id="0ef76a3665a041ae4ab352c47ccfefcf" category="paragraph">某些 ONTAP 指令接受相對增量：</block>
+  <block id="d7486039685c951b3fc88ec9d3a55615" category="paragraph">使用 <block ref="0c5606ed319753bb2d86a485f23c8f6d" prefix=" " category="inline-code"></block> 確認結果。</block>
+  <block id="6c004ae428dc3da99685209b2b1c7aff" category="section-title">預先將檔案設定為最大值</block>
+  <block id="b1019996b4911ba45b3962a3cada4d6b" category="paragraph">將<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>提升至目前的<block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block>不會預先分配公用 inode 檔案，也不會保留對應的 inode 記錄容量。因此，立即的空間風險較低。對於檔案數量較多的 NAS Volume ，請在 Volume 大小和協定限制允許的情況下，將<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>設為 Volume 可容納的最大值，而不是等待 inode 耗盡事件。</block>
+  <block id="c78c395ccd2d955d8d99cade6eeda8af" category="paragraph">其餘的影響在於，如果命名空間實際增長至接近該上限會發生什麼情況，以及達到無法進一步提高的限制時會發生什麼情況：</block>
+  <block id="416b86ad01c2c0aafe6ca64b6c02c4fd" category="list-text">*容量僅在分配 inode 時才會消耗。*每個 ONTAP 9 公共 inode 在 inode 檔案中佔用 288 位元組，此外還包括 inode 檔案結構和其他中繼資料。在 FlexVol 絕對上限情況下，僅原始 inode 記錄就佔用約 2,040,109,451 × 288 位元組（約 547 GiB）。已用空間也佔用基礎儲存設備，因此請監控總可用空間，而不僅僅是 Volume 已使用百分比。請參閱 <block ref="bd5854be14b52897f2541532f3aba6e2" category="inline-link-macro-rx"></block>。</block>
+  <block id="c48c7f58f0b24081c9eee284f65e4b11" category="list-text">*inode 檔案成長後，您無法將<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>降低至低於<block ref="e88c75146b28c1c27220224aa52da2fc" prefix=" " category="inline-code"></block>。*設定高上限並不會鎖定未使用的容量；已分配的記錄才會。</block>
+  <block id="4272e2c44c1c509a875bb209fb26228a" category="list-text">*在 FlexVol 上，2,040,109,451 是一個硬性上限。*您無法向該 Volume 新增更多公用 inode。如果工作負載可能超過單一 Volume 的絕對上限，請使用 FlexGroup，以便您可以新增成員。將 FlexVol 或成員設為其*目前大小*允許的最大值仍然是合適的；該值通常遠低於 2,040,109,451。</block>
+  <block id="b1b9f5362d9720bc1a89a5dea93c3767" category="list-text">*FlexGroup 全域總數可能超過 20 億個 inode*（在統一 ONTAP 中最高可達 4000 億個，在執行 ONTAP 9.19.1 及更新版本的 AFX 中最高可達 1 兆個）。對於 NFS，請在可見檔案 ID 數量接近 20 億之前啟用 64 位元檔案識別碼。請參閱 <block ref="676acfef156ed83110b3692f5ba1996b" category="inline-link-macro-rx"></block>。</block>
+  <block id="7decbb5df306bedae5c235e17f74d39c" category="list-text">*繼續監控<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>對比<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>。*最大值設定會意外移除預設上限，但 Volume 仍可能在支援的上限處耗盡 inode。</block>
+  <block id="bdce5182bc568396a96a832b4ee8fc7b" category="paragraph">若要套用目前的最大值，請使用從 ONTAP 9.9.1 開始的進階<block ref="3f546520c0335e0a7342cfb31fb40d60" prefix=" " category="inline-code"></block>行動：</block>
+  <block id="cb196ef5cddf344076fb18bcdd5ef7fa" category="paragraph">這是一個一次性行動，並非持久分配模式。僅 <block ref="b326b5062b2f0e69046810717534cb09" prefix=" " category="inline-code"></block> 有效。如果 Volume 之後增長，需要套用新的最大值時，請再次執行此操作。當您希望設定一個低於最大值的特定值時，請使用 <block ref="248d9da2c0d74a21dcc355578c72ff8d" prefix=" " category="inline-code"></block>。如果 FlexVol Volume（或 FlexGroup 組成部分）約為 7.8 TB 或更大，則您可以設定的最大值是絕對上限 2,040,109,451，且該值不會隨著 Volume 大小的增加而進一步增加。</block>
+  <block id="b6c33c25d934b1636c2c4b248afd34ff" category="inline-link-macro">← 上一頁：Maxfiles 和 ONTAP inode 資訊</block>
+  <block id="d14c47f432e54c8437f4e1c2dc3113aa" category="cell"><block ref="d14c47f432e54c8437f4e1c2dc3113aa" category="inline-link-macro-rx"></block></block>
+  <block id="7c8603ed7954c90d8a0d7ad3523222d5" category="inline-link-macro">接下來：監控 maxfiles、EMS 事件和 ONTAP 增強功能 →</block>
+  <block id="773135f18c1fb17f9d5fdf1cf15cd0a9" category="cell"><block ref="773135f18c1fb17f9d5fdf1cf15cd0a9" category="inline-link-macro-rx"></block></block>
+  <block id="39c2318767212118846bf0f1014b8ee6" category="summary">監控 ONTAP maxfiles 使用情況，解釋 inode EMS 事件，並審查版本增強功能。</block>
+  <block id="a67662ee912526774b7d0f445e940b75" category="paragraph">監控目前的公用 inode 使用量，以及公用 inode 檔案分配的高水位容量。使用 EMS 事件來偵測耗盡與成員不平衡的情況。</block>
+  <block id="59e3dcd37cf08ef7f6f1df7ec655446c" category="section-title">與 maxfiles 相關的 EMS 訊息</block>
+  <block id="2b803291887c984520d400fa4ee66174" category="section-title"><block ref="4ba949083f6a82a458c532315ad1c812" prefix="" category="inline-code"></block></block>
+  <block id="80c2f077df5b55b4ff2eba29e2832f87" category="paragraph">此 ERROR 事件表示 Volume 的 inode 不足。在提供可用的 inode 或增加設定的最大值之前，無法建立新的檔案系統物件。在變更限制之前，請檢查<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>、<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>、<block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block>和 Volume 容量。</block>
+  <block id="35b87bd73b67ea30fe4a38bd8512faf2" category="list-text"><block ref="2031a22d5c934cb4f9a72e82575ca716" prefix="" category="inline-code"></block> 表示某個元件的 inode 即將耗盡。ONTAP 將較少的建立導向該元件，這可能會影響經銷和效能。</block>
+  <block id="ae8234d3451b406d741fcab72e766f19" category="list-text"><block ref="9b6a7665a7a2d4d06f529683b39f7d0b" prefix="" category="inline-code"></block> 表示某個成員的 inode 已用完，無法接受新檔案。</block>
+  <block id="2bef9032cc49d3d6c970631b58a1be90" category="list-text"><block ref="bc024cc410b57fb0c4a54526cdc6e04f" prefix="" category="inline-code"></block> 表示引發接近滿或滿事件的條件不再適用。</block>
+  <block id="9caabfdb47b1cdc8dc7a3050904f95dc" category="paragraph">對於 FlexGroup 事件，請調查成員經銷以及 FlexGroup 層級的總數。提高 FlexGroup 檔案限額，而不是嘗試直接針對單一成員設定<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>。超出 *資料* 容量的成員可能會使整個 FlexGroup 報告<block ref="e654d1196cfba5f5e0c0a869185f35cf" prefix=" " category="inline-code"></block>，甚至可能失敗<block ref="44ba5ca65651b4f36f1927576dd35436" prefix=" " category="inline-code"></block>；請參閱 <block ref="2c312ad3f1852a35521a8efbb7f6037e" category="inline-link-macro-rx"></block>。</block>
+  <block id="3cf0bdd258be6177c271ef87db5895d2" category="paragraph">使用 CLI 檢視公共上限和目前使用情況：</block>
+  <block id="cc0ba210ec09c5d81128827ef82c068a" category="paragraph">在進階權限設定中，請包含最大可能值和已分配的公共 inode 檔案容量：</block>
+  <block id="7dba9c18b9075c2d6a13c9597990256e" category="paragraph">使用 REST API 擷取公共<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>上限和目前使用情況：</block>
+  <block id="7b372169c506e7cc69d8bdf47a475137" category="paragraph">REST <block ref="f550cadffa4edad04f3b3926a9f7a0e8" prefix=" " category="inline-code"></block> 和 <block ref="53bd4787d147454c817a832a67bce571" prefix=" " category="inline-code"></block> 欄位對應於 CLI <block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block> 和 <block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>。將進階 CLI 欄位用於 <block ref="e88c75146b28c1c27220224aa52da2fc" prefix=" " category="inline-code"></block>。</block>
+  <block id="0b799c45aaf034f20724f0b5b9285c6d" category="paragraph"><block ref="d92450c6cbe85c59736df0f89d654a4d" prefix="" category="inline-code"></block>包括公用 ACL inode、命名串流、串流目錄、公用目錄索引和其他公用物件。<block ref="0c5606ed319753bb2d86a485f23c8f6d" prefix=" " category="inline-code"></block>不提供分隔的 ACL inode 計數器。</block>
+  <block id="061dbd97a64de35b738075bfaca27187" category="paragraph">同時追蹤目前使用情況和 inode 檔案容量。在大量刪除之後，較低的<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>數值並不表示 inode 檔案容量已歸還。</block>
+  <block id="528afc38b02c6a61ae306457ab20e81b" category="section-title">ONTAP 功能及與 maxfiles 相關的增強功能</block>
+  <block id="c4206f44cb4a86c33d1c23dec158554e" category="cell">ONTAP 9 早期版本</block>
+  <block id="92577782ca044ad06758d93c67c819ab" category="cell">管理員可以檢查<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>和<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>並設定特定<block ref="248d9da2c0d74a21dcc355578c72ff8d" prefix=" " category="inline-code"></block>值。過去，當 Volume 大小達到約 680 GB 時，預設的自動值會停止增長於 21,251,126；這是一個預設規模限制，並非最大可設定值。</block>
+  <block id="74eb178224c5fa701fbcd96998feaafe" category="cell">ONTAP 9.9.1</block>
+  <block id="76190f99d725863a91bc49e6942d945e" category="cell">新增了<block ref="fbd2daff3aa0eb25a3a83718a9714b52" prefix=" " category="inline-code"></block>，這是一項一次性行動，可將<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>設為目前的<block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block>。請參閱<block ref="2e1605f8a04a971285e7a2ba5bfea4f5" category="inline-link-macro-rx"></block>。</block>
+  <block id="b6e60011eab2ca1cf5d6c756a1bbfc5e" category="cell">ONTAP 9.13.1</block>
+  <block id="777e4abe0373e1fefbe41078a74be374" category="cell">隨著 Volume 成長超過先前約 2,100 萬的平台期，自動預設 inode 規模會持續進行。</block>
+  <block id="b70f959a3aeb0a7db488a55bb9760a78" category="cell">新增了將目錄索引 inode 放置和移轉到公共 inode 空間的選項。請參閱 <block ref="4146811f913e7364532462424a065508" category="inline-link-macro-rx"></block>。</block>
+  <block id="8c9108ed2d1909b0235497e5838d6955" category="paragraph">版本支援和限制可能因平台和 Volume 類型而異。請在所用 ONTAP 版本的命令參考中驗證其行為。</block>
+  <block id="160e6b4c60cc8937c3cc75c9e3b93052" category="inline-link-macro">← 上一頁：控制 maxfiles</block>
+  <block id="9a165f478c831b350cfc7486e94b2011" category="cell"><block ref="9a165f478c831b350cfc7486e94b2011" category="inline-link-macro-rx"></block></block>
+  <block id="531766925ceb338e4f36c62623e4bbee" category="inline-link-macro">接下來：規劃方法 →</block>
+  <block id="f56a0615e7d6700eb0e2ed1878c4c9c4" category="cell"><block ref="f56a0615e7d6700eb0e2ed1878c4c9c4" category="inline-link-macro-rx"></block></block>
+  <block id="8435e30947de4263006359d074b357b6" category="list-text">連結:https://docs.netapp.com/us-en/ontap-ems/callhome-no-events.html<block ref="4ba949083f6a82a458c532315ad1c812" prefix="[" category="inline-code"></block> EMS 參考^]</block>
+  <block id="cd17ebde61d474086fc2ea93733d9427" category="inline-link-macro">FlexGroup inode EMS 事件</block>
+  <block id="610cdd81a93b8ad3051bdbfae69791b7" category="list-text"><block ref="610cdd81a93b8ad3051bdbfae69791b7" category="inline-link-macro-rx"></block></block>
+  <block id="7047504de97491a757b3c9bc607ded7d" category="summary">在 ONTAP 上評估高檔案數 NAS 工作負載規模之前，請收集 inode、目錄、操作速率和容量估算值。</block>
+  <block id="014082508343a51fd36d02cb74d61670" category="paragraph">開始進行高檔案數量的 NAS 規劃時，請使用四個分隔的估算值，而不是單一檔案數量或容量數字。</block>
+  <block id="c4adbd18f85bb67872826219423160f6" category="list-text">工作負載生命週期內的檔案系統物件總數</block>
+  <block id="a0cbe6bddf592fc5ea9b331986c405d1" category="list-text">最大目錄中的峰值條目</block>
+  <block id="99a435e50edb883f1980e520933c0d25" category="list-text">建立、尋找、列舉和刪除的峰值速率</block>
+  <block id="915516916ed7964ed6818d9b90fd86d3" category="list-text">使用者資料、inode、目錄、目錄索引、Snapshot 快照技術複本和成長容量</block>
+  <block id="f078e6ef9ae1daa44fbbac4b7ccf753c" category="paragraph">請使用以下方法收集這些輸入資訊：</block>
+  <block id="510c87500e568b60d047ffe478c2b258" category="section-title">尋找物件總數和 inode 餘裕</block>
+  <block id="fb8408e2cdb50f312e806cb7c710b0fb" category="paragraph">將應用程式清單與 ONTAP 的公有 inode 計數器進行比較：</block>
+  <block id="b9cf4dc46d47545a07168890aada7404" category="paragraph">對於 FlexGroup，請檢查配置的總數以及每個組成部分的使用情況：</block>
+  <block id="9a00ac0ff4418a31de09b6bb72ad26b8" category="list-text">將預估的檔案、目錄、串流、ACL、公用目錄索引、暫存物件和移轉重疊部分計入總估算值。</block>
+  <block id="79075d5cb48fc6634ecc5b8dd72c5d58" category="inline-link-macro">ACL 共用</block>
+  <block id="ba75827afa4b9d69a1f45b3271a7b178" category="list-text">在 ACL 較常見的情況下，請將高達預估檔案和目錄數量的兩倍作為<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>的保守起始估計值。每個 NTFS 或 NFSv4 ACL 可能會使用額外的公共 inode，但 <block ref="384dffd17f5195d101af99e60af06fcb" category="inline-link-macro-rx"></block> 可以減少實際使用量。請使用具有代表性的資料進行驗證。</block>
+  <block id="9a4e1b8eec2592558e9bc2a72fcedfa7" category="list-text">使用應用程式的庫存或移轉評估來預測成長。<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block> 是目前使用量，而不是未來的峰值。</block>
+  <block id="541d900919a68a9515c742c835c71162" category="paragraph">NetApp XCP 可以統計目前命名空間中的檔案和目錄數量。在 XCP 1.5 及更新版本中：</block>
+  <block id="9bb2e9f02ad93ac18df3dcae8c50bff6" category="paragraph">該 <block ref="1051648d0a5a726e0234c2579abcd347" prefix=" " category="inline-code"></block> 報告包含檔案和目錄計數。它不包含從未作為目錄項目出現的 ACL inode 或命名串流，因此請從應用程式設定檔中新增這些內容。處理檔案數量較多的資料集時，請預留一些時間；XCP 會在列印總數之前掃描目錄樹。有關 XCP 1.5 子命令附註和相關掃描，請參閱 <block ref="0c90cf67d2a9c2e2b5e400c17a8b62bd" category="inline-link-macro-rx"></block>。</block>
+  <block id="2d479ab15d69f74f659fa9a8e4823cd0" category="section-title">尋找最大的目錄</block>
+  <block id="37a6ee9b5852d4b0bdd6aa641c97316c" category="list-text">使用應用程式清單、移轉工具或受控命名空間掃描來識別最多條目的目錄。</block>
+  <block id="5637c197915a1bf2dc4254918d6add00" category="list-text">審查<block ref="b3858595805a9c8bfdd9eb4d86966268" prefix=" " category="inline-code"></block>以及已接近上限之目錄的相關 EMS 事件。</block>
+  <block id="072edbabc32304dcbc84e30b0753a6d9" category="list-text">測量目錄物件本身，如 <block ref="309f0393f6b9933e0b779d252fb16f5f" category="inline-link-macro-rx"></block> 所述。</block>
+  <block id="ae937e3b89b51b6f2663653e4ea7f192" category="list-text">建立檔案名稱長度與替代名稱的模型，如 <block ref="e0e2503a3085feee61226f9dc6c1bb33" category="inline-link-macro-rx"></block> 所述。</block>
+  <block id="4af2e342eaa5cd226d114695105efa75" category="paragraph">XCP 可以按項目數或目錄檔案大小對目錄進行排名。<block ref="1051648d0a5a726e0234c2579abcd347" prefix=" " category="inline-code"></block> 報告將最大目錄的項目數列為 <block ref="9a19e4962658ae45e6a1aea119360fe4" prefix=" " category="inline-code"></block>。若要列出每個目錄及其中繼資料檔案大小（從大到小）：</block>
+  <block id="a07b2412f95fad941a745ab3db47e1db" category="paragraph">若要列出條目數超過指定數量（本例為 2,000）的目錄：</block>
+  <block id="9d5a4104f2b1cad58931104d51a93c94" category="paragraph">這些掃描會尋找繁忙的目錄。它們並不能取代針對<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>的名稱長度與編碼建立模型。</block>
+  <block id="0eb65bfc3f2fa714c34300f24dc2ffc4" category="section-title">測量中繼資料操作速率</block>
+  <block id="2045da70a797e26a5cb524311a7babba" category="list-text">使用應用程式遙測、用戶端工作負載工具、封包追蹤、ONTAP 效能統計資料或 Harvest 等監控工具來測量建立、尋找、開啟、結案、屬性、列舉、重新命名和刪除速率。</block>
+  <block id="3daebdb78603ec425626c37bf602118a" category="list-text">測試具代表性的並行性以及暖快取和冷快取行為。</block>
+  <block id="f1ae661cb32237d8327b12a45dbb7d34" category="list-text">吞吐量測量並不一定能反映中繼資料密集型工作負載的特性。操作計數器可以提供一些線索，尤其是<block ref="d3457857c3b336c738f741b28fa914e1" prefix=" " category="inline-code"></block>。</block>
+  <block id="61b63160bc47b0b2f1b5313bf8a0f46a" category="section-title">尋找中繼資料和 Snapshot 快照技術容量</block>
+  <block id="e21e495d99347f121687b53463b710cd" category="list-text">使用<block ref="02c37fe0473ebb5d08be11d7852bb5ac" prefix=" " category="inline-code"></block>來分隔使用者資料、檔案系統中繼資料、inode 和 Snapshot 保留。</block>
+  <block id="27af6c502f855a128e63508bcc7d22fb" category="list-text">使用<block ref="67ff4bdb4fa0904f7c2aad37e9cbbfff" prefix=" " category="inline-code"></block>來審查 Volume 的彙總實體佔用空間。</block>
+  <block id="fe4d705d69300865613d2e6c256af148" category="list-text">估計原始 ONTAP 9 inode 記錄數為<block ref="bff66c63926c7fdbe76fcac6f529c50d" prefix=" " category="inline-code"></block>，然後加上目錄檔案大小。</block>
+  <block id="4794b30e79adcb5f64a1cf2a79867141" category="list-text">在統一的 ONTAP 上，使用 <block ref="2d2a51ba4ba356cb2255c8188435d256" prefix=" " category="inline-code"></block> 審查彙總中繼資料。</block>
+  <block id="f978d4700e9a16038836c38b060a02b4" category="list-text">在 AFX 上，使用<block ref="3c74c42e64e78be5f9347581b897489c" prefix=" " category="inline-code"></block>審查儲存可用區中繼資料。</block>
+  <block id="e6fafc267ef68c6b563c3d38c6cebb6a" category="list-text">為無法從主機清點的其他系統中繼資料預留約 1% 的容量。</block>
+  <block id="86387fdc8b522976130634ebaf1b44b6" category="section-title">不要將 maxdir-size 與 maxfiles 混淆</block>
+  <block id="7d1b8cfdb35d1ce73f865aebb21d05ba" category="list-text"><block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix="" category="inline-code"></block>（maxfiles）是 FlexVol 或 FlexGroup 成員的公共 inode 上限。</block>
+  <block id="5b600f5f02b7b5841ccd1a42598a3dbe" category="list-text"><block ref="e247c5267284bdf6c8c4ff36810192aa" prefix="" category="inline-code"></block> 是 Volume 中每個目錄檔案的位元組上限。能容納多少個名稱取決於名稱長度和編碼，而不是 Volume 的檔案數量。</block>
+  <block id="c9ea1c7cab91c1f3b79427524e4b1ef9" category="list-text">請勿從 Volume 總檔案數推導<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>，也不要使用<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block>來估計一個目錄中可容納多少個名稱。</block>
+  <block id="b9a1a3c83c0321c2a2e6170fcb91b361" category="inline-link-macro">← 上一頁：監控 maxfiles、EMS 事件和 ONTAP 增強功能</block>
+  <block id="2f556e9c05749a346ee9f23d56b78b00" category="cell"><block ref="2f556e9c05749a346ee9f23d56b78b00" category="inline-link-macro-rx"></block></block>
+  <block id="10a87e3ada8e32b802d33d5cf5184a6e" category="inline-link-macro">接下來：高檔案數 NAS 工作負載最佳實務 →</block>
+  <block id="337a337d8912b4681614ac57285d7da4" category="cell"><block ref="337a337d8912b4681614ac57285d7da4" category="inline-link-macro-rx"></block></block>
+  <block id="309f0393f6b9933e0b779d252fb16f5f" category="list-text"><block ref="309f0393f6b9933e0b779d252fb16f5f" category="inline-link-macro-rx"></block></block>
+  <block id="2cf2d4b3752705b90c8f093a8217823e" category="summary">在 ONTAP 上規劃、部署、監控和運行高檔案數 NAS 工作負載。</block>
+  <block id="e2555d61ed92e87307dabd5f775a3117" category="paragraph">高檔案數工作負載設計必須考量公用 inode 總數、最大目錄中的項目數、中繼資料操作速率和生命週期任務。如 <block ref="c4cc53e575d976b43bd48c2b31604253" category="inline-link-macro-rx"></block> 中所述收集這些輸入，然後使用這些建議。請勿將檔案數視為單一限制，或僅依賴資料容量。</block>
+  <block id="7179c28498d4bb1120f16bc574f96484" category="section-title">在決定儲存設備規模之前，先對命名空間進行分析</block>
+  <block id="1a3f77df2f449c5cd4390a3bdbf50327" category="paragraph">收集或估算：</block>
+  <block id="12c918febee876a2e8e40bf175dfc07a" category="list-text">目前和峰值總檔案數、目錄數、串流數和 ACL 物件數</block>
+  <block id="000392027214b042e5133ff79b37c06a" category="list-text">年度或專案階段成長</block>
+  <block id="b20ab9307812eb60f064d91b0109fcbf" category="list-text">每秒建立和刪除的峰值檔案數</block>
+  <block id="4db70f46b3d0b553138d128f572f7eb2" category="list-text">一個目錄中的峰值條目</block>
+  <block id="6e7849ff48477596b965eba7d6e4ab4b" category="list-text">檔案名稱長度經銷和字元集</block>
+  <block id="b10ab42cfe1b2b24bf59b64b746b5144" category="list-text">使用 SMB DOS 8.3 或替代 NFS 名稱</block>
+  <block id="28cfc5aeaa3010cf813b3b17c3c4364a" category="list-text">讀取、寫入、查閱、屬性、列舉、重新命名與刪除速率</block>
+  <block id="6d6a37fa7743a206ad7e3926e447c3c1" category="list-text">Snapshot 排程和保留</block>
+  <block id="280c198148fbb0fcd619fbea6af12c61" category="list-text">備份、複寫、移轉、分析和安全性掃描頻率</block>
+  <block id="72eeb8bc7d26e1652fccc97201ad4816" category="paragraph">使用最高水位線值而非每日均值。建置管道、分析作業、移轉和臨時暫存工作流程通常會在短時間內建立最大的命名空間，然後將其清理，但 inode 和目錄檔案在清理後仍可能保留最高水位線標記。</block>
+  <block id="15e741e02a0e9927eeff83b806487c2b" category="section-title">獨立調整 maxfiles 和 maxdir-size 的大小</block>
+  <block id="0234606fda72a934be721fff77bc65cf" category="paragraph">維護兩個分隔的預測：</block>
+  <block id="c755a8653d3d51e26174f59ff406b5b9" category="list-text">*Volume inode 預測：*預期在 FlexVol 或每個 FlexGroup 組成部分中的所有公用檔案系統物件。</block>
+  <block id="8e795a6022934996250399f72406cd28" category="list-text">*最大目錄預測：* 包含最多或最大名稱之目錄的磁碟上目錄檔案位元組數。</block>
+  <block id="6d55792de223f4aa51fb424b6a3636ab" category="paragraph">*請勿從一個值推導出另一個值。*分片命名空間（檔案分割在多個目錄中）可以在不建立大型目錄的情況下耗盡<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block>。單一扁平目錄可能會達到<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>限制，而 Volume 仍有數百萬個可用 inode。</block>
+  <block id="2bb29ce6eba1a9c382d2da7e00420ab3" category="paragraph">*在 NTFS 或大量使用 ACL 的命名空間上，請勿僅根據可見的檔案數量來估算規模<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block>。*請將目錄、ACL inode、命名串流及其他公用物件納入您的預估中。在大量使用 ACL 的情況下，請使用高達預估檔案與目錄數量的兩倍作為<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>的保守初始估算值，然後使用具代表性的資料進行驗證，因為 ACL 共用可以減少實際的使用量。</block>
+  <block id="3f8edfd6f2c194874158aa05c77da2c3" category="list-text">對於高檔案數量的 Volume ，當 Volume 大小與傳輸協定限制允許時，請將<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>設為目前的<block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block>。該上限不會預先配置空間；它可讓<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>成長至允許的範圍，而不需要重複調高。</block>
+  <block id="e39eddaaabb3134860c0eca23736b001" category="list-text">僅在證實有單一目錄需求時才提高<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>，通常以約 2% 的幅度遞增。請參閱 <block ref="5fc88fb8d7c0a48e0cdaec0da30885fc" category="inline-link-macro-rx"></block> 與 <block ref="96da23ce6b4b1c691b22ebd86ad0737e" category="inline-link-macro-rx"></block>。</block>
+  <block id="895e9936b84204ac2cc4b7966ba9c97c" category="paragraph">請參閱 <block ref="b380ffd86e368ce2eca63e3ab71be44f" category="inline-link-macro-rx"></block> 和 <block ref="e0e2503a3085feee61226f9dc6c1bb33" category="inline-link-macro-rx"></block>。</block>
+  <block id="593820b772f10bf5a4d22aed69f84396" category="section-title">建議採用分片目錄結構</block>
+  <block id="b62d04856e957b6df39771e251493bc0" category="paragraph">常見的命名空間佈局有三種。</block>
+  <block id="7614b23660c3e0807d0d3cafe5700f2e" category="list-text">*扁平化：*一個或幾個目錄包含多個位於同一層級的檔案。</block>
+  <block id="dab6e8c56936262bccd3ba42dac640e0" category="list-text">*寬：* 許多頂層目錄將檔案分割。</block>
+  <block id="d7a7552ce0c12cccc570d7eb786c85c3" category="list-text">*深度：* 較少的頂層目錄會商機多個層級的子目錄。</block>
+  <block id="adb4fe5ee78ff81990b236c77ded3d1f" category="image-alt">比較扁平命名空間與單一目錄中多個檔案的圖表</block>
+  <block id="e23ae5ebe1f5d183cba70599f0c7b3b0" category="paragraph">如果應用程式可以使用寬而深的層級結構，則應盡可能避免將數百萬個名稱放在一個扁平的目錄層級。扁平配置會集中記憶體容量與 CPU 工作，並可能增加大量<block ref="a59cda03fc199ec763301e878c4dfe74" prefix=" " category="inline-code"></block>、<block ref="1e36542efa12c0d5b70478c43512c5cf" prefix=" " category="inline-code"></block>、尋找與刪除作業期間的延遲。在 FlexGroup Volume 中，大型扁平目錄也可能產生更多遠端項目，導致其目錄檔案比在 FlexVol 中具有相同可見名稱數量的目錄更快接近<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>。</block>
+  <block id="4fa83c42eac4ca408ef7ecba85fab65e" category="paragraph">FlexGroup Volume 通常最適合許多較小的目錄，而不是單一大型扁平目錄。小於約 2 MiB 的目錄會維持在簡單掃描路徑上。從 ONTAP 9.2 開始，較大的目錄會自動建立索引，這有助於目標尋找。建立索引並不會使非常大的目錄等同於分片階層：列舉、萬用字元掃描和單一目錄建立序列化仍然適用。ONTAP 可以將 FlexGroup 子目錄放置在遠端，同時偏好檔案與父目錄的局部性，這可降低這些檔案的遠端延遲。</block>
+  <block id="c3318c6b1fa64f093bc38299c6927fd7" category="paragraph">將檔案分佈在層級結構中意味著使用更多的目錄，每個目錄中的檔案數量更少。</block>
+  <block id="1b456412549c0805eb2927cd415dda99" category="paragraph">常見的分片鍵包括：</block>
+  <block id="f6ef6ac96a6cbf54771496e92747c36b" category="list-text">雜湊前綴</block>
+  <block id="fff57e1c48dfe3bcfb3b36eeed7b459c" category="list-text">客戶、專案或租戶</block>
+  <block id="7dcea3edd7bf65f68ae900c67c6ee94e" category="list-text">日期或時間範圍</block>
+  <block id="ea1a0eec9a1affd26fcc7bdf0feb0ce1" category="list-text">資料集、作業或工作流程階段</block>
+  <block id="1c924f9ed045b97f876b5931000e05d3" category="list-text">物件類型或生命週期狀態</block>
+  <block id="2e6ad0ef67f1d567523afed09c0dcfe4" category="paragraph">選擇足夠的分片以確保目錄操作可管理的，但不要建立過多近乎空的目錄，以免目錄數量過多。確定性方案使檔案放置可預測，並允許用戶端在無需掃描每個分片的情況下找到檔案。</block>
+  <block id="38e1e259898a322da5733dae555524e1" category="paragraph">廣泛和深入的版面配置都可以運作。請將完整路徑長度保持在 NAS 傳輸協定、用戶端作業系統和應用程式的限制範圍內。如果無法避免平面版面配置，請依照<block ref="309f0393f6b9933e0b779d252fb16f5f" category="inline-link-macro-rx"></block>所述，監控最大目錄檔案的目前大小和<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>空餘空間，並驗證是否適合進行受控增加。</block>
+  <block id="25cc3c208a53c6c7473d396619bf43e9" category="section-title">選擇合適的 Volume 架構</block>
+  <block id="b3a15e84a6a956fda47323be822a9076" category="paragraph">當單一 Volume 的容量（小於 1 TB）、inode 規模（小於 20 億）和效能範圍能夠滿足工作負載（較低的擷取、較少的用戶端）時，請使用 FlexVol。對於可能需要在叢集中建立許多 Volume / 檔案系統，進而可能面臨達到總 Volume 數量風險的工作負載（例如使用 Kubernetes PVC），或是 VMware 資料存放區，也應考慮使用 FlexVol Volume。</block>
+  <block id="3c19decc92e7d2fe011678221989f72e" category="paragraph">當工作負載能夠受益於更大的總容量（&gt;300TB）、檔案計數規模（&gt;20億）以及跨組成部分和節點的並行性時，請使用 FlexGroup。</block>
+  <block id="ef68111c83778c96aea6227dc024c06c" category="paragraph">規劃：</block>
+  <block id="093395c92d7ffa92268293c092b64990" category="list-text">每個成員的 inode 限制和經銷</block>
+  <block id="1c51f2bc8011ac749b491da5096ef5cd" category="list-text">NFS 64 位元檔案識別碼，當 FlexGroup 檔案數量可能超過約 20 億個時（請參閱 <block ref="676acfef156ed83110b3692f5ba1996b" category="inline-link-macro-rx"></block>）</block>
+  <block id="511149af6e03fe3755d03f03ef9204ea" category="list-text">彙總和組成部分容量平衡（附註：對於 NetApp AFX，此為非必要）</block>
+  <block id="60c99709fd0e78d91dc00c50d783755b" category="list-text">工作負載放置行為</block>
+  <block id="12959f2e0e43f245b2ad18b7dd5b33de" category="list-text">FlexGroup 特定目錄條目表示</block>
+  <block id="4283f83b615395cc92b172259eab6d95" category="list-text">資料保護相容性</block>
+  <block id="2267d3a579244cdacd500ac3c51efe53" category="list-text">檔案分發時的應用程式行為</block>
+  <block id="74f40f2f3571ff707a7831f540db87bf" category="paragraph">一個 FlexGroup 不會自動並行化單一邏輯目錄上的操作。跨目錄分片對於效能平衡仍然十分重要。</block>
+  <block id="424f66e2c97b600b5afe782cfd3546ca" category="section-title">留出營業利潤</block>
+  <block id="2e04cd31b54ba08f52ad30aa6cd064b7" category="paragraph">請勿計畫在 *已使用* inode 或最大目錄檔案達到 100% 的情況下進行穩定狀態運作。保留利潤以因應意外成長、暫存物件、Snapshot 快照技術保留的中繼資料、ACL 與串流、移轉重疊、備份工作、FlexGroup 放置不平衡，以及會變更檔案名稱的軟體變更。</block>
+  <block id="3b0e7932ad1d3ccfebb5c4be52cb3f58" category="paragraph">將<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>設定為目前最大值是一個上限，而不是執行直到最後一個 inode 消失的權限。應在遠低於該上限之前對<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>發出警報。對於<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>，在 <block ref="96da23ce6b4b1c691b22ebd86ad0737e" category="inline-link-macro-rx"></block> 中大約 2% 的增加指導原則是指如何提高上限，而不是通用的運作利潤。</block>
+  <block id="3e875ee9dc3e61e37070d71fd8381420" category="section-title">考慮中繼資料容量</block>
+  <block id="b0570031724a3a9e1dff1f327f91369e" category="paragraph">分別對 inode 檔案、目錄檔案、索引、Snapshot 快照技術和彙總中繼資料進行預算。每個已分配的公共 inode 使用 288 位元組作為 inode 檔案的基本估算值；請參閱 <block ref="bd5854be14b52897f2541532f3aba6e2" category="inline-link-macro-rx"></block>。提高<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>並不會立即分配該空間。將峰值已分配的 inode 檔案容量視為持久容量。</block>
+  <block id="53eb8651d274c67b0001a7307a045343" category="paragraph">使用<block ref="02c37fe0473ebb5d08be11d7852bb5ac" prefix=" " category="inline-code"></block>來檢查 inode 和中繼資料容量，而不是將每個 CLI 計數器都當作位元組值來轉換。</block>
+  <block id="2144169336499e0617c7a05c4915684d" category="section-title">使用實際的檔案名稱場景</block>
+  <block id="e646e35b4c6936e073763c7f22d97f8e" category="paragraph">至少測試：</block>
+  <block id="b6d19105ed816a100cdd4b821dc00381" category="list-text">簡短的純 ASCII 名稱</block>
+  <block id="10c6a9435783b246572b39e4f4b6e71c" category="list-text">工作負載的檔案名稱長度中位數和高百分位數</block>
+  <block id="fbcc7a65a17e20e253069083c3cfb644" category="list-text">使用非 ASCII 字元或補充 Unicode 字元時</block>
+  <block id="4164c650630d9a11812b11152488f243" category="list-text">產生 DOS 8.3 別名的 SMB 工作負載</block>
+  <block id="bc89f7508d1897671222a24476d2028d" category="list-text">可能需要備用名稱的多協定存取</block>
+  <block id="ee2b10d33e1fc0f143a70100447a3445" category="list-text">代表生產的 FlexGroup 配置</block>
+  <block id="6614b386a2fa8b2502dfa2fe9ff45478" category="paragraph">路徑長度和基本名稱長度不可互換。跨越多個目錄的長路徑會影響協定限制和 inode 計數，而每個目錄僅儲存其立即組成部分。</block>
+  <block id="00f9a80964a6c9575418d65f35dc5d8b" category="section-title">測試中繼資料操作，而不僅僅是處理量</block>
+  <block id="f44350ab1309cebb184d65c64bb5959c" category="paragraph">順序頻寬測試無法預測高檔案數量下的效能表現。包括：</block>
+  <block id="dfd21da1674ed3abf9127c2a8a49e9a6" category="list-text">建立檔案和目錄</block>
+  <block id="4a9fc0872f95b3de0680a146b58a2bf6" category="list-text">現有名稱與遺失名稱查詢</block>
+  <block id="0326e538ed29b581f3413e17a3a3eba2" category="list-text"><block ref="77ddcb5f19832f4145345889013ab3a4" prefix="" category="inline-code"></block>或屬性操作</block>
+  <block id="8c633f8dbdb076e53b3238710cc561b9" category="list-text">開啟和結案</block>
+  <block id="c676c93a6cdbe35a1ecb275f0f6779e5" category="list-text">在目錄內和目錄間重新命名</block>
+  <block id="584fc6101dbab0af7f727e38be0d2f36" category="list-text">取消連結和遞迴刪除</block>
+  <block id="21c6f98402be0975abea49c9a5b69b79" category="list-text">完整和部分目錄枚舉</block>
+  <block id="314212130fd2f122d47306c9b3c838b3" category="list-text">萬用字元搜尋</block>
+  <block id="aa4840da7062f5a817f0194612404d47" category="list-text">冷快取與暖快取執行</block>
+  <block id="0d3d96e1c89e5bd97ff8037fdd1e640a" category="list-text">適用時可混合使用 NFS 和 SMB 存取</block>
+  <block id="07074b036b9499e28be80f513d6408d5" category="paragraph">測量延遲分佈、CPU、快取行為、網路負載和完成時間。如果 Snapshot 快照技術、複寫、分析、備份和安全性掃描等作業在生產環境中同時存在，則在這些作業期間重複測試。</block>
+  <block id="c09e169f87222776835c4dfca7f229c5" category="section-title">驗證生命週期操作</block>
+  <block id="ec6aae69072166e4930dbcefb5580b10" category="paragraph">測試超出初始擷取的情況：</block>
+  <block id="c280b53616f424a6176ed493334ff0bf" category="list-text">擴展至預計峰值數量</block>
+  <block id="5f4bfd0aa70895e2988ba200b385c358" category="list-text">大量刪除和非同步刪除</block>
+  <block id="6b3760e9ce2bfd92685feda2753e312f" category="list-text">備份和還原</block>
+  <block id="393755dbc70f5d6955d723262e09061f" category="list-text">SnapMirror 初始化、更新、容錯移轉與重新同步</block>
+  <block id="de623df82499de2f787cc4c5c2eeb3a3" category="list-text">複製或 Snapshot 快照技術密集型工作流程</block>
+  <block id="4c8b7b48a42e5bead3877b4b31e4e4dd" category="list-text">Volume 移動或儲存設備容錯移轉</block>
+  <block id="f4508a728088fe85958cad2209671571" category="list-text">ONTAP 升級與必要時的回復檢查</block>
+  <block id="2982b41e1437317ddfd7819a30efc476" category="list-text">從 FlexVol 移轉至 FlexGroup 或在協定環境之間移轉</block>
+  <block id="03533304991d1ba831ff8f5d6a85fb2e" category="paragraph">目錄索引可能需要在目的地建置或傳輸。僅當避免重建能顯著改善恢復時，才啟用公用索引傳輸；它不會改善本機查閱。請參閱 <block ref="e8fbab8e3f897452fa523ca069f3a632" category="inline-link-macro-rx"></block>。</block>
+  <block id="6b3542a02d335e7a79c553cc65b67381" category="section-title">監控 inode 限制和分配</block>
+  <block id="733b2929dbdc4f92d350e0799cb0eef6" category="paragraph">依照 <block ref="2dff3dea147415edcfacac4b9f62a123" category="inline-link-macro-rx"></block> 中所述、追蹤<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>（相對於<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block> 和<block ref="e88c75146b28c1c27220224aa52da2fc" prefix=" " category="inline-code"></block>）。在<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block> 達到<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block> 之前發出警示。對於 FlexGroup Volume、即使整體總量看似仍有空間、也應調查組成成員層級的事件。</block>
+  <block id="7ef369c13af098a65782854ca4d0f3bf" category="section-title">監控大型目錄</block>
+  <block id="c6c1d7b41173a3e35a76cf5b79dc6a10" category="paragraph">測量目錄檔案大小並解析 EMS 檔案 ID，如 <block ref="309f0393f6b9933e0b779d252fb16f5f" category="inline-link-macro-rx"></block> 所述。在已知扁平目錄或頻繁變更的目錄產生警告之前，先對其進行清點。</block>
+  <block id="abf0d8566aa3de32b3a9d8ddd827fdeb" category="section-title">在故障發生前回應警告</block>
+  <block id="676093340e6179cb6704f671c62713d1" category="paragraph">關於 inode 警告：</block>
+  <block id="9b93e58f9be8a8bdce54d62f58839e8e" category="list-text">檢查<block ref="d92450c6cbe85c59736df0f89d654a4d" prefix=" " category="inline-code"></block>、<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>、<block ref="e15bc244a0d3e47eb85cc3b39242fc0b" prefix=" " category="inline-code"></block>、Volume 大小和容量。</block>
+  <block id="0c8ec36ca2e20b198d47b67430e25ff9" category="list-text">判斷成長是預期內的還是異常的。</block>
+  <block id="4d5e177744be0e236d7f53cb04541818" category="list-text">增加<block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block>、擴充 Volume 或視情況移除不必要的物件。</block>
+  <block id="fb945cb25bc5a10d3644a0c052d59b55" category="list-text">對於 FlexGroup，請檢查受影響的成分和配置平衡。</block>
+  <block id="cdab485ba73f53c3ee1c4dca9d379958" category="paragraph">關於目錄大小警告：</block>
+  <block id="fe46e500c34976fa1d6c30ca46104ac1" category="list-text">將目錄 inode 解析為路徑。</block>
+  <block id="a5f6b88e51f25a93e5c668a2f3ea5fb3" category="list-text">測量目前目錄檔案大小並分析檔案名稱行為。</block>
+  <block id="a2470f2482b04827e0d337631121073d" category="list-text">停止無限制的扁平目錄成長。</block>
+  <block id="2e09ae4987ecd46c905cf0b2c5ccdac5" category="list-text">盡可能將名稱分片或移轉到新目錄。</block>
+  <block id="4b4cb4fcb3ea3084131df52ff6ef6b16" category="list-text">只有在應用程式無法重組且已了解效能風險時，才增加<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>。</block>
+  <block id="b236c2ebb52691819b881d4195f23350" category="paragraph">請勿等待<block ref="4ba949083f6a82a458c532315ad1c812" prefix=" " category="inline-code"></block>或<block ref="07d7a78c0706069f9b9b8c5286480955" prefix=" " category="inline-code"></block>；此時用戶端建立作業已經失敗。</block>
+  <block id="a11f542d633b4a4e6a368c5f82c7b163" category="section-title">管理刪除行為</block>
+  <block id="32c8b327bf7d05df50663b2e91e4c57b" category="paragraph">刪除檔案會釋放公共 inode 以供重複使用，但不會縮小公共 inode 檔案。同樣地，從目錄中刪除名稱會使目錄插槽可重複使用，但通常不會減少目錄檔案的最高水位大小。</block>
+  <block id="00479c8ef25ca55594f6908949296ad1" category="paragraph">大型刪除操作會佔用大量中繼資料，並可能暫時增加私人殭屍 inode 的數量。當用戶端側遞迴刪除 <block ref="373d5cc730dd449760c437daf3d5a6d5" prefix="(" category="inline-code"></block>）與生產流量競爭時，應限制其速率。</block>
+  <block id="673707fbad752d2ebf03c0a253cc53ab" category="paragraph">從 ONTAP 9.8 開始，<block ref="2f61bd138c3ec1694874ec59c0fe54f8" prefix=" " category="inline-code"></block> 會從叢集移除目錄，而不是透過 NFS 或 SMB，這可避免用戶端與網路爭用。這適用於 FlexVol 與 FlexGroup Volume。ONTAP 掃描路徑，先刪除子目錄內容，並執行平行刪除工作（預設 5,000 個並行工作；可設定為 50 到 100,000 個）。在 TR-4571 測試中，對於 24,000 個項目的樹狀結構，這比單一執行緒<block ref="373d5cc730dd449760c437daf3d5a6d5" prefix=" " category="inline-code"></block>快約 10 倍。</block>
+  <block id="eb58961aea6c28863986df9b67f2fc26" category="paragraph">限制條件：Volume 必須處於線上並已裝載，路徑必須是一個目錄（而不是單一檔案），並且一次只能執行一個 async-delete 作業。</block>
+  <block id="b611bba87bafb008a2adc68a67d3a651" category="paragraph">如果大型稀疏目錄仍然存在問題，請將剩餘項目製作複本到新目錄中。降低<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>並不會將其壓縮。請參閱 <block ref="63c6d23f7ae00c851617cae48ae139d9" category="inline-link-macro-rx"></block>。</block>
+  <block id="2ac09cb0ee0d1ce76f35a1fc6ded4c20" category="section-title">規劃節點和 HA 餘裕</block>
+  <block id="c02e8e4d6e0e745968073c0bbc3b1ae8" category="paragraph">即使資料處理量較低，高檔案數操作仍會使用 CPU、記憶體容量、快取和儲存設備 I/O。保留餘裕以供：</block>
+  <block id="8ad1552c4d6e23de508d7e5efdeb5b19" category="list-text">中繼資料突發</block>
+  <block id="95faf9ae6095b07eb3047f371fec64af" category="list-text">冷快取查詢與列舉</block>
+  <block id="f5830bb77bdbe5a2ae23d643ef39e7d0" category="list-text">掃描器和資料保護</block>
+  <block id="11ed2d05a0bfc32786ac6cc8cbc76c0e" category="list-text">儲存設備容錯移轉或接管</block>
+  <block id="125c9b12b7216c9a106ebe1993171ff9" category="list-text">FlexGroup 遠端操作</block>
+  <block id="fefee051b1350c929460c7dacc00aa46" category="list-text">共享該節點的其他 Volume</block>
+  <block id="c42e5946bcf267ca5fb906bcd99fd50d" category="paragraph">應根據觀察到的中繼資料需求（而不僅僅是容量或處理量）來平衡工作負載。即使網路和磁碟頻寬看似可用，節點仍可能因中繼資料而受限。</block>
+  <block id="087442e33771edbb21fa2a9e39f35f4b" category="section-title">跨資料 LIF 和節點分散用戶端連線</block>
+  <block id="b485aec48654fc01d1499ca3f402fd95" category="paragraph">高檔案數的 NAS 通常受限於中繼資料。NFS 或 SMB 裝載通常使用一個 TCP 連線連接到一個資料 LIF，而該 LIF 位於一個節點上。如果許多用戶端、掃描器或備份作業裝載同一個位址，即使叢集的其餘部分處於閒置狀態，該節點也會將 CPU 用於協定處理。FlexGroup 可以透過叢集網路重新導向檔案作業，但這並不會移除擁有用戶端連線之節點上的負載。</block>
+  <block id="c0734d0170590251ac36f60627077e7d" category="list-text">在 SVM 中建立多個資料 LIF（資料網路介面），每個服務於工作負載的節點上都有多個 LIF，以便用戶端可以透過多條路徑存取每個節點。</block>
+  <block id="8e1c3b2e1c4333c1d6d8e63984c05e9c" category="list-text">確認每個應該參與的節點在該 SVM 中至少有一個資料 LIF。</block>
+  <block id="be6f2de2dfe5960da75923395b87005d" category="list-text">在這些 LIF 和節點之間平衡裝載。按 IP 裝載時，均勻選擇位址。當用戶端按名稱裝載時，在一個 FQDN 後方提供多個 LIF 位址，並使用 DNS 負載平衡。</block>
+  <block id="9219dbae1324c2bec2303004ed878151" category="list-text">請勿將整個工作負載綁定至單一 LIF 或單一節點。</block>
+  <block id="e9a1352693840bef2b68b2101ac24e99" category="paragraph">支援 NFS<block ref="bb0fc0de24da5f7976510a315e4b7120" prefix=" " category="inline-code"></block> 或 SMB 多通道的單一用戶端可以在一個裝載上開啟額外的連線。這有利於該用戶端；但這並不能取代將許多用戶端分散在各個 LIF 和節點上的做法。</block>
+  <block id="738572bb86845019f9b4641cdef4d22b" category="section-title">使用目前的 ONTAP 版本</block>
+  <block id="e55a963883dd95029fb2e710a53be254" category="paragraph">ONTAP 的後續版本包括目錄索引、inode 管理改進、稀疏目錄最佳化、目錄索引傳輸以及其他針對高檔案數處理的增強功能。升級決策仍需考慮平台支援、資料保護相容性和應用程式資格判斷。</block>
+  <block id="aad4351d6e0d3901faf27836563c2d71" category="paragraph">請勿僅因為某項功能與高檔案數量有關而啟用它：</block>
+  <block id="c1a4001d01740deb66721a1d6245ee1d" category="list-text">僅當確有單一目錄要求時才提出<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>。</block>
+  <block id="98d267828b625eddc00408c17ea8dc27" category="list-text">在適當的情況下，將 <block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix=" " category="inline-code"></block> 設定為目前的最大值；請參閱 <block ref="5fc88fb8d7c0a48e0cdaec0da30885fc" category="inline-link-macro-rx"></block>。</block>
+  <block id="3611f859ba71de999a2992c2450be810" category="list-text">僅當複寫或還原需要保留索引時才啟用目錄索引傳輸。</block>
+  <block id="de794de55f3a4764200f3ed81ee57978" category="list-text">僅當檔案系統分析的洞察結果足以證明其掃描工作的必要性時，才啟用檔案系統分析。</block>
+  <block id="bd6c0597a0b350475a5b2f3f1127e12a" category="list-text">將<block ref="7805299bd0a810ecc218b9f897d0b4a8" prefix=" " category="inline-code"></block> 和<block ref="7e464cb367dc4f9c8a3200495bed4def" prefix=" " category="inline-code"></block> 視為狀態，而不是啟用開關。</block>
+  <block id="edabf92cfdd17ae476ddc22dbc7dbe24" category="paragraph">從 ONTAP 9.17.1 開始，在新建的 NAS SVM 中，新 Volume 可以預設啟用檔案系統分析。請檢查<block ref="89b388eef7bc80aaf1a4377290a92fd9" prefix=" " category="inline-code"></block> 而不是假設它已停用，並在對高檔案數工作負載進行資格判斷時，將其命名空間掃描納入帳戶。</block>
+  <block id="7eecfa7462322aea7eba343bda912ff5" category="section-title">記錄假設與臨界值</block>
+  <block id="c374271b2424ed1cabed9b7bd0207345" category="paragraph">記錄：</block>
+  <block id="5151d462388604d9cf42dd9d04f81a16" category="list-text">工作負載和檔案名稱假設</block>
+  <block id="3d6513f9f612b3675f75b503d2529b1e" category="list-text">檔案和目錄數量峰值</block>
+  <block id="2900de29b620fd38c049df1f76d0cbb6" category="list-text">選取的利潤</block>
+  <block id="5821a008ad1974a7028ba00fba182531" category="list-text">Volume 和組成佈局</block>
+  <block id="e5ab2cfe25a2e64db2a4f6e4285abf19" category="list-text">資料 LIF 和用戶端裝載佈局</block>
+  <block id="1f18a964205ae48fd18f0a83b56b21bb" category="list-text"><block ref="45b963397aa40d4a0063e0d85e4fe7a1" prefix="" category="inline-code"></block> 和 <block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block> 值</block>
+  <block id="11cefe838c5acd899f435dd863f6098b" category="list-text">警報閾值和回應負責人</block>
+  <block id="976b885d0121e2bd14035622205eba2a" category="list-text">預期擷取和刪除速率</block>
+  <block id="03777b64a5ec2be7be90fe2cd340b8ee" category="list-text">恢復和移轉目標</block>
+  <block id="d7d8919bcc5cc27ae7da6e724bdaa3aa" category="list-text">ONTAP 版本和平台相依性</block>
+  <block id="c2008c96256bd3addbd75112351c90bf" category="paragraph">當應用程式版本、檔案名稱格式、保留、協定或資料保護工作流程發生變更時，請重新審視模型。</block>
+  <block id="eb27352db2620dc9bf82d155a76c3c46" category="inline-link-macro">← 上一頁：規劃方法</block>
+  <block id="1d53064872ce8b51cd201491dcfa95f9" category="cell"><block ref="1d53064872ce8b51cd201491dcfa95f9" category="inline-link-macro-rx"></block></block>
+  <block id="070e4629ecb4de3726c473c8463789eb" category="list-text"><block ref="070e4629ecb4de3726c473c8463789eb" category="inline-link-macro-rx"></block></block>
+  <block id="ccb21e7b71ea3309b373124ab2e9d54e" category="section-title">高檔案數工作負載</block>
+  <block id="87e4aed8a519da43d5ba216f86e0a069" category="paragraph"><block ref="fdfa61193d1a20ad2876c816fcc52cde" category="inline-link-macro-rx"></block> 了解高檔案數 NAS 工作負載如何使用 ONTAP 中繼資料，如何<block ref="87fa326a8b08315a6712cdeda1a9a9d6" prefix=" " category="inline-code"></block>與<block ref="e247c5267284bdf6c8c4ff36810192aa" prefix=" " category="inline-code"></block>定義不同的擴充邊界，以及如何規劃命名空間以實現容量與效能。</block>
+  <block id="635f9ad6cab39593a272e1c0ba52b17b" category="sidebar">高檔案數 NAS 工作負載</block>
+  <block id="980aaa905a8089510a3314fab2d792dc" category="sidebar">Maxdir-size 和大型目錄</block>
+  <block id="33aad678b052c2d8b59b7dd33d606087" category="sidebar">功能、EMS 和監控</block>
+  <block id="8a7e0beccfabd338dccfddb2c0fbe7d2" category="sidebar">inode 類型</block>
+  <block id="9a00e15ca5553b10b87330540e61f76f" category="sidebar">監控、EMS 和增強功能</block>
+  <block id="c2ffe02d76c4f089648f1647b43e4ee5" category="sidebar">最佳實務</block>
 </blocks>

@@ -1,0 +1,172 @@
+---
+sidebar: sidebar 
+permalink: high-file-count-workloads/high-file-count-workloads-02-maxdirsize.html 
+keywords: ONTAP, NAS, maxdir-size, maxdirsize, directory file, filename 
+summary: 了解 ONTAP maxdir-size 測量的內容，以及目錄檔案大小的計算方式。 
+---
+= Maxdir-size 和大型 ONTAP 目錄
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/high-file-count-workloads/
+
+
+[role="lead"]
+`maxdir-size` 透過限制可分配給該目錄中名稱的容量，來限制 ONTAP Volume 中每個目錄檔案的大小。它與 Volume 的 `maxfiles` inode 限制無關，且單一目錄中的名稱數量沒有靜態可定義的限制，因為該值是可變的，並且基於許多因素，例如名稱長度、字元類型等。如需詳細資訊，請參閱 link:high-file-count-workloads-02-maxdirsize.html#estimating-the-number-of-names-per-directory-file["估算每個目錄檔案的名稱數量"]。
+
+
+
+[[what-is-a-directory-in-ontap]]
+== ONTAP 中的目錄是什麼？
+
+WAFL 目錄是一個中繼資料檔案，用於將名稱對應至 inode 編號。它的大小並非該目錄下儲存於檔案中的資料總和，而是取決於目錄包含的名稱數量，以及每個名稱所需的目錄空間大小。新建立的目錄初始大小為 4 KiB，並隨著項目的新增，以 4 KiB 目錄區塊為單位增長。
+
+目錄使用一個 inode，其記錄儲存在 Volume 級 inode 檔案中（在概念和功能上是分隔的）。目錄的名稱儲存在該目錄本身的資料區塊中。增加更多名稱會增加個別目錄檔案的大小，並可能接近 `maxdir-size`上限，而建立更多檔案系統物件（例如檔案、目錄、ACL 和命名串流）會配置更多 inode 記錄，並可能使 Volume 級 inode 檔案接近 `maxfiles`上限。單一 4KiB 目錄區塊中的名稱項目數量取決於每個名稱的儲存方式，這取決於其長度和字元編碼。
+
+
+
+[[directory-block-layout]]
+=== 目錄區塊佈局
+
+ONTAP 目錄檔案以 4 KiB 區塊為單位成長，每個區塊包含的條目記錄和名稱區塊數量不固定，具體數量取決於各自的大小。在 ONTAP 中，名稱區塊是一個 16 位元組的插槽，用於儲存檔案名稱的一部分；每個名稱佔用一個條目記錄，外加其編碼長度所需的 16 位元組區塊數量。
+
+以下範例展示如何在 48 位元組的名稱中配置名稱區塊：
+
+[link=../media/high-file-count-workloads/directory-name-chunks-48-byte.png]
+image::directory-name-chunks-48-byte.png[圖示：一個 48 位元組的檔案名稱儲存為三個 16 位元組的名稱區塊和一個 16 位元組的 Unicode 短格式例行成本區塊]
+
+
+
+[[max-number-of-directory-blocks-and-maximum-number-of-names]]
+=== 目錄區塊的最大數量和名稱的最大數量
+
+允許的最大目錄區塊數量由  `maxdir-size` 值決定。
+
+目錄大小為 320 MB 時，最多可以分配 81,920 個目錄區塊（320 MB / 4 KiB，其中 320 MB 等於 335,544,320 位元組，因為 ONTAP 以二進位單位報告這些值）。因此，目錄檔案中允許的名稱總數取決於每個目錄區塊允許的條目數。
+
+
+
+==== 目錄區塊的建構方式
+
+每 4 KiB 的目錄區塊都以相同的方式劃分：
+
+* 最多 128 筆條目記錄，每筆 12 位元組（1536 位元組）
+* 一個共享的資源池，包含 160 個名稱區塊，每個名稱區塊 16 位元組（共 2560 位元組）
+
+
+這些共佔用一個 4 KiB 區塊。每個儲存的名稱都需要一個條目記錄和一個或多個名稱區塊，無論哪個資源池先耗盡（128 個條目記錄或 160 個名稱區塊），都將決定該區塊能容納多少個名稱。對於 ASCII 名稱，名稱區塊會先耗盡。因此， `maxdir-size / filename-length` 和固定的每兆位元組檔案比率都不是精確的。
+
+在下圖中，我們可以看到前一個範例中的 48 位元組名稱。該名稱使用單一 12 位元組的項目記錄，加上先前顯示的四個 16 位元組名稱區塊（64 位元組）。
+
+[link=../media/high-file-count-workloads/directory-block-4kib-layout.png]
+image::directory-block-4kib-layout.png[4 KiB 目錄區塊示意圖，展示了使用一個 12 位元組條目記錄和四個 16 位元組名稱區塊表示的 48 位元組 Unicode 短名稱]
+
+{nbsp}
+
+160 個資料塊的資源池會在條目記錄被使用之前耗盡區塊中的空間。總共 160 個資料塊 / 4 個資料塊，每個區塊可提供 40 個此類名稱。或者，128 個條目記錄中有 88 個未被使用。較短的日常名稱只需要三個資料塊，因此相同的 4 KiB 目錄區塊可以容納大約 53 個此類名稱。這說明了名稱的大小如何直接影響單一目錄中允許的名稱數量。
+
+
+
+[[estimating-the-number-of-names-per-directory-file]]
+=== 估算每個目錄檔案的名稱數量
+
+要粗略估算目錄中可以容納多少個名稱，先計算單一 4 KiB 的區塊可以容納多少個名稱，然後乘以容量上限允許的區塊數。（記住，在 320 MB 的容量上限下，即為 81,920 個區塊。）
+
+一個區塊中能容納多少個名稱取決於每個名稱佔用的區塊空間大小。較短、較簡單的名稱佔用空間較小，因此可以容納更多；較長的名稱，或者 ONTAP 需要以較寬格式儲存的名稱，佔用空間較大，因此可容納的名稱數量較少：
+
+* 長度不超過 32 個字元的日常名稱（例如 `report-2026.csv`）都以相同的方式打包，大約 53 個可以裝入一個區塊。
+* 較長的名稱可容納的數量較少 —— 例如，48 個字元的名稱每個區塊大約可容納 40 個。
+* 必須以更寬的形式儲存的名稱大約佔用兩倍的空間，因此可容納的數量會減少。這適用於包含非 ASCII 字元（例如帶有重音符號的文字或東亞文字）的名稱、同時包含 NFS 替代名稱的名稱，以及 FlexGroup 遠端項目。由於特殊字元所需的空間，此類 32 個字元的名稱每個區塊大約可容納 26 個。如果 SMB 在長名稱旁邊也產生一個短的「8.3」別名，則該別名也會佔用額外的空間。
+
+
+儲存舊式 DOS 風格「8.3」名稱的舊 Volume，由於名稱非常小（位元組數較少），每個區塊最多可容納 128 個條目。但是，在採用普通名稱的現代 Volume 上，您不會看到這種現象。這是因為目前的 ONTAP Volume 以 Unicode 格式（預設為 C.UTF-8）儲存名稱，因此它們可以支援跨 NFS 和 SMB 的長檔案名稱和國際字元，而不是像舊系統那樣依賴八個字元的 DOS 風格名稱。有關 Volume 語言的更多詳細資訊，請參閱 <insert link here>。
+
+由於名稱差異很大，目錄中允許的檔案數量並沒有單一的固定數值。一個有用的規劃數值是，在 320 MB 的設定下，一個 FlexVol Volume 最多可容納約 430 萬個普通名稱。這裡的普通名稱指的是最多約 32 個 ASCII 字元。這只是一個粗略的範例，並非保證，而且不要求名稱必須是任何特定長度。下表顯示了一些常見情況，以及在 320 MB 的設定下，單一目錄中每個情況允許的近似名稱數量。
+
+[cols="3,3,1,2"]
+|===
+| 名稱設定檔 | 範例檔案名稱 | 每 4 KiB 區塊的名稱 | 一個目錄中的名稱大小為 320 MB 
+
+
+| 簡短、日常用語的名字（8 個字元） | `f0001.db` | 53 | 4,341,758 
+
+
+| 日常名稱（32 個字元） | `project-alpha-run0142-input1.dat` | 53 | 4,341,758 
+
+
+| 較長的名稱（48 個字元） | `run-2026-09-21-node07-sensor-array-01423.parquet` | 40 | 3,276,798 
+
+
+| 包含非 ASCII 字元的名稱，或 FlexGroup 項目（32 個字元） | `résumé-final-2026-09-21-v03.docx` | 26 | 2,129,918 
+
+
+| 同時包含 NFS 備用名稱的名稱（32 個字元） | `Marketing-Overview-2026Q3v2.pptx`備選方案 `MARKET~1.PPT` | 22 | 1,802,238 
+|===
+*注意：* 計數假設  `.` 和  `..` 條目存在，因此每個值都略小於計算結果。
+
+總結來說，同樣的 320 MB 上限可容納約 430 萬個簡短的日常名稱，但如果名稱以較寬的形式儲存，則數量不到一半。如果每個名稱都達到協定最大值 255 個字元，則只允許約 737,000 個名稱。
+
+
+
+[[filename-length-compared-with-path-length]]
+=== 檔案名稱長度與路徑長度的比較
+
+ `maxdir-size` 記錄儲存在特定父目錄中的基本名稱。它不會在每個條目中儲存完整的絕對路徑。每個路徑名稱組成部分都是其自身父目錄中的一個條目。因此，更深的目錄結構並不會增加  `maxdir-size` 使用量。
+
+更深的層級結構會在 Volume 中增加目錄和公共 inode，但會減少每個目錄中儲存的名稱數量。這種權衡通常可以提高擴充性和整體效能。
+
+*注意：*協定和用戶端路徑長度限制仍然獨立適用。
+
+
+
+[[how-the-maxdir-size-cap-behaves]]
+== maxdir-size 上限的行為方式
+
+此上限獨立適用於 Volume 中的每個目錄，且它是一種限制而非保留。設定 320 MB 並不會立即保留 320 MB 的 Volume 容量；它只是允許任何一個目錄增長到該大小。
+
+以下列出一些需要考慮的因素：
+
+* 如果一個目錄檔案成長到 320 MB 的區塊，那麼這些區塊將佔用 320 MB 的實際 Volume 容量。
+* 一旦目錄檔案成長，即使之後刪除了條目，其大小也會保持在最高值。
+* 刪除檔案或目錄會使這些條目插槽可重複使用，但不會壓縮目錄檔案。
+* 索引目錄可以對完全空白的 4 KiB 區塊進行打洞（ONTAP 9.5 及更高版本提供），並回收磁碟上的這些實體區塊，但報告的目錄檔案大小通常不會縮小。
+
+
+*注意：* ONTAP 為大型目錄建立的伴隨目錄索引會使用自身的中繼資料容量和一個 inode，但它不屬於目錄檔案的一部分，且從不計入 `maxdir-size`。如果索引設定為佔用公共 inode 空間以用於 SnapMirror 複寫目的，則它會改為計入 `maxfiles`（公共 inode 限制）。
+
+如需詳細資訊，請參閱 link:high-file-count-workloads-04-maxdirsize-indexing.html["ONTAP 中的目錄索引"]。
+
+
+
+[[raising-the-maxdir-size-value]]
+=== 提高 maxdir-size 值
+
+* 適用於 Volume 中的所有目錄
+* 允許目錄檔案超出先前的上限
+* 不預先分配或保留新的最大值
+* 不會新增公用 inode 或變更 `maxfiles`
+* 不會使現有目錄立即使用空間
+
+
+有關如何檢查設定的上限與目錄的目前大小，請參閱 link:high-file-count-workloads-03-maxdirsize-view.html["檢視 maxdir-size 和目前目錄大小"]。
+
+
+
+[[do-flexgroup-volumes-bypass-maxdir-size-limitations]]
+== FlexGroup Volume 是否可以繞過 maxdir-size 限制？
+
+不。一個 FlexGroup 不會將一個目錄的 `maxdir-size`乘以成員數。目錄檔案仍然存在於單一成員上，而且遠端項目會使該檔案的成長速度比在 FlexVol 上的相同名稱更快。如需放置、遠端項目膨脹及規劃數據的相關資訊，請參閱 link:high-file-count-workloads-06-maxdirsize-volume-types.html#flexgroup-volumes["資料量FlexGroup"]。
+
+[cols="<,>"]
+|===
+
+
+| link:high-file-count-workloads-01-overview.html["← 上一頁： NetApp ONTAP NAS Volume 的高檔案數工作負載"] | link:high-file-count-workloads-03-maxdirsize-view.html["接下來：查看 maxdir-size 和目前目錄大小 →"] 
+|===
+
+
+[[related-information]]
+== 相關資訊
+
+* link:high-file-count-workloads-06-maxdirsize-volume-types.html["Volume 考量"]
+* link:https://docs.netapp.com/us-en/ontap/volumes/cautions-increasing-maximum-directory-size-concept.html["FlexVol Volume 的最大目錄大小"^]
+

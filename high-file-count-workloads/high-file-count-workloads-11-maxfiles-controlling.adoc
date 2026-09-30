@@ -1,0 +1,87 @@
+---
+sidebar: sidebar 
+permalink: high-file-count-workloads/high-file-count-workloads-11-maxfiles-controlling.html 
+keywords: ONTAP, NAS, maxfiles, files, files-set-maximum, files-maximum-possible, FlexGroup 
+summary: 將 ONTAP Volume 檔案上限設為特定值或目前最大值，並了解提前提高上限的影響。 
+---
+= 控制 maxfiles
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/high-file-count-workloads/
+
+
+[role="lead"]
+Volume  `-files` 選項是公共 inode 上限。在工作負載耗盡 inode 之前，將其提高至規劃值或目前的  `files-maximum-possible`。有關限制、NFS 檔案 ID 行為和耗盡症狀的描述，請參閱 link:high-file-count-workloads-10-maxfiles-limits.html["Maxfiles 和 ONTAP inode 資訊"]。
+
+
+
+[[set-a-specific-ceiling]]
+== 設定特定上限
+
+當容量規劃需要特定值時使用 `volume modify -files`：
+
+[listing]
+----
+volume modify -vserver <svm> -volume <volume> -files <inode-count>
+----
+ONTAP 會根據 Volume 大小、最大可能值和已分配的 inode 檔案容量來驗證要求的值。設定的上限不能低於已達到的 inode 檔案容量。
+
+對於 FlexGroup，請指定 FlexGroup 名稱和所需的 FlexGroup 範圍總數。請勿在成員上獨立設定 `files`。ONTAP 會將要求的總數平均分配給目前的成員，且每個成員都會強制執行其部分：
+
+[listing]
+----
+volume modify -vserver <svm> -volume <flexgroup> -files <flexgroup-total-inodes>
+----
+變更值之後，請檢查組成成員層級的 `files`與 `files-used`，因為使用情況不一定會像設定的限制那樣平均分佈：
+
+[listing]
+----
+volume show -vserver <svm> -volume-style-extended flexgroup-constituent -fields files,files-used
+----
+某些 ONTAP 指令接受相對增量：
+
+[listing]
+----
+volume modify -vserver <svm> -volume <volume> -files +<additional-inodes>
+----
+使用  `volume show` 確認結果。
+
+
+
+[[setting-files-to-the-maximum-up-front]]
+== 預先將檔案設定為最大值
+
+將 `files`提升至目前的 `files-maximum-possible`不會預先分配公用 inode 檔案，也不會保留對應的 inode 記錄容量。因此，立即的空間風險較低。對於檔案數量較多的 NAS Volume ，請在 Volume 大小和協定限制允許的情況下，將 `files`設為 Volume 可容納的最大值，而不是等待 inode 耗盡事件。
+
+其餘的影響在於，如果命名空間實際增長至接近該上限會發生什麼情況，以及達到無法進一步提高的限制時會發生什麼情況：
+
+* *容量僅在分配 inode 時才會消耗。*每個 ONTAP 9 公共 inode 在 inode 檔案中佔用 288 位元組，此外還包括 inode 檔案結構和其他中繼資料。在 FlexVol 絕對上限情況下，僅原始 inode 記錄就佔用約 2,040,109,451 × 288 位元組（約 547 GiB）。已用空間也佔用基礎儲存設備，因此請監控總可用空間，而不僅僅是 Volume 已使用百分比。請參閱 link:high-file-count-workloads-08-maxfiles-high-file-counts.html#capacity-impact["容量影響"]。
+* *inode 檔案成長後，您無法將 `files`降低至低於 `inodefile-public-capacity`。*設定高上限並不會鎖定未使用的容量；已分配的記錄才會。
+* *在 FlexVol 上，2,040,109,451 是一個硬性上限。*您無法向該 Volume 新增更多公用 inode。如果工作負載可能超過單一 Volume 的絕對上限，請使用 FlexGroup，以便您可以新增成員。將 FlexVol 或成員設為其*目前大小*允許的最大值仍然是合適的；該值通常遠低於 2,040,109,451。
+* *FlexGroup 全域總數可能超過 20 億個 inode*（在統一 ONTAP 中最高可達 4000 億個，在執行 ONTAP 9.19.1 及更新版本的 AFX 中最高可達 1 兆個）。對於 NFS，請在可見檔案 ID 數量接近 20 億之前啟用 64 位元檔案識別碼。請參閱 link:high-file-count-workloads-10-maxfiles-limits.html#nfs-64-bit-file-identifiers-and-flexgroup-file-counts["NFS 64 位元檔案識別碼和 FlexGroup 檔案計數"]。
+* *繼續監控 `files-used`對比 `files`。*最大值設定會意外移除預設上限，但 Volume 仍可能在支援的上限處耗盡 inode。
+
+
+若要套用目前的最大值，請使用從 ONTAP 9.9.1 開始的進階 `files-set-maximum`行動：
+
+[listing]
+----
+set -privilege advanced
+volume modify -vserver <svm> -volume <volume> -files-set-maximum true
+----
+這是一個一次性行動，並非持久分配模式。僅  `true` 有效。如果 Volume 之後增長，需要套用新的最大值時，請再次執行此操作。當您希望設定一個低於最大值的特定值時，請使用  `-files`。如果 FlexVol Volume（或 FlexGroup 組成部分）約為 7.8 TB 或更大，則您可以設定的最大值是絕對上限 2,040,109,451，且該值不會隨著 Volume 大小的增加而進一步增加。
+
+[cols="<,>"]
+|===
+
+
+| link:high-file-count-workloads-10-maxfiles-limits.html["← 上一頁：Maxfiles 和 ONTAP inode 資訊"] | link:high-file-count-workloads-12-maxfiles-monitoring.html["接下來：監控 maxfiles、EMS 事件和 ONTAP 增強功能 →"] 
+|===
+
+
+[[related-information]]
+== 相關資訊
+
+* link:https://docs.netapp.com/us-en/ontap/volumes/change-maximum-number-files-allowed-concept.html["FlexVol Volume 允許的預設和最大檔案數"^]
+* link:https://www.netapp.com/pdf.html?item=/media/12385-tr4571.pdf["TR-4571：NetApp ONTAP FlexGroup Volume"^]
+

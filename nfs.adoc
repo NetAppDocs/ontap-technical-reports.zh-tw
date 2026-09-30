@@ -18,6 +18,13 @@ NetApp NFS 解決方案簡化資料管理，協助您在最佳化成本的同時
 
 
 
+[[high-file-count-workloads]]
+== 高檔案數工作負載
+
+link:high-file-count-workloads/high-file-count-workloads-01-overview.html["NetApp ONTAP 高檔案數工作負載（適用於 NAS Volume）"] 了解高檔案數 NAS 工作負載如何使用 ONTAP 中繼資料，如何 `maxfiles`與 `maxdir-size`定義不同的擴充邊界，以及如何規劃命名空間以實現容量與效能。
+
+
+
 [[nfs]]
 == NFS
 
