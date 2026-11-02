@@ -98,11 +98,4 @@ NOTE: 本文件取代先前發表的技術報告 _TR-4770 ： ONTAP 最佳實務
 link:https://docs.netapp.com/us-en/netapp-solutions-sap/["ONTAP 上的 SAP HANA 資料庫解決方案"^]設定、管理及自動化 SAP 解決方案的最佳實務做法、請參閱 NetApp SAP 解決方案頁面。
 
 
-
-[[epic]]
-== 致勝
-
-link:https://docs.netapp.com/us-en/ontap-apps-dbs/epic/epic-overview.html["EPIC on ONTAP 最佳實務做法"^]瞭解在內部部署和雲端部署 Epic 的最佳實務做法、同時符合在 ONTAP 上適當部署的組態標準的指南。
-
-
 NOTE: 本文件取代先前發表的技術報告 _TR-3923 ： Epic 的 NetApp 最佳實務做法。
