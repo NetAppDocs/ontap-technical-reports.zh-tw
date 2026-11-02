@@ -2057,7 +2057,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="69bdc8c83ef26acac8abddded97f8b64" category="paragraph"><block ref="69bdc8c83ef26acac8abddded97f8b64" category="inline-image-macro-rx" type="image"></block></block>
   <block id="8ccb316b5c1b78555f8a38a9affe4408" category="section-title">中繼資料密集型工作負載結果</block>
   <block id="3bd1fd712f75938356695de5aab35052" category="paragraph">隨著 AFX ONTAP 9.18.1 的變更，NFSv4.x 在這些類型工作負載下的效能已大幅改善，並已縮小與 NFSv3 效能的差距（在 15% 以內）。</block>
-  <block id="c583e153d978cb5844d41c32c86a31ff" category="paragraph">我們的效能工程團隊對標準 AI 影像、EDA 和軟體建置基準的效能進行了比較，發現與先前的 ONTAP 版本相比有了巨大的提升。</block>
   <block id="aa6ef0e541d33677fb78f28cb622a5b5" category="paragraph"><block ref="aa6ef0e541d33677fb78f28cb622a5b5" category="inline-image-macro-rx" type="image"></block></block>
   <block id="a6a8f697c065d890bf89843c649c7358" category="paragraph">儘管 NetApp AFX 在儲存架構的呈現方式上存在一些相當大的差異，但 ONTAP 的功能集和管理方式幾乎保持不變。這完全是出於設計考量。ONTAP 就是 ONTAP，應盡可能降低學習難度。在這種情況下，NetApp AFX 仍然運行著 ONTAP。</block>
   <block id="da7e3e739f578be1f4c13495e5461eff" category="section-title">管理 – CLI</block>
@@ -2962,7 +2961,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="4790820e71d568645bb04f281809cab5" category="paragraph">目前，節點類型為 <block ref="9cf787ca68118452f94875110bf7c0d8" category="inline-link-macro-rx"></block> 和 <block ref="a67c7f87cb090f0e7a2eb2e9e2ce04a7" category="inline-link-macro-rx"></block>，其讀寫處理量大致如下所示*。隨著 NetApp AFX 可用的硬體更新，這些限制可能會變更。</block>
   <block id="7243f720b1a11790b4333cc5b0935200" category="list-text">使用 <block ref="451033c113f4cb2c96f7cf68d47e4bb7" category="inline-link-macro-rx"></block> 基準測試工具和連續讀取/寫入獲得的效能數據。</block>
   <block id="0afd336df6e2f35fa9136b405a81257e" category="admonition">如下面的<block ref="b5e0ef07acc1f0284ac7885ebafed6e2" category="inline-link-macro-rx"></block>章節所示，使用多個用戶端讀取和寫入多個檔案可達到最佳效能。</block>
-  <block id="830183f90a7d21bc3023a5a607dc46b7" category="cell">約 17GB/s（提升 70%）</block>
   <block id="913b914fe6c0068aa828d6146b79c0a5" category="paragraph">例如，在統一的 ONTAP 叢集中，每個節點都有自己的一組專用磁碟。因此，效能僅導向該節點所擁有的磁碟。由於一個節點只能存取一組磁碟，因此效能將僅限於它可以直接存取的磁碟。</block>
   <block id="82f771d84cb467c143d321be8dbc7f21" category="paragraph">NetApp AFX 將所有可用磁碟匯集到一個名為儲存可用區 （SAZ） 的單一容量資源池。因此，所有節點都可以運用所有可用磁碟進行讀寫操作。由於磁碟和節點是解耦的，與統一的 ONTAP 架構相比，您不一定需要使用那麼多機櫃即可獲得相同（或更高）的處理量效能。NetApp AFX 的解耦架構最大限度地發揮了磁碟櫃的效能潛力。</block>
   <block id="7f810f955c236680f67b2a1021577415" category="paragraph">從 ONTAP 9.19.1 開始，節點：機櫃飽和比率至少為 4:1，8:3 也是可能的。</block>
@@ -3844,4 +3842,6 @@ ONTAP 是功能強大的資料管理平台、具備內嵌壓縮、不中斷硬�
   <block id="8a7e0beccfabd338dccfddb2c0fbe7d2" category="sidebar">inode 類型</block>
   <block id="9a00e15ca5553b10b87330540e61f76f" category="sidebar">監控、EMS 和增強功能</block>
   <block id="c2ffe02d76c4f089648f1647b43e4ee5" category="sidebar">最佳實務</block>
+  <block id="047ac8d5a4555f864c4a724edbef5e44" category="cell">約 16GB/s（提升 +60%）</block>
+  <block id="d20323b4b266c4cb39fa13a0be177ac0" category="paragraph">我們的效能工程團隊比較了標準 AI、EDA 和軟體建置基準的效能，發現與先前的 ONTAP 版本相比有了巨大的提升。</block>
 </blocks>

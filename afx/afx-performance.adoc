@@ -37,7 +37,7 @@ NOTE: 如下面的link:#benchmark-results["基準測試結果"]章節所示，�
 | AFX 1K | 約 35GB/s | 約 10GB/s 
 
 
-| AFX 2K | 約 35GB/s | 約 17GB/s（提升 70%） 
+| AFX 2K | 約 35GB/s | 約 16GB/s（提升 +60%） 
 |===
 
 NOTE: 如需最新的效能預估，請洽詢您的 NetApp 銷售團隊。
@@ -223,7 +223,7 @@ image:image36.png["影像"]
 
 隨著 AFX ONTAP 9.18.1 的變更，NFSv4.x 在這些類型工作負載下的效能已大幅改善，並已縮小與 NFSv3 效能的差距（在 15% 以內）。
 
-我們的效能工程團隊對標準 AI 影像、EDA 和軟體建置基準的效能進行了比較，發現與先前的 ONTAP 版本相比有了巨大的提升。
+我們的效能工程團隊比較了標準 AI、EDA 和軟體建置基準的效能，發現與先前的 ONTAP 版本相比有了巨大的提升。
 
 *NetApp AFX – NetApp AFX 中的 NFSv4.1 中繼資料 IO 效能*
 
